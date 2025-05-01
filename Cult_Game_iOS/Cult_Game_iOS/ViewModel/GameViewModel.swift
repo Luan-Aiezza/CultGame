@@ -2,29 +2,46 @@ import SwiftUI
 
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
-//    @Published var faithPoints: Int = 10
-//    @Published var followers: Int = 0
-//    @Published var usedCard: Card?
-
-    func receiveInitialCards() {
-        var hand: [Card] = []
-        hand.append(contentsOf: commonCards.shuffled().prefix(2))
-        hand.append(cultistCards.randomElement()!)
-        playerHand = hand.shuffled()
+    @Published var usedCard: Card?
+    @Published var points: Int = 10
+    @Published var followers: Int = 50
+    @Published var role: PlayerRole? = nil
+    
+    func selectRole(_ selectedRole: PlayerRole) {
+        self.role = selectedRole
+        receiveInitialCards()
     }
 
-//    func playCard(_ card: Card) {
-//        guard faithPoints >= card.faithCost else { return }
-//        faithPoints -= card.faithCost
-//        followers += card.followersGained
-//        usedCard = card
-//        playerHand.removeAll { $0.id == card.id }
-//    }
+    func receiveInitialCards() {
+        playerHand.removeAll()
 
-//    func replenishCard() {
-//        if let used = usedCard {
-//            playerHand.append(used)
-//            usedCard = nil
-//        }
-//    }
+        switch role {
+        case .cultist:
+            playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
+            playerHand.append(cultistCards.randomElement()!)
+        case .heretic:
+            playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
+            playerHand.append(contentsOf: heresyCards.shuffled().prefix(2))
+            playerHand.append(assassinationCard) // permanente
+        default: break
+        }
+    }
+
+    func playCard(_ card: Card) {
+        guard points >= card.faithCost else { return }
+        points -= card.faithCost
+        followers += card.followersEffect
+
+        if card.type != .assassination {
+            usedCard = card
+            playerHand.removeAll { $0.id == card.id }
+        }
+    }
+
+    func replenishCard() {
+        if let card = usedCard {
+            playerHand.append(card)
+            usedCard = nil
+        }
+    }
 }

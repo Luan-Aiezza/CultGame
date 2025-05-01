@@ -25,7 +25,7 @@ struct ContentView: View {
                         HStack {
                             ForEach(viewModel.playerHand) { card in
                                 VStack {
-                                    Image(systemName: "rectangle") // Substitua por card.imageName
+                                    Image(systemName: "rectangle") // IMAGEM DA CARTA
                                         .resizable()
                                         .frame(width: 100, height: 100)
                                     Text(card.name)
@@ -53,7 +53,7 @@ struct ContentView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 20) {
-                    Image(systemName: "rectangle") // Substitua por card.imageName
+                    Image(systemName: "rectangle") // IMAGEM DA CARTA
                         .resizable()
                         .frame(width: 150, height: 150)
                     Text(card.name)

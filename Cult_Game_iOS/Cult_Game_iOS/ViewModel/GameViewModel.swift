@@ -22,7 +22,7 @@ class GameViewModel: ObservableObject {
         case .heretic:
             playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
             playerHand.append(contentsOf: heresyCards.shuffled().prefix(2))
-            playerHand.append(assassinationCard) // permanente
+            playerHand.append(assassinationCard) // carta permanente
         default: break
         }
     }

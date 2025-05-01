@@ -8,6 +8,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack {
+                //INTERFACE PARA ESCOLHA DO JOGADOR (PROVISORIO)
                 if viewModel.role == nil {
                     Text("Escolha seu papel")
                         .font(.title)
@@ -18,9 +19,12 @@ struct ContentView: View {
                         viewModel.selectRole(.heretic)
                     }.padding()
                 } else {
+                    
+                    //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Fé: \(viewModel.points)" : "Heresia: \(viewModel.points)")
                     Text("Seguidores: \(viewModel.followers)")
 
+                    //EXIBIÇÃO SIMPLES DAS CARTAS EM UMA SCROLL VIEW (PROVISORIO)
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(viewModel.playerHand) { card in
@@ -29,6 +33,7 @@ struct ContentView: View {
                                         .resizable()
                                         .frame(width: 100, height: 100)
                                     Text(card.name)
+                                    //BOTÃO PARA VER DETLHES DAS CARTAS (PROVISORIO)
                                     Button("Ver") {
                                         selectedCard = card
                                     }
@@ -40,6 +45,7 @@ struct ContentView: View {
                         }
                     }
 
+                    //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
                     Button("Reabastecer Carta") {
                         viewModel.replenishCard()
                     }

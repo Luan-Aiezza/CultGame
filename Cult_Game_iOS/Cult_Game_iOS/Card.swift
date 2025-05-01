@@ -1,11 +1,12 @@
 import SwiftUI
 
-
+//CONTROLE DO TIPO DE JOGADOR
 enum PlayerRole {
     case cultist
     case heretic
 }
 
+//ESTRUTURA DAS CARTAS
 struct Card: Identifiable, Equatable {
     let id = UUID()
     let name: String
@@ -23,6 +24,7 @@ struct Card: Identifiable, Equatable {
     }
 }
 
+//INSTANCIA DE CARTAS MANUAIS (PROVISORIO)
 let commonCards: [Card] = [
     Card(name: "Orar", faithCost: 2, followersEffect: 5, description: "Aumenta o fervor.", imageName: "orar", type: .common),
     Card(name: "Cantar Hinos", faithCost: 1, followersEffect: 3, description: "Atrai curiosos.", imageName: "hinos", type: .common)

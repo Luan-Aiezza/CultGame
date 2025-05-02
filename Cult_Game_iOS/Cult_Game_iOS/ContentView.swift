@@ -10,19 +10,19 @@ struct ContentView: View {
             VStack {
                 //INTERFACE PARA ESCOLHA DO JOGADOR (PROVISORIO)
                 if viewModel.role == nil {
-                    Text("Escolha seu papel")
+                    Text("Choose your role:")
                         .font(.title)
-                    Button("Cultista") {
+                    Button("Cultist") {
                         viewModel.selectRole(.cultist)
                     }.padding()
-                    Button("Herege") {
+                    Button("Heretic") {
                         viewModel.selectRole(.heretic)
                     }.padding()
                 } else {
                     
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
-                    Text(viewModel.role == .cultist ? "Fé: \(viewModel.points)" : "Heresia: \(viewModel.points)")
-                    Text("Seguidores: \(viewModel.followers)")
+                    Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
+                    Text("Faithful: \(viewModel.followers)")
 
                     //EXIBIÇÃO SIMPLES DAS CARTAS EM UMA SCROLL VIEW (PROVISORIO)
                     ScrollView(.horizontal) {
@@ -34,7 +34,7 @@ struct ContentView: View {
                                         .frame(width: 100, height: 100)
                                     Text(card.name)
                                     //BOTÃO PARA VER DETLHES DAS CARTAS (PROVISORIO)
-                                    Button("Ver") {
+                                    Button("Show") {
                                         selectedCard = card
                                     }
                                 }
@@ -46,7 +46,7 @@ struct ContentView: View {
                     }
 
                     //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
-                    Button("Reabastecer Carta") {
+                    Button("Buy card") {
                         viewModel.replenishCard()
                     }
                     .padding()
@@ -64,14 +64,14 @@ struct ContentView: View {
                         .frame(width: 150, height: 150)
                     Text(card.name)
                         .font(.title)
-                    Text("Custo de \(viewModel.role == .cultist ? "Fé" : "Heresia"): \(card.faithCost)")
-                    Text("Seguidores: \(card.followersEffect)")
+                    Text("Cost of \(viewModel.role == .cultist ? "Faith" : "Heresy"): \(card.faithCost)")
+                    Text("Faithful: \(card.followersEffect)")
                     Text(card.description)
                         .padding()
                         .multilineTextAlignment(.center)
 
                     HStack {
-                        Button("Usar") {
+                        Button("Use") {
                             viewModel.playCard(card)
                             selectedCard = nil
                         }
@@ -81,7 +81,7 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
 
-                        Button("Fechar") {
+                        Button("Close") {
                             selectedCard = nil
                         }
                         .padding()

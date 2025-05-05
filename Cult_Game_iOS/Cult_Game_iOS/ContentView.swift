@@ -19,6 +19,8 @@ struct ContentView: View {
                     }.padding()
                 } else if viewModel.currentPhase == .cardPlay {
                     
+                    Text("\(viewModel.timeRemaining)")
+                    
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")

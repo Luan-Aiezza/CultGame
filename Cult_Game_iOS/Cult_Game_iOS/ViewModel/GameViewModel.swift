@@ -1,15 +1,25 @@
 import SwiftUI
 
+enum GamePhase {
+    case roleSelection
+    case cardPlay
+    case discussion
+    //controla as fases do jogo
+}
+
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
     @Published var usedCard: Card?
     @Published var points: Int = 10
     @Published var followers: Int = 50
     @Published var role: PlayerRole? = nil
+    @Published var currentPhase: GamePhase = .roleSelection
     
+
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
+        currentPhase = .cardPlay
     }
 
     func receiveInitialCards() {
@@ -22,7 +32,7 @@ class GameViewModel: ObservableObject {
         case .heretic:
             playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
             playerHand.append(contentsOf: heresyCards.shuffled().prefix(2))
-            playerHand.append(assassinationCard) // carta permanente
+            playerHand.append(assassinationCard)
         default: break
         }
     }
@@ -36,6 +46,9 @@ class GameViewModel: ObservableObject {
             usedCard = card
             playerHand.removeAll { $0.id == card.id }
         }
+
+
+        proceedToDiscussionIfReady()
     }
 
     func replenishCard() {
@@ -44,4 +57,12 @@ class GameViewModel: ObservableObject {
             usedCard = nil
         }
     }
+
+    func proceedToDiscussionIfReady() {
+        // vai precisar ser adaptado pra quando for os jogadores de fato 
+        if usedCard != nil {
+            currentPhase = .discussion
+        }
+    }
+
 }

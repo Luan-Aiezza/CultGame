@@ -14,6 +14,7 @@ class GameViewModel: ObservableObject {
     @Published var points: Int = 10
     @Published var followers: Int = 50
     @Published var role: PlayerRole? = nil
+
     @Published var round : Int = 0
     
     //cartas ativas
@@ -32,10 +33,11 @@ class GameViewModel: ObservableObject {
     private var timeSubscription: Cancellable?
 
     
-
+    
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
+        currentPhase = .cardPlay
         startTimer()
     }
 

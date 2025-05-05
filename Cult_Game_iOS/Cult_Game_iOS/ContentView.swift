@@ -18,7 +18,6 @@ struct ContentView: View {
                         viewModel.selectRole(.heretic)
                     }.padding()
                 } else if viewModel.currentPhase == .cardPlay {
-                    
                     //ACTIVE CARDS
                     ScrollView(.horizontal) {
                         HStack {
@@ -39,6 +38,7 @@ struct ContentView: View {
                             }
                         }
                     }
+                    Text("\(viewModel.timeRemaining)")
                     
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")

@@ -15,15 +15,16 @@ class GameViewModel: ObservableObject {
     @Published var followers: Int = 50
     @Published var role: PlayerRole? = nil
     @Published var timeRemaining: Int = 30
-    
+    @Published var currentPhase: GamePhase = .roleSelection
     private var availableTime: Int = 30
     private var timer: Timer?
     private var timeSubscription: Cancellable?
     
-
+    
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
+        currentPhase = .cardPlay
         startTimer()
     }
 

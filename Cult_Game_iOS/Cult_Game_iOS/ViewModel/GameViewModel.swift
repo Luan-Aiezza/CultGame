@@ -15,7 +15,12 @@ class GameViewModel: ObservableObject {
     @Published var followers: Int = 50
     @Published var role: PlayerRole? = nil
     @Published var timeRemaining: Int = 30
-    @Published var currentPhase: GamePhase = .roleSelection
+    @Published var currentPhase: GamePhase = .roleSelection {
+        didSet {
+            startTimer()
+        }
+    }
+
     private var availableTime: Int = 30
     private var timer: Timer?
     private var timeSubscription: Cancellable?
@@ -25,7 +30,6 @@ class GameViewModel: ObservableObject {
         self.role = selectedRole
         receiveInitialCards()
         currentPhase = .cardPlay
-        startTimer()
     }
 
     func receiveInitialCards() {
@@ -53,17 +57,23 @@ class GameViewModel: ObservableObject {
             }
         }
         
-        func updateTimer() {
-            // diminuir o tempo
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                // o tempo acabou
-                timer?.invalidate()
-                // implementar a lógica de quando o tempo acabar, como desabilitar ações do jogador
-                print("Tempo acabou! Você não pode jogar mais cartas.")
+    func updateTimer() {
+        if timeRemaining > 0 {
+            timeRemaining -= 1
+        } else {
+            timer?.invalidate()
+            switch currentPhase {
+            case .cardPlay:
+                print("Tempo acabou na fase de jogo. Jogador não pode mais jogar cartas.")
+            case .discussion:
+                print("Tempo da discussão finalizado. Prosseguir com a rodada.")
+                currentPhase = .roleSelection //(ou próxima fase)
+            default:
+                break
             }
         }
+    }
+
     func playCard(_ card: Card) {
         guard points >= card.faithCost else { return }
         points -= card.faithCost

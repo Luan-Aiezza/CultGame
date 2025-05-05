@@ -18,9 +18,10 @@ struct ContentView: View {
                         viewModel.selectRole(.heretic)
                     }.padding()
                 } else if viewModel.currentPhase == .cardPlay {
-                    
-                    Text("\(viewModel.timeRemaining)")
-                    
+
+                    // TIMER DA FASE DE JOGO
+                    timerView
+
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
@@ -51,7 +52,11 @@ struct ContentView: View {
                         viewModel.replenishCard()
                     }
                     .padding()
+
                 } else if viewModel.currentPhase == .discussion {
+
+                    // TIMER DA FASE DE DISCUSSÃO
+                    timerView
 
                     //TEXTO SIMPLES DE FASE DE DISCUSSÃO (PROVISORIO)
                     Text("Discussion Phase")
@@ -108,6 +113,15 @@ struct ContentView: View {
                 .padding(40)
             }
         }
+    }
+
+    // VIEW REUTILIZÁVEL PARA O TEMPO
+    private var timerView: some View {
+        Text("Time left: \(viewModel.timeRemaining)s")
+            .font(.headline)
+            .padding(8)
+            .background(Color.yellow.opacity(0.3))
+            .cornerRadius(8)
     }
 }
 

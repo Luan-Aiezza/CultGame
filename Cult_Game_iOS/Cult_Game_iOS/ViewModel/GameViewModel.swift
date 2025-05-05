@@ -1,5 +1,12 @@
 import SwiftUI
 
+enum GamePhase {
+    case roleSelection
+    case cardPlay
+    case discussion
+    //controla as fases do jogo
+}
+
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
     @Published var usedCard: Card?
@@ -14,9 +21,14 @@ class GameViewModel: ObservableObject {
     //card deck
     var deck = CardDeck()
     
+    //phase
+    @Published var currentPhase: GamePhase = .roleSelection
+    
+
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
+        currentPhase = .cardPlay
     }
 
     func receiveInitialCards() {
@@ -37,6 +49,7 @@ class GameViewModel: ObservableObject {
     func playCard(_ card: Card) {
         card.play(vm: self)
         replenishCard()
+        proceedToDiscussionIfReady()
     }
 
     func replenishCard() {
@@ -63,4 +76,12 @@ class GameViewModel: ObservableObject {
             card.play(vm: self)
         }
     }
+
+    func proceedToDiscussionIfReady() {
+        // vai precisar ser adaptado pra quando for os jogadores de fato 
+        if usedCard != nil {
+            currentPhase = .discussion
+        }
+    }
+
 }

@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct ContentView: View {
@@ -9,7 +8,7 @@ struct ContentView: View {
         ZStack {
             VStack {
                 //INTERFACE PARA ESCOLHA DO JOGADOR (PROVISORIO)
-                if viewModel.role == nil {
+                if viewModel.currentPhase == .roleSelection {
                     Text("Choose your role:")
                         .font(.title)
                     Button("Cultist") {
@@ -18,7 +17,7 @@ struct ContentView: View {
                     Button("Heretic") {
                         viewModel.selectRole(.heretic)
                     }.padding()
-                } else {
+                } else if viewModel.currentPhase == .cardPlay {
                     
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
@@ -48,6 +47,17 @@ struct ContentView: View {
                     //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
                     Button("Buy card") {
                         viewModel.replenishCard()
+                    }
+                    .padding()
+                } else if viewModel.currentPhase == .discussion {
+
+                    //TEXTO SIMPLES DE FASE DE DISCUSSÃO (PROVISORIO)
+                    Text("Discussion Phase")
+                        .font(.title)
+                        .padding()
+                    Text("This is where players debate their choices.") // Placeholder de interface
+                    Button("Back to Card Play") {
+                        viewModel.currentPhase = .cardPlay
                     }
                     .padding()
                 }

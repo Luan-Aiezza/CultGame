@@ -2,7 +2,7 @@
 //  Cult_Game_tvOSApp.swift
 //  Cult_Game_tvOS
 //
-//  Created by Jorge Samuel Silva Coelho on 05/05/25.
+//  Created by Luan Aiezza on 05/05/25.
 //
 
 import SwiftUI

@@ -5,7 +5,6 @@ enum GamePhase {
     case roleSelection
     case cardPlay
     case discussion
-    //controla as fases do jogo
 }
 
 class GameViewModel: ObservableObject {
@@ -13,19 +12,78 @@ class GameViewModel: ObservableObject {
     @Published var usedCard: Card?
     @Published var points: Int = 10
     @Published var followers: Int = 50
+    @Published var heresyPoints: Int = 0
     @Published var role: PlayerRole? = nil
     @Published var timeRemaining: Int = 30
     @Published var currentPhase: GamePhase = .roleSelection {
         didSet {
             startTimer()
+            handlePhaseChange()
         }
     }
 
     private var availableTime: Int = 30
     private var timer: Timer?
-    private var timeSubscription: Cancellable?
-    
-    
+    private var alreadyEnteredCardPlayOnce = false
+
+    // MARK: - Timer
+    func startTimer() {
+        timeRemaining = availableTime
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.updateTimer()
+        }
+    }
+
+    func updateTimer() {
+        if timeRemaining > 0 {
+            timeRemaining -= 1
+        } else {
+            timer?.invalidate()
+            switch currentPhase {
+            case .cardPlay:
+                currentPhase = .discussion
+            case .discussion:
+                currentPhase = .cardPlay
+            default:
+                break
+            }
+        }
+    }
+
+    // MARK: -  mudança de fase
+    func handlePhaseChange() {
+        switch currentPhase {
+        case .cardPlay:
+            if alreadyEnteredCardPlayOnce {
+                heresyPoints += 1 // aumenta heresia cada vez que volta pra tela de selcionar cartas
+            }
+            alreadyEnteredCardPlayOnce = true
+            replenishHandIfNeeded()
+        default:
+            break
+        }
+    }
+
+    func replenishHandIfNeeded() {
+        let needed = 3 - playerHand.count
+        guard needed > 0 else { return }
+
+        var pool: [Card] = []
+
+        switch role {
+        case .cultist:
+            pool = (commonCards + cultistCards).shuffled()
+        case .heretic:
+            pool = (commonCards + heresyCards + [assassinationCard]).shuffled()
+        default:
+            break
+        }
+
+        playerHand.append(contentsOf: pool.prefix(needed))
+    }
+
+    // MARK: - Jogo
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
@@ -46,33 +104,6 @@ class GameViewModel: ObservableObject {
         default: break
         }
     }
-    func startTimer() {
-            // reiniciar o cronometro
-            timeRemaining = availableTime
-            // cancelar o tempo
-            timer?.invalidate()
-            // começa o tempo novamente
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-                self?.updateTimer()
-            }
-        }
-        
-    func updateTimer() {
-        if timeRemaining > 0 {
-            timeRemaining -= 1
-        } else {
-            timer?.invalidate()
-            switch currentPhase {
-            case .cardPlay:
-                print("Tempo acabou na fase de jogo. Jogador não pode mais jogar cartas.")
-            case .discussion:
-                print("Tempo da discussão finalizado. Prosseguir com a rodada.")
-                currentPhase = .roleSelection //(ou próxima fase)
-            default:
-                break
-            }
-        }
-    }
 
     func playCard(_ card: Card) {
         guard points >= card.faithCost else { return }
@@ -83,7 +114,6 @@ class GameViewModel: ObservableObject {
             usedCard = card
             playerHand.removeAll { $0.id == card.id }
         }
-
 
         proceedToDiscussionIfReady()
     }
@@ -96,10 +126,8 @@ class GameViewModel: ObservableObject {
     }
 
     func proceedToDiscussionIfReady() {
-        // vai precisar ser adaptado pra quando for os jogadores de fato 
         if usedCard != nil {
             currentPhase = .discussion
         }
     }
-
 }

@@ -7,7 +7,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack {
-                //INTERFACE PARA ESCOLHA DO JOGADOR (PROVISORIO)
+                // INTERFACE PARA ESCOLHA DO JOGADOR
                 if viewModel.currentPhase == .roleSelection {
                     Text("Choose your role:")
                         .font(.title)
@@ -17,72 +17,74 @@ struct ContentView: View {
                     Button("Heretic") {
                         viewModel.selectRole(.heretic)
                     }.padding()
-                } else if viewModel.currentPhase == .cardPlay {
+                } else {
+                    
+                    // EXIBIÇÃO GLOBAL DAS MÉTRICAS (FAITH, FOLLOWERS, HERESY POINTS)
+                    HStack(spacing: 20) {
+                        Text("Faith: \(viewModel.points)")
+                        Text("Faithful: \(viewModel.followers)")
+                        Text("Heresy Points: \(viewModel.heresyPoints)")
+                    }
+                    .font(.headline)
+                    .padding()
 
-                    // TIMER DA FASE DE JOGO
+                    // TIMER
                     timerView
 
-                    //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
-                    Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
-                    Text("Faithful: \(viewModel.followers)")
-
-                    //EXIBIÇÃO SIMPLES DAS CARTAS EM UMA SCROLL VIEW (PROVISORIO)
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(viewModel.playerHand) { card in
-                                VStack {
-                                    Image(systemName: "rectangle") // IMAGEM DA CARTA
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                    Text(card.name)
-                                    //BOTÃO PARA VER DETLHES DAS CARTAS (PROVISORIO)
-                                    Button("Show") {
-                                        selectedCard = card
+                    // FASE DE JOGO
+                    if viewModel.currentPhase == .cardPlay {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(viewModel.playerHand) { card in
+                                    VStack {
+                                        Image(systemName: "rectangle")
+                                            .resizable()
+                                            .frame(width: 100, height: 100)
+                                        Text(card.name)
+                                        Button("Show") {
+                                            selectedCard = card
+                                        }
                                     }
+                                    .padding()
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(8)
                                 }
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(8)
                             }
                         }
-                    }
 
-                    //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
-                    Button("Buy card") {
-                        viewModel.replenishCard()
-                    }
-                    .padding()
-
-                } else if viewModel.currentPhase == .discussion {
-
-                    // TIMER DA FASE DE DISCUSSÃO
-                    timerView
-
-                    //TEXTO SIMPLES DE FASE DE DISCUSSÃO (PROVISORIO)
-                    Text("Discussion Phase")
-                        .font(.title)
+                        Button("Buy card") {
+                            viewModel.replenishCard()
+                        }
                         .padding()
-                    Text("This is where players debate their choices.") // Placeholder de interface
-                    Button("Back to Card Play") {
-                        viewModel.currentPhase = .cardPlay
                     }
-                    .padding()
+
+                    // FASE DE DISCUSSÃO
+                    else if viewModel.currentPhase == .discussion {
+                        Text("Discussion Phase")
+                            .font(.title)
+                            .padding()
+                        Text("This is where players debate their choices.")
+                        Button("Back to Card Play") {
+                            viewModel.currentPhase = .cardPlay
+                        }
+                        .padding()
+                    }
                 }
             }
 
-            // Detalhe da carta selecionada (overlay)
+            // OVERLAY DE DETALHES DA CARTA
             if let card = selectedCard {
                 Color.black.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 20) {
-                    Image(systemName: "rectangle") // IMAGEM DA CARTA
+                    Image(systemName: "rectangle")
                         .resizable()
                         .frame(width: 150, height: 150)
                     Text(card.name)
                         .font(.title)
-                    Text("Cost of \(viewModel.role == .cultist ? "Faith" : "Heresy"): \(card.faithCost)")
-                    Text("Faithful: \(card.followersEffect)")
+                    Text("Faith Cost: \(card.faithCost)")
+                    Text("Follower Effect: \(card.followersEffect)")
                     Text(card.description)
                         .padding()
                         .multilineTextAlignment(.center)
@@ -115,7 +117,6 @@ struct ContentView: View {
         }
     }
 
-    // VIEW REUTILIZÁVEL PARA O TEMPO
     private var timerView: some View {
         Text("Time left: \(viewModel.timeRemaining)s")
             .font(.headline)

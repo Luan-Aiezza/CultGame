@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = GameViewModel()
+    @ObservedObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
 
     var body: some View {
@@ -19,6 +19,27 @@ struct ContentView: View {
                         viewModel.selectRole(.heretic)
                     }.padding()
                 } else {
+                    
+                    //ACTIVE CARDS
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(viewModel.activeCards) { card in
+                                VStack {
+                                    Image(systemName: "rectangle") // IMAGEM DA CARTA
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                    Text(card.name)
+                                    //BOTÃO PARA VER DETLHES DAS CARTAS (PROVISORIO)
+                                    Button("Show") {
+                                        selectedCard = card
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                            }
+                        }
+                    }
                     
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
@@ -48,6 +69,9 @@ struct ContentView: View {
                     //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
                     Button("Buy card") {
                         viewModel.replenishCard()
+                    }
+                    Button("Add round") {
+                        viewModel.addRound()
                     }
                     .padding()
                 }

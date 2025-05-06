@@ -1,25 +1,28 @@
 import Foundation
+import SwiftUICore
 import GameKit
 import MultipeerConnectivity
 
-class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate {
+class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate, GKLocalPlayerListener {
     static let shared = MultiplayerManager()
     
     @Published var match: GKMatch?
-    @Published var isHost: Bool = false
+    @Published var isHosting: Bool = false
     @Published var connectedPlayers: [GKPlayer] = []
     @Published var globalState = GlobalGameState(sharedFaithPoints: 30, heresyPoints: [:], followers: 50)
+    @Published var matchAvailable = false
     
     private override init() { super.init() }
 
     func startHosting(matchRequest: GKMatchRequest = GKMatchRequest()) {
-        isHost = true
-        matchRequest.minPlayers = 5
+        isHosting = true
+        matchRequest.minPlayers = 2
         matchRequest.maxPlayers = 7
         GKMatchmaker.shared().findMatch(for: matchRequest) { match, error in
             if let match = match {
                 self.match = match
                 match.delegate = self
+                print("conectando")
             } else if let error = error {
                 print("Error hosting match: \(error.localizedDescription)")
             }
@@ -27,13 +30,14 @@ class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate {
     }
 
     func joinMatch(matchRequest: GKMatchRequest = GKMatchRequest()) {
-        isHost = false
-        matchRequest.minPlayers = 5
+        isHosting = false
+        matchRequest.minPlayers = 2
         matchRequest.maxPlayers = 7
         GKMatchmaker.shared().findMatch(for: matchRequest) { match, error in
             if let match = match {
                 self.match = match
                 match.delegate = self
+                print("conectei")
             } else if let error = error {
                 print("Error joining match: \(error.localizedDescription)")
             }
@@ -104,6 +108,53 @@ class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate {
     func send(_ action: CardPlayAction) {
         guard let data = try? JSONEncoder().encode(action) else { return }
         try? match?.sendData(toAllPlayers: data, with: .reliable)
+    }
+    
+    var rootViewController: UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+    
+    func authenticatePlayer() {
+        // Set the authentication handler that GameKit invokes.
+        GKLocalPlayer.local.authenticateHandler = { viewController, error in
+            if let viewController = viewController {
+                // If the view controller is non-nil, present it to the player so they can
+                // perform some necessary action to complete authentication.
+                self.rootViewController?.present(viewController, animated: true) { }
+                return
+            }
+            if let error {
+                // If you can’t authenticate the player, disable Game Center features in your game.
+                print("Error: \(error.localizedDescription).")
+                return
+            }
+            
+            // A value of nil for viewController indicates successful authentication, and you can access
+            // local player properties.
+            
+            // Load the local player's avatar.
+//            GKLocalPlayer.local.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
+//                if let image {
+//                    self.myAvatar = Image(uiImage: image)
+//                }
+//                if let error {
+//                    // Handle an error if it occurs.
+//                    print("Error: \(error.localizedDescription).")
+//
+//                }
+//            }
+            // Register for real-time invitations from other players.
+            GKLocalPlayer.local.register(self)
+            
+            // Add an access point to the interface.
+            GKAccessPoint.shared.location = .topLeading
+            GKAccessPoint.shared.showHighlights = true
+            GKAccessPoint.shared.isActive = true
+            
+            // Enable the Start Game button.
+            self.matchAvailable = true
+        }
     }
 }
 

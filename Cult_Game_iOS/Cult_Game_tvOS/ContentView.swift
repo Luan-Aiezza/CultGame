@@ -24,6 +24,11 @@ struct HostGameView: View {
             }
         }
         .padding()
+        .onAppear {
+            multiplayerManager.authenticatePlayer()
+
+            multiplayerManager.startHosting()
+        }
     }
 }
 #Preview {

@@ -3,7 +3,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
-
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    
     var body: some View {
         ZStack {
             VStack {
@@ -50,6 +51,9 @@ struct ContentView: View {
                     }
                     .padding()
                 }
+            }.onAppear {
+                multiplayerManager.authenticatePlayer()
+                multiplayerManager.joinMatch()
             }
 
             // Detalhe da carta selecionada (overlay)

@@ -54,11 +54,6 @@ class GameViewModel: ObservableObject {
             usedCard = card
             playerHand.removeAll { $0.id == card.id }
         }
-
-        // Envia ação ao host
-        let action = CardPlayAction(card: card, playerRole: role ?? .cultist)
-        MultiplayerManager.shared.send(action)
-        
     }
     
     func processCardAction(_ action: CardPlayAction) {
@@ -86,11 +81,11 @@ class GameViewModel: ObservableObject {
     
     //HOST
     func receiveData(_ data: Data, from player: GKPlayer) {
-        if let state = try? JSONDecoder().decode(GlobalGameState.self, from: data) {
+        if (try? JSONDecoder().decode(GlobalGameState.self, from: data)) != nil {
             DispatchQueue.main.async {
 //                self.globalState = state
             }
-        } else if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+        } else if (try? JSONDecoder().decode(CardPlayAction.self, from: data)) != nil {
             // Ação do jogador (já tratada no host)
         }
     }

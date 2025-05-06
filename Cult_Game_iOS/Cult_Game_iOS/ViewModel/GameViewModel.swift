@@ -102,7 +102,6 @@ class GameViewModel: ObservableObject {
 
     func receiveInitialCards() {
         playerHand.removeAll()
-
         switch role {
         case .cultist:
             playerHand.append(contentsOf: deck.commonCards.shuffled().prefix(2))
@@ -122,14 +121,14 @@ class GameViewModel: ObservableObject {
     }
 
     func replenishCard() {
-//        if let card = usedCard {
-//            playerHand.append(card)
-//            usedCard = nil
-//        }
-        
-        if playerHand.count < 3 {
-            playerHand.append(deck.specialCards.randomElement()!)
+        if let card = usedCard {
+            playerHand.append(card)
+            usedCard = nil
         }
+        
+//        if playerHand.count < 3 {
+//            playerHand.append(deck.specialCards.randomElement()!)
+//        }
     }
     
     func addRound() {

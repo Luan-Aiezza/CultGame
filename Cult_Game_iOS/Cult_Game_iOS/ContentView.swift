@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var viewModel = GameViewModel()
+    @StateObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
 
     var body: some View {
@@ -17,31 +17,6 @@ struct ContentView: View {
                     Button("Heretic") {
                         viewModel.selectRole(.heretic)
                     }.padding()
-
-                } else if viewModel.currentPhase == .cardPlay {
-                    
-                    //ACTIVE CARDS
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(viewModel.activeCards) { card in
-                                VStack {
-                                    Image(systemName: "rectangle") // IMAGEM DA CARTA
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                    Text(card.name)
-                                    //BOTÃO PARA VER DETLHES DAS CARTAS (PROVISORIO)
-                                    Button("Show") {
-                                        selectedCard = card
-                                    }
-                                }
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(8)
-                            }
-                        }
-                    }
-                    Text("\(viewModel.timeRemaining)")
-                
                 } else {
                     
                     // EXIBIÇÃO GLOBAL DAS MÉTRICAS (FAITH, FOLLOWERS, HERESY POINTS)
@@ -58,6 +33,27 @@ struct ContentView: View {
 
                     // FASE DE JOGO
                     if viewModel.currentPhase == .cardPlay {
+                        
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(viewModel.activeCards) { card in
+                                    VStack {
+                                        Image(systemName: "rectangle")
+                                            .resizable()
+                                            .frame(width: 100, height: 100)
+                                        Text(card.name)
+                                        Button("Show") {
+                                            selectedCard = card
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(8)
+                                }
+                            }
+                        }
+                        
+                        
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(viewModel.playerHand) { card in
@@ -77,25 +73,11 @@ struct ContentView: View {
                             }
                         }
 
-                    //BOTÃO PARA REABASTECER CARTA GASTA ENQUANTO NÃO HÁ RODADAS (PROVISORIO
-                    Button("Buy card") {
-                        viewModel.replenishCard()
-                    }
-                    Button("Add round") {
-                        viewModel.addRound()
-                    }
-                    .padding()
-
-                } else if viewModel.currentPhase == .discussion {
-
-                    // TIMER DA FASE DE DISCUSSÃO
-                    timerView
-
-                    //TEXTO SIMPLES DE FASE DE DISCUSSÃO (PROVISORIO)
-                    Text("Discussion Phase")
-                        .font(.title)
                         Button("Buy card") {
                             viewModel.replenishCard()
+                        }
+                        Button("Add round") {
+                            viewModel.addRound()
                         }
                         .padding()
                     }

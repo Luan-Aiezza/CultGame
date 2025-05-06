@@ -14,6 +14,15 @@ class GameViewModel: ObservableObject {
     @Published var followers: Int = 50
     @Published var heresyPoints: Int = 0
     @Published var role: PlayerRole? = nil
+    @Published var round : Int = 0
+    
+    //cartas ativas
+    @Published var activeCards : [SpecificCard] = []
+    
+    //card deck
+    var deck = CardDeck()
+
+    //timer
     @Published var timeRemaining: Int = 30
     @Published var currentPhase: GamePhase = .roleSelection {
         didSet {
@@ -24,6 +33,7 @@ class GameViewModel: ObservableObject {
 
     private var availableTime: Int = 30
     private var timer: Timer?
+    private var timeSubscription: Cancellable?
     private var alreadyEnteredCardPlayOnce = false
 
     // MARK: - Timer
@@ -73,9 +83,9 @@ class GameViewModel: ObservableObject {
 
         switch role {
         case .cultist:
-            pool = (commonCards + cultistCards).shuffled()
+            pool = (deck.commonCards + deck.cultistCards).shuffled()
         case .heretic:
-            pool = (commonCards + heresyCards + [assassinationCard]).shuffled()
+            pool = (deck.commonCards + deck.heresyCards + [deck.assassinationCard]).shuffled()
         default:
             break
         }
@@ -92,29 +102,21 @@ class GameViewModel: ObservableObject {
 
     func receiveInitialCards() {
         playerHand.removeAll()
-
         switch role {
         case .cultist:
-            playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
-            playerHand.append(cultistCards.randomElement()!)
+            playerHand.append(contentsOf: deck.commonCards.shuffled().prefix(2))
+            playerHand.append(deck.specialCards.randomElement()!)
         case .heretic:
-            playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
-            playerHand.append(contentsOf: heresyCards.shuffled().prefix(2))
-            playerHand.append(assassinationCard)
+            playerHand.append(contentsOf: deck.commonCards.shuffled().prefix(2))
+            playerHand.append(contentsOf: deck.heresyCards.shuffled().prefix(2))
+            playerHand.append(deck.assassinationCard) // carta permanente
         default: break
         }
     }
 
     func playCard(_ card: Card) {
-        guard points >= card.faithCost else { return }
-        points -= card.faithCost
-        followers += card.followersEffect
-
-        if card.type != .assassination {
-            usedCard = card
-            playerHand.removeAll { $0.id == card.id }
-        }
-
+        card.play(vm: self)
+        replenishCard()
         proceedToDiscussionIfReady()
     }
 
@@ -122,6 +124,24 @@ class GameViewModel: ObservableObject {
         if let card = usedCard {
             playerHand.append(card)
             usedCard = nil
+        }
+        
+//        if playerHand.count < 3 {
+//            playerHand.append(deck.specialCards.randomElement()!)
+//        }
+    }
+    
+    func addRound() {
+        round += 1
+        playAllActiveCards()
+    }
+    
+    func playAllActiveCards() {
+        
+        activeCards.removeAll { ($0 as AnyObject).isActive == false }
+        
+        for card in activeCards {
+            card.play(vm: self)
         }
     }
 

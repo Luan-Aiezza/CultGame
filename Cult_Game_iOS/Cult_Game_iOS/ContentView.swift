@@ -33,6 +33,27 @@ struct ContentView: View {
 
                     // FASE DE JOGO
                     if viewModel.currentPhase == .cardPlay {
+                        
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(viewModel.activeCards) { card in
+                                    VStack {
+                                        Image(systemName: "rectangle")
+                                            .resizable()
+                                            .frame(width: 100, height: 100)
+                                        Text(card.name)
+                                        Button("Show") {
+                                            selectedCard = card
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(8)
+                                }
+                            }
+                        }
+                        
+                        
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(viewModel.playerHand) { card in
@@ -54,6 +75,9 @@ struct ContentView: View {
 
                         Button("Buy card") {
                             viewModel.replenishCard()
+                        }
+                        Button("Add round") {
+                            viewModel.addRound()
                         }
                         .padding()
                     }

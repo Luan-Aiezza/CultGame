@@ -1,26 +1,56 @@
+// GameModels.swift
+import Foundation
 import SwiftUI
 
+struct CardPlayAction: Codable {
+    var card: Card
+    var playerRole: PlayerRole
+}
+
+struct GameUpdate: Codable {
+    var sharedFaithPoints: Int
+    var sharedFollowers: Int
+}
+
+// Estado global sincronizado
+struct GlobalGameState: Codable {
+    var sharedFaithPoints: Int
+    var heresyPoints: [String: Int] // ID do herege -> pontos
+    var followers: Int
+}
+
+
 //CONTROLE DO TIPO DE JOGADOR
-enum PlayerRole {
+enum CardType: String, Codable {
+    case common
+    case cultist
+    case heresy
+    case assassination
+}
+
+enum PlayerRole: String, Codable {
     case cultist
     case heretic
 }
 
 //ESTRUTURA DAS CARTAS
-struct Card: Identifiable, Equatable {
-    let id = UUID()
+struct Card: Identifiable, Codable {
+    let id: UUID
     let name: String
     let faithCost: Int
-    let followersEffect: Int // Pode ser positivo (cultistas) ou negativo (herege)
+    let followersEffect: Int
     let description: String
     let imageName: String
     let type: CardType
-    
-    enum CardType {
-        case common
-        case cultist
-        case heresy
-        case assassination
+
+    init(id: UUID = UUID(), name: String, faithCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType) {
+        self.id = id
+        self.name = name
+        self.faithCost = faithCost
+        self.followersEffect = followersEffect
+        self.description = description
+        self.imageName = imageName
+        self.type = type
     }
 }
 

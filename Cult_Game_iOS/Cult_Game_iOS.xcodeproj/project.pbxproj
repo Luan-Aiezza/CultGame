@@ -11,10 +11,38 @@
 		CF696C132DC3B95000B0CE7D /* Cult_Game_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CF688F332DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GameModels.swift,
+				MultiplayerManager.swift,
+			);
+			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
+		};
+		CF688F342DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GameModels.swift,
+				MultiplayerManager.swift,
+			);
+			target = CF0315042DC90959006E4E79 /* Cult_Game_tvOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CF0315062DC90959006E4E79 /* Cult_Game_tvOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Cult_Game_tvOS;
+			sourceTree = "<group>";
+		};
+		CF0315192DC911A7006E4E79 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CF688F332DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */,
+				CF688F342DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */ = {
@@ -42,17 +70,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CF0315142DC9096D006E4E79 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		CF696C0A2DC3B95000B0CE7D = {
 			isa = PBXGroup;
 			children = (
-				CF0315142DC9096D006E4E79 /* Shared */,
+				CF0315192DC911A7006E4E79 /* Shared */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
 				CF0315062DC90959006E4E79 /* Cult_Game_tvOS */,
 				CF696C142DC3B95000B0CE7D /* Products */,
@@ -370,12 +391,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_iOS/Cult_Game_iOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -399,12 +422,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_iOS/Cult_Game_iOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

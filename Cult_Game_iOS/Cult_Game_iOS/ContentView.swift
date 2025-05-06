@@ -53,7 +53,7 @@ struct ContentView: View {
                 }
             }.onAppear {
                 multiplayerManager.authenticatePlayer()
-                multiplayerManager.joinMatch()
+                multiplayerManager.joinMatchUsingViewController()
             }
 
             // Detalhe da carta selecionada (overlay)

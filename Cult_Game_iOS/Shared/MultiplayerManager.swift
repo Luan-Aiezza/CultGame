@@ -29,18 +29,18 @@ class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate, GKLocalPl
         }
     }
 
-    func joinMatch(matchRequest: GKMatchRequest = GKMatchRequest()) {
+    func joinMatchUsingViewController() {
         isHosting = false
-        matchRequest.minPlayers = 2
-        matchRequest.maxPlayers = 7
-        GKMatchmaker.shared().findMatch(for: matchRequest) { match, error in
-            if let match = match {
-                self.match = match
-                match.delegate = self
-                print("conectei")
-            } else if let error = error {
-                print("Error joining match: \(error.localizedDescription)")
-            }
+
+        let request = GKMatchRequest()
+        request.minPlayers = 2
+        request.maxPlayers = 7
+
+        let mmvc = GKMatchmakerViewController(matchRequest: request)
+        mmvc?.matchmakerDelegate = self
+
+        if let vc = mmvc {
+            rootViewController?.present(vc, animated: true)
         }
     }
 
@@ -129,21 +129,7 @@ class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate, GKLocalPl
                 print("Error: \(error.localizedDescription).")
                 return
             }
-            
-            // A value of nil for viewController indicates successful authentication, and you can access
-            // local player properties.
-            
-            // Load the local player's avatar.
-//            GKLocalPlayer.local.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
-//                if let image {
-//                    self.myAvatar = Image(uiImage: image)
-//                }
-//                if let error {
-//                    // Handle an error if it occurs.
-//                    print("Error: \(error.localizedDescription).")
-//
-//                }
-//            }
+        
             // Register for real-time invitations from other players.
             GKLocalPlayer.local.register(self)
             
@@ -160,4 +146,22 @@ class MultiplayerManager: NSObject, ObservableObject, GKMatchDelegate, GKLocalPl
 
 extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
+}
+
+extension MultiplayerManager: GKMatchmakerViewControllerDelegate {
+    func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
+        viewController.dismiss(animated: true)
+    }
+
+    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
+        print("Matchmaker failed: \(error.localizedDescription)")
+        viewController.dismiss(animated: true)
+    }
+
+    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
+        self.match = match
+        match.delegate = self
+        print("Match joined successfully")
+        viewController.dismiss(animated: true)
+    }
 }

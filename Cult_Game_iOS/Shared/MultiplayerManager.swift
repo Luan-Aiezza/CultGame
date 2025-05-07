@@ -76,7 +76,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
 
-    private func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
+    public func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: [peer], with: .reliable)

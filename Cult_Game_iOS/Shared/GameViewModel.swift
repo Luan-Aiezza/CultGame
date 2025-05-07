@@ -14,6 +14,7 @@ class GameViewModel: ObservableObject {
     @Published var usedCard: Card?
     @Published var role: PlayerRole? = nil
     @Published var round : Int = 0
+    private var cancellables = Set<AnyCancellable>()
     private let multiplayerManager = MultiplayerManager.shared
     private var peerID: MCPeerID {
         multiplayerManager.myPeerID
@@ -63,6 +64,9 @@ class GameViewModel: ObservableObject {
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
+
     }
     
     //cartas ativas
@@ -150,11 +154,11 @@ class GameViewModel: ObservableObject {
     }
 
     // MARK: - Jogo
-    func selectRole(_ selectedRole: PlayerRole) {
-        self.role = selectedRole
-        receiveInitialCards()
-        currentPhase = .cardPlay
-    }
+//    func selectRole(_ selectedRole: PlayerRole) {
+//        self.role = selectedRole
+//        receiveInitialCards()
+//        currentPhase = .cardPlay
+//    }
 
     func receiveInitialCards() {
         playerHand.removeAll()
@@ -220,6 +224,16 @@ class GameViewModel: ObservableObject {
     func proceedToDiscussionIfReady() {
         if usedCard != nil {
             currentPhase = .discussion
+        }
+    }
+    
+    @objc private func handleRoleAssignment(_ notification: Notification) {
+        if let role = notification.object as? PlayerRole {
+            DispatchQueue.main.async {
+                self.role = role
+                self.receiveInitialCards()
+                self.currentPhase = .cardPlay
+            }
         }
     }
 }

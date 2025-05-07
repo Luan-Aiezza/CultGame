@@ -1,7 +1,8 @@
 import SwiftUI
+import Combine
 
 struct ContentView: View {
-    @StateObject private var viewModel = GameViewModel()
+    @ObservedObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     
@@ -23,6 +24,7 @@ struct ContentView: View {
 //                    }.padding()
                     
                 } else {
+                    Text("\(viewModel.role)")
                     
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
@@ -97,11 +99,19 @@ struct ContentView: View {
             }.onAppear {
                 multiplayerManager.joinSession()
                 
-                NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
-                    if let role = notification.object as? PlayerRole {
-                        viewModel.selectRole(role)
-                    }
-                }
+//                NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
+//                    if let role = notification.object as? PlayerRole {
+//                        viewModel.selectRole(role)
+//                    }
+//                }
+//                
+//                var role = multiplayerManager.$role
+//                .receive(on: DispatchQueue.main)
+//                .sink { values in
+//                print("arrayCount: \(test.array.count) valuesCount: \(values.count)")
+//                }
+                
+                
             }
 
             // OVERLAY DE DETALHES DA CARTA

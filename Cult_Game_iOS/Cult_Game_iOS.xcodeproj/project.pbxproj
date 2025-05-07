@@ -15,16 +15,22 @@
 		CF688F332DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Card.swift,
 				GameModels.swift,
+				GameViewModel.swift,
 				MultiplayerManager.swift,
+				SpecificCard.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
 		CFFE15792DCA63EF00CFF322 /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Card.swift,
 				GameModels.swift,
+				GameViewModel.swift,
 				MultiplayerManager.swift,
+				SpecificCard.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
@@ -401,7 +407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 527MA6AD9C;
+				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
@@ -432,7 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 527MA6AD9C;
+				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";

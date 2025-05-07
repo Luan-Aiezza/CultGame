@@ -33,7 +33,7 @@ struct HostGameView: View {
             }
 
             Button("Iniciar Jogo") {
-                if multiplayerManager.connectedPeers.count < 3 || multiplayerManager.connectedPeers.count > 7 {
+                if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
                     errorMessage = "Você precisa de 3 a 7 jogadores para iniciar."
                     return
                 }

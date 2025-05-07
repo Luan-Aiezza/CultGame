@@ -24,7 +24,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CFFE15502DCA5EBA00CFF322"
+               BlueprintIdentifier = "CFFE15682DCA633100CFF322"
                BuildableName = "Cult_Game_tvOS.app"
                BlueprintName = "Cult_Game_tvOS"
                ReferencedContainer = "container:Cult_Game_iOS.xcodeproj">
@@ -53,7 +53,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CFFE15502DCA5EBA00CFF322"
+            BlueprintIdentifier = "CFFE15682DCA633100CFF322"
             BuildableName = "Cult_Game_tvOS.app"
             BlueprintName = "Cult_Game_tvOS"
             ReferencedContainer = "container:Cult_Game_iOS.xcodeproj">
@@ -70,7 +70,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CFFE15502DCA5EBA00CFF322"
+            BlueprintIdentifier = "CFFE15682DCA633100CFF322"
             BuildableName = "Cult_Game_tvOS.app"
             BlueprintName = "Cult_Game_tvOS"
             ReferencedContainer = "container:Cult_Game_iOS.xcodeproj">

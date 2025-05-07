@@ -10,16 +10,10 @@ struct ContentView: View {
             VStack {
                 //INTERFACE PARA ESCOLHA DO JOGADOR (PROVISORIO)
                 if viewModel.role == nil {
-                    Text("Choose your role:")
-                        .font(.title)
-                    Button("Cultist") {
-                        viewModel.selectRole(.cultist)
-                    }.padding()
-                    Button("Heretic") {
-                        viewModel.selectRole(.heretic)
-                    }.padding()
-                } else {
                     
+                    ProgressView("Waiting for game to start...")
+                    
+                } else {
                     //EXIBIÇÃO DA PONTUAÇÃO DO JOGADOR (PROVISORIO)
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
@@ -52,8 +46,13 @@ struct ContentView: View {
                     .padding()
                 }
             }.onAppear {
-                multiplayerManager.authenticatePlayer()
-                multiplayerManager.joinMatchUsingViewController()
+                multiplayerManager.joinSession()
+                
+                NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
+                    if let role = notification.object as? PlayerRole {
+                        viewModel.selectRole(role)
+                    }
+                }
             }
 
             // Detalhe da carta selecionada (overlay)

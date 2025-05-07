@@ -1,30 +1,46 @@
 import SwiftUI
 import Foundation
-import GameKit
+import MultipeerConnectivity
 
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
     @Published var usedCard: Card?
-    @Published var points: Int = 10
-    @Published var followers: Int = 50
     @Published var role: PlayerRole? = nil
     
-    
-    //RELACIONADO AO HOST
-    init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleReceivedData(_:)), name: .didReceiveGameData, object: nil)
+    private let multiplayerManager = MultiplayerManager.shared
+    private var peerID: MCPeerID {
+        multiplayerManager.myPeerID
     }
-    
-    @objc func handleReceivedData(_ notification: Notification) {
-        guard let data = notification.object as? Data else { return }
-        // Decodifique e processe os dados
-        if let update = try? JSONDecoder().decode(GameUpdate.self, from: data) {
-            self.points = update.sharedFaithPoints
-            self.followers = update.sharedFollowers
+
+    var isHost: Bool {
+        multiplayerManager.isHosting
+    }
+
+    var points: Int {
+        get {
+            guard let role else { return 0 }
+            if role == .cultist {
+                return multiplayerManager.globalState.sharedFaithPoints
+            } else {
+                return multiplayerManager.globalState.heresyPoints[peerID.displayName, default: 0]
+            }
         }
     }
-    /* HOST */
-    
+
+    var followers: Int {
+        multiplayerManager.globalState.followers
+    }
+
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
+    }
+
+    @objc func syncState() {
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+    }
+
     func selectRole(_ selectedRole: PlayerRole) {
         self.role = selectedRole
         receiveInitialCards()
@@ -40,35 +56,25 @@ class GameViewModel: ObservableObject {
         case .heretic:
             playerHand.append(contentsOf: commonCards.shuffled().prefix(2))
             playerHand.append(contentsOf: heresyCards.shuffled().prefix(2))
-            playerHand.append(assassinationCard) // carta permanente
+            playerHand.append(assassinationCard)
         default: break
         }
     }
-    
+
     func playCard(_ card: Card) {
         guard points >= card.faithCost else { return }
-        points -= card.faithCost
-        followers += card.followersEffect
+
+        let action = CardPlayAction(playerID: peerID.displayName, card: card, playerRole: role!)
+
+        if isHost {
+            multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+        } else {
+            multiplayerManager.send(action)
+        }
 
         if card.type != .assassination {
             usedCard = card
             playerHand.removeAll { $0.id == card.id }
-        }
-    }
-    
-    func processCardAction(_ action: CardPlayAction) {
-        // Atualiza o estado compartilhado
-        if action.playerRole == .cultist {
-            points -= action.card.faithCost
-            followers += action.card.followersEffect
-        } else if action.playerRole == .heretic {
-            // lógica do herege
-        }
-
-        // Broadcast update para todos
-        let update = GameUpdate(sharedFaithPoints: points, sharedFollowers: followers)
-        if let data = try? JSONEncoder().encode(update) {
-            MultiplayerManager.shared.sendDataToAllPlayers(data)
         }
     }
 
@@ -76,17 +82,6 @@ class GameViewModel: ObservableObject {
         if let card = usedCard {
             playerHand.append(card)
             usedCard = nil
-        }
-    }
-    
-    //HOST
-    func receiveData(_ data: Data, from player: GKPlayer) {
-        if (try? JSONDecoder().decode(GlobalGameState.self, from: data)) != nil {
-            DispatchQueue.main.async {
-//                self.globalState = state
-            }
-        } else if (try? JSONDecoder().decode(CardPlayAction.self, from: data)) != nil {
-            // Ação do jogador (já tratada no host)
         }
     }
 }

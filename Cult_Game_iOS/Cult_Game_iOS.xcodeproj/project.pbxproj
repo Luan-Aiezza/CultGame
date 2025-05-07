@@ -341,6 +341,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -372,6 +373,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -402,6 +404,8 @@
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -431,6 +435,8 @@
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (

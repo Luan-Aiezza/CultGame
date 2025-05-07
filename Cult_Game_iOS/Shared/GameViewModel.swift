@@ -154,11 +154,11 @@ class GameViewModel: ObservableObject {
     }
 
     // MARK: - Jogo
-//    func selectRole(_ selectedRole: PlayerRole) {
-//        self.role = selectedRole
-//        receiveInitialCards()
-//        currentPhase = .cardPlay
-//    }
+    func selectRole(_ selectedRole: PlayerRole) {
+        self.role = selectedRole
+        receiveInitialCards()
+        currentPhase = .cardPlay
+    }
 
     func receiveInitialCards() {
         playerHand.removeAll()

@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 struct ContentView: View {
     @ObservedObject private var viewModel = GameViewModel()
@@ -12,19 +11,9 @@ struct ContentView: View {
                 if viewModel.role == nil {
                     
                     ProgressView("Waiting for game to start...")
-                
-//                if viewModel.currentPhase == .roleSelection {
-//                    Text("Choose your role:")
-//                        .font(.title)
-//                    Button("Cultist") {
-//                        viewModel.selectRole(.cultist)
-//                    }.padding()
-//                    Button("Heretic") {
-//                        viewModel.selectRole(.heretic)
-//                    }.padding()
-                    
+
                 } else {
-                    Text("\(viewModel.role)")
+                    Text("\(String(describing: viewModel.role))")
                     
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
@@ -99,18 +88,11 @@ struct ContentView: View {
             }.onAppear {
                 multiplayerManager.joinSession()
                 
-//                NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
-//                    if let role = notification.object as? PlayerRole {
-//                        viewModel.selectRole(role)
-//                    }
-//                }
-//                
-//                var role = multiplayerManager.$role
-//                .receive(on: DispatchQueue.main)
-//                .sink { values in
-//                print("arrayCount: \(test.array.count) valuesCount: \(values.count)")
-//                }
-                
+                NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
+                    if let role = notification.object as? PlayerRole {
+                        viewModel.selectRole(role)
+                    }
+                }
                 
             }
 

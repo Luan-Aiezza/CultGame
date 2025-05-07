@@ -87,6 +87,7 @@ class MultiplayerManager: NSObject, ObservableObject {
 }
 
 extension MultiplayerManager: MCSessionDelegate {
+    
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         DispatchQueue.main.async {
             switch state {
@@ -99,8 +100,6 @@ extension MultiplayerManager: MCSessionDelegate {
             }
         }
     }
-    
-    
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         handleReceived(data, from: peerID)
@@ -112,6 +111,13 @@ extension MultiplayerManager: MCSessionDelegate {
                 }
             }
         }
+        
+        if let role = try? JSONDecoder().decode(PlayerRole.self, from: data) {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .didReceiveRole, object: role)
+            }
+        }
+        
     }
 
     // Unused delegate methods (required)

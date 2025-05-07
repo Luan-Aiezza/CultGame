@@ -78,7 +78,11 @@ struct HostGameView: View {
         }
 
         self.playerRoles = roles
-        // Aqui você pode enviar os papéis aos peers caso necessário
+        for (peerName, role) in roles {
+            if let peer = multiplayerManager.connectedPeers.first(where: { $0.displayName == peerName }) {
+                multiplayerManager.sendRole(role, to: peer)
+            }
+        }
     }
 }
 

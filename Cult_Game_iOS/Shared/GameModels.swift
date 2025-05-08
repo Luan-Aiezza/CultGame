@@ -36,6 +36,7 @@ enum CardType: String, Codable {
 
 enum MultiplayerMessage: Codable {
     case roleAssignment(PlayerRole)
+    case kickPlayer
     
     enum CodingKeys: String, CodingKey {
         case type, data
@@ -43,6 +44,7 @@ enum MultiplayerMessage: Codable {
     
     enum MessageType: String, Codable {
         case roleAssignment
+        case kickPlayer
     }
     
     // Manual Encoding
@@ -52,9 +54,12 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment(let role):
             try container.encode(MessageType.roleAssignment, forKey: .type)
             try container.encode(role, forKey: .data)
+        case .kickPlayer:
+            try container.encode(MessageType.kickPlayer, forKey: .type)
+            // Não há data para codificar
         }
     }
-
+    
     // Manual Decoding
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -63,6 +68,9 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment:
             let role = try container.decode(PlayerRole.self, forKey: .data)
             self = .roleAssignment(role)
+        case .kickPlayer:
+            self = .kickPlayer
         }
+        
     }
 }

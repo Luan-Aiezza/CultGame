@@ -180,7 +180,7 @@ class GameViewModel: ObservableObject {
         let action = CardPlayAction(playerID: peerID.displayName, card: card, playerRole: role!)
 
         if isHost {
-            multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+            multiplayerManager.handleReceived(action, from: peerID)
         } else {
             multiplayerManager.send(action)
         }

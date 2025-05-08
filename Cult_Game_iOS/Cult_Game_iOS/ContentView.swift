@@ -10,10 +10,19 @@ struct ContentView: View {
             VStack {
                 if viewModel.role == nil {
                     
-                    ProgressView("Waiting for game to start...")
+//                    ProgressView("Waiting for game to start...")
+                    
+                    Text("Choose your role:")
+                           .font(.title)
+                       Button("Cultist") {
+                           viewModel.selectRole(.cultist)
+                       }.padding()
+                       Button("Heretic") {
+                           viewModel.selectRole(.heretic)
+                       }.padding()
 
                 } else {
-                    Text("\(String(describing: viewModel.role))")
+                    Text("\(viewModel.round)")
                     
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
@@ -65,10 +74,10 @@ struct ContentView: View {
                         }
 
                         Button("Buy card") {
-                            viewModel.replenishCard()
+                            viewModel.replenishHandIfNeeded()
                         }
-                        Button("Add round") {
-                            viewModel.addRound()
+                        Button("Skip round") {
+                            viewModel.skipCard()
                         }
                         .padding()
                     }
@@ -81,6 +90,7 @@ struct ContentView: View {
                         Text("This is where players debate their choices.")
                         Button("Back to Card Play") {
                             viewModel.currentPhase = .cardPlay
+                            viewModel.playAllActiveCards()
                         }
                         .padding()
                     }

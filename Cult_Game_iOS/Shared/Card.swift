@@ -40,6 +40,7 @@ class Card: Identifiable, Equatable, Codable {
         case cultist
         case heresy
         case assassination
+        case empty
     }
 }
 
@@ -93,7 +94,7 @@ public class CardDeck {
 
             if card.isActive == true {
                 vm.followers += card.followersEffect
-                card.isActive = false
+                //card.isActive = false
             }
         }
 
@@ -129,7 +130,6 @@ public class CardDeck {
                 
                 //vai pra false
                 card.isActive = false
-                print(vm.activeCards)
             }
         }
 

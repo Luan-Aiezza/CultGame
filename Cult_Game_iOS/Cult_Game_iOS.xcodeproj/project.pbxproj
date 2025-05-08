@@ -11,9 +11,38 @@
 		CFFE15692DCA633100CFF322 /* Cult_Game_tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_tvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Card.swift,
+				GameModels.swift,
+				GameViewModel.swift,
+				MultiplayerManager.swift,
+				SpecificCard.swift,
+			);
+			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
+		};
+		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Card.swift,
+				GameModels.swift,
+				GameViewModel.swift,
+				MultiplayerManager.swift,
+				SpecificCard.swift,
+			);
+			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CF0315192DC911A7006E4E79 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */,
+				3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */,
+			);
 			path = Shared;
 			sourceTree = "<group>";
 		};

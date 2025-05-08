@@ -35,6 +35,21 @@ class MultiplayerManager: NSObject, ObservableObject {
         browser?.delegate = self
         browser?.startBrowsingForPeers()
     }
+    
+    // Função criada para quando um player está tentando conectar ao jogo mas não pode mais entrar. Ex: O limite de jogadores foi atingido e mais um player está tentando entrar na partida.
+    
+    func disconnect() {
+        session.cancelConnectPeer(myPeerID)
+    }
+    
+    // Função que deve ser chamada ao encerrar o host de uma partida.
+    
+    func disconnectAll() {
+        advertiser?.stopAdvertisingPeer()
+        browser?.stopBrowsingForPeers()
+        session.disconnect()
+        connectedPeers.removeAll()
+    }
 
     func send(_ action: CardPlayAction) {
         guard !session.connectedPeers.isEmpty else { return }
@@ -50,17 +65,15 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
-    func handleReceived(_ data: Data, from peerID: MCPeerID) {
-        if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
-            DispatchQueue.main.async {
-                if action.playerRole == .cultist {
-                    self.globalState.sharedFaithPoints -= action.card.faithCost
-                } else {
-                    self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
-                }
-                self.globalState.followers += action.card.followersEffect
-                self.sendGlobalStateToAllPlayers()
+    func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
+        DispatchQueue.main.async {
+            if action.playerRole == .cultist {
+                self.globalState.sharedFaithPoints -= action.card.faithCost
+            } else {
+                self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
             }
+            self.globalState.followers += action.card.followersEffect
+            self.sendGlobalStateToAllPlayers()
         }
     }
     
@@ -83,7 +96,14 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
+    // Função criada para eliminar um jogador do jogo
     
+    private func eliminate(peer: MCPeerID) {
+        let message = MultiplayerMessage.kickPlayer
+        if let data = try? JSONEncoder().encode(message) {
+            try? session.send(data, toPeers: [peer], with: .reliable)
+        }
+    }
 }
 
 extension MultiplayerManager: MCSessionDelegate {
@@ -103,14 +123,22 @@ extension MultiplayerManager: MCSessionDelegate {
     
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        handleReceived(data, from: peerID)
+        // Primeiro tenta decodificar como MultiplayerMessage
         if let message = try? JSONDecoder().decode(MultiplayerMessage.self, from: data) {
             switch message {
             case .roleAssignment(let role):
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .didReceiveRole, object: role)
                 }
+            case .kickPlayer:
+                DispatchQueue.main.async {
+                    MultiplayerManager.shared.disconnect()
+                }
             }
+        }
+        // Se não for uma mensagem especial, assume que é uma ação do jogo
+        else if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+            handleReceived(action, from: peerID)
         }
     }
 

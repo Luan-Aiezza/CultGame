@@ -8,7 +8,7 @@ struct HostGameView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Aguardando jogadores...")
+            Text("Waiting players...")
                 .font(.title)
 
             List(multiplayerManager.connectedPeers, id: \.self) { peer in
@@ -16,10 +16,10 @@ struct HostGameView: View {
                     Text(peer.displayName.prefix(10))
                     Spacer()
                     if let role = playerRoles[peer.displayName] {
-                        Text(role == .cultist ? "Cultista" : "Herege")
+                        Text(role == .cultist ? "Cultist" : "Heretic")
                             .foregroundColor(role == .cultist ? .green : .red)
                     } else {
-                        Text("Sem papel")
+                        Text("No role")
                             .foregroundColor(.gray)
                     }
                 }
@@ -32,9 +32,9 @@ struct HostGameView: View {
                     .multilineTextAlignment(.center)
             }
 
-            Button("Iniciar Jogo") {
+            Button("Start Game") {
                 if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
-                    errorMessage = "Você precisa de 3 a 7 jogadores para iniciar."
+                    errorMessage = "You need to connect between 1 and 7 players"
                     return
                 }
 
@@ -48,7 +48,7 @@ struct HostGameView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
 
-            Text("Jogadores conectados: \(multiplayerManager.connectedPeers.count)")
+            Text("Players connected: \(multiplayerManager.connectedPeers.count)")
                 .font(.footnote)
 
             Spacer()
@@ -67,7 +67,7 @@ struct HostGameView: View {
     func assignRoles() {
         var players = multiplayerManager.connectedPeers.shuffled()
         guard let herege = players.popLast() else {
-            errorMessage = "Erro ao selecionar herege"
+            errorMessage = "Error assigning heretic role!"
             return
         }
 

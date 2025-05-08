@@ -5,26 +5,26 @@ struct GameStatusView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Status do Jogo")
+            Text("Game Status")
                 .font(.largeTitle)
                 .bold()
 
             VStack(spacing: 10) {
-                Text("Pontos de Fé (Cultistas): \(multiplayerManager.globalState.sharedFaithPoints)")
+                Text("Faith points: \(multiplayerManager.globalState.sharedFaithPoints)")
                     .foregroundColor(.green)
                     .font(.title2)
 
                 ForEach(multiplayerManager.globalState.heresyPoints.sorted(by: { $0.key < $1.key }), id: \.key) { peerName, heresy in
                     HStack {
-                        Text("Herege: \(peerName.prefix(10))")
+                        Text("Heretic: \(peerName.prefix(10))")
                         Spacer()
-                        Text("Heresia: \(heresy)")
+                        Text("Heresy: \(heresy)")
                     }
                     .foregroundColor(.red)
                     .font(.title3)
                 }
 
-                Text("Seguidores: \(multiplayerManager.globalState.followers)")
+                Text("Followers: \(multiplayerManager.globalState.followers)")
                     .foregroundColor(.blue)
                     .font(.title2)
             }

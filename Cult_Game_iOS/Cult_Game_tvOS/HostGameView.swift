@@ -55,9 +55,8 @@ struct HostGameView: View {
 
             // Status do jogo
             if gameStarted {
-                Text("Jogo Iniciado!")
-                    .font(.title2)
-                    .foregroundColor(.green)
+                GameStatusView()
+                        .transition(.slide)
             }
         }
         .onAppear {

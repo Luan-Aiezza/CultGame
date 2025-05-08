@@ -32,6 +32,7 @@ enum CardType: String, Codable {
     case cultist
     case heresy
     case assassination
+    case empty
 }
 
 enum MultiplayerMessage: Codable {

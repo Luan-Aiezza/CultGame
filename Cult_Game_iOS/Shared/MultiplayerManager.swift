@@ -66,19 +66,19 @@ class MultiplayerManager: NSObject, ObservableObject {
         connectedPeers.removeAll()
     }
     
-    //    func handleReceived(_ data: Data, from peerID: MCPeerID) {
-    //        if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
-    //            DispatchQueue.main.async {
-    //                if action.playerRole == .cultist {
-    //                    self.globalState.sharedFaithPoints -= action.card.faithCost
-    //                } else {
-    //                    self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
-    //                }
-    //                self.globalState.followers += action.card.followersEffect
-    //                self.sendGlobalStateToAllPlayers()
-    //            }
-    //        }
-    //    }
+        func handleReceived(_ data: Data, from peerID: MCPeerID) {
+            if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+                DispatchQueue.main.async {
+                    if action.playerRole == .cultist {
+                        self.globalState.sharedFaithPoints -= action.card.faithCost
+                    } else {
+                        self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
+                    }
+                    self.globalState.followers += action.card.followersEffect
+                    self.sendGlobalStateToAllPlayers()
+                }
+            }
+        }
     
     func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
         DispatchQueue.main.async {

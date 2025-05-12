@@ -15,6 +15,7 @@
 		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AudioManager.swift,
 				Card.swift,
 				GameModels.swift,
 				GameViewModel.swift,
@@ -26,6 +27,7 @@
 		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AudioManager.swift,
 				Card.swift,
 				GameModels.swift,
 				GameViewModel.swift,

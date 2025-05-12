@@ -21,21 +21,21 @@ class MultiplayerManager: NSObject, ObservableObject {
         session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
     }
-
+    
     func startHosting() {
         isHosting = true
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
     }
-
+    
     func joinSession() {
         isHosting = false
         browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         browser?.delegate = self
         browser?.startBrowsingForPeers()
     }
-
+    
     func send(_ action: CardPlayAction) {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {
@@ -50,32 +50,59 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
-    func handleReceived(_ data: Data, from peerID: MCPeerID) {
-        if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
-            DispatchQueue.main.async {
-                if action.playerRole == .cultist {
-                    self.globalState.sharedFaithPoints -= action.card.faithCost
-                } else {
-                    self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
+    // Função criada para quando um player está tentando conectar ao jogo mas não pode mais entrar. Ex: O limite de jogadores foi atingido e mais um player está tentando entrar na partida.
+
+    
+    func disconnect() {
+        session.cancelConnectPeer(myPeerID)
+    }
+    
+    // Função que deve ser chamada ao encerrar o host de uma partida.
+    
+    func disconnectAll() {
+        advertiser?.stopAdvertisingPeer()
+        browser?.stopBrowsingForPeers()
+        session.disconnect()
+        connectedPeers.removeAll()
+    }
+    
+        func handleReceived(_ data: Data, from peerID: MCPeerID) {
+            if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+                DispatchQueue.main.async {
+                    if action.playerRole == .cultist {
+                        self.globalState.sharedFaithPoints -= action.card.faithCost
+                    } else {
+                        self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
+                    }
+                    self.globalState.followers += action.card.followersEffect
+                    self.sendGlobalStateToAllPlayers()
                 }
-                self.globalState.followers += action.card.followersEffect
-                self.sendGlobalStateToAllPlayers()
             }
+        }
+    
+    func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
+        DispatchQueue.main.async {
+            if action.playerRole == .cultist {
+                self.globalState.sharedFaithPoints -= action.card.faithCost
+            } else {
+                self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
+            }
+            self.globalState.followers += action.card.followersEffect
+            self.sendGlobalStateToAllPlayers()
         }
     }
     
     func assignRolesRandomly(to players: [MCPeerID]) {
         let shuffled = players.shuffled()
         
-        // Exemplo: 1 herético, o resto cultistas
         if let heretic = shuffled.first {
-            sendRole(PlayerRole.heretic, to: heretic)
+            sendRole(.heretic, to: heretic)
         }
         for cultist in shuffled.dropFirst() {
-            sendRole(PlayerRole.cultist, to: cultist)
+            sendRole(.cultist, to: cultist)
         }
     }
-
+    
     public func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
@@ -83,11 +110,19 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
+    // Função criada para eliminar um jogador do jogo
+
     
+    private func eliminate(peer: MCPeerID) {
+        let message = MultiplayerMessage.kickPlayer
+        if let data = try? JSONEncoder().encode(message) {
+            try? session.send(data, toPeers: [peer], with: .reliable)
+        }
+    }
 }
 
+// MARK: - MCSessionDelegate
 extension MultiplayerManager: MCSessionDelegate {
-    
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         DispatchQueue.main.async {
             switch state {
@@ -100,32 +135,31 @@ extension MultiplayerManager: MCSessionDelegate {
             }
         }
     }
-
+    
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        handleReceived(data, from: peerID)
         if let message = try? JSONDecoder().decode(MultiplayerMessage.self, from: data) {
             switch message {
             case .roleAssignment(let role):
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .didReceiveRole, object: role)
                 }
+            case .kickPlayer:
+                DispatchQueue.main.async {
+                    MultiplayerManager.shared.disconnect()
+                }
             }
+        } else if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+            handleReceived(action, from: peerID)
         }
-        
-        if let role = try? JSONDecoder().decode(PlayerRole.self, from: data) {
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .didReceiveRole, object: role)
-            }
-        }
-        
     }
-
-    // Unused delegate methods (required)
+    
+    // Métodos exigidos mas não utilizados
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {}
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {}
 }
 
+// MARK: - MCNearbyServiceAdvertiserDelegate
 extension MultiplayerManager: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("Received invitation from: \(peerID.displayName)")
@@ -133,20 +167,19 @@ extension MultiplayerManager: MCNearbyServiceAdvertiserDelegate {
     }
 }
 
+// MARK: - MCNearbyServiceBrowserDelegate
 extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         print("Found peer: \(peerID.displayName)")
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 10)
     }
-
+    
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {}
 }
 
+// MARK: - Notification Names
 extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
-}
-
-extension Notification.Name {
     static let didReceiveRole = Notification.Name("didReceiveRole")
 }
 

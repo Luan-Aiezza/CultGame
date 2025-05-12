@@ -12,7 +12,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CF688F332DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
+		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
@@ -23,7 +23,7 @@
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
-		CFFE15792DCA63EF00CFF322 /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
+		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
@@ -40,8 +40,8 @@
 		CF0315192DC911A7006E4E79 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				CF688F332DC995840077BE58 /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */,
-				CFFE15792DCA63EF00CFF322 /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */,
+				3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */,
+				3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -343,7 +343,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = K4H4UFJU24;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
@@ -375,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = K4H4UFJU24;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";

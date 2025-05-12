@@ -14,6 +14,7 @@ class GameViewModel: ObservableObject {
     @Published var usedCard: Card?
     @Published var role: PlayerRole? = nil
     @Published var round : Int = 0
+    private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     private var cancellables = Set<AnyCancellable>()
     private let multiplayerManager = MultiplayerManager.shared
     private var peerID: MCPeerID {
@@ -130,6 +131,13 @@ class GameViewModel: ObservableObject {
             }
             alreadyEnteredCardPlayOnce = true
             replenishHandIfNeeded()
+            addRound()
+            playAllActiveCards()
+            
+            if usedCard == nil {
+                usedCard = emptyCard
+            }
+            
         default:
             break
         }
@@ -175,46 +183,61 @@ class GameViewModel: ObservableObject {
     }
 
     func playCard(_ card: Card) {
-        guard points >= card.faithCost else { return }
+        
+        if usedCard == nil {
+            guard points >= card.faithCost else { return }
 
-        let action = CardPlayAction(playerID: peerID.displayName, card: card, playerRole: role!)
+            let action = CardPlayAction(playerID: peerID.displayName, card: card, playerRole: role!)
 
-        if isHost {
-            multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+            if isHost {
+                multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+            } else {
+                multiplayerManager.send(action)
+            }
+
+            if card.type != .assassination {
+                usedCard = card
+                playerHand.removeAll { $0.id == card.id }
+            } else {
+                usedCard = card
+            }
+            
+            card.play(vm: self)
+            proceedToDiscussionIfReady()
+
         } else {
-            multiplayerManager.send(action)
+            print("you've already played a card this round")
         }
-
-        if card.type != .assassination {
-            usedCard = card
-            playerHand.removeAll { $0.id == card.id }
-        }
-        
-        card.play(vm: self)
-        replenishCard()
-        proceedToDiscussionIfReady()
-        
     }
+    
+    func skipCard() {
+        
+        if usedCard == nil {
+            
+            let action = CardPlayAction(playerID: peerID.displayName, card: emptyCard, playerRole: role!)
 
-    func replenishCard() {
-        if let card = usedCard {
-            playerHand.append(card)
-            usedCard = nil
+            if isHost {
+                multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+            } else {
+                multiplayerManager.send(action)
+            }
+
+            usedCard = emptyCard
+            
+            proceedToDiscussionIfReady()
+        } else {
+            print("you've already chosen a card this round")
         }
         
-//        if playerHand.count < 3 {
-//            playerHand.append(deck.specialCards.randomElement()!)
-//        }
     }
     
     func addRound() {
         round += 1
-        playAllActiveCards()
     }
     
     func playAllActiveCards() {
         
-        activeCards.removeAll { ($0 as AnyObject).isActive == false }
+        activeCards.removeAll { $0.isActive == false }
         
         for card in activeCards {
             card.play(vm: self)
@@ -224,6 +247,7 @@ class GameViewModel: ObservableObject {
     func proceedToDiscussionIfReady() {
         if usedCard != nil {
             currentPhase = .discussion
+            usedCard = nil
         }
     }
     

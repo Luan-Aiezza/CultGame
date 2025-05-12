@@ -1,4 +1,5 @@
 import SwiftUI
+import MultipeerConnectivity
 
 struct HostGameView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
@@ -66,21 +67,23 @@ struct HostGameView: View {
 
     func assignRoles() {
         var players = multiplayerManager.connectedPeers.shuffled()
-        guard let herege = players.popLast() else {
+
+        guard let heretic = players.popLast() else {
             errorMessage = "Error assigning heretic role!"
             return
         }
 
-        var roles: [String: PlayerRole] = [herege.displayName: .heretic]
+        var roles: [MCPeerID: PlayerRole] = [heretic: .heretic]
         for peer in players {
-            roles[peer.displayName] = .cultist
+            roles[peer] = .cultist
         }
 
-        self.playerRoles = roles
-        for (peerName, role) in roles {
-            if let peer = multiplayerManager.connectedPeers.first(where: { $0.displayName == peerName }) {
-                multiplayerManager.sendRole(role, to: peer)
-            }
+        // Atualiza o state local para exibição (baseado em displayName)
+        self.playerRoles = roles.mapKeys(\.displayName)
+
+        // Envia a role diretamente para cada peer
+        for (peer, role) in roles {
+            multiplayerManager.sendRole(role, to: peer)
         }
     }
 }

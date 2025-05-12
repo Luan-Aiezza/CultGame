@@ -12,7 +12,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     private var session: MCSession!
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
-    public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    public let myPeerID = MCPeerID(displayName: "\(UIDevice.current.name)_\(UUID().uuidString.prefix(4))")
     
     var isHosting: Bool = false
     
@@ -148,4 +148,10 @@ extension Notification.Name {
 
 extension Notification.Name {
     static let didReceiveRole = Notification.Name("didReceiveRole")
+}
+
+extension Dictionary {
+    func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
+        Dictionary<T, Value>(uniqueKeysWithValues: self.map { (transform($0.key), $0.value) })
+    }
 }

@@ -3,50 +3,107 @@ import AVFoundation
 
 class AudioManager {
     static let shared = AudioManager()
-    
-    private var audioPlayer: AVAudioPlayer?
-    
-    // MARK: - Sound Types
-    enum SoundType: String {
-        case swipe = "swipe"
-        case receiveCard = "receive_card"
-        case viewDetails = "view_card"
-        case playCard = "play_card"
+
+    private var audioPlayers: [String: [AVAudioPlayer]] = [:]
+    private var backgroundMusicPlayer: AVAudioPlayer?
+    private let maxSimultaneousPlays = 3
+    private var globalVolume: Float = 1.0 {
+        didSet {
+            updateAllVolumes()
+        }
     }
-    
-    // MARK: - Play Sound
-    func play(_ sound: SoundType) {
-        guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: "mp3") else {
-            print("Sound file \(sound.rawValue).mp3 not found")
+
+    private init() {}
+
+    // MARK: - Efeitos Sonoros
+    func playSound(named name: String) {
+        if let players = audioPlayers[name] {
+            if let availablePlayer = players.first(where: { !$0.isPlaying }) {
+                availablePlayer.volume = globalVolume
+                availablePlayer.play()
+                return
+            }
+
+            if players.count < maxSimultaneousPlays {
+                if let player = createPlayer(for: name) {
+                    player.volume = globalVolume
+                    audioPlayers[name]?.append(player)
+                    player.play()
+                }
+            }
+        } else {
+            if let player = createPlayer(for: name) {
+                player.volume = globalVolume
+                audioPlayers[name] = [player]
+                player.play()
+            }
+        }
+    }
+
+    // MARK: - Musica de Background
+    func playBackgroundMusic(named name: String) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
+            print("⚠️ Background music file \(name).mp3 not found.")
             return
         }
 
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
+            backgroundMusicPlayer?.numberOfLoops = -1 // loop infinito
+            backgroundMusicPlayer?.volume = globalVolume
+            backgroundMusicPlayer?.prepareToPlay()
+            backgroundMusicPlayer?.play()
         } catch {
-            print("Error playing sound \(sound.rawValue): \(error.localizedDescription)")
+            print("⚠️ Could not play background music \(name): \(error.localizedDescription)")
         }
     }
-    
-    // MARK: - Specific Triggers
-    func playSwipeSound() {
-        play(.swipe)
-    }
-    
-    func playReceiveCardSound() {
-        play(.receiveCard)
+
+    func stopBackgroundMusic() {
+        backgroundMusicPlayer?.stop()
+        backgroundMusicPlayer = nil
     }
 
-    func playViewDetailsSound() {
-        play(.viewDetails)
+    // MARK: - Controle de Volume
+    func setVolume(to value: Float) {
+        globalVolume = min(max(value, 0.0), 1.0) // Clamp entre 0.0 e 1.0
     }
 
-    func playPlayCardSound() {
-        play(.playCard)
+    private func updateAllVolumes() {
+        for (_, players) in audioPlayers {
+            for player in players {
+                player.volume = globalVolume
+            }
+        }
+        backgroundMusicPlayer?.volume = globalVolume
+    }
+
+    // MARK: - Internal
+    private func createPlayer(for name: String) -> AVAudioPlayer? {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
+            print("Sound file \(name).mp3 not found.")
+            return nil
+        }
+
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            return player
+        } catch {
+            print("Failed to create player for \(name): \(error.localizedDescription)")
+            return nil
+        }
     }
 }
 
-
-//METODO DE CHAMADA AudioManager.shared.playPlayCardSound()
+/////Como usar!
+//// Som de efeito
+//AudioManager.shared.playSound(named: "swipe")
+//
+//// Música de fundo
+//AudioManager.shared.playBackgroundMusic(named: "main_theme")
+//
+//// Parar música de fundo
+//AudioManager.shared.stopBackgroundMusic()
+//
+//// Alterar volume global (0.0 a 1.0)
+//AudioManager.shared.setVolume(to: 0.3)

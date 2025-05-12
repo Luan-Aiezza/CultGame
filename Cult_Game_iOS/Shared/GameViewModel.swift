@@ -203,6 +203,7 @@ class GameViewModel: ObservableObject {
             }
             
             card.play(vm: self)
+            AudioManager.shared.playSound(named: "ClickSound")//TESTE DE SOM
             proceedToDiscussionIfReady()
 
         } else {

@@ -15,32 +15,32 @@
 		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Card.swift,
 				"Extensions/GameViewModel+Cards.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
+				Models/Card.swift,
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
-				MultiplayerManager.swift,
-				SpecificCard.swift,
+				Models/SpecificCard.swift,
 				ViewModels/GameViewModel.swift,
+				ViewModels/MultiplayerManager.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
 		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Card.swift,
 				"Extensions/GameViewModel+Cards.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
+				Models/Card.swift,
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
-				MultiplayerManager.swift,
-				SpecificCard.swift,
+				Models/SpecificCard.swift,
 				ViewModels/GameViewModel.swift,
+				ViewModels/MultiplayerManager.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};

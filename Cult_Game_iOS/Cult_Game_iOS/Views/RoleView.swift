@@ -27,6 +27,18 @@ struct RoleView: View {
                 
                 
                 VStack{
+                    
+                    HStack(){
+                        Spacer()
+                        Button {
+                            MultiplayerManager.shared.eliminate(peer: viewModel.getID())
+                        } label: {
+                            Image("\(viewModel.role?.rawValue ?? "cultist")buttonX")
+                        }
+                        .padding(.trailing, 30)
+
+                    }
+                    
                     VStack {
                         Text("You are a \(viewModel.role?.rawValue ?? "Unknown")!")
                             .font(.custom("VinerHandITC", size: 40))

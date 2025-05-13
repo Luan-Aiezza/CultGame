@@ -278,4 +278,8 @@ class GameViewModel: ObservableObject {
             }
         }
     }
+    
+    public func getID() -> MCPeerID {
+        return peerID
+    }
 }

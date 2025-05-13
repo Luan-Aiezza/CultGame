@@ -136,7 +136,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     // Função criada para eliminar um jogador do jogo
 
     
-    private func eliminate(peer: MCPeerID) {
+    public func eliminate(peer: MCPeerID) {
         let message = MultiplayerMessage.kickPlayer
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: [peer], with: .reliable)

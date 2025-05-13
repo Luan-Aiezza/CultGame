@@ -13,6 +13,7 @@ enum PlayerRole: String, Codable {
     case heretic
 }
 
+//tipos de personagem
 enum Character : String, Codable {
     case fox
     case panda
@@ -70,6 +71,8 @@ enum MultiplayerMessage: Codable {
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
             // Não há data para codificar
+            
+        //decodificar a mensagem do personagem
         case .characterAssignment(let character):
             try container.encode(MessageType.characterAssignment, forKey: .type)
             try container.encode(character, forKey: .data)
@@ -87,6 +90,8 @@ enum MultiplayerMessage: Codable {
             self = .roleAssignment(role)
         case .kickPlayer:
             self = .kickPlayer
+        
+        //decodificar a mensagem do personagem
         case .characterAssignment:
             let character = try container.decode(Character.self, forKey: .data)
             self = .characterAssignment(character)

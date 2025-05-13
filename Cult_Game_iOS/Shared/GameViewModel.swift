@@ -14,6 +14,8 @@ class GameViewModel: ObservableObject {
     @Published var usedCard: Card?
     @Published var role: PlayerRole? = .cultist
     @Published var round : Int = 0
+    
+    //personagem do jogador
     @Published var character : Character = .fox
     private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     private var cancellables = Set<AnyCancellable>()
@@ -69,13 +71,13 @@ class GameViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
         
+        
+        // receber o personagem
         NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
             if let character = notification.object as? Character {
                 self.character = character
             }
         }
-
-
     }
     
     //cartas ativas
@@ -265,6 +267,14 @@ class GameViewModel: ObservableObject {
                 self.role = role
                 self.receiveInitialCards()
                 self.currentPhase = .cardPlay
+            }
+        }
+    }
+    
+    @objc private func handleCharacterAssignment(_ notification: Notification) {
+        if let character = notification.object as? Character {
+            DispatchQueue.main.async {
+                self.character = character
             }
         }
     }

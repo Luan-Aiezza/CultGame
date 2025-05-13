@@ -103,6 +103,29 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
+    func assignCharactersRandomly(to players: [MCPeerID]) {
+        let allCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
+        let shuffledCharacters = allCharacters.shuffled()
+        
+        for (index, player) in players.enumerated() {
+            if index < shuffledCharacters.count {
+                let character = shuffledCharacters[index]
+                sendCharacter(character, to: player)
+            } else {
+                print("Mais jogadores do que personagens disponíveis!")
+            }
+        }
+    }
+    
+    func sendCharacter(_ character: Character, to peer: MCPeerID) {
+        let message = MultiplayerMessage.characterAssignment(character)
+        if let data = try? JSONEncoder().encode(message) {
+            try? session.send(data, toPeers: [peer], with: .reliable)
+        }
+    }
+
+
+    
     public func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
@@ -143,14 +166,17 @@ extension MultiplayerManager: MCSessionDelegate {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .didReceiveRole, object: role)
                 }
+            case .characterAssignment(let character):
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .didReceiveCharacter, object: character)
+                }
             case .kickPlayer:
                 DispatchQueue.main.async {
                     MultiplayerManager.shared.disconnect()
                 }
             }
-        } else if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
-            handleReceived(action, from: peerID)
         }
+
     }
     
     // Métodos exigidos mas não utilizados
@@ -181,4 +207,7 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
 extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
     static let didReceiveRole = Notification.Name("didReceiveRole")
+    static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
+    
+
 }

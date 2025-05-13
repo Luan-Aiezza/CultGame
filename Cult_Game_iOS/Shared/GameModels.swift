@@ -13,6 +13,16 @@ enum PlayerRole: String, Codable {
     case heretic
 }
 
+enum Character : String, Codable {
+    case fox
+    case panda
+    case bunny
+    case tiger
+    case deer
+    case pig
+    case wolf
+}
+
 struct GameUpdate: Codable {
     var sharedFaithPoints: Int
     var sharedFollowers: Int
@@ -38,6 +48,7 @@ enum CardType: String, Codable {
 enum MultiplayerMessage: Codable {
     case roleAssignment(PlayerRole)
     case kickPlayer
+    case characterAssignment(Character)
     
     enum CodingKeys: String, CodingKey {
         case type, data
@@ -46,6 +57,7 @@ enum MultiplayerMessage: Codable {
     enum MessageType: String, Codable {
         case roleAssignment
         case kickPlayer
+        case characterAssignment
     }
     
     // Manual Encoding
@@ -58,6 +70,10 @@ enum MultiplayerMessage: Codable {
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
             // Não há data para codificar
+        case .characterAssignment(let character):
+            try container.encode(MessageType.characterAssignment, forKey: .type)
+            try container.encode(character, forKey: .data)
+            
         }
     }
     
@@ -71,6 +87,9 @@ enum MultiplayerMessage: Codable {
             self = .roleAssignment(role)
         case .kickPlayer:
             self = .kickPlayer
+        case .characterAssignment:
+            let character = try container.decode(Character.self, forKey: .data)
+            self = .characterAssignment(character)
         }
         
     }

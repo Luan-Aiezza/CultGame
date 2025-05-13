@@ -6,5 +6,9 @@
 	<array>
 		<string>_cult-game._tcp</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string></string>
+	</array>
 </dict>
 </plist>

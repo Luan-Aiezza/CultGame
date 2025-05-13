@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+//    @ObservedObject private var viewModel = GameViewModel()
     @ObservedObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
     @ObservedObject var multiplayerManager = MultiplayerManager.shared

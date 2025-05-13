@@ -12,8 +12,9 @@ enum GamePhase {
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
     @Published var usedCard: Card?
-    @Published var role: PlayerRole? = nil
+    @Published var role: PlayerRole? = .cultist
     @Published var round : Int = 0
+    @Published var character : Character = .fox
     private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     private var cancellables = Set<AnyCancellable>()
     private let multiplayerManager = MultiplayerManager.shared
@@ -67,6 +68,13 @@ class GameViewModel: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
+        
+        NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
+            if let character = notification.object as? Character {
+                self.character = character
+            }
+        }
+
 
     }
     

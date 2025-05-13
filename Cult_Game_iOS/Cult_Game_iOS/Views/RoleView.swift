@@ -36,6 +36,7 @@ struct RoleView: View {
                             Image("\(viewModel.role?.rawValue ?? "cultist")buttonX")
                         }
                         .padding(.trailing, 30)
+                        .padding(.top, 35)
 
                     }
                     
@@ -57,7 +58,7 @@ struct RoleView: View {
                             }
                         }
                     }
-                    .padding(.top, 100)
+                    .padding(.top, 90)
                     
                     VStack{
                             if let role = viewModel.role {
@@ -93,6 +94,7 @@ struct RoleView: View {
                         }
                     }
                     .padding(.top, 100)
+                    .padding(.bottom, 25)
                 }
             }
         }

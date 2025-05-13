@@ -13,6 +13,12 @@ enum PlayerRole: String, Codable {
     case heretic
 }
 
+enum GamePhase {
+    case roleSelection
+    case cardPlay
+    case discussion
+}
+
 struct GameUpdate: Codable {
     var sharedFaithPoints: Int
     var sharedFollowers: Int

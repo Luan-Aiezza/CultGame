@@ -1,0 +1,14 @@
+//
+//  PlayerModel.swift
+//  Cult_Game_iOS
+//
+//  Created by Jorge Samuel Silva Coelho on 13/05/25.
+//
+
+struct PlayerModel {
+    var hand: [Card] = []
+    var usedCard: Card? = nil
+    var role: PlayerRole? = nil
+    var personalHeresyPoints: Int = 0
+    var hasEnteredCardPlayOnce = false
+}

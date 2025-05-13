@@ -16,10 +16,15 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
-				GameModels.swift,
-				GameViewModel.swift,
+				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+MultiplayerSinc.swift",
+				"Extensions/GameViewModel+Phase.swift",
+				"Extensions/GameViewModel+Timer.swift",
+				Models/GameModels.swift,
+				Models/PlayerModel.swift,
 				MultiplayerManager.swift,
 				SpecificCard.swift,
+				ViewModels/GameViewModel.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
@@ -27,10 +32,15 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
-				GameModels.swift,
-				GameViewModel.swift,
+				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+MultiplayerSinc.swift",
+				"Extensions/GameViewModel+Phase.swift",
+				"Extensions/GameViewModel+Timer.swift",
+				Models/GameModels.swift,
+				Models/PlayerModel.swift,
 				MultiplayerManager.swift,
 				SpecificCard.swift,
+				ViewModels/GameViewModel.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};

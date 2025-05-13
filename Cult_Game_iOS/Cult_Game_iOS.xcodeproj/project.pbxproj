@@ -6,7 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		337E55DD2DD3934E00E54818 /* Almendra-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 337E55DA2DD3934E00E54818 /* Almendra-Regular.ttf */; };
+		337E55DE2DD3934E00E54818 /* VinerHandITC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 337E55DC2DD3934E00E54818 /* VinerHandITC.TTF */; };
+		337E55E02DD3934E00E54818 /* Almendra-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 337E55DA2DD3934E00E54818 /* Almendra-Regular.ttf */; };
+		337E55E12DD3934E00E54818 /* VinerHandITC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 337E55DC2DD3934E00E54818 /* VinerHandITC.TTF */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		337E55DA2DD3934E00E54818 /* Almendra-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Almendra-Regular.ttf"; sourceTree = "<group>"; };
+		337E55DC2DD3934E00E54818 /* VinerHandITC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = VinerHandITC.TTF; sourceTree = "<group>"; };
 		CF696C132DC3B95000B0CE7D /* Cult_Game_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFE15692DCA633100CFF322 /* Cult_Game_tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_tvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -34,9 +43,24 @@
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
+		3398F2E12DD38E3B0060E09B /* Exceptions for "Resources" folder in "Cult_Game_tvOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				FontManager.swift,
+			);
+			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3398F2DD2DD38E2B0060E09B /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3398F2E12DD38E3B0060E09B /* Exceptions for "Resources" folder in "Cult_Game_tvOS" target */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CF0315192DC911A7006E4E79 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -79,10 +103,13 @@
 		CF696C0A2DC3B95000B0CE7D = {
 			isa = PBXGroup;
 			children = (
+				3398F2DD2DD38E2B0060E09B /* Resources */,
 				CF0315192DC911A7006E4E79 /* Shared */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
 				CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */,
 				CF696C142DC3B95000B0CE7D /* Products */,
+				337E55DA2DD3934E00E54818 /* Almendra-Regular.ttf */,
+				337E55DC2DD3934E00E54818 /* VinerHandITC.TTF */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +138,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				3398F2DD2DD38E2B0060E09B /* Resources */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
 			);
 			name = Cult_Game_iOS;
@@ -185,6 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337E55DD2DD3934E00E54818 /* Almendra-Regular.ttf in Resources */,
+				337E55DE2DD3934E00E54818 /* VinerHandITC.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +222,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337E55E02DD3934E00E54818 /* Almendra-Regular.ttf in Resources */,
+				337E55E12DD3934E00E54818 /* VinerHandITC.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,7 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = K4H4UFJU24;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
@@ -438,7 +470,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = K4H4UFJU24;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";

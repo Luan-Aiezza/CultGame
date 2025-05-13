@@ -12,11 +12,11 @@ enum GamePhase {
 class GameViewModel: ObservableObject {
     @Published var playerHand: [Card] = []
     @Published var usedCard: Card?
-    @Published var role: PlayerRole? = .cultist
+    @Published var role: PlayerRole? = .heretic
     @Published var round : Int = 0
     
     //personagem do jogador
-    @Published var character : Character = .fox
+    @Published var character : Character = .bunny
     private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     private var cancellables = Set<AnyCancellable>()
     private let multiplayerManager = MultiplayerManager.shared

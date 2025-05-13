@@ -9,20 +9,6 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack {
-                if viewModel.role == nil {
-                    
-//                    ProgressView("Waiting for game to start...")
-                    
-                    Text("Choose your role:")
-                           .font(.title)
-                       Button("Cultist") {
-                           viewModel.selectRole(.cultist)
-                       }.padding()
-                       Button("Heretic") {
-                           viewModel.selectRole(.heretic)
-                       }.padding()
-
-                } else {
                     Text("\(viewModel.round)")
                     
                     Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
@@ -104,52 +90,43 @@ struct ContentView: View {
                         viewModel.selectRole(role)
                     }
                 }
-                
-                for family in UIFont.familyNames {
-                    print("Family: \(family)")
-                    for name in UIFont.fontNames(forFamilyName: family) {
-                        print("  Font: \(name)")
-                    }
-                }
-                
             }
 
             // OVERLAY DE DETALHES DA CARTA
-            if let card = selectedCard {
-                Color.black.opacity(0.5)
-                    .edgesIgnoringSafeArea(.all)
-
-                VStack(spacing: 20) {
-                    Image(systemName: "rectangle")
-                        .resizable()
-                        .frame(width: 150, height: 150)
-                    Text(card.name)
-                        .font(.title)
-                    Text("Faith Cost: \(card.faithCost)")
-                    Text("Follower Effect: \(card.followersEffect)")
-                    Text(card.description)
-                        .padding()
-                        .multilineTextAlignment(.center)
-
-                    HStack {
-                        Button("Use") {
-                            viewModel.playCard(card)
-                            selectedCard = nil
-                        }
-                        .disabled(viewModel.points < card.faithCost)
-                        .padding()
-                        .background(viewModel.points >= card.faithCost ? Color.blue : Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-
-                        Button("Close") {
-                            selectedCard = nil
-                        }
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+        if let card = selectedCard {
+            Color.black.opacity(0.5)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
+                Image(systemName: "rectangle")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                Text(card.name)
+                    .font(.title)
+                Text("Faith Cost: \(card.faithCost)")
+                Text("Follower Effect: \(card.followersEffect)")
+                Text(card.description)
+                    .padding()
+                    .multilineTextAlignment(.center)
+                
+                HStack {
+                    Button("Use") {
+                        viewModel.playCard(card)
+                        selectedCard = nil
                     }
+                    .disabled(viewModel.points < card.faithCost)
+                    .padding()
+                    .background(viewModel.points >= card.faithCost ? Color.blue : Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
+                    Button("Close") {
+                        selectedCard = nil
+                    }
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
                 .padding()
                 .background(Color.white)
@@ -157,6 +134,7 @@ struct ContentView: View {
                 .padding(40)
             }
         }
+
     }
 
     private var timerView: some View {

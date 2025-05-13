@@ -9,8 +9,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string></string>
-		<string>VinerHandITC.ttf</string>
-		<string>Almendra-Regular.ttf</string>
+		<string>VinerHandITC</string>
+		<string>Almendra-Regular</string>
 	</array>
 </dict>
 </plist>

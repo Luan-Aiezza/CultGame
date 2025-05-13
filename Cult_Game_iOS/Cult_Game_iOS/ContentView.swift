@@ -105,6 +105,13 @@ struct ContentView: View {
                     }
                 }
                 
+                for family in UIFont.familyNames {
+                    print("Family: \(family)")
+                    for name in UIFont.fontNames(forFamilyName: family) {
+                        print("  Font: \(name)")
+                    }
+                }
+                
             }
 
             // OVERLAY DE DETALHES DA CARTA

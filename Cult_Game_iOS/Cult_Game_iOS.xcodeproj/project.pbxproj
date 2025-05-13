@@ -16,6 +16,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
+				CardDistributionManager.swift,
 				GameModels.swift,
 				GameViewModel.swift,
 				MultiplayerManager.swift,
@@ -27,6 +28,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Card.swift,
+				CardDistributionManager.swift,
 				GameModels.swift,
 				GameViewModel.swift,
 				MultiplayerManager.swift,

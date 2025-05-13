@@ -8,7 +8,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack {
-                if viewModel.role == nil {
+                if viewModel.player.role == nil {
                     
 //                    ProgressView("Waiting for game to start...")
                     
@@ -24,7 +24,7 @@ struct ContentView: View {
                 } else {
                     Text("\(viewModel.round)")
                     
-                    Text(viewModel.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
+                    Text(viewModel.player.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
         
 
@@ -56,7 +56,7 @@ struct ContentView: View {
                         
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(viewModel.playerHand) { card in
+                                ForEach(viewModel.player.hand) { card in
                                     VStack {
                                         Image(systemName: "rectangle")
                                             .resizable()

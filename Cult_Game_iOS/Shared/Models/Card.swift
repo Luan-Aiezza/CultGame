@@ -46,23 +46,23 @@ class Card: Identifiable, Equatable, Codable {
 
 //INSTANCIA DE CARTAS MANUAIS (PROVISORIO)
 
-public class CardDeck {
+public class CardDeck: Codable {
     
-    let commonCards: [Card] = [
+    var commonCards: [Card] = [
         Card(name: "Pray", faithCost: 2, followersEffect: 5, description: "Increases fervor.", imageName: "orar", type: .common),
         Card(name: "Sing Hymns", faithCost: 1, followersEffect: 3, description: "Attracts the curious.", imageName: "hinos", type: .common)
     ]
 
-    let cultistCards: [Card] = [
+    var cultistCards: [Card] = [
         Card(name: "Secret Ritual", faithCost: 4, followersEffect: 10, description: "Strengthens cult ties.", imageName: "ritual", type: .cultist)
     ]
 
-    let heresyCards: [Card] = [
+    var heresyCards: [Card] = [
         Card(name: "Spread Doubts", faithCost: 2, followersEffect: -5, description: "Shakes the followers' faith.", imageName: "duvida", type: .heresy),
         Card(name: "Sabotage Ritual", faithCost: 3, followersEffect: -8, description: "Weakens the cultists.", imageName: "sabotar", type: .heresy)
     ]
 
-    let assassinationCard = Card(name: "Assassination", faithCost: 5, followersEffect: 0, description: "Eliminates a player.", imageName: "assassinato", type: .assassination)
+    var assassinationCard = Card(name: "Assassination", faithCost: 5, followersEffect: 0, description: "Eliminates a player.", imageName: "assassinato", type: .assassination)
     
     var specialCards: [SpecificCard] = []
 

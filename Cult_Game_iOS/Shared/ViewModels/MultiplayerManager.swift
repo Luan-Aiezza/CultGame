@@ -5,6 +5,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     static let shared = MultiplayerManager()
     
     @Published var connectedPeers: [MCPeerID] = []
+    @Published var players: [MCPeerID: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(sharedFaithPoints: 30, heresyPoints: [:], followers: 50)
     
     private let serviceType = "cult-game"
@@ -127,8 +128,10 @@ extension MultiplayerManager: MCSessionDelegate {
             switch state {
             case .connected:
                 self.connectedPeers.append(peerID)
+                self.players[peerID] = PlayerModel()
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
+                self.players.removeValue(forKey: peerID)
             default:
                 break
             }

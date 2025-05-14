@@ -20,6 +20,8 @@ extension GameViewModel {
         case .cardPlay:
             currentPhase = .discussion
         case .discussion:
+            currentPhase = .elimination
+        case .elimination:
             currentPhase = .cardPlay
         default:
             break

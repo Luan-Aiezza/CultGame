@@ -93,6 +93,13 @@ struct ContentView: View {
                             viewModel.playAllActiveCards()
                         }
                         .padding()
+                        Button("Go to Elimination Phase") {
+                            viewModel.currentPhase = .elimination
+                        }
+                        .padding()
+                    }
+                    else if viewModel.currentPhase == .elimination {
+                        EliminationView()
                     }
                 }
             }.onAppear {

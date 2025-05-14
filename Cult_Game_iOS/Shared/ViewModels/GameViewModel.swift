@@ -25,6 +25,9 @@ class GameViewModel: ObservableObject {
 
     // MARK: - Estado individual
     @Published private(set) var player = PlayerModel()
+    
+    // MARK: - Array global de players
+    @Published var players: [MCPeerID: PlayerModel] = [:]
 
     func assignRole(_ role: PlayerRole) {
         player.role = role

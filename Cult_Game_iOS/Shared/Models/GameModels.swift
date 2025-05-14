@@ -8,15 +8,12 @@ struct CardPlayAction: Codable {
     var playerRole: PlayerRole
 }
 
-enum PlayerRole: String, Codable {
-    case cultist
-    case heretic
-}
 
 enum GamePhase {
     case roleSelection
     case cardPlay
     case discussion
+    case elimination
 }
 
 struct GameUpdate: Codable {

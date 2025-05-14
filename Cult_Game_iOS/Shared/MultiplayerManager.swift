@@ -12,7 +12,14 @@ class MultiplayerManager: NSObject, ObservableObject {
     private var session: MCSession!
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
-    public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    //public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    
+    public var myPeerID: MCPeerID {
+        _myPeerID
+    }
+
+    private var _myPeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
+
     
     var isHosting: Bool = false
     
@@ -168,7 +175,10 @@ extension MultiplayerManager: MCSessionDelegate {
                 }
             case .characterAssignment(let character):
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: .didReceiveCharacter, object: character)
+                    NotificationCenter.default.post(name: .didReceiveCharacter, object: nil, userInfo: [
+                               "peerID": peerID,
+                               "character": character
+                           ])
                 }
             case .kickPlayer:
                 DispatchQueue.main.async {
@@ -211,3 +221,14 @@ extension Notification.Name {
     
 
 }
+
+
+
+//feito pra testar na tela waiting for players
+#if DEBUG
+extension MultiplayerManager {
+    func _setFakePeerID(_ fakeID: MCPeerID) {
+        self._myPeerID = fakeID
+    }
+}
+#endif

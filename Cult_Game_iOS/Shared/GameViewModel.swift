@@ -14,12 +14,14 @@ class GameViewModel: ObservableObject {
     @Published var usedCard: Card?
     @Published var role: PlayerRole? = .heretic
     @Published var round : Int = 0
+    @Published var assignedCharacters: [MCPeerID: Character] = [:]
+
     
     //personagem do jogador
     @Published var character : Character = .bunny
     private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     private var cancellables = Set<AnyCancellable>()
-    private let multiplayerManager = MultiplayerManager.shared
+    let multiplayerManager = MultiplayerManager.shared //tirei o private pra testar no WaitingForPlayersView
     private var peerID: MCPeerID {
         multiplayerManager.myPeerID
     }
@@ -65,6 +67,20 @@ class GameViewModel: ObservableObject {
             multiplayerManager.globalState.heresyPoints = newValue
         }
     }
+    
+    var playersForDisplay: [Player] {
+        multiplayerManager.connectedPeers
+            .compactMap { peer in
+                guard let character = assignedCharacters[peer] else { return nil }
+                return Player(
+                    peerID: peer,
+                    isYou: peer == multiplayerManager.myPeerID,
+                    character: character
+                )
+            }
+            .sorted { $0.isYou && !$1.isYou }
+    }
+
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
@@ -74,10 +90,17 @@ class GameViewModel: ObservableObject {
         
         // receber o personagem
         NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
-            if let character = notification.object as? Character {
+            guard let userInfo = notification.userInfo,
+                  let peerID = userInfo["peerID"] as? MCPeerID,
+                  let character = userInfo["character"] as? Character else { return }
+
+            self.assignedCharacters[peerID] = character
+
+            if peerID == self.peerID {
                 self.character = character
             }
         }
+
     }
     
     //cartas ativas
@@ -260,6 +283,16 @@ class GameViewModel: ObservableObject {
             usedCard = nil
         }
     }
+    
+    
+    
+    func _injectFakePeers(_ peers: [MCPeerID], withCharacters characters: [Character]) {
+        for (peer, char) in zip(peers, characters) {
+            assignedCharacters[peer] = char
+        }
+        MultiplayerManager.shared.connectedPeers = peers
+    }
+
     
     @objc private func handleRoleAssignment(_ notification: Notification) {
         if let role = notification.object as? PlayerRole {

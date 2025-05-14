@@ -8,12 +8,23 @@
 
 /* Begin PBXFileReference section */
 		CF696C132DC3B95000B0CE7D /* Cult_Game_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFFE15692DCA633100CFF322 /* Cult_Game_tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cult_Game_tvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		CF0315192DC911A7006E4E79 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Cult_Game_iOS;
+			sourceTree = "<group>";
+		};
+		CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Cult_Game_tvOS;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,13 +37,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CFFE15662DCA633100CFF322 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		CF696C0A2DC3B95000B0CE7D = {
 			isa = PBXGroup;
 			children = (
+				CF0315192DC911A7006E4E79 /* Shared */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
+				CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */,
 				CF696C142DC3B95000B0CE7D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				CF696C132DC3B95000B0CE7D /* Cult_Game_iOS.app */,
+				CFFE15692DCA633100CFF322 /* Cult_Game_tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +91,28 @@
 			productReference = CF696C132DC3B95000B0CE7D /* Cult_Game_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CFFE15742DCA633100CFF322 /* Build configuration list for PBXNativeTarget "Cult_Game_tvOS" */;
+			buildPhases = (
+				CFFE15652DCA633100CFF322 /* Sources */,
+				CFFE15662DCA633100CFF322 /* Frameworks */,
+				CFFE15672DCA633100CFF322 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */,
+			);
+			name = Cult_Game_tvOS;
+			packageProductDependencies = (
+			);
+			productName = Cult_Game_tvOS;
+			productReference = CFFE15692DCA633100CFF322 /* Cult_Game_tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -81,6 +124,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					CF696C122DC3B95000B0CE7D = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CFFE15682DCA633100CFF322 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -100,6 +146,7 @@
 			projectRoot = "";
 			targets = (
 				CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */,
+				CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -112,10 +159,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CFFE15672DCA633100CFF322 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CF696C0F2DC3B95000B0CE7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFFE15652DCA633100CFF322 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -249,12 +310,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_iOS/Cult_Game_iOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -278,12 +342,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_iOS/Cult_Game_iOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +366,68 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CFFE15752DCA633100CFF322 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_tvOS/Cult_Game_tvOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
+				DEVELOPMENT_TEAM = K4H4UFJU24;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mooncat.Cult-Game-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 18.2;
+			};
+			name = Debug;
+		};
+		CFFE15762DCA633100CFF322 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cult_Game_tvOS/Cult_Game_tvOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
+				DEVELOPMENT_TEAM = K4H4UFJU24;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mooncat.Cult-Game-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 18.2;
 			};
 			name = Release;
 		};
@@ -319,6 +448,15 @@
 			buildConfigurations = (
 				CF696C222DC3B95100B0CE7D /* Debug */,
 				CF696C232DC3B95100B0CE7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CFFE15742DCA633100CFF322 /* Build configuration list for PBXNativeTarget "Cult_Game_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFFE15752DCA633100CFF322 /* Debug */,
+				CFFE15762DCA633100CFF322 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

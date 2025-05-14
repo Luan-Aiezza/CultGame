@@ -43,21 +43,11 @@
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
-		3398F2E12DD38E3B0060E09B /* Exceptions for "Resources" folder in "Cult_Game_tvOS" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				FontManager.swift,
-			);
-			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3398F2DD2DD38E2B0060E09B /* Resources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3398F2E12DD38E3B0060E09B /* Exceptions for "Resources" folder in "Cult_Game_tvOS" target */,
-			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
@@ -375,7 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
@@ -407,7 +397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 527MA6AD9C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";

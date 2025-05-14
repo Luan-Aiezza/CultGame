@@ -45,14 +45,20 @@ struct WaitingForPlayersView: View {
                 .scaledToFill()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
+                .overlay {
+                    
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                }
 
             VStack(spacing: 20) {
                 Spacer().frame(height: 40)
 
                 Text("Waiting\nfor Players")
                     .multilineTextAlignment(.center)
-                    .font(Font.custom("Papyrus", size: 34))
-                    .foregroundColor(.init(white: 0.95))
+                    .font(Font.custom("VinerHandITC", size: 34))
+                    .foregroundColor(Color.title)
+                    .padding(.top, 40)
 
                 PlayersGrid(players: viewModel.playersForDisplay)
 
@@ -105,7 +111,7 @@ struct PlayerCard: View {
 
                 VStack(spacing: 2) {
                     Text(player.name)
-                        .font(Font.custom("Papyrus", size: 19))
+                        .font(Font.custom("Almendra-Regular", size: 19))
                         .font(.headline)
                         .foregroundColor(.white)
                         //.padding(.trailing)
@@ -117,7 +123,7 @@ struct PlayerCard: View {
                                 .scaledToFit()
                                 .frame(height: 15)
                             Text("You")
-                                .font(Font.custom("Papyrus", size: 13))
+                                .font(Font.custom("Almendra-Regular", size: 13))
                                 //.font(.caption2)
                                 .foregroundColor(.orange)
                                 

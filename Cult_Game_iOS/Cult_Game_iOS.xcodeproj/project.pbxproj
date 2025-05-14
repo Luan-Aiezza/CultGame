@@ -24,22 +24,32 @@
 		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Card.swift,
-				GameModels.swift,
-				GameViewModel.swift,
-				MultiplayerManager.swift,
-				SpecificCard.swift,
+				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+MultiplayerSinc.swift",
+				"Extensions/GameViewModel+Phase.swift",
+				"Extensions/GameViewModel+Timer.swift",
+				Models/Card.swift,
+				Models/GameModels.swift,
+				Models/PlayerModel.swift,
+				Models/SpecificCard.swift,
+				ViewModels/GameViewModel.swift,
+				ViewModels/MultiplayerManager.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
 		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Card.swift,
-				GameModels.swift,
-				GameViewModel.swift,
-				MultiplayerManager.swift,
-				SpecificCard.swift,
+				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+MultiplayerSinc.swift",
+				"Extensions/GameViewModel+Phase.swift",
+				"Extensions/GameViewModel+Timer.swift",
+				Models/Card.swift,
+				Models/GameModels.swift,
+				Models/PlayerModel.swift,
+				Models/SpecificCard.swift,
+				ViewModels/GameViewModel.swift,
+				ViewModels/MultiplayerManager.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
@@ -365,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 527MA6AD9C;
+				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
@@ -397,7 +407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 527MA6AD9C;
+				DEVELOPMENT_TEAM = K4H4UFJU24;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";

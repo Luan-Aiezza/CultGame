@@ -1,4 +1,5 @@
 import SwiftUI
+import MultipeerConnectivity
 
 struct HostGameView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
@@ -8,7 +9,7 @@ struct HostGameView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Aguardando jogadores...")
+            Text("Waiting players...")
                 .font(.title)
 
             List(multiplayerManager.connectedPeers, id: \.self) { peer in
@@ -16,10 +17,10 @@ struct HostGameView: View {
                     Text(peer.displayName.prefix(10))
                     Spacer()
                     if let role = playerRoles[peer.displayName] {
-                        Text(role == .cultist ? "Cultista" : "Herege")
+                        Text(role == .cultist ? "Cultist" : "Heretic")
                             .foregroundColor(role == .cultist ? .green : .red)
                     } else {
-                        Text("Sem papel")
+                        Text("No role")
                             .foregroundColor(.gray)
                     }
                 }
@@ -32,9 +33,9 @@ struct HostGameView: View {
                     .multilineTextAlignment(.center)
             }
 
-            Button("Iniciar Jogo") {
+            Button("Start Game") {
                 if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
-                    errorMessage = "Você precisa de 3 a 7 jogadores para iniciar."
+                    errorMessage = "You need to connect between 1 and 7 players"
                     return
                 }
 
@@ -48,16 +49,15 @@ struct HostGameView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
 
-            Text("Jogadores conectados: \(multiplayerManager.connectedPeers.count)")
+            Text("Players connected: \(multiplayerManager.connectedPeers.count)")
                 .font(.footnote)
 
             Spacer()
 
             // Status do jogo
             if gameStarted {
-                Text("Jogo Iniciado!")
-                    .font(.title2)
-                    .foregroundColor(.green)
+                GameStatusView()
+                        .transition(.slide)
             }
         }
         .onAppear {
@@ -67,21 +67,23 @@ struct HostGameView: View {
 
     func assignRoles() {
         var players = multiplayerManager.connectedPeers.shuffled()
-        guard let herege = players.popLast() else {
-            errorMessage = "Erro ao selecionar herege"
+
+        guard let heretic = players.popLast() else {
+            errorMessage = "Error assigning heretic role!"
             return
         }
 
-        var roles: [String: PlayerRole] = [herege.displayName: .heretic]
+        var roles: [MCPeerID: PlayerRole] = [heretic: .heretic]
         for peer in players {
-            roles[peer.displayName] = .cultist
+            roles[peer] = .cultist
         }
 
-        self.playerRoles = roles
-        for (peerName, role) in roles {
-            if let peer = multiplayerManager.connectedPeers.first(where: { $0.displayName == peerName }) {
-                multiplayerManager.sendRole(role, to: peer)
-            }
+        // Atualiza o state local para exibição (baseado em displayName)
+        self.playerRoles = roles.mapKeys(\.displayName)
+
+        // Envia a role diretamente para cada peer
+        for (peer, role) in roles {
+            multiplayerManager.sendRole(role, to: peer)
         }
     }
 }

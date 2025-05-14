@@ -30,9 +30,9 @@ struct RoleView: View {
                     HStack(){
                         Spacer()
                         Button {
-                            MultiplayerManager.shared.eliminate(peer: viewModel.getID())
+                            MultiplayerManager.shared.eliminate(peer: viewModel.peerID)
                         } label: {
-                            Image("\(viewModel.role?.rawValue ?? "cultist")buttonX")
+                            Image("\(viewModel.player.role?.rawValue ?? "cultist")buttonX")
                         }
                         .padding(.trailing, 30)
                         .padding(.top, 35)
@@ -40,11 +40,11 @@ struct RoleView: View {
                     }
                     
                     VStack {
-                        Text("You are a \(viewModel.role?.rawValue ?? "Unknown")!")
+                        Text("You are a \(viewModel.player.role?.rawValue ?? "Unknown")!")
                             .font(.custom("VinerHandITC", size: 40))
                             .foregroundStyle(Color.title)
                         
-                        if let role = viewModel.role {
+                        if let role = viewModel.player.role {
                             switch role {
                             case .cultist:
                                 Text("Protect and defend the cult")
@@ -60,10 +60,10 @@ struct RoleView: View {
                     .padding(.top, 90)
                     
                     VStack{
-                            if let role = viewModel.role {
+                        if let role = viewModel.player.role {
                                 switch role {
                                 case .cultist:
-                                    Image("\(viewModel.role?.rawValue ?? "cultist")_\(viewModel.character.rawValue)_001")
+                                    Image("\(viewModel.player.role?.rawValue ?? "cultist")_\(viewModel.player.character.rawValue)_001")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 250, height: 350)
@@ -71,7 +71,7 @@ struct RoleView: View {
                                         .padding(.bottom, 30)
                                     
                                 case .heretic:
-                                    Image("\(viewModel.role?.rawValue ?? "heretic")_\(viewModel.character.rawValue)_001")
+                                    Image("\(viewModel.player.role?.rawValue ?? "heretic")_\(viewModel.player.character.rawValue)_001")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 250, height: 350)
@@ -85,7 +85,7 @@ struct RoleView: View {
                             ContentView()
                         } label: {
                             ZStack {
-                                Image("\(viewModel.role?.rawValue ?? "heretic")_button_001")
+                                Image("\(viewModel.player.role?.rawValue ?? "heretic")_button_001")
                                 Text("Iniciar")
                                     .foregroundColor(Color.title)
                                     .font(.custom("Almendra-Regular", size: 26))

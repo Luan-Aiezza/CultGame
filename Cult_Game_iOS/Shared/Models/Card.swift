@@ -30,8 +30,8 @@ class Card: Identifiable, Equatable, Codable {
         vm.followers += followersEffect
 
         if type != .assassination {
-            vm.usedCard = self
-            vm.playerHand.removeAll { $0.id == self.id }
+            vm.assignCard(card: self)
+            vm.removeCardFromHand(card: self)
         }
     }
     

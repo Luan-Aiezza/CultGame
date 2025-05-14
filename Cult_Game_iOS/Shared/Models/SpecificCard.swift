@@ -39,8 +39,7 @@ class SpecificCard : Card, ObservableObject{
     }
     
     override func play(vm: GameViewModel) {
-        vm.playerHand.removeAll { $0.id == self.id }
-
+        vm.removeCardFromHand(card: self)
         specialAbility?(vm)
     }
 }

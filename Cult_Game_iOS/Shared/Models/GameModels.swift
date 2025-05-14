@@ -22,6 +22,14 @@ enum Character : String, Codable {
     case deer
     case pig
     case wolf
+    
+}
+
+enum GamePhase {
+    case roleSelection
+    case cardPlay
+    case discussion
+    
 }
 
 struct GameUpdate: Codable {

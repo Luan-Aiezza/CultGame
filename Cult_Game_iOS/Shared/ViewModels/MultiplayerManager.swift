@@ -12,13 +12,17 @@ class MultiplayerManager: NSObject, ObservableObject {
     private var session: MCSession!
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
+
     //public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
     
-    public var myPeerID: MCPeerID {
-        _myPeerID
-    }
+//    public var myPeerID: MCPeerID {
+//        _myPeerID
+//    }
 
     private var _myPeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
+
+
+    public let myPeerID = MCPeerID(displayName: "\(UIDevice.current.name)_\(UUID().uuidString.prefix(4))")
 
     
     var isHosting: Bool = false
@@ -222,9 +226,10 @@ extension Notification.Name {
 
 }
 
-
-
-//feito pra testar na tela waiting for players
+//<<<<<<< HEAD:Cult_Game_iOS/Shared/MultiplayerManager.swift
+//
+//
+////feito pra testar na tela waiting for players
 #if DEBUG
 extension MultiplayerManager {
     func _setFakePeerID(_ fakeID: MCPeerID) {
@@ -232,3 +237,10 @@ extension MultiplayerManager {
     }
 }
 #endif
+//=======
+
+extension Dictionary {
+    func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
+        Dictionary<T, Value>(uniqueKeysWithValues: self.map { (transform($0.key), $0.value) })
+    }
+}

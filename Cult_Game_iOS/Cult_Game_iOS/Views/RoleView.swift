@@ -27,7 +27,6 @@ struct RoleView: View {
                 
                 
                 VStack{
-                    
                     HStack(){
                         Spacer()
                         Button {

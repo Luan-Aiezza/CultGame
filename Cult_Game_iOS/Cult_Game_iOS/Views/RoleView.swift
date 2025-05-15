@@ -1,9 +1,3 @@
-//
-//  RoleView.swift
-//  Cult_Game_iOS
-//
-//  Created by Jessica Rodrigues on 12/05/25.
-
 
 import SwiftUI
 

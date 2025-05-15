@@ -1,10 +1,3 @@
-//
-//  PlayerModel.swift
-//  Cult_Game_iOS
-//
-//  Created by Jorge Samuel Silva Coelho on 13/05/25.
-//
-
 enum PlayerState {
     case active
     case inactive

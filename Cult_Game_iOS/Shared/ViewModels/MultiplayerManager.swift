@@ -117,7 +117,7 @@ class MultiplayerManager: NSObject, ObservableObject {
             self.sendGlobalStateToAllPlayers()
             NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
 
-            // ✅ Verifique vitória após atualizar o estado
+        
             GameViewModel().checkVictoryConditions() //precisa estar vinculada ao mesmo GameViewModel do host,
         }
     }

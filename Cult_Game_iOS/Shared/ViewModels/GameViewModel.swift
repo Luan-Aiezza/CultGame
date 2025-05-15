@@ -17,7 +17,7 @@ class GameViewModel: ObservableObject {
 
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
-    private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
+    var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
     
     var availableTime: Int = 30
     var timer: Timer?
@@ -91,6 +91,57 @@ class GameViewModel: ObservableObject {
             }
             .sorted { $0.isYou && !$1.isYou }
     }
+    func endGame(with outcome: GameOutcome) {
+        print("🏁 Fim de jogo — resultado: \(outcome)")
+
+    }
+
+    
+    func checkVictoryConditions() {
+        print("⚖️ Verificando condições de vitória...")
+
+        let cultists = multiplayerManager.connectedPeers.filter {
+            multiplayerManager.getRoles(for: [$0])[$0] == .cultist
+        }
+
+        
+        let heretics = multiplayerManager.connectedPeers.filter {
+            multiplayerManager.getRoles(for: [$0])[$0] == .heretic
+        }
+
+        let activeHeretics = heretics.filter {
+            multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
+        }
+
+        // Herege vence se os seguidores forem 0
+        if followers <= 0 {
+            print("🏴 Vitória dos Hereges: seguidores chegaram a 0")
+            endGame(with: .hereticVictory)
+            return
+        }
+
+        // Herege vence se só restar ele ou empatar em número com cultistas
+//        if cultists.count <= heretics.count {
+//            print("🏴 Vitória dos Hereges: número de cultistas igual ou inferior aos hereges")
+//            endGame(with: .hereticVictory)
+//            return
+//        }
+
+        // Cultistas vencem se atingir o máximo de seguidores
+        if followers >= GameRules.maxFollowers {
+            print("✝️ Vitória dos Cultistas: seguidores chegaram ao máximo")
+            endGame(with: .cultistVictory)
+            return
+        }
+
+//        // Cultistas vencem se todos os hereges forem inativos
+//        if activeHeretics.isEmpty {
+//            print("✝️ Vitória dos Cultistas: todos os hereges estão inativos")
+//            endGame(with: .cultistVictory)
+//        }
+    }
+
+    
 
     // MARK: - Computed: Pontos
     var points: Int {
@@ -117,11 +168,22 @@ class GameViewModel: ObservableObject {
         set { globalState.followers = newValue }
     }
     
+    
 
     // MARK: - Init
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
+        
     }
     
+    
+    
+    
+    
+    
+    
 }
+
+
+

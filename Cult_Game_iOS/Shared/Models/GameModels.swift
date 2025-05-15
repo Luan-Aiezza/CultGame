@@ -37,6 +37,21 @@ struct GameUpdate: Codable {
     var sharedFollowers: Int
 }
 
+enum GameOutcome {
+    case cultistVictory
+    case hereticVictory
+}
+
+struct GameRules {
+    static let maxFollowers = 40
+    static let initialFollowers = 35
+    static let maxFaithPoints = 80
+    static let initialFaithPoints = 45
+    // etc.
+}
+
+
+
 // Estado global sincronizado
 struct GlobalGameState: Codable {
     var sharedFaithPoints: Int

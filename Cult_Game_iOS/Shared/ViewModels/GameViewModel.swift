@@ -41,6 +41,10 @@ class GameViewModel: ObservableObject {
         player.usedCard = card
     }
     
+    func attPlayer(newPlayer: PlayerModel) {
+        player = newPlayer
+    }
+    
     func receiveInitialCards() {
         player.hand.removeAll()
         switch player.role {

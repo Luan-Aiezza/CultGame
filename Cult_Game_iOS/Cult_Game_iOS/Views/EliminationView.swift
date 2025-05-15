@@ -6,6 +6,7 @@ struct EliminationView: View {
     @ObservedObject var viewModel: GameViewModel
 
     @State private var selectedPeer: MCPeerID? = nil
+    @State private var voteConfirmed = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -19,6 +20,7 @@ struct EliminationView: View {
                 if let player = multiplayerManager.players[peer] {
                     Button(action: {
                         selectedPeer = peer
+                        voteConfirmed = false
                     }) {
                         HStack {
                             Text(peer.displayName)
@@ -40,13 +42,26 @@ struct EliminationView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
-                
             }
 
             if let selected = selectedPeer {
                 Text("Selecionado: \(selected.displayName)")
                     .foregroundColor(.red)
                     .padding(.top, 10)
+
+                if !voteConfirmed {
+                    Button("Confirmar Voto") {
+                        if let player = multiplayerManager.players[selected] {
+                            viewModel.addVote(to: selected)
+                            voteConfirmed = true
+                        }
+                    }
+                    .padding(.top, 5)
+                } else {
+                    Text("Voto confirmado!")
+                        .foregroundColor(.green)
+                        .font(.subheadline)
+                }
             }
 
             Spacer()
@@ -60,10 +75,6 @@ struct EliminationView: View {
                 viewModel.currentPhase = .cardPlay
             }
             .padding()
-        }
-        .onAppear {
-            print("dasda")
-            print(multiplayerManager.players)
         }
         .padding()
     }

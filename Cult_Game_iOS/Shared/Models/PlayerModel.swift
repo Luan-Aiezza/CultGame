@@ -26,4 +26,5 @@ struct PlayerModel: Codable, Identifiable {
     var personalHeresyPoints: Int = 0
     var hasEnteredCardPlayOnce = false
     var state: PlayerState = .active
+    var votes: Int = 0
 }

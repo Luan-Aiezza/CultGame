@@ -10,16 +10,16 @@ struct ContentView: View {
             VStack {
                 if viewModel.player.role == nil {
                     
-//                    ProgressView("Waiting for game to start...")
+                    ProgressView("Waiting for game to start...")
                     
-                    Text("Choose your role:")
-                           .font(.title)
-                       Button("Cultist") {
-                           viewModel.selectRole(.cultist)
-                       }.padding()
-                       Button("Heretic") {
-                           viewModel.selectRole(.heretic)
-                       }.padding()
+//                    Text("Choose your role:")
+//                           .font(.title)
+//                       Button("Cultist") {
+//                           viewModel.selectRole(.cultist)
+//                       }.padding()
+//                       Button("Heretic") {
+//                           viewModel.selectRole(.heretic)
+//                       }.padding()
 
                 } else {
                     Text("\(viewModel.round)")
@@ -99,7 +99,7 @@ struct ContentView: View {
                         .padding()
                     }
                     else if viewModel.currentPhase == .elimination {
-                        EliminationView()
+                        EliminationView(multiplayerManager: multiplayerManager, viewModel: viewModel)
                     }
                 }
             }.onAppear {

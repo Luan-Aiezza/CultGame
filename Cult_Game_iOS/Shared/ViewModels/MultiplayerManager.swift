@@ -4,6 +4,8 @@ import MultipeerConnectivity
 class MultiplayerManager: NSObject, ObservableObject {
     static let shared = MultiplayerManager()
     
+    @Published var hostPeerID: MCPeerID?
+    
     @Published var connectedPeers: [MCPeerID] = []
     @Published var players: [MCPeerID: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(sharedFaithPoints: 30, heresyPoints: [:], followers: 50)
@@ -26,6 +28,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     func startHosting() {
         isHosting = true
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
+        hostPeerID = myPeerID // <- define como host
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
     }
@@ -52,7 +55,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     // Função criada para quando um player está tentando conectar ao jogo mas não pode mais entrar. Ex: O limite de jogadores foi atingido e mais um player está tentando entrar na partida.
-
+    
     
     func disconnect() {
         session.cancelConnectPeer(myPeerID)
@@ -67,19 +70,19 @@ class MultiplayerManager: NSObject, ObservableObject {
         connectedPeers.removeAll()
     }
     
-        func handleReceived(_ data: Data, from peerID: MCPeerID) {
-            if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
-                DispatchQueue.main.async {
-                    if action.playerRole == .cultist {
-                        self.globalState.sharedFaithPoints -= action.card.faithCost
-                    } else {
-                        self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
-                    }
-                    self.globalState.followers += action.card.followersEffect
-                    self.sendGlobalStateToAllPlayers()
+    func handleReceived(_ data: Data, from peerID: MCPeerID) {
+        if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
+            DispatchQueue.main.async {
+                if action.playerRole == .cultist {
+                    self.globalState.sharedFaithPoints -= action.card.faithCost
+                } else {
+                    self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
                 }
+                self.globalState.followers += action.card.followersEffect
+                self.sendGlobalStateToAllPlayers()
             }
         }
+    }
     
     func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
         DispatchQueue.main.async {
@@ -129,6 +132,7 @@ extension MultiplayerManager: MCSessionDelegate {
             case .connected:
                 self.connectedPeers.append(peerID)
                 self.players[peerID] = PlayerModel()
+                
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
                 self.players.removeValue(forKey: peerID)

@@ -9,16 +9,31 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack {
-
+                
+                if viewModel.player.role == nil {
+                    
+                    //                    ProgressView("Waiting for game to start...")
+                    
+                    Text("Choose your role:")
+                        .font(.title)
+                    Button("Cultist") {
+                        viewModel.selectRole(.cultist)
+                    }.padding()
+                    Button("Heretic") {
+                        viewModel.selectRole(.heretic)
+                    }.padding()
+                    
+                } else {
+                    
                     Text("\(viewModel.round)")
                     
                     Text(viewModel.player.role == .cultist ? "Faith: \(viewModel.points)" : "Heresy: \(viewModel.points)")
                     Text("Faithful: \(viewModel.followers)")
-        
-
+                    
+                    
                     // TIMER
                     timerView
-
+                    
                     // FASE DE JOGO
                     if viewModel.currentPhase == .cardPlay {
                         
@@ -60,7 +75,7 @@ struct ContentView: View {
                                 }
                             }
                         }
-
+                        
                         Button("Buy card") {
                             viewModel.replenishHandIfNeeded()
                         }
@@ -69,7 +84,7 @@ struct ContentView: View {
                         }
                         .padding()
                     }
-
+                    
                     // FASE DE DISCUSSÃO
                     else if viewModel.currentPhase == .discussion {
                         Text("Discussion Phase")
@@ -83,7 +98,8 @@ struct ContentView: View {
                         .padding()
                     }
                 }
-            }.onAppear {
+            }
+        }.onAppear {
                 multiplayerManager.joinSession()
                 
                 NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in

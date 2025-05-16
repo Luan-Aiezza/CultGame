@@ -13,12 +13,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
 
-    //public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
-    
-//    public var myPeerID: MCPeerID {
-//        _myPeerID
-//    }
-
     private var _myPeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
 
 

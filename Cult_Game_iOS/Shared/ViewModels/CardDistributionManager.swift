@@ -1,5 +1,8 @@
 import Foundation
 
+// CONST QUANTIDADE DE CARTAS
+let 10
+
 // Gerenciador responsável por distribuir cartas aos jogadores, controlando os baralhos e reciclagem de cartas.
 class CardDistributionManager: ObservableObject {
     
@@ -50,21 +53,23 @@ class CardDistributionManager: ObservableObject {
         }
 
         // Move a carta usada para a pilha de descarte.
-        addUsedCard(card)
 
         // Sorteia nova carta do mesmo tipo da usada e adiciona à mão.
         switch card.type {
         case .common:
             if let newCard = drawCard(from: &commonDeck, usedPile: &usedCommon) {
                 hand.append(newCard)
+                addUsedCard(card)
             }
         case .cultist:
             if let newCard = drawCard(from: &cultistDeck, usedPile: &usedCultist) {
                 hand.append(newCard)
+                addUsedCard(card)
             }
         case .heresy:
             if let newCard = drawCard(from: &heresyDeck, usedPile: &usedHeresy) {
                 hand.append(newCard)
+                addUsedCard(card)
             }
         default:
             break // cartas especiais (como assassinato) não são repostas aqui
@@ -87,16 +92,9 @@ class CardDistributionManager: ObservableObject {
         }
     }
 
-    // Sorteia uma única carta de um baralho. Se vazio, reembaralha a pilha de descarte.
-    private func drawCard(from deck: inout [Card], usedPile: inout [Card]) -> Card? {
-        if deck.isEmpty {
-            reshuffle(&deck, from: &usedPile)
-        }
-        return deck.popLast() // remove e retorna a última carta
-    }
-
     // Reembaralha o baralho a partir da pilha de descarte.
     private func reshuffle(_ deck: inout [Card], from used: inout [Card]) {
+        deck = CardDeck()
         deck = used.shuffled()
         used.removeAll()
     }
@@ -107,9 +105,25 @@ class CardDistributionManager: ObservableObject {
         case .common: usedCommon.append(card)
         case .cultist: usedCultist.append(card)
         case .heresy: usedHeresy.append(card)
+        case .empty: break
         default: break
         }
     }
+    
+    private func drawCardWithChance(from deck: inout [Card], usedPile: inout [Card]) -> Card {
+        var randomChance = Int.random(in: 1...100)
+        
+        if deck.isEmpty {
+            reshuffle(&deck, from: &usedPile)
+        }
+        
+        for (index, card) in deck.enumerated() {
+            if deck[index].rarity > randomChance {
+                deck[index].rarity -= 1
+                return card[index]
+            }
+        }
+        
+        return deck.popLast()
+    }
 }
-
-///

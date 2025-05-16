@@ -79,18 +79,18 @@ class GameViewModel: ObservableObject {
     
     @Published var assignedCharacters: [MCPeerID: Character] = [:]
     
-    var playersForDisplay: [Player] {
-        multiplayerManager.connectedPeers
-            .compactMap { peer in
-                guard let character = assignedCharacters[peer] else { return nil }
-                return Player(
-                    peerID: peer,
-                    isYou: peer == multiplayerManager.myPeerID,
-                    character: character
-                )
-            }
-            .sorted { $0.isYou && !$1.isYou }
-    }
+//    var playersForDisplay: [Player] {
+//        multiplayerManager.connectedPeers
+//            .compactMap { peer in
+//                guard let character = assignedCharacters[peer] else { return nil }
+//                return Player(
+//                    peerID: peer,
+//                    isYou: peer == multiplayerManager.myPeerID,
+//                    character: character
+//                )
+//            }
+//            .sorted { $0.isYou && !$1.isYou }
+//    }
 
     // MARK: - Computed: Pontos
     var points: Int {

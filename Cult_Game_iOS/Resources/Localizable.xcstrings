@@ -1,0 +1,607 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "A cursed artifact makes the rituals feel hollow and meaningless." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um artefato amaldiçoado faz com que os rituais pareçam vazios e sem sentido."
+          }
+        }
+      }
+    },
+    "A new day begins in the village." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A new day begins in the village"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um novo dia se inicia na vila."
+          }
+        }
+      }
+    },
+    "Cold blood" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sangue frio"
+          }
+        }
+      }
+    },
+    "Cultist" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cultist"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cultista"
+          }
+        }
+      }
+    },
+    "Dawn is breaking over the village - and the air carries the omen of a new call." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alvorada se estende sobre a vila — e o ar carrega o presságio de um novo chamado."
+          }
+        }
+      }
+    },
+    "Dawn is breaking over the village - but something ancient is also awakening over the land." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alvorada toca a vila — mas há algo antigo que também acorda sob a terra."
+          }
+        }
+      }
+    },
+    "Echoes of doubt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ecos de dúvida"
+          }
+        }
+      }
+    },
+    "Everything seemed too calm. As if someone had silenced the chaos before it could begin." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tudo parecia calmo demais. Como se alguém tivesse silenciado o caos antes que começasse."
+          }
+        }
+      }
+    },
+    "Faith points: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faith points:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pontos de fé:"
+          }
+        }
+      }
+    },
+    "Followers: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Followers:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguidores:"
+          }
+        }
+      }
+    },
+    "Game Status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Status"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status do jogo"
+          }
+        }
+      }
+    },
+    "Heresy: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heresy:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heresia:"
+          }
+        }
+      }
+    },
+    "Heretic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heretic"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herege"
+          }
+        }
+      }
+    },
+    "Morning blooms over the village - but beneath its beauty, the silence of what is to come grows." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A manhã floresce sobre a vila — mas sob sua beleza, cresce o silêncio do que está por vir."
+          }
+        }
+      }
+    },
+    "Night announces itself like an ancient whisper, sliding through half-open doors and averted gazes." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A noite se anuncia como um sussurro antigo, deslizando entre portas entreabertas e olhares desviados."
+          }
+        }
+      }
+    },
+    "No role" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No role"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum papel"
+          }
+        }
+      }
+    },
+    "Players connected: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players connected:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogadores conectados:"
+          }
+        }
+      }
+    },
+    "Rumors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rumores"
+          }
+        }
+      }
+    },
+    "Start Game" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Game"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Começar o jogo"
+          }
+        }
+      }
+    },
+    "Tear of ashes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lágrima de Cinzas"
+          }
+        }
+      }
+    },
+    "The altar is defiled with forbidden symbols, weakening the bond of the faithful." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O altar está profanado com símbolos proibidos, enfraquecendo o vínculo dos fiéis."
+          }
+        }
+      }
+    },
+    "The cult’s time has run out — and now, under the moon’s gaze, the village wonders what comes next." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O tempo do culto se esgotou — e agora, sob o olhar da lua, a vila se pergunta o que virá em seguida."
+          }
+        }
+      }
+    },
+    "The day rises again - but the village is no longer the same, and the cult never forgets." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The day rises again - but the village is no longer the same, and the cult never forgets."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O dia nasce novamente — mas a vila já não é a mesma, e o culto nunca esquece."
+          }
+        }
+      }
+    },
+    "The day says goodbye in silence — the kind that weighs before the sentence." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O dia se despede em silêncio — é a calma que pesa antes da sentença."
+          }
+        }
+      }
+    },
+    "The dusk stitches the village with threads of mistrust. Each shadow, a blind spot." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A penumbra costura a vila com fios de desconfiança. Cada sombra, um ponto cego."
+          }
+        }
+      }
+    },
+    "The evening has arrived like a warning. It’s time to choose paths, and some have no return." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O entardecer chegou como um aviso. É hora de escolher caminhos, e alguns não têm retorno"
+          }
+        }
+      }
+    },
+    "The first light of morning touches the village - and with it, the weight of past choices." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A primeira luz da manhã toca a vila — e com ela, o peso das escolhas do passado."
+          }
+        }
+      }
+    },
+    "The heretic spreads encrypted messages among the villagers, planting the seed of chaos." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege espalha mensagens criptografadas entre os aldeões, plantando a semente do caos."
+          }
+        }
+      }
+    },
+    "The last breath of the day carries a strange weight. Now, it’s time to decide what will endure." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O último suspiro do dia traz um peso estranho. Agora, é hora de decidir o que vai perdurar."
+          }
+        }
+      }
+    },
+    "The last light of the day fades — and with it, the silence that precedes the verdict." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A última luz do dia se apaga — e com ela, o silêncio que antecede o veredito."
+          }
+        }
+      }
+    },
+    "The light of the new day dawns on the village - but not everyone should have woken up." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A luz do novo dia desperta na vila — mas nem todos deveriam ter despertado."
+          }
+        }
+      }
+    },
+    "The mist subsides in the morning - but there are eyes in the forest that have never stopped watching." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A bruma cede à manhã — mas há olhos na floresta que nunca deixaram de vigiar."
+          }
+        }
+      }
+    },
+    "The new sun rises - and the eyes of the cult seek the face of the traitor." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O novo sol se ergue — e os olhos do culto buscam o rosto do traidor."
+          }
+        }
+      }
+    },
+    "The night has closed like an ancient book — but no day ends without leaving marks on the pages of tomorrow." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A noite se fechou como um livro antigo — mas nenhum dia termina sem deixar marcas nas páginas do amanhã."
+          }
+        }
+      }
+    },
+    "The night rose heavy — as if bearing the weight of a newborn secret." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A noite se ergueu pesada — como se carregasse o peso de um segredo recém-nascido."
+          }
+        }
+      }
+    },
+    "The shadow advances over the village — and with it, the moment to point, to judge… and to lose." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sombra avança sobre a vila — e com ela, o momento de apontar, julgar... e perder."
+          }
+        }
+      }
+    },
+    "The shadow has fallen like a sacred veil. What has been done can no longer be undone." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sombra desceu como um véu sagrado. O que foi feito, já não pode ser desfeito."
+          }
+        }
+      }
+    },
+    "The sky darkens, but eyes turn against one another." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O céu escurece, mas os olhos se voltam uns contra os outros."
+          }
+        }
+      }
+    },
+    "The sky is covered in gray — it is the time for heavy words and sealed fates." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O céu se cobre de cinza — é a hora das palavras pesadas e dos destinos selados."
+          }
+        }
+      }
+    },
+    "The sun breaks through the horizon - and with it, the eyes of the occult once again turn to the village." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O sol rasga o horizonte — e com ele, os olhos do oculto se voltam mais uma vez à vila."
+          }
+        }
+      }
+    },
+    "The sun rises over the village - the cycle begins again, and sacrifice may lie ahead." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O sol nasce sobre a vila — o ciclo recomeça, e o sacrifício pode está por vir."
+          }
+        }
+      }
+    },
+    "The sun slowly drowns on the horizon — and with it, poorly buried secrets begin to breathe." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O sol se afoga lentamente no horizonte — e com ele, segredos mal enterrados começam a respirar."
+          }
+        }
+      }
+    },
+    "The village awakens under the gaze of the cult - and there is a traitor among those who pray." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A vila desperta sob o olhar do culto — e há um traidor entre aqueles que oram."
+          }
+        }
+      }
+    },
+    "This card eliminates one of the players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta carta elimina um dos jogadores"
+          }
+        }
+      }
+    },
+    "Twisted tales and veiled suspicions spread like smoke among the faithful. The leader's figure can no longer be seen with the same trust." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Histórias distorcidas e suspeitas veladas se espalham como fumaça entre os fiéis. A figura do líder não pode mais ser vista com a mesma confiança."
+          }
+        }
+      }
+    },
+    "Unholy rite" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rito profano"
+          }
+        }
+      }
+    },
+    "Waiting players..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting Players…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aguardando jogadores…"
+          }
+        }
+      }
+    },
+    "With nightfall, no promises remain — only consequences." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com o cair da noite, não restam promessas — só consequências."
+          }
+        }
+      }
+    },
+    "You need to connect between 5 and 8 players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você precisa conectar entre 5 e 8 jogadores"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

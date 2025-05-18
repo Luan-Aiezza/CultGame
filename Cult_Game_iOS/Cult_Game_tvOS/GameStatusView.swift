@@ -2,27 +2,15 @@ import SwiftUI
 import SpriteKit
 
 struct GameStatusView: View {
+    
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-
-    // Função que retorna a cena
-    var backgroundScene: SKScene {
-        let scene = GameBackgroundScene()
-        scene.size = CGSize(width: 400, height: 800) // Ajuste conforme necessário
-        scene.scaleMode = .resizeFill
-        return scene
-    }
-
+    
     var body: some View {
         ZStack {
+            
             // Tile Map ao fundo
-            SpriteView(scene: backgroundScene)
-                .ignoresSafeArea()
-
-            // Conteúdo principal
-            VStack(spacing: 20) {
-                Text("Game Status")
-                    .font(.largeTitle)
-                    .bold()
+            SpriteView(scene: scene)
+                .ignoresSafeArea(.all)
 
                 VStack(spacing: 10) {
                     Text("Faith points: \(multiplayerManager.globalState.sharedFaithPoints)")
@@ -48,4 +36,4 @@ struct GameStatusView: View {
             .padding()
         }
     }
-}
+

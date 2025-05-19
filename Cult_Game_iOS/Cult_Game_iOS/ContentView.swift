@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-//    @ObservedObject private var viewModel = GameViewModel()
     @ObservedObject private var viewModel = GameViewModel()
     @State private var selectedCard: Card? = nil
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
@@ -12,16 +11,16 @@ struct ContentView: View {
                 
                 if viewModel.player.role == nil {
                     
-                    //                    ProgressView("Waiting for game to start...")
+                                        ProgressView("Waiting for game to start...")
                     
-                    Text("Choose your role:")
-                        .font(.title)
-                    Button("Cultist") {
-                        viewModel.selectRole(.cultist)
-                    }.padding()
-                    Button("Heretic") {
-                        viewModel.selectRole(.heretic)
-                    }.padding()
+//                    Text("Choose your role:")
+//                        .font(.title)
+//                    Button("Cultist") {
+//                        viewModel.selectRole(.cultist)
+//                    }.padding()
+//                    Button("Heretic") {
+//                        viewModel.selectRole(.heretic)
+//                    }.padding()
                     
                 } else {
                     
@@ -105,6 +104,7 @@ struct ContentView: View {
                 NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                     if let role = notification.object as? PlayerRole {
                         viewModel.selectRole(role)
+                        viewModel.receiveInitialCards()
                     }
                 }
             }

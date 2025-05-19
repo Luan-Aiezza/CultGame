@@ -10,9 +10,11 @@ extension GameViewModel {
 
         switch player.role {
         case .cultist:
-            pool = (deck.commonCards + deck.cultistCards).shuffled()
+            guard let card = deckManager.replenishHand(player.hand, usedCard: player.usedCard) else {return}
+            pool.append(card)
         case .heretic:
-            pool = (deck.commonCards + deck.heresyCards + [deck.assassinationCard]).shuffled()
+            guard let card = deckManager.replenishHand(player.hand, usedCard: player.usedCard) else {return}
+            pool.append(card)
         default:
             break
         }

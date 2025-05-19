@@ -14,9 +14,9 @@ class Card: Identifiable, Equatable, Codable {
     let description: String
     let imageName: String
     let type: CardType
-    let rarity : Float
+    var rarity : Int
     
-    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType, rarity: Float) {
+    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType, rarity: Int) {
         self.id = UUID()
         self.name = name
         self.faithCost = faithCost
@@ -37,6 +37,7 @@ class Card: Identifiable, Equatable, Codable {
         if type != .assassination {
             vm.assignCard(card: self)
             vm.removeCardFromHand(card: self)
+            print("jogando carta!!! \(self.name)")
         }
     }
     

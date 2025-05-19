@@ -22,7 +22,7 @@ extension GameViewModel {
     }
 
     func playCard(_ card: Card) {
-        guard player.usedCard == nil else {
+        guard player.usedCard != nil else {
             print("you've already played a card this round")
             return
         }
@@ -50,7 +50,7 @@ extension GameViewModel {
     }
 
     func skipCard() {
-        guard player.usedCard == nil else {
+        guard player.usedCard != nil else {
             print("you've already chosen a card this round")
             return
         }

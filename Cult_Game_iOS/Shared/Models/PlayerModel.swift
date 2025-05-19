@@ -1,9 +1,7 @@
-//
-//  PlayerModel.swift
-//  Cult_Game_iOS
-//
-//  Created by Jorge Samuel Silva Coelho on 13/05/25.
-//
+enum PlayerState {
+    case active
+    case inactive
+}
 
 import Foundation
 
@@ -17,6 +15,16 @@ enum PlayerRole: String, Codable {
     case heretic
 }
 
+enum Character : String, Codable {
+    case fox
+    case panda
+    case bunny
+    case tiger
+    case deer
+    case pig
+    case wolf
+}
+
 struct PlayerModel: Codable, Identifiable {
     var id: String = UUID().uuidString
     
@@ -27,4 +35,5 @@ struct PlayerModel: Codable, Identifiable {
     var hasEnteredCardPlayOnce = false
     var state: PlayerState = .active
     var votes: Int = 0
+    var character: Character = .fox
 }

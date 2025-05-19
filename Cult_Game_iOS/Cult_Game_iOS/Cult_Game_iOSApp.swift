@@ -9,9 +9,23 @@ import SwiftUI
 
 @main
 struct Cult_Game_iOSApp: App {
+    
+    init() {
+        FontManager.registerFonts()
+        
+        for family in UIFont.familyNames {
+            print("Family: \(family)")
+            for name in UIFont.fontNames(forFamilyName: family) {
+                print("  Font: \(name)")
+            }
+        }
+
+    }
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RoleView()
         }
     }
 }

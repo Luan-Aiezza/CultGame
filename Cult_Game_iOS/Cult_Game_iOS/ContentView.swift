@@ -101,6 +101,9 @@ struct ContentView: View {
                     else if viewModel.currentPhase == .elimination {
                         EliminationView(multiplayerManager: multiplayerManager, viewModel: viewModel)
                     }
+                    else if viewModel.currentPhase == .eliminationResults {
+                        EliminationResultsView(viewModel: viewModel)
+                    }
                 }
             }.onAppear {
                 multiplayerManager.joinSession()

@@ -153,16 +153,55 @@ extension MultiplayerManager: MCSessionDelegate {
                 DispatchQueue.main.async {
                     MultiplayerManager.shared.disconnect()
                 }
+                
+            case .vote(let peerDisplayName):
+                DispatchQueue.main.async {
+                    if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
+                       var player = self.players[peer] {
+                        player.votes += 1
+                        self.players[peer] = player
+                        self.sendPlayersToAll()
+                    }
+                }
+                
+            case .setInactive(let peerDisplayName):
+                DispatchQueue.main.async {
+                    if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
+                       var player = self.players[peer] {
+                        player.state = .inactive
+                        self.players[peer] = player
+                    }
+                }
+            case .updatePlayers(let decoded):
+                DispatchQueue.main.async {
+                    let updated = decoded.mapKeys { displayName in
+                        self.connectedPeers.first(where: { $0.displayName == displayName }) ?? MCPeerID(displayName: displayName)
+                    }
+                    self.players = updated
+                }
             }
         } else if let action = try? JSONDecoder().decode(CardPlayAction.self, from: data) {
             handleReceived(action, from: peerID)
         }
     }
     
+    func sendPlayersToAll() {
+        guard !session.connectedPeers.isEmpty else { return }
+        let serializablePlayers = players.mapKeys { $0.displayName }
+        let message = MultiplayerMessage.updatePlayers(serializablePlayers)
+        sendMessage(message)
+    }
+    
     // Métodos exigidos mas não utilizados
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {}
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {}
+    func sendMessage(_ message: MultiplayerMessage) {
+        guard !session.connectedPeers.isEmpty else { return }
+        if let data = try? JSONEncoder().encode(message) {
+            try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
+        }
+    }
 }
 
 // MARK: - MCNearbyServiceAdvertiserDelegate

@@ -14,7 +14,7 @@ class GameViewModel: ObservableObject {
     @Published var timeRemaining: Int = 30
     @Published var round: Int = 0
     @Published var activeCards: [SpecificCard] = []
-
+    
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
     private var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
@@ -22,13 +22,13 @@ class GameViewModel: ObservableObject {
     var availableTime: Int = 30
     var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
-
+    
     // MARK: - Estado individual
     @Published private(set) var player = PlayerModel()
     
     // MARK: - Array global de players
     @Published var players: [MCPeerID: PlayerModel] = [:]
-
+    
     func assignRole(_ role: PlayerRole) {
         player.role = role
     }
@@ -80,10 +80,10 @@ class GameViewModel: ObservableObject {
         get { multiplayerManager.globalState }
         set { multiplayerManager.globalState = newValue }
     }
-
+    
     var isHost: Bool { multiplayerManager.isHosting }
     var peerID: MCPeerID { multiplayerManager.myPeerID }
-
+    
     // MARK: - Computed: Pontos
     var points: Int {
         get {
@@ -103,16 +103,17 @@ class GameViewModel: ObservableObject {
             }
         }
     }
-
+    
     var followers: Int {
         get { globalState.followers }
         set { globalState.followers = newValue }
     }
-
+    
     // MARK: - Init
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
+        
     }
     
 }

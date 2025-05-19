@@ -9,22 +9,14 @@ import Foundation
 import MultipeerConnectivity
 
 extension GameViewModel {
+
     func addVote(to peerID: MCPeerID) {
-        guard var player = multiplayerManager.players[peerID] else { return }
-        player.votes += 1
-        multiplayerManager.players[peerID] = player
-        print("voto adicionado!")
-        if(peerID == multiplayerManager.myPeerID) {
-            attPlayer(newPlayer: player)
-        }
+        let message = MultiplayerMessage.vote(peerID.displayName)
+        multiplayerManager.sendMessage(message)
     }
     
     func turnPlayerInactive(to peerID: MCPeerID) {
-        guard var player = multiplayerManager.players[peerID] else { return }
-        player.state = .inactive
-        multiplayerManager.players[peerID] = player
-        if(peerID == multiplayerManager.myPeerID) {
-            attPlayer(newPlayer: player)
-        }
+        let message = MultiplayerMessage.setInactive(peerID.displayName)
+        multiplayerManager.sendMessage(message)
     }
 }

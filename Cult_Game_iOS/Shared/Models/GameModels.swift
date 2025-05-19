@@ -14,6 +14,7 @@ enum GamePhase {
     case cardPlay
     case discussion
     case elimination
+    case eliminationResults
 }
 
 struct GameUpdate: Codable {
@@ -41,7 +42,10 @@ enum CardType: String, Codable {
 enum MultiplayerMessage: Codable {
     case roleAssignment(PlayerRole)
     case kickPlayer
-    
+    case vote(String)
+    case setInactive(String)
+    case updatePlayers([String: PlayerModel])
+
     enum CodingKeys: String, CodingKey {
         case type, data
     }
@@ -49,6 +53,9 @@ enum MultiplayerMessage: Codable {
     enum MessageType: String, Codable {
         case roleAssignment
         case kickPlayer
+        case vote
+        case setInactive
+        case updatePlayers
     }
     
     // Manual Encoding
@@ -58,12 +65,24 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment(let role):
             try container.encode(MessageType.roleAssignment, forKey: .type)
             try container.encode(role, forKey: .data)
+            
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
-            // Não há data para codificar
+            
+        case .vote(let peerID):
+            try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(peerID, forKey: .data)
+            
+        case .setInactive(let peerID):
+            try container.encode(MessageType.setInactive, forKey: .type)
+            try container.encode(peerID, forKey: .data)
+            
+        case .updatePlayers(let players):
+            try container.encode(MessageType.updatePlayers, forKey: .type)
+            try container.encode(players, forKey: .data)
         }
     }
-    
+
     // Manual Decoding
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -72,9 +91,22 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment:
             let role = try container.decode(PlayerRole.self, forKey: .data)
             self = .roleAssignment(role)
+            
         case .kickPlayer:
             self = .kickPlayer
+            
+        case .vote:
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .vote(peerID)
+            
+        case .setInactive:
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .setInactive(peerID)
+            
+        case .updatePlayers:
+            let players = try container.decode([String: PlayerModel].self, forKey: .data)
+            self = .updatePlayers(players)
         }
-        
     }
+
 }

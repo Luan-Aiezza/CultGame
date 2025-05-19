@@ -1,7 +1,3 @@
-enum PlayerState {
-    case active
-    case inactive
-}
 
 import Foundation
 

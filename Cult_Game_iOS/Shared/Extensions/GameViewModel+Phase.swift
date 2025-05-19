@@ -1,9 +1,3 @@
-//
-//  GameViewModel+Phase.swift
-//  Cult_Game_iOS
-//
-//  Created by Jorge Samuel Silva Coelho on 13/05/25.
-//
 
 import Foundation
 
@@ -19,6 +13,10 @@ extension GameViewModel {
         case .cardPlay:
             currentPhase = .discussion
         case .discussion:
+            currentPhase = .elimination
+        case .elimination:
+            currentPhase = .eliminationResults
+        case .eliminationResults:
             currentPhase = .cardPlay
         default:
             break

@@ -8,33 +8,30 @@ struct CardPlayAction: Codable {
     var playerRole: PlayerRole
 }
 
-enum PlayerRole: String, Codable {
-    case cultist
-    case heretic
-}
-
-//tipos de personagem
-enum Character : String, Codable {
-    case fox
-    case panda
-    case bunny
-    case tiger
-    case deer
-    case pig
-    case wolf
-    
-}
-
 enum GamePhase {
     case roleSelection
     case cardPlay
     case discussion
-    
+    case elimination
+    case eliminationResults
 }
 
 struct GameUpdate: Codable {
     var sharedFaithPoints: Int
     var sharedFollowers: Int
+}
+
+enum GameOutcome {
+    case cultistVictory
+    case hereticVictory
+}
+
+struct GameRules {
+    static let maxFollowers = 40
+    static let initialFollowers = 35
+    static let maxFaithPoints = 80
+    static let initialFaithPoints = 45
+    
 }
 
 // Estado global sincronizado
@@ -58,6 +55,9 @@ enum MultiplayerMessage: Codable {
     case roleAssignment(PlayerRole)
     case kickPlayer
     case characterAssignment(Character)
+    case vote(String)
+    case setInactive(String)
+    case updatePlayers([String: PlayerModel])
     
     enum CodingKeys: String, CodingKey {
         case type, data
@@ -67,6 +67,9 @@ enum MultiplayerMessage: Codable {
         case roleAssignment
         case kickPlayer
         case characterAssignment
+        case vote
+        case setInactive
+        case updatePlayers
     }
     
     // Manual Encoding
@@ -76,15 +79,24 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment(let role):
             try container.encode(MessageType.roleAssignment, forKey: .type)
             try container.encode(role, forKey: .data)
+            
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
-            // Não há data para codificar
-            
-        //decodificar a mensagem do personagem
+            //decodificar a mensagem do personagem
         case .characterAssignment(let character):
             try container.encode(MessageType.characterAssignment, forKey: .type)
             try container.encode(character, forKey: .data)
+        case .vote(let peerID):
+            try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(peerID, forKey: .data)
             
+        case .setInactive(let peerID):
+            try container.encode(MessageType.setInactive, forKey: .type)
+            try container.encode(peerID, forKey: .data)
+            
+        case .updatePlayers(let players):
+            try container.encode(MessageType.updatePlayers, forKey: .type)
+            try container.encode(players, forKey: .data)
         }
     }
     
@@ -96,14 +108,25 @@ enum MultiplayerMessage: Codable {
         case .roleAssignment:
             let role = try container.decode(PlayerRole.self, forKey: .data)
             self = .roleAssignment(role)
+            
         case .kickPlayer:
             self = .kickPlayer
-        
-        //decodificar a mensagem do personagem
+            //decodificar a mensagem do personagem
         case .characterAssignment:
             let character = try container.decode(Character.self, forKey: .data)
             self = .characterAssignment(character)
+        case .vote:
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .vote(peerID)
+            
+        case .setInactive:
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .setInactive(peerID)
+            
+        case .updatePlayers:
+            let players = try container.decode([String: PlayerModel].self, forKey: .data)
+            self = .updatePlayers(players)
         }
-        
     }
+    
 }

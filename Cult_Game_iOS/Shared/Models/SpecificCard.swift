@@ -1,10 +1,3 @@
-//
-//  SpecificCard.swift
-//  Cult_Game_iOS
-//
-//  Created by Jessica Rodrigues on 05/05/25.
-//
-
 import Foundation
 import SwiftUI
 
@@ -19,7 +12,7 @@ class SpecificCard : Card, ObservableObject{
          heresyCost: Int,
          description: String,
          imageName: String,
-         type: Card.CardType,
+         type: CardType,
          rarity: Int,
          isActive: Bool,
          specialAbility : ((GameViewModel) -> Void)? = nil)

@@ -1,4 +1,12 @@
+//
+//  GameViewModel+Cards.swift
+//  Cult_Game_iOS
+//
+//  Created by Jorge Samuel Silva Coelho on 13/05/25.
+//
+
 import Foundation
+import SwiftUI
 
 extension GameViewModel {
     
@@ -21,32 +29,35 @@ extension GameViewModel {
         addCard(pool: pool, needed: needed)
     }
 
+    
     func playCard(_ card: Card) {
         guard player.usedCard != nil else {
             print("you've already played a card this round")
             return
         }
 
-        guard points >= card.faithCost else { return }
-
-        let action = CardPlayAction(playerID: peerID.displayName, card: card, playerRole: player.role!)
-
-        if isHost {
-            multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
-        } else {
-            multiplayerManager.send(action)
+        guard points >= card.faithCost else {
+            print("⚠️ Pontos insuficientes para usar a carta.")
+            return
         }
 
-        if card.type != .assassination {
-            assignCard(card: card)
-            removeCardFromHand(card: card)
+        assignCard(card: card)
+        removeCardFromHand(card: card)
 
-        } else {
-            assignCard(card: card)
-        }
+        card.play(vm: self) // envia para host
 
-        card.play(vm: self)
+        print("""
+        🃏 Carta jogada: \(card.name)
+        ✝️ Fé: \(globalState.sharedFaithPoints)
+        🔥 Heresia: \(globalState.heresyPoints[peerID.displayName, default: 0])
+        👥 Fiéis: \(globalState.followers)
+        """)
+
+        // Impede skip
+        turnEnteredCardPlayOnce()
+
         proceedToDiscussionIfReady()
+        checkVictoryConditions()
     }
 
     func skipCard() {
@@ -55,16 +66,28 @@ extension GameViewModel {
             return
         }
 
-        let action = CardPlayAction(playerID: peerID.displayName, card: player.usedCard!, playerRole: player.role!)
+        print("⏭ Rodada skipada")
+
+        let action = CardPlayAction(playerID: peerID.displayName, card: emptyCard, playerRole: player.role!)
 
         if isHost {
-            multiplayerManager.handleReceived(try! JSONEncoder().encode(action), from: peerID)
+            multiplayerManager.handleReceived(action, from: peerID)
         } else {
             multiplayerManager.send(action)
         }
+
         turnEmptyCard()
-        proceedToDiscussionIfReady()
+
+        if currentPhase == .cardPlay {
+            currentPhase = .discussion
+        } else if currentPhase == .discussion {
+            currentPhase = .cardPlay
+            playAllActiveCards()
+        }
     }
+
+
+
 
     func playAllActiveCards() {
         activeCards.removeAll { $0.isActive == false }

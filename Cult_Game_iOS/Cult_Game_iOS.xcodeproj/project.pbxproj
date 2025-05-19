@@ -25,6 +25,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
@@ -43,6 +44,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",

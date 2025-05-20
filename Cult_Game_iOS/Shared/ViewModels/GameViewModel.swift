@@ -37,6 +37,7 @@ class GameViewModel: ObservableObject {
     
     func addCard(pool: [Card], needed: Int) {
         player.hand.append(contentsOf: pool.prefix(needed))
+        print("adicionou novas cartas sim")
     }
     
     func assignCard(card: Card) {

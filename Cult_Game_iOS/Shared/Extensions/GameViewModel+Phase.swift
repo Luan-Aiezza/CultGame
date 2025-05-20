@@ -30,12 +30,15 @@ extension GameViewModel {
                 globalState.heresyPoints[peerID.displayName, default: 0] += 1
             }
             turnEnteredCardPlayOnce()
+            print("hand antes: \(player.hand)")
             replenishHandIfNeeded()
+            print("hand depois: \(player.hand)")
             addRound()
             playAllActiveCards()
 
             if player.usedCard == nil {
                 turnEmptyCard()
+                print("turn empty card foi ativado durante handle phase")
             }
 
         default: break
@@ -47,7 +50,7 @@ extension GameViewModel {
     }
 
     func proceedToDiscussionIfReady() {
-        if player.usedCard != nil {
+        if player.usedCard == nil {
             currentPhase = .discussion
             turnEmptyCard()
         }

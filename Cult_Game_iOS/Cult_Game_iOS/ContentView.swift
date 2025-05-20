@@ -141,7 +141,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear {
-                    multiplayerManager.startHosting()
+                    multiplayerManager.joinSession()
 
                     NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                         if let role = notification.object as? PlayerRole {

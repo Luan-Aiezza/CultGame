@@ -11,7 +11,20 @@ import SwiftUI
 extension GameViewModel {
     
     func replenishHandIfNeeded() {
-        let needed = 3 - player.hand.count
+        print("CHEGOU NO INICIO DE REPLENISH HAND IF NEEDED!!!!!!!")
+        print("o usedcard ta nil ? \(player.usedCard)")
+        var idealCardNumber = 0
+        
+        switch player.role {
+        case .cultist:
+            idealCardNumber = 3
+        case .heretic:
+            idealCardNumber = 5
+        default:
+            break
+        }
+        
+        let needed = idealCardNumber - player.hand.count
         guard needed > 0 else { return }
 
         var pool: [Card] = []
@@ -27,6 +40,8 @@ extension GameViewModel {
             break
         }
         addCard(pool: pool, needed: needed)
+        
+        print("CHEGOU NO FINAL DE REPLENISH HAND IF NEEDED!!!!!!!")
     }
 
     

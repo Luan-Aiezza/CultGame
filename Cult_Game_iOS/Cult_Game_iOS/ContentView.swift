@@ -12,29 +12,30 @@ struct ContentView: View {
             ZStack {
                 VStack {
                     if viewModel.player.role == nil {
-                        VStack(spacing: 30) {
-                            Text("Choose your Role")
-                                .font(.largeTitle)
-
-                            Button("Cultist") {
-                                viewModel.selectRole(.cultist)
-                                roleSelected = true
-                            }
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-
-                            Button("Heretic") {
-                                viewModel.selectRole(.heretic)
-                                roleSelected = true
-                            }
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        ProgressView("waiting for players...")
+//                        VStack(spacing: 30) {
+//                            Text("Choose your Role")
+//                                .font(.largeTitle)
+//
+//                            Button("Cultist") {
+//                                viewModel.selectRole(.cultist)
+//                                roleSelected = true
+//                            }
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//
+//                            Button("Heretic") {
+//                                viewModel.selectRole(.heretic)
+//                                roleSelected = true
+//                            }
+//                            .padding()
+//                            .background(Color.red)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
                         }
-                    } else {
+                     else {
                         VStack {
                             HStack {
                                 Text("Round: \(viewModel.round)")
@@ -138,7 +139,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear {
-                    multiplayerManager.startHosting()
+                    multiplayerManager.joinSession()
 
                     NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                         if let role = notification.object as? PlayerRole {

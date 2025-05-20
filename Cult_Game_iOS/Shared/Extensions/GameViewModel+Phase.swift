@@ -5,7 +5,6 @@ extension GameViewModel {
     
     func selectRole(_ selectedRole: PlayerRole) {
         assignRole(selectedRole)
-        receiveInitialCards()
         currentPhase = .cardPlay
     }
     

@@ -13,7 +13,7 @@ class SpecificCard : Card, ObservableObject{
          description: String,
          imageName: String,
          type: Card.CardType,
-         rarity: Float,
+         rarity: Int,
          isActive: Bool,
          specialAbility : ((GameViewModel) -> Void)? = nil)
     {

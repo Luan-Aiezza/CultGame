@@ -34,6 +34,7 @@
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
+				ViewModels/CardDistributionManager.swift,
 				ViewModels/GameViewModel.swift,
 				ViewModels/MultiplayerManager.swift,
 			);
@@ -52,6 +53,7 @@
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
+				ViewModels/CardDistributionManager.swift,
 				ViewModels/GameViewModel.swift,
 				ViewModels/MultiplayerManager.swift,
 			);

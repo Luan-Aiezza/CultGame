@@ -14,9 +14,9 @@ class Card: Identifiable, Equatable, Codable {
     let description: String
     let imageName: String
     let type: CardType
-    let rarity : Float
+    var rarity : Int
     
-    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType, rarity: Float) {
+    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType, rarity: Int) {
         self.id = UUID()
         self.name = name
         self.faithCost = faithCost
@@ -42,15 +42,5 @@ class Card: Identifiable, Equatable, Codable {
             print("📡 Enviando carta para host")
             vm.multiplayerManager.send(action)
         }
-    }
-
-
-    
-    enum CardType : String, Codable {
-        case common
-        case cultist
-        case heresy
-        case assassination
-        case empty
     }
 }

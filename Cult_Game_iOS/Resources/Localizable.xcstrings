@@ -1,13 +1,70 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "A believer is corrupted from within. Faith appears intact, but it is poisoned." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A believer is corrupted from within. Faith appears intact, but it is poisoned."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O crente é corrompido por dentro. A fé parece intacta, mas está envenenada."
+          }
+        }
+      }
+    },
     "A cursed artifact makes the rituals feel hollow and meaningless." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A cursed artifact makes the rituals feel hollow and meaningless."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Um artefato amaldiçoado faz com que os rituais pareçam vazios e sem sentido."
+          }
+        }
+      }
+    },
+    "A forgotten word is whispered on the hill. Whoever hears it is never the same again." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A forgotten word is whispered on the hill. Whoever hears it is never the same again."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma palavra esquecida é sussurrada na colina. Quem a ouve nunca mais é o mesmo."
+          }
+        }
+      }
+    },
+    "A group of followers begins to follow an alternative path." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A group of followers begins to follow an alternative path."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um grupo de seguidores começa a seguir um caminho alternativo."
           }
         }
       }
@@ -29,13 +86,87 @@
         }
       }
     },
+    "A precisely cast doubt is more lethal than a blade. The leader’s prestige falters, and the faithful scatter." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A precisely cast doubt is more lethal than a blade. The leader’s prestige falters, and the faithful scatter."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma dúvida formulada com precisão é mais letal que uma lâmina. O prestígio do líder vacila e os fiéis se dispersam."
+          }
+        }
+      }
+    },
+    "An artifact reveals the cultists’ hypocrisy to the eyes of the faithful." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An artifact reveals the cultists’ hypocrisy to the eyes of the faithful."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um artefato revela a hipocrisia dos cultistas aos olhos dos fiéis."
+          }
+        }
+      }
+    },
+    "Ancient verses are recited covertly in the village, seducing restless minds." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancient verses are recited covertly in the village, seducing restless minds."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versos antigos são recitados secretamente na aldeia, seduzindo mentes inquietas."
+          }
+        }
+      }
+    },
     "Cold blood" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cold blood"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sangue frio"
+          }
+        }
+      }
+    },
+    "Corruption" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corruption"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrupção silenciosa"
           }
         }
       }
@@ -59,6 +190,12 @@
     "Dawn is breaking over the village - and the air carries the omen of a new call." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawn is breaking over the village - and the air carries the omen of a new call."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -70,6 +207,12 @@
     "Dawn is breaking over the village - but something ancient is also awakening over the land." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawn is breaking over the village - but something ancient is also awakening over the land."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -81,10 +224,16 @@
     "Echoes of doubt" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Echoes of doubt"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ecos de dúvida"
+            "value" : "Espalhar mentira"
           }
         }
       }
@@ -92,10 +241,33 @@
     "Everything seemed too calm. As if someone had silenced the chaos before it could begin." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything seemed too calm. As if someone had silenced the chaos before it could begin."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tudo parecia calmo demais. Como se alguém tivesse silenciado o caos antes que começasse."
+          }
+        }
+      }
+    },
+    "Faith Divided" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faith Divided"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despertar do cisma"
           }
         }
       }
@@ -116,6 +288,23 @@
         }
       }
     },
+    "False Prophet" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "False Prophet"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falso Profeta"
+          }
+        }
+      }
+    },
     "Followers: %lld" : {
       "localizations" : {
         "en" : {
@@ -128,6 +317,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seguidores:"
+          }
+        }
+      }
+    },
+    "Foreign Word" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foreign Word"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palavra Estrangeira"
+          }
+        }
+      }
+    },
+    "Fragments of a forbidden text circulate among the weakest of the faithful." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragments of a forbidden text circulate among the weakest of the faithful."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragmentos de um texto proibido circulam entre os fiéis mais fracos."
           }
         }
       }
@@ -180,9 +403,66 @@
         }
       }
     },
+    "In muffled chants and hidden circles, forbidden ceremonies are conducted. Few returns… but power makes itself known." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In muffled chants and hidden circles, forbidden ceremonies are conducted. Few returns… but power makes itself known."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em cânticos abafados e círculos ocultos, cerimônias proibidas são conduzidas. Poucos retornam... mas o poder se faz presente."
+          }
+        }
+      }
+    },
+    "Mirror of Dissent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mirror of Dissent"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espelho da Dissidência"
+          }
+        }
+      }
+    },
+    "Mirrored Rite" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mirrored Rite"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ato de Contrição Deturpado"
+          }
+        }
+      }
+    },
     "Morning blooms over the village - but beneath its beauty, the silence of what is to come grows." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning blooms over the village - but beneath its beauty, the silence of what is to come grows."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -191,9 +471,32 @@
         }
       }
     },
+    "Name in Shadows" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name in Shadows"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sombra sobre o nome"
+          }
+        }
+      }
+    },
     "Night announces itself like an ancient whisper, sliding through half-open doors and averted gazes." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night announces itself like an ancient whisper, sliding through half-open doors and averted gazes."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -234,13 +537,104 @@
         }
       }
     },
-    "Rumors" : {
+    "Profanation" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profanation"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rumores"
+            "value" : "Profanação"
+          }
+        }
+      }
+    },
+    "Profane Mirror" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profane Mirror"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espelho Profano"
+          }
+        }
+      }
+    },
+    "Profane Poetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profane Poetry"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poesia Profana"
+          }
+        }
+      }
+    },
+    "Rumors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rumors"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sussuros de rebeldia"
+          }
+        }
+      }
+    },
+    "Secret Ritual" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secret Ritual"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ritual Secreto"
+          }
+        }
+      }
+    },
+    "Shattered name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shattered name"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome quebrado"
           }
         }
       }
@@ -264,10 +658,16 @@
     "Tear of ashes" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tear of ashes"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lágrima de Cinzas"
+            "value" : "Lágrimas de Cinza"
           }
         }
       }
@@ -275,6 +675,12 @@
     "The altar is defiled with forbidden symbols, weakening the bond of the faithful." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The altar is defiled with forbidden symbols, weakening the bond of the faithful."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -286,6 +692,12 @@
     "The cult’s time has run out — and now, under the moon’s gaze, the village wonders what comes next." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cult’s time has run out — and now, under the moon’s gaze, the village wonders what comes next."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -314,6 +726,12 @@
     "The day says goodbye in silence — the kind that weighs before the sentence." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The day says goodbye in silence — the kind that weighs before the sentence."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -325,6 +743,12 @@
     "The dusk stitches the village with threads of mistrust. Each shadow, a blind spot." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The dusk stitches the village with threads of mistrust. Each shadow, a blind spot."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -336,6 +760,12 @@
     "The evening has arrived like a warning. It’s time to choose paths, and some have no return." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The evening has arrived like a warning. It’s time to choose paths, and some have no return."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -347,6 +777,12 @@
     "The first light of morning touches the village - and with it, the weight of past choices." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The first light of morning touches the village - and with it, the weight of past choices."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -355,9 +791,66 @@
         }
       }
     },
+    "The heretic performs a ritual mimicking the cultists, but ends up invoking opposing forces." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic performs a ritual mimicking the cultists, but ends up invoking opposing forces."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege realiza um ritual imitando os cultistas, mas acaba invocando forças opostas."
+          }
+        }
+      }
+    },
+    "The heretic poses as a divine envoy, luring followers away from the cult." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic poses as a divine envoy, luring followers away from the cult."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege se apresenta como um enviado divino, atraindo seguidores para longe do culto."
+          }
+        }
+      }
+    },
+    "The heretic proclaims their doubts from the mountaintop, and their voice echoes through the forest." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic proclaims their doubts from the mountaintop, and their voice echoes through the forest."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege proclama suas dúvidas do topo da montanha, e sua voz ecoa pela floresta."
+          }
+        }
+      }
+    },
     "The heretic spreads encrypted messages among the villagers, planting the seed of chaos." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic spreads encrypted messages among the villagers, planting the seed of chaos."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -366,9 +859,49 @@
         }
       }
     },
+    "The heretic spreads rumors among the villagers, leading them to abandon the doctrine." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic spreads rumors among the villagers, leading them to abandon the doctrine."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege espalha rumores entre os moradores, levando-os a abandonar a doutrina."
+          }
+        }
+      }
+    },
+    "The heretic uses an enchanted mirror to reveal hidden truths to the faithful." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The heretic uses an enchanted mirror to reveal hidden truths to the faithful."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O herege usa um espelho encantado para revelar verdades ocultas aos fiéis."
+          }
+        }
+      }
+    },
     "The last breath of the day carries a strange weight. Now, it’s time to decide what will endure." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The last breath of the day carries a strange weight. Now, it’s time to decide what will endure."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -380,6 +913,12 @@
     "The last light of the day fades — and with it, the silence that precedes the verdict." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The last light of the day fades — and with it, the silence that precedes the verdict."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -391,6 +930,12 @@
     "The light of the new day dawns on the village - but not everyone should have woken up." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The light of the new day dawns on the village - but not everyone should have woken up."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -402,6 +947,12 @@
     "The mist subsides in the morning - but there are eyes in the forest that have never stopped watching." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The mist subsides in the morning - but there are eyes in the forest that have never stopped watching."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -410,9 +961,32 @@
         }
       }
     },
+    "The Murmur" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Murmur"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sussuros do escuro"
+          }
+        }
+      }
+    },
     "The new sun rises - and the eyes of the cult seek the face of the traitor." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The new sun rises - and the eyes of the cult seek the face of the traitor."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -424,6 +998,12 @@
     "The night has closed like an ancient book — but no day ends without leaving marks on the pages of tomorrow." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The night has closed like an ancient book — but no day ends without leaving marks on the pages of tomorrow."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,6 +1015,12 @@
     "The night rose heavy — as if bearing the weight of a newborn secret." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The night rose heavy — as if bearing the weight of a newborn secret."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -446,6 +1032,12 @@
     "The shadow advances over the village — and with it, the moment to point, to judge… and to lose." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The shadow advances over the village — and with it, the moment to point, to judge… and to lose."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +1049,12 @@
     "The shadow has fallen like a sacred veil. What has been done can no longer be undone." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The shadow has fallen like a sacred veil. What has been done can no longer be undone."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -468,6 +1066,12 @@
     "The sky darkens, but eyes turn against one another." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sky darkens, but eyes turn against one another."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -479,6 +1083,12 @@
     "The sky is covered in gray — it is the time for heavy words and sealed fates." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sky is covered in gray — it is the time for heavy words and sealed fates."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,9 +1097,32 @@
         }
       }
     },
+    "The spread" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The spread"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disseminar Rumores"
+          }
+        }
+      }
+    },
     "The sun breaks through the horizon - and with it, the eyes of the occult once again turn to the village." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sun breaks through the horizon - and with it, the eyes of the occult once again turn to the village."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -501,6 +1134,12 @@
     "The sun rises over the village - the cycle begins again, and sacrifice may lie ahead." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sun rises over the village - the cycle begins again, and sacrifice may lie ahead."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -512,6 +1151,12 @@
     "The sun slowly drowns on the horizon — and with it, poorly buried secrets begin to breathe." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sun slowly drowns on the horizon — and with it, poorly buried secrets begin to breathe."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -523,6 +1168,12 @@
     "The village awakens under the gaze of the cult - and there is a traitor among those who pray." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The village awakens under the gaze of the cult - and there is a traitor among those who pray."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -534,6 +1185,12 @@
     "This card eliminates one of the players" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This card eliminates one of the players"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -542,9 +1199,32 @@
         }
       }
     },
+    "Torn Manuscript" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Torn Manuscript"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manuscrito rasgado"
+          }
+        }
+      }
+    },
     "Twisted tales and veiled suspicions spread like smoke among the faithful. The leader's figure can no longer be seen with the same trust." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twisted tales and veiled suspicions spread like smoke among the faithful. The leader's figure can no longer be seen with the same trust."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -553,13 +1233,53 @@
         }
       }
     },
+    "Unbeliever" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbeliever"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incrédulo"
+          }
+        }
+      }
+    },
     "Unholy rite" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unholy rite"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rito profano"
+          }
+        }
+      }
+    },
+    "Wait a moment..." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait a moment..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espere um momento..."
           }
         }
       }
@@ -580,9 +1300,49 @@
         }
       }
     },
+    "Whispered words in the darkness make the faithful question their devotion." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whispered words in the darkness make the faithful question their devotion."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palavras sussurradas na escuridão fazem os fiéis questionarem sua devoção."
+          }
+        }
+      }
+    },
+    "Whispers of forgotten gods seep among the faithful. Slowly, eyes begin to turn toward other altars. " : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whispers of forgotten gods seep among the faithful. Slowly, eyes begin to turn toward other altars. "
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sussurros de deuses esquecidos se infiltram entre os fiéis. Lentamente, os olhares começam a se voltar para outros altares."
+          }
+        }
+      }
+    },
     "With nightfall, no promises remain — only consequences." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With nightfall, no promises remain — only consequences."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -594,6 +1354,12 @@
     "You need to connect between 5 and 8 players" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You need to connect between 5 and 8 players"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",

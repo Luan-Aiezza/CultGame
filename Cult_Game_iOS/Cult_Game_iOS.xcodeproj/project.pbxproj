@@ -30,6 +30,7 @@
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
 				Models/Card.swift,
+				Models/CardDeck.swift,
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
@@ -47,11 +48,20 @@
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
 				Models/Card.swift,
+				Models/CardDeck.swift,
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
 				ViewModels/GameViewModel.swift,
 				ViewModels/MultiplayerManager.swift,
+			);
+			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
+		};
+		33AD87132DD7CAB3004CA21C /* Exceptions for "Cult_Game_iOS" folder in "Cult_Game_tvOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Views/WaitingForPlayersView.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
@@ -79,6 +89,9 @@
 		};
 		CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				33AD87132DD7CAB3004CA21C /* Exceptions for "Cult_Game_iOS" folder in "Cult_Game_tvOS" target */,
+			);
 			path = Cult_Game_iOS;
 			sourceTree = "<group>";
 		};

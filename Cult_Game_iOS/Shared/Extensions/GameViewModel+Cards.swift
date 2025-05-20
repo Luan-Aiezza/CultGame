@@ -101,9 +101,6 @@ extension GameViewModel {
         }
     }
 
-
-
-
     func playAllActiveCards() {
         activeCards.removeAll { $0.isActive == false }
         for card in activeCards {

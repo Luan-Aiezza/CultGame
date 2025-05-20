@@ -50,8 +50,8 @@ extension GameViewModel {
     }
 
     func proceedToDiscussionIfReady() {
+        currentPhase = .discussion
         if player.usedCard == nil {
-            currentPhase = .discussion
             turnEmptyCard()
         }
     }

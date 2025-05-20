@@ -72,6 +72,11 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		CF3698352DDC1926005F6FE8 /* Audio */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Cult_Game_iOS;
@@ -105,6 +110,7 @@
 		CF696C0A2DC3B95000B0CE7D = {
 			isa = PBXGroup;
 			children = (
+				CF3698352DDC1926005F6FE8 /* Audio */,
 				3365CA4F2DD4DE87002A5681 /* Resources */,
 				CF0315192DC911A7006E4E79 /* Shared */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
@@ -141,6 +147,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3365CA4F2DD4DE87002A5681 /* Resources */,
+				CF3698352DDC1926005F6FE8 /* Audio */,
 				CF696C152DC3B95000B0CE7D /* Cult_Game_iOS */,
 			);
 			name = Cult_Game_iOS;
@@ -164,6 +171,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3365CA4F2DD4DE87002A5681 /* Resources */,
+				CF3698352DDC1926005F6FE8 /* Audio */,
 				CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */,
 			);
 			name = Cult_Game_tvOS;

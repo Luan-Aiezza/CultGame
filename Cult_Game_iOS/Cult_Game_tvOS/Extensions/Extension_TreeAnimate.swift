@@ -24,7 +24,7 @@ extension GameStatusView {
         tree.position = CGPoint(x: originalPosition.x, y: originalPosition.y - deltaY)
 
         // Define a rotação de balanço (em radianos)
-        let angle: CGFloat = .pi / 180 * 3  // ~2 graus
+        let angle: CGFloat = .pi / 180 * 2  // ~2 graus
 
         // Define as ações de balanço
         let swayRight = SKAction.rotate(byAngle: angle, duration: 1.2)

@@ -10,7 +10,7 @@ extension GameStatusView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/2 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena

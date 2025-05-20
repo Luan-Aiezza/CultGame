@@ -16,7 +16,7 @@ extension GameStatusView {
             animateFire(in: scene)
             animateRain(in: scene)
             animateSmoke(in: scene)
-            //animateWater(in: scene)
+            animateBonfire(in: scene)
             
             return scene
         } else {
@@ -36,18 +36,6 @@ extension GameStatusView {
             applyLinearFiltering(to: child)
         }
 
-        if let tileMapNode = node.childNode(withName: "*/Tree") as? SKTileMapNode {
-            addFilteringMode(tileMap: tileMapNode)
-        }
     }
 
-    func addFilteringMode(tileMap: SKTileMapNode) {
-        for col in 0..<tileMap.numberOfColumns {
-            for row in 0..<tileMap.numberOfRows {
-                if let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row) {
-                    tileDefinition.textures[0].filteringMode = .linear
-                }
-            }
-        }
-    }
 }

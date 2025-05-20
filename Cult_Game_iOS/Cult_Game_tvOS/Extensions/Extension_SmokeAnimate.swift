@@ -10,8 +10,8 @@ extension GameStatusView {
             return
         }
         emitter1.name = "Smoke1"
-        emitter1.position = CGPoint(x: -625, y: -40)
-        emitter1.zPosition = 5  // Ajuste para ficar acima do fundo, mas abaixo do pet/personagem
+        emitter1.position = CGPoint(x: -590, y: 10)
+        emitter1.zPosition = 5  // Ajusta para ficar acima do fundo.
 
         scene.addChild(emitter1)
         
@@ -21,8 +21,8 @@ extension GameStatusView {
         }
 
         emitter2.name = "Smoke1"
-        emitter2.position = CGPoint(x: -655, y: -165)
-        emitter2.zPosition = 5  // Ajuste para ficar acima do fundo, mas abaixo do pet/personagem
+        emitter2.position = CGPoint(x: -630, y: -140)
+        emitter2.zPosition = 5  // Ajusta para ficar acima do fundo.
         scene.addChild(emitter2)
     }
 }

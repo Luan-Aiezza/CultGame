@@ -11,7 +11,7 @@ extension GameStatusView {
 
         emitter.name = "Fireflies"
         emitter.position = CGPoint(x: scene.size.width-scene.size.width, y: scene.size.height/4)
-        emitter.zPosition = 5  // Ajuste para ficar acima do fundo, mas abaixo do pet/personagem
+        emitter.zPosition = 5  // Ajusta para ficar acima do fundo
         emitter.particlePositionRange = CGVector(dx: scene.size.width, dy: scene.size.height)
 
         scene.addChild(emitter)

@@ -5,7 +5,7 @@ extension GameStatusView {
     
     // MARK: - Animação de árvores
     func animateTrees(in scene: SKScene) {
-        for i in 1...62 {
+        for i in 1...258{
             if let tree = scene.childNode(withName: "*/tree_\(i)") as? SKSpriteNode {
                 applyWindEffect(to: tree)
             }

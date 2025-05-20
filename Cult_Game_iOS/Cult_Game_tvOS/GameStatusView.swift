@@ -8,10 +8,11 @@ struct GameStatusView: View {
     var body: some View {
         ZStack {
             
-            // Tile Map ao fundo
+            // VIEW DO MAPA
             SpriteView(scene: scene)
                 .ignoresSafeArea(.all)
-
+            
+            //A PARTIR DAQUI SERÁ UI
                 VStack(spacing: 10) {
                     Text("Faith points: \(multiplayerManager.globalState.sharedFaithPoints)")
                         .foregroundColor(.green)

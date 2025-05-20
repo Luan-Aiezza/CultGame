@@ -10,8 +10,8 @@ extension GameStatusView {
             return
         }
         emitter.name = "Rain"
-        emitter.position = CGPoint(x: 470, y: 540)
-        emitter.zPosition = 5  // Ajuste para ficar acima do fundo, mas abaixo do pet/personagem
+        emitter.position = CGPoint(x: 520, y: 540)
+        emitter.zPosition = 5  // Ajusta para ficar acima do fundo
 
         scene.addChild(emitter)
         

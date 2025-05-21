@@ -86,6 +86,23 @@
         }
       }
     },
+    "A new day has begun in the village and you are..." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A new day has begun in the village and you are..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um novo dia começou na vila e você é..."
+          }
+        }
+      }
+    },
     "A precisely cast doubt is more lethal than a blade. The leader’s prestige falters, and the faithful scatter." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -133,6 +150,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versos antigos são recitados secretamente na aldeia, seduzindo mentes inquietas."
+          }
+        }
+      }
+    },
+    "Back to menu" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voltar para o menu"
+          }
+        }
+      }
+    },
+    "Choose someone to kill" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose someone to kill"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha alguém para matar"
           }
         }
       }
@@ -221,6 +266,90 @@
         }
       }
     },
+    "Dealing cards" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distribuindo cartas"
+          }
+        }
+      }
+    },
+    "Deer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deer"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cervo"
+          }
+        }
+      }
+    },
+    "Destroy and sabotage the cult" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destroy and sabotage the cult"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destrua e sabote o culto"
+          }
+        }
+      }
+    },
+    "Discussion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discussão"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feito"
+          }
+        }
+      }
+    },
+    "Drawing players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorteando jogadores"
+          }
+        }
+      }
+    },
     "Echoes of doubt" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -233,7 +362,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Espalhar mentira"
+            "value" : "Espalhar mentiras"
           }
         }
       }
@@ -277,13 +406,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Faith points:"
+            "value" : "Faith points: %lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pontos de fé:"
+            "value" : "Pontos de fé: %lld"
           }
         }
       }
@@ -310,13 +439,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Followers:"
+            "value" : "Followers: %lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seguidores:"
+            "value" : "Seguidores: %lld"
           }
         }
       }
@@ -334,6 +463,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Palavra Estrangeira"
+          }
+        }
+      }
+    },
+    "Fox" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fox"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raposa"
           }
         }
       }
@@ -371,6 +517,23 @@
         }
       }
     },
+    "Heresy has whispered too much. The cult has listened. And now the veil of lies burns in flames." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heresy has whispered too much. The cult has listened. And now the veil of lies burns in flames."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A heresia sussurrou demais. O culto escutou. E agora, o véu da mentira arde em chamas"
+          }
+        }
+      }
+    },
     "Heresy: %lld" : {
       "localizations" : {
         "en" : {
@@ -403,6 +566,17 @@
         }
       }
     },
+    "How to play" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Como jogar"
+          }
+        }
+      }
+    },
     "In muffled chants and hidden circles, forbidden ceremonies are conducted. Few returns… but power makes itself known." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -416,6 +590,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Em cânticos abafados e círculos ocultos, cerimônias proibidas são conduzidas. Poucos retornam... mas o poder se faz presente."
+          }
+        }
+      }
+    },
+    "Look at Apple Tv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look at Apple Tv"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Olhe para a Apple Tv"
           }
         }
       }
@@ -505,6 +696,23 @@
         }
       }
     },
+    "No one was eliminated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No one was eliminated"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguém foi eliminado"
+          }
+        }
+      }
+    },
     "No role" : {
       "localizations" : {
         "en" : {
@@ -517,6 +725,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nenhum papel"
+          }
+        }
+      }
+    },
+    "Pairing with players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pareando com jogadores"
+          }
+        }
+      }
+    },
+    "Panda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panda"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panda"
+          }
+        }
+      }
+    },
+    "Pig" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pig"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porco"
+          }
+        }
+      }
+    },
+    "Play again" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogar novamente"
           }
         }
       }
@@ -588,6 +852,51 @@
         }
       }
     },
+    "Protect and defend the cult." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protect and defend the cult."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteja e defenda o culto."
+          }
+        }
+      }
+    },
+    "Rabbit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabbit"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coelho"
+          }
+        }
+      }
+    },
+    "Round result" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resultado da rodada"
+          }
+        }
+      }
+    },
     "Rumors" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -639,6 +948,40 @@
         }
       }
     },
+    "Skip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pular"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar"
+          }
+        }
+      }
+    },
     "Start Game" : {
       "localizations" : {
         "en" : {
@@ -685,6 +1028,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "O altar está profanado com símbolos proibidos, enfraquecendo o vínculo dos fiéis."
+          }
+        }
+      }
+    },
+    "The cult was defeated!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cult was defeated!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O culto foi derrotado!"
           }
         }
       }
@@ -791,6 +1151,34 @@
         }
       }
     },
+    "The flame and unity of the cult burned brighter - the heretic was unmasked" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The flame and unity of the cult burned brighter - the heretic was unmasked"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A chama e a união do culto ardeu mais forte - o herege foi desmascarado"
+          }
+        }
+      }
+    },
+    "The fox was killed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A raposa foi morta"
+          }
+        }
+      }
+    },
     "The heretic performs a ritual mimicking the cultists, but ends up invoking opposing forces." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -838,6 +1226,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "O herege proclama suas dúvidas do topo da montanha, e sua voz ecoa pela floresta."
+          }
+        }
+      }
+    },
+    "The Heretic Served Heresy as Faith—and You Drank It to the Dregs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Heretic Served Heresy as Faith—and You Drank It to the Dregs"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Herege serviu heresia como se fosse fé — e vocês beberam até o fim"
           }
         }
       }
@@ -1182,6 +1587,17 @@
         }
       }
     },
+    "There are suspicious looks and the cult writhes under the weight of suspicion." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Há olhares desconfiados e o culto se contorce sob o peso da suspeita "
+          }
+        }
+      }
+    },
     "This card eliminates one of the players" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1195,6 +1611,51 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta carta elimina um dos jogadores"
+          }
+        }
+      }
+    },
+    "Tie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empate"
+          }
+        }
+      }
+    },
+    "Tiger" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiger"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tigre"
+          }
+        }
+      }
+    },
+    "Tongues were silent at the judgment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As línguas se calaram diante do julgamento"
           }
         }
       }
@@ -1267,6 +1728,23 @@
         }
       }
     },
+    "Victory of the cultists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Victory of the cultists"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitória dos cultistas"
+          }
+        }
+      }
+    },
     "Wait a moment..." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1334,6 +1812,23 @@
         }
       }
     },
+    "Who is the heretic?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who is the heretic?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quem é o herege?"
+          }
+        }
+      }
+    },
     "With nightfall, no promises remain — only consequences." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1351,19 +1846,155 @@
         }
       }
     },
-    "You need to connect between 5 and 8 players" : {
+    "Wolf" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You need to connect between 5 and 8 players"
+            "value" : "Wolf"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Você precisa conectar entre 5 e 8 jogadores"
+            "value" : "Lobo"
+          }
+        }
+      }
+    },
+    "You are the cultist!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are the cultist!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você é o cultista!"
+          }
+        }
+      }
+    },
+    "You are the heretic!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are the heretic!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você é o herege!"
+          }
+        }
+      }
+    },
+    "You have already confirmed a letter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have already confirmed a letter"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você já confirmou uma carta"
+          }
+        }
+      }
+    },
+    "You have been discovered" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have been discovered"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have been discovered"
+          }
+        }
+      }
+    },
+    "You have been eliminated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have been eliminated"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você foi eliminado"
+          }
+        }
+      }
+    },
+    "You need to connect between %lld and %lld players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You need to connect between %lld and %lld players"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você precisa conectar entre %lld e %lld jogadores"
+          }
+        }
+      }
+    },
+    "You served heresy as if it were faith—and they drank it to the dregs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You served heresy as if it were faith—and they drank it to the dregs"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você serviu heresia como se fosse fé — e eles beberam até o fim"
+          }
+        }
+      }
+    },
+    "You won!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You won!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você venceu!"
           }
         }
       }

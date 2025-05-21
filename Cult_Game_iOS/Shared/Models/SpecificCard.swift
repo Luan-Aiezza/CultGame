@@ -9,18 +9,23 @@ class SpecificCard : Card, ObservableObject{
     init(name: String,
          faithCost: Int,
          followersEffect: Int,
+         heresyCost: Int,
          description: String,
          imageName: String,
-         type: Card.CardType,
+         type: CardType,
+         rarity: Int,
          isActive: Bool,
          specialAbility : ((GameViewModel) -> Void)? = nil)
     {
         super.init(name: name,
                    faithCost: faithCost,
+                   heresyCost : heresyCost,
                    followersEffect: followersEffect,
                    description: description,
                    imageName: imageName,
-                   type: type)
+                   type: type,
+                   rarity: rarity
+        )
         
         self.specialAbility = specialAbility
         self.isActive = isActive

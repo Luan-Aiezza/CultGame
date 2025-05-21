@@ -3,7 +3,7 @@ import Foundation
 import MultipeerConnectivity
 import Combine
 
-class GameViewModel: ObservableObject {
+class GameViewModel: ObservableObject, Observable {
     // MARK: - Estado geral do jogo
     @Published var currentPhase: GamePhase = .roleSelection {
         didSet {
@@ -22,9 +22,11 @@ class GameViewModel: ObservableObject {
     @State var isTie: Bool = false
     @State var didEvaluate: Bool = false
     
+    @Published var deckManager = CardDistributionManager.shared
+
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
-    var emptyCard = Card(name: "", faithCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty)
+    public var emptyCard = Card(name: "", faithCost: 0, heresyCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty, rarity: 0)
     
     var availableTime: Int = 30
     var timer: Timer?
@@ -42,6 +44,7 @@ class GameViewModel: ObservableObject {
     
     func addCard(pool: [Card], needed: Int) {
         player.hand.append(contentsOf: pool.prefix(needed))
+        print("adicionou novas cartas sim")
     }
     
     func assignCard(card: Card) {
@@ -61,7 +64,7 @@ class GameViewModel: ObservableObject {
         switch player.role {
         case .cultist:
             player.hand.append(contentsOf: deck.commonCards.shuffled().prefix(2))
-            player.hand.append(deck.specialCards.randomElement()!)
+            player.hand.append(deck.cultistCards.randomElement()!)
         case .heretic:
             player.hand.append(contentsOf: deck.commonCards.shuffled().prefix(2))
             player.hand.append(contentsOf: deck.heresyCards.shuffled().prefix(2))
@@ -72,6 +75,7 @@ class GameViewModel: ObservableObject {
     
     func removeCardFromHand(card: Card) {
         player.hand.removeAll { $0.id == card.id }
+        print("removendo card da mao!!! \(card.name)")
     }
     
     func removeAllCardFromHand(card: Card) {

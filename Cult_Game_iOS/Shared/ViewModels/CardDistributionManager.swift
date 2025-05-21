@@ -80,7 +80,7 @@ class CardDistributionManager: ObservableObject {
     }
 
     // Sorteia uma lista de cartas com base em uma sequência de tipos.
-    private func drawCards(types: [Card.CardType]) -> [Card] {
+    private func drawCards(types: [CardType]) -> [Card] {
         types.compactMap { type in
             switch type {
             case .common:

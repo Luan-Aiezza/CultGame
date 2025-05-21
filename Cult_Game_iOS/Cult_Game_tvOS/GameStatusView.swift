@@ -5,10 +5,10 @@ import AVFoundation
 struct GameStatusView: View {
     
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    var Audio = AudioManager.shared
+    var Audio = AudioManager.shared //Background Music
+    
     var body: some View {
         ZStack {
-            
             // VIEW DO MAPA
             SpriteView(scene: scene)
                 .ignoresSafeArea(.all)

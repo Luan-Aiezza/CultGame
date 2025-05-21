@@ -17,6 +17,7 @@ extension GameStatusView {
             animateRain(in: scene)
             animateSmoke(in: scene)
             animateBonfire(in: scene)
+            animateFollowers(in: scene)
             
             return scene
         } else {

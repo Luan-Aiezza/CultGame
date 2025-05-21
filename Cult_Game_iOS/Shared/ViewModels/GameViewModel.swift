@@ -7,8 +7,11 @@ class GameViewModel: ObservableObject {
     // MARK: - Estado geral do jogo
     @Published var currentPhase: GamePhase = .roleSelection {
         didSet {
-            startTimer()
-            handlePhaseChange()
+            if multiplayerManager.isHosting {
+                startTimer()
+                handlePhaseChange()
+                print("Startou pelo host")
+            }
         }
     }
     

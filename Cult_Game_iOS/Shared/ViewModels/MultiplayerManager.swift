@@ -8,8 +8,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     @Published var assignedRoles: [MCPeerID: PlayerRole] = [:]
     @Published var playerStates: [MCPeerID: PlayerModel] = [:]
-
-
     @Published var connectedPeers: [MCPeerID] = []
     @Published var players: [MCPeerID: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(
@@ -17,24 +15,39 @@ class MultiplayerManager: NSObject, ObservableObject {
         heresyPoints: [:],
         followers: GameRules.initialFollowers
     )
+    @Published var round = 0
+    @Published var currentPhase: GamePhase = .pairing
     
     private let serviceType = "cult-game"
-
+    
     private var session: MCSession!
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
-
+    
     private var _myPeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
     public let myPeerID = MCPeerID(displayName: "\(UIDevice.current.name)_\(UUID().uuidString.prefix(4))")
-
+    
     var isHosting: Bool = false
-
+    
     private override init() {
         super.init()
         session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
     }
-
+    
+    func sendGamePhase(_ phase: GamePhase) {
+        let message = MultiplayerMessage.attPhase(phase)
+        sendMessage(message)
+    }
+    
+//    func handleReceivedData(_ data: Data, from peerID: MCPeerID) {
+//        if let phase = try? JSONDecoder().decode(GamePhase.self, from: data) {
+//            DispatchQueue.main.async {
+//                self.currentPhase = phase
+//            }
+//        }
+//    }
+    
     func startHosting() {
         isHosting = true
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
@@ -42,21 +55,25 @@ class MultiplayerManager: NSObject, ObservableObject {
         advertiser?.delegate = self
         advertiser?.startAdvertisingPeer()
     }
-
+    
     func joinSession() {
         isHosting = false
         browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         browser?.delegate = self
         browser?.startBrowsingForPeers()
     }
-
+    
+    func goToNextRound() {
+        round += 1
+    }
+    
     func send(_ action: CardPlayAction) {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {
             try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
         }
     }
-
+    
     func sendGlobalStateToAllPlayers() {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(globalState) {
@@ -90,7 +107,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     func disconnect() {
         session.cancelConnectPeer(myPeerID)
     }
-
+    
     func disconnectAll() {
         advertiser?.stopAdvertisingPeer()
         browser?.stopBrowsingForPeers()
@@ -107,7 +124,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
         DispatchQueue.main.async {
             print("\n🎯 Ação recebida do jogador \(peerID.displayName): carta \(action.card.name)")
-
+            
             if action.playerRole == .cultist {
                 print("🙏 Reduzindo fé em \(action.card.faithCost)")
                 self.globalState.sharedFaithPoints -= action.card.faithCost
@@ -115,21 +132,21 @@ class MultiplayerManager: NSObject, ObservableObject {
                 print("🔥 Aumentando heresia de \(action.card.faithCost)")
                 self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
             }
-
+            
             print("👥 Alterando seguidores em \(action.card.followersEffect)")
             self.globalState.followers += action.card.followersEffect
-
+            
             print("📬 Novo estado global: \n - Fé: \(self.globalState.sharedFaithPoints)\n - Heresia total: \(self.globalState.heresyPoints.values.reduce(0, +))\n - Seguidores: \(self.globalState.followers)")
-
+            
             self.sendGlobalStateToAllPlayers()
             NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
-
-        
+            
+            
             GameViewModel().checkVictoryConditions() //precisa estar vinculada ao mesmo GameViewModel do host,
         }
     }
-
-
+    
+    
     func assignRolesRandomly(to players: [MCPeerID]) {
         let shuffled = players.shuffled()
         if let heretic = shuffled.first {
@@ -139,11 +156,11 @@ class MultiplayerManager: NSObject, ObservableObject {
             sendRole(.cultist, to: cultist)
         }
     }
-
+    
     func assignCharactersRandomly(to players: [MCPeerID]) {
         let allCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
         let shuffledCharacters = allCharacters.shuffled()
-
+        
         for (index, player) in players.enumerated() {
             if index < shuffledCharacters.count {
                 let character = shuffledCharacters[index]
@@ -153,14 +170,14 @@ class MultiplayerManager: NSObject, ObservableObject {
             }
         }
     }
-
+    
     func sendCharacter(_ character: Character, to peer: MCPeerID) {
         let message = MultiplayerMessage.characterAssignment(character)
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: [peer], with: .reliable)
         }
     }
-
+    
     public func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
@@ -194,10 +211,14 @@ extension MultiplayerManager: MCSessionDelegate {
             }
         }
     }
-
+    
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if let message = try? JSONDecoder().decode(MultiplayerMessage.self, from: data) {
             switch message {
+            case .attPhase(let phase):
+                DispatchQueue.main.async {
+                    self.currentPhase = phase
+                }
             case .roleAssignment(let role):
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .didReceiveRole, object: role)
@@ -276,7 +297,7 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
         print("🔍 Encontrou peer: \(peerID.displayName)")
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 10)
     }
-
+    
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {}
 }
 

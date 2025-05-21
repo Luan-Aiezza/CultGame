@@ -8,7 +8,8 @@ struct CardPlayAction: Codable {
     var playerRole: PlayerRole
 }
 
-enum GamePhase {
+enum GamePhase: String, Codable {
+    case pairing
     case roleSelection
     case cardPlay
     case discussion
@@ -52,6 +53,7 @@ enum CardType: String, Codable {
 }
 
 enum MultiplayerMessage: Codable {
+    case attPhase(GamePhase)
     case roleAssignment(PlayerRole)
     case kickPlayer
     case characterAssignment(Character)
@@ -64,6 +66,7 @@ enum MultiplayerMessage: Codable {
     }
     
     enum MessageType: String, Codable {
+        case attPhase
         case roleAssignment
         case kickPlayer
         case characterAssignment
@@ -76,6 +79,10 @@ enum MultiplayerMessage: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
+        case .attPhase(let phase):
+            try container.encode(MessageType.attPhase, forKey: .type)
+                    try container.encode(phase, forKey: .data)
+
         case .roleAssignment(let role):
             try container.encode(MessageType.roleAssignment, forKey: .type)
             try container.encode(role, forKey: .data)
@@ -105,6 +112,9 @@ enum MultiplayerMessage: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(MessageType.self, forKey: .type)
         switch type {
+        case .attPhase:
+                let phase = try container.decode(GamePhase.self, forKey: .data)
+                self = .attPhase(phase)
         case .roleAssignment:
             let role = try container.decode(PlayerRole.self, forKey: .data)
             self = .roleAssignment(role)

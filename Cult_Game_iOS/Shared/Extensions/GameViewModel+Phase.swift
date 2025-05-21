@@ -13,12 +13,20 @@ extension GameViewModel {
         switch currentPhase {
         case .cardPlay:
             currentPhase = .discussion
+            multiplayerManager.currentPhase = .discussion
+            multiplayerManager.sendGamePhase(.discussion)
         case .discussion:
             currentPhase = .elimination
+            multiplayerManager.currentPhase = .elimination
+            multiplayerManager.sendGamePhase(.elimination)
         case .elimination:
             currentPhase = .eliminationResults
+            multiplayerManager.currentPhase = .eliminationResults
+            multiplayerManager.sendGamePhase(.eliminationResults)
         case .eliminationResults:
             currentPhase = .cardPlay
+            multiplayerManager.currentPhase = .cardPlay
+            multiplayerManager.sendGamePhase(.cardPlay)
         default:
             break
         }

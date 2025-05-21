@@ -28,11 +28,43 @@ struct SelectCard: View {
 
 struct PlayCardView: View {
     @EnvironmentObject var vm: GameViewModel
-    @State private var selectedCard: Card? = nil
+    @State var selectedCard: Card? = nil
+    @State var hand : [Card] = []
+    @State var zoomedCard: Card? = nil
+    @State var showZoomedCard = false
+    @State var showBlockMessage = false
+    @State var stringShow = "O culto não tem pontos de fé suficiente para escolher uma carta"
+    @State var skippedRound : Bool = false
+    @State var playedCard : Bool = false
+    
     
     var body: some View {
         NavigationStack {
             ZStack {
+                
+                if let card = zoomedCard, showZoomedCard {
+                    Color.black.opacity(0.6)
+                        .ignoresSafeArea()
+                    
+                    CardView(card: card)
+                        .frame(width: 350, height: 490)
+                        .shadow(radius: 10)
+                        .transition(.opacity)
+                        .onTapGesture {
+                            withAnimation {
+                                showZoomedCard = false
+                            }
+                        }
+                        .zIndex(2)
+                }
+                
+                if showBlockMessage && !showZoomedCard{
+                    blockMessageView(show: $stringShow)
+                        .zIndex(4)
+                }
+                
+                
+                
                 Image("background_002")
                     .resizable()
                     .overlay {
@@ -42,34 +74,91 @@ struct PlayCardView: View {
                     .scaledToFill()
                 
                 VStack {
+                    
+                    
+                    
                     SelectCard(selectedCard: $selectedCard)
+                        .padding(.vertical, 50)
+                        
                         .dropDestination(for: Card.self) { items, location in
                             if let card = items.first {
-                                selectedCard = card
-                                return true
+                                
+                                if selectedCard == nil {
+                                    selectedCard = card
+                                    hand.removeAll{$0 == card}
+                                    return true
+                                }
                             }
                             return false
                         }
+                        .onTapGesture {
+                            if let card = selectedCard{
+                                if !playedCard {
+                                    hand.append(card)
+                                    selectedCard = nil
+                                }
+                            }
+                            
+                        } .transition(.slide)
                     
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(vm.player.hand) { card in
+                    if selectedCard != nil {
+                        HStack(spacing: 20) {
+                            ForEach(hand, id: \.id) { card in
                                 CardView(card: card)
                                     .frame(width: 154, height: 216)
-                                    .draggable(card)
-                                    .onTapGesture {
-                                        selectedCard = card
-                                    }
-                                    .scrollTransition { content, phase in
-                                        content
-                                            .scaleEffect(phase.isIdentity ? 1 : 0.8)
+                                    .overlay {
+                                        
+                                        if playedCard {
+                                            ZStack {
+                                                Color.black.opacity(0.6)
+                                                    .cornerRadius(12)
+                                                Image("block")
+                                            }
+                                        }
                                     }
                             }
                         }
+                        
+                    } else {
+                        CardCarouselView(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard, showBlockMessage: $showBlockMessage, cards: $hand, skippedRound: $skippedRound)
                     }
+                    
+                    HStack(spacing: 50) {
+                        Button {
+                            if !playedCard && selectedCard == nil{
+                                vm.skipCard()
+                                skippedRound = true
+                                stringShow = "You've skipped this round."
+                                showBlockMessage = true
+                            }
+                        } label: {
+                            Image("cardViewButton")
+                        }
+                        
+                        Button {
+                            if let selectedCard = selectedCard,
+                               let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
+                                if !skippedRound {
+                                    vm.playCard(cardToPlay)
+                                    stringShow = "You've already played a card."
+                                    showBlockMessage = true
+                                    playedCard = true
+                                }
+                            }
+                        } label: {
+                            Image("cardViewButton")
+                        }
+                        
+                    }
+                    .padding()
+                    
                 }
+
             }
+        }
+        .onAppear {
+            self.hand = vm.player.hand
         }
     }
 }

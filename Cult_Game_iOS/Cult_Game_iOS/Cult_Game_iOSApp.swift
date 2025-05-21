@@ -18,7 +18,7 @@ struct Cult_Game_iOSApp: App {
      
     var body: some Scene {
         WindowGroup {
-            PlayView()
+            PlayCardView()
                 .environment(vm)
         }
     }

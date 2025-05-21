@@ -3,7 +3,7 @@ import Foundation
 import MultipeerConnectivity
 import Combine
 
-class GameViewModel: ObservableObject {
+class GameViewModel: ObservableObject, Observable {
     // MARK: - Estado geral do jogo
     @Published var currentPhase: GamePhase = .roleSelection {
         didSet {

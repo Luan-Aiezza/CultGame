@@ -1,7 +1,18 @@
 import SwiftUI
+import UniformTypeIdentifiers
+
+//UTI
+extension UTType {
+    static let card: UTType = UTType(exportedAs: "card")
+}
 
 //ESTRUTURA DAS CARTAS
-class Card: Identifiable, Equatable, Codable {
+class Card: Identifiable, Equatable, Codable, Transferable {
+    
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .card)
+    }
+    
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.id == rhs.id
     }

@@ -9,16 +9,17 @@ import SwiftUI
 
 @main
 struct Cult_Game_iOSApp: App {
+    @StateObject var vm = GameViewModel()
     
     init() {
         FontManager.registerFonts()
 
     }
      
-    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PlayView()
+                .environment(vm)
         }
     }
 }

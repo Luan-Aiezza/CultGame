@@ -11,8 +11,6 @@ import SwiftUI
 extension GameViewModel {
     
     func replenishHandIfNeeded() {
-        print("CHEGOU NO INICIO DE REPLENISH HAND IF NEEDED!!!!!!!")
-        print("o usedcard ta nil ? \(player.usedCard)")
         var idealCardNumber = 0
         
         switch player.role {

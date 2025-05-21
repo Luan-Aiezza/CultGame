@@ -12,7 +12,7 @@ class SpecificCard : Card, ObservableObject{
          heresyCost: Int,
          description: String,
          imageName: String,
-         type: Card.CardType,
+         type: CardType,
          rarity: Int,
          isActive: Bool,
          specialAbility : ((GameViewModel) -> Void)? = nil)

@@ -24,9 +24,13 @@ enum Character : String, Codable {
 struct PlayerModel: Codable, Identifiable {
     var id: String = UUID().uuidString
     
-    var hand: [Card] = []
+    var hand: [Card] = [
+        Card(name: "Pray", faithCost: 2, heresyCost: 0, followersEffect: 5, description: "Increases fervor.", imageName: "orar", type: .common, rarity: 1),
+        Card(name: "Sing Hymns", faithCost: 1, heresyCost: 0, followersEffect: 3, description: "Attracts the curious.", imageName: "hinos", type: .common, rarity: 5),
+        Card(name: "Meditate", faithCost: 1, heresyCost: 0, followersEffect: 2, description: "Improves spiritual clarity.", imageName: "meditar", type: .common, rarity: 3)
+    ]
     var usedCard: Card? = nil
-    var role: PlayerRole? = nil
+    var role: PlayerRole? = .heretic
     var personalHeresyPoints: Int = 0
     var hasEnteredCardPlayOnce = false
     var state: PlayerState = .active

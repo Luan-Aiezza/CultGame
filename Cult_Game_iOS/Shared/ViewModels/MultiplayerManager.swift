@@ -11,7 +11,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var connectedPeers: [MCPeerID] = []
     @Published var players: [MCPeerID: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(
-        sharedFaithPoints: GameRules.initialFaithPoints,
+        sharedFaithPoints: 5,
         heresyPoints: [:],
         followers: GameRules.initialFollowers
     )

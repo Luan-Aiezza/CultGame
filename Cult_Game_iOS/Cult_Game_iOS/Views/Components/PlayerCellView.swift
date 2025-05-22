@@ -1,3 +1,12 @@
+//
+//  PlayerCellView.swift
+//  Cult_Game_iOS
+//
+//  Created by Jorge Samuel Silva Coelho on 22/05/25.
+//
+
+import SwiftUI
+
 struct PlayerCellView: View {
     let player: PlayerModel
     let isSelected: Bool
@@ -63,6 +72,14 @@ struct PlayerCellView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 8)
+                
+                if isSelected {
+                                    Image("murder_symbol")
+                                        .resizable()
+                                        .frame(width: 54, height: 57)
+                                        .offset(x: 74, y: -36.5) // Metade para fora nas duas direções
+                                }
+                
             }
         }
         .frame(width: width, height: height)

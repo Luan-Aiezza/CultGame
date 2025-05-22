@@ -54,6 +54,7 @@ enum CardType: String, Codable {
 
 enum MultiplayerMessage: Codable {
     case attPhase(GamePhase)
+    
     case roleAssignment(PlayerRole)
     case kickPlayer
     case characterAssignment(Character)

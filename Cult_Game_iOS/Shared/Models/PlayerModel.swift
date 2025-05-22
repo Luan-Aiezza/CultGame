@@ -30,7 +30,7 @@ struct PlayerModel: Codable, Identifiable {
         Card(name: "Meditate", faithCost: 1, heresyCost: 0, followersEffect: 2, description: "Improves spiritual clarity.", imageName: "meditar", type: .common, rarity: 3)
     ]
     var usedCard: Card? = nil
-    var role: PlayerRole? = .heretic
+    var role: PlayerRole? = nil
     var personalHeresyPoints: Int = 0
     var hasEnteredCardPlayOnce = false
     var state: PlayerState = .active

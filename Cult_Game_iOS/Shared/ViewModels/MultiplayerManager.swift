@@ -18,6 +18,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var round = 0
     @Published var currentPhase: GamePhase = .pairing
     
+    
     private let serviceType = "cult-game"
     
     private var session: MCSession!

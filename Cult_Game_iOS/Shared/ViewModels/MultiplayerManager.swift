@@ -2,6 +2,8 @@ import Foundation
 import MultipeerConnectivity
 
 class MultiplayerManager: NSObject, ObservableObject {
+    
+    //MARK
     static let shared = MultiplayerManager()
     
     @Published var hostPeerID: MCPeerID?
@@ -39,11 +41,15 @@ class MultiplayerManager: NSObject, ObservableObject {
     func sendGamePhase(_ phase: GamePhase) {
         let message = MultiplayerMessage.attPhase(phase)
         sendMessage(message)
+        
+        DispatchQueue.main.async {
+            self.currentPhase = phase
+        }
     }
     
 //    func handleReceivedData(_ data: Data, from peerID: MCPeerID) {
 //        if let phase = try? JSONDecoder().decode(GamePhase.self, from: data) {
-//            DispatchQueue.main.async {
+//            DispatchQueue.mainasync {
 //                self.currentPhase = phase
 //            }
 //        }

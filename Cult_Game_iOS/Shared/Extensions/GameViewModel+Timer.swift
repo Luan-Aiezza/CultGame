@@ -16,7 +16,7 @@ extension GameViewModel {
             timeRemaining -= 1
         } else {
             timer?.invalidate()
-            advancePhaseAfterTimer()
+//            advancePhaseAfterTimer()
         }
     }
 }

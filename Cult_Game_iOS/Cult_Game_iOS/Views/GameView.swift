@@ -21,7 +21,7 @@ struct GameView: View {
             case .cardPlay:
                 PlayCardView()
             case .discussion:
-                EmptyView() //pegar da Mari
+                DiscussionView() //pegar da Mari
             case .elimination:
                 EliminationView() // SAM!!
             case .eliminationResults:

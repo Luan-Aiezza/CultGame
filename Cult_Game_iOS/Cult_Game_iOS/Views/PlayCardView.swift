@@ -159,6 +159,7 @@ struct PlayCardView: View {
         }
         .onAppear {
             self.hand = vm.player.hand
+            vm.handlePhaseChange()
         }
     }
 }

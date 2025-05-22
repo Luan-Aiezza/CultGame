@@ -2,7 +2,7 @@ import SwiftUI
 import MultipeerConnectivity
 
 struct HostGameView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @EnvironmentObject var multiplayerManager: MultiplayerManager
     @State private var playerRoles: [String: PlayerRole] = [:]
     @State private var gameStarted = false
     @State private var errorMessage: String?
@@ -41,9 +41,6 @@ struct HostGameView: View {
                 }
                 
                 assignRoles()
-//                viewModel.currentPhase = .cardPlay
-//                multiplayerManager.currentPhase = .cardPlay
-//                multiplayerManager.sendGamePhase(.cardPlay)
                 multiplayerManager.sendGamePhase(.roleSelection)
                 gameStarted = true
                 errorMessage = nil

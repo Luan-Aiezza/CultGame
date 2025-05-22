@@ -3,8 +3,8 @@ import SpriteKit
 import AVFoundation
 
 struct GameStatusView: View {
-    
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @StateObject var timerManager = GameTimerManager()
+    @EnvironmentObject var multiplayerManager : MultiplayerManager
     var Audio = AudioManager.shared //Background Music
     
     var body: some View {
@@ -15,6 +15,12 @@ struct GameStatusView: View {
             
             
             //A PARTIR DAQUI SERÁ UI
+            
+            Text("Tempo restante: \(timerManager.timeRemaining)")
+                .foregroundColor(.yellow)
+                .font(.title)
+
+            
                 VStack(spacing: 10) {
                     Text("Faith points: \(multiplayerManager.globalState.sharedFaithPoints)")
                         .foregroundColor(.green)
@@ -38,6 +44,7 @@ struct GameStatusView: View {
             }
         .onAppear{
             Audio.playBackgroundMusic(named: "OST")
+            timerManager.start(duration: 20)
         }
             .padding()
         }

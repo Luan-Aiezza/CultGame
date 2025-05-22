@@ -124,8 +124,10 @@ class MultiplayerManager: NSObject, ObservableObject {
             self.sendGlobalStateToAllPlayers()
             NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
 
-        
-            GameViewModel().checkVictoryConditions() //precisa estar vinculada ao mesmo GameViewModel do host,
+            // Observa pedidos de verificação de vitória enviados via NotificationCenter
+
+            NotificationCenter.default.post(name: .shouldCheckVictoryConditions, object: nil)
+
         }
     }
 
@@ -284,7 +286,10 @@ extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
     static let didReceiveRole = Notification.Name("didReceiveRole")
     static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
+    // Notificação usada para solicitar verificação de vitória pelo GameViewModel
+    static let shouldCheckVictoryConditions = Notification.Name("shouldCheckVictoryConditions")
 }
+
 
 #if DEBUG
 extension MultiplayerManager {

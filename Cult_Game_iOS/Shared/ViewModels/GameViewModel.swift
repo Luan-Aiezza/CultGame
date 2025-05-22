@@ -18,6 +18,9 @@ class GameViewModel: ObservableObject {
     @State var eliminatedPlayer: MCPeerID?
     @State var isTie: Bool = false
     @State var didEvaluate: Bool = false
+    @Published var gameEnded: Bool = false
+    @Published var gameOutcome: GameOutcome? = nil
+
     
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
@@ -79,8 +82,6 @@ class GameViewModel: ObservableObject {
         player.hasEnteredCardPlayOnce = true
     }
     
-    
-    
     // MARK: - Estado global
     var globalState: GlobalGameState {
         get { multiplayerManager.globalState }
@@ -93,23 +94,24 @@ class GameViewModel: ObservableObject {
     // Personagens sorteados (por peer)
     @Published var assignedCharacters: [MCPeerID: Character] = [:]
     
-    // Jogadores conectados + personagens (para a tela de espera)
-    //    var playersForDisplay: [Player] {
-    //        multiplayerManager.connectedPeers
-    //            .compactMap { peer in
-    //                guard let character = assignedCharacters[peer] else { return nil }
-    //                return Player(
-    //                    peerID: peer,
-    //                    isYou: peer == multiplayerManager.myPeerID,
-    //                    character: character
-    //                )
-    //            }
-    //            .sorted { $0.isYou && !$1.isYou }
-    //    }
-    
+    // MARK: - Encerramento do jogo
     func endGame(with outcome: GameOutcome) {
+        gameEnded = true
+        gameOutcome = outcome
         print("🏁 Fim de jogo — resultado: \(outcome)")
     }
+    func resetGame() {
+        globalState = GlobalGameState(
+            sharedFaithPoints: GameRules.initialFaithPoints,
+            heresyPoints: [:],
+            followers: GameRules.initialFollowers
+        )
+        currentPhase = .roleSelection
+        player = PlayerModel()
+        gameEnded = false
+        gameOutcome = nil
+    }
+
     
     // MARK: - Recebe personagem sorteado
     @objc func handleCharacterAssignment(_ notification: Notification) {
@@ -121,8 +123,6 @@ class GameViewModel: ObservableObject {
         
         DispatchQueue.main.async {
             self.assignedCharacters[peerID] = character
-            
-            //Se for o próprio jogador, atualiza também localmente
             if peerID == self.peerID {
                 self.player.character = character
             }
@@ -158,11 +158,14 @@ class GameViewModel: ObservableObject {
         }
     }
     
+    // Observa pedidos de verificação de vitória enviados via NotificationCenter
+    @objc func triggerVictoryCheck() {
+        checkVictoryConditions()
+    }
+    
     func assignCharacter(_ character: Character) {
         player.character = character
     }
-    
-    // MARK: - Pontos (fé/heresia)
     
     // MARK: - Computed: Pontos
     var points: Int {
@@ -197,8 +200,6 @@ class GameViewModel: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterAssignment(_:)), name: .didReceiveCharacter, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(triggerVictoryCheck), name: .shouldCheckVictoryConditions, object: nil)
     }
-    
-    
 }

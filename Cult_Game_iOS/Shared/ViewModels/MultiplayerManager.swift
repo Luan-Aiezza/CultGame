@@ -6,6 +6,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     @Published var hostPeerID: MCPeerID?
     
+    @Published private var availableCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
     @Published var assignedRoles: [MCPeerID: PlayerRole] = [:]
     @Published var playerStates: [MCPeerID: PlayerModel] = [:]
     @Published var connectedPeers: [MCPeerID] = []
@@ -157,19 +158,19 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
-    func assignCharactersRandomly(to players: [MCPeerID]) {
-        let allCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
-        let shuffledCharacters = allCharacters.shuffled()
-        
-        for (index, player) in players.enumerated() {
-            if index < shuffledCharacters.count {
-                let character = shuffledCharacters[index]
-                sendCharacter(character, to: player)
-            } else {
-                print("⚠️ Mais jogadores do que personagens disponíveis!")
-            }
-        }
-    }
+//    func assignCharactersRandomly(to players: [MCPeerID]) {
+//        let allCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
+//        let shuffledCharacters = allCharacters.shuffled()
+//        
+//        for (index, player) in players.enumerated() {
+//            if index < shuffledCharacters.count {
+//                let character = shuffledCharacters[index]
+//                sendCharacter(character, to: player)
+//            } else {
+//                print("⚠️ Mais jogadores do que personagens disponíveis!")
+//            }
+//        }
+//    }
     
     func sendCharacter(_ character: Character, to peer: MCPeerID) {
         let message = MultiplayerMessage.characterAssignment(character)
@@ -203,6 +204,14 @@ extension MultiplayerManager: MCSessionDelegate {
                 self.connectedPeers.append(peerID)
                 self.players[peerID] = PlayerModel()
                 
+                if !self.availableCharacters.isEmpty {
+                    let character = self.availableCharacters.removeFirst()
+                    self.sendCharacter(character, to: peerID)
+                    print("👤 Atribuído personagem \(character) para \(peerID.displayName)")
+                } else {
+                    print("⚠️ Sem personagens disponíveis para \(peerID.displayName)")
+                }
+                
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
                 self.players.removeValue(forKey: peerID)
@@ -225,10 +234,7 @@ extension MultiplayerManager: MCSessionDelegate {
                 }
             case .characterAssignment(let character):
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: .didReceiveCharacter, object: nil, userInfo: [
-                        "peerID": peerID,
-                        "character": character
-                    ])
+                    NotificationCenter.default.post(name: .didReceiveCharacter, object: character)
                 }
             case .kickPlayer:
                 DispatchQueue.main.async {

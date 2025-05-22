@@ -41,9 +41,10 @@ struct HostGameView: View {
                 }
                 
                 assignRoles()
-                viewModel.currentPhase = .cardPlay
-                multiplayerManager.currentPhase = .cardPlay
-                multiplayerManager.sendGamePhase(.cardPlay)
+//                viewModel.currentPhase = .cardPlay
+//                multiplayerManager.currentPhase = .cardPlay
+//                multiplayerManager.sendGamePhase(.cardPlay)
+                multiplayerManager.sendGamePhase(.roleSelection)
                 gameStarted = true
                 errorMessage = nil
             }
@@ -59,14 +60,14 @@ struct HostGameView: View {
             Spacer()
             
             // Status do jogo
-            if gameStarted {
-                GameStatusView()
-                    .transition(.slide)
-                Spacer()
-                
-                timerView
-                    .padding(.bottom)
-            }
+//            if gameStarted {
+//                GameStatusView()
+//                    .transition(.slide)
+//                Spacer()
+//                
+//                timerView
+//                    .padding(.bottom)
+//            }
         }
         .onAppear {
             multiplayerManager.startHosting()
@@ -94,6 +95,7 @@ struct HostGameView: View {
             multiplayerManager.sendRole(role, to: peer)
         }
     }
+    
     private var timerView: some View {
         VStack {
             Text("Phase: \(multiplayerManager.currentPhase)")

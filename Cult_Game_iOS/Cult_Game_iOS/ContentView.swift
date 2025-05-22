@@ -105,10 +105,10 @@ struct ContentView: View {
                         .padding()
                     }
                     else if multiplayerManager.currentPhase == .elimination {
-                        EliminationView(multiplayerManager: multiplayerManager, viewModel: viewModel)
+                        EliminationView(multiplayerManager: multiplayerManager)
                     }
                     else if multiplayerManager.currentPhase == .eliminationResults {
-                        EliminationResultsView(viewModel: viewModel)
+                        EliminationResultsView()
                     }
                 }
             }.onAppear {

@@ -30,8 +30,8 @@ enum GameOutcome {
 struct GameRules {
     static let maxFollowers = 40
     static let initialFollowers = 35
-    static let maxFaithPoints = 80
-    static let initialFaithPoints = 45
+    static let maxFaithPoints = 1000
+    static let initialFaithPoints = 1000
     
 }
 

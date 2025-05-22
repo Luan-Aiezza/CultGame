@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct RoleView: View {
@@ -43,23 +42,25 @@ struct RoleView: View {
                     
                     VStack{
                         if let role = viewModel.player.role {
-                            switch role {
-                            case .cultist:
-                                Image("\(viewModel.player.role?.rawValue ?? "cultist")_\(viewModel.player.character.rawValue)_001")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 250, height: 350)
-                                    .shadow(color: .yellow.opacity(0.4), radius: 5, x: 0, y: 0)
-                                    .padding(.bottom, 30)
-                                
-                            case .heretic:
-                                Image("\(viewModel.player.role?.rawValue ?? "heretic")_\(viewModel.player.character.rawValue)_001")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 250, height: 350)
-                                    .shadow(color: .red.opacity(0.4), radius: 5, x: 0, y: 0)
-                                    .padding(.bottom, 30)
-                                
+                            if let character = viewModel.player.character {
+                                switch role {
+                                case .cultist:
+                                    Image("\(String(describing: viewModel.player.role?.rawValue))_\(String(describing: viewModel.player.character?.displayName))_001")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 250, height: 350)
+                                        .shadow(color: .yellow.opacity(0.4), radius: 5, x: 0, y: 0)
+                                        .padding(.bottom, 30)
+                                    
+                                case .heretic:
+                                    Image("\(viewModel.player.role?.rawValue ?? "heretic")_\(viewModel.player.character!.rawValue)_001")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 250, height: 350)
+                                        .shadow(color: .red.opacity(0.4), radius: 5, x: 0, y: 0)
+                                        .padding(.bottom, 30)
+                                    
+                                }
                             }
                         }
                     }
@@ -76,8 +77,7 @@ struct RoleView: View {
                 fadeInOut =  true
             }
         }
-    } 
-    
+    }
 }
 
 #Preview {

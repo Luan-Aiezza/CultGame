@@ -3,7 +3,7 @@ import MultipeerConnectivity
 
 struct EliminationView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var viewModel: GameViewModel
+    @EnvironmentObject var viewModel: GameViewModel
     
     @State private var selectedPeer: MCPeerID? = nil
     @State private var voteConfirmed = false

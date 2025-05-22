@@ -9,20 +9,13 @@ import SwiftUI
 
 struct StoryView: View {
     @EnvironmentObject var vm: GameViewModel
+    @EnvironmentObject var multiplayerManager: MultiplayerManager
     @State private var fadeInOut : Bool = false
     @State private var changeView : Bool = false
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Image("background_002")
-                    .resizable()
-                    .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                    }
-                    .ignoresSafeArea()
-                    .scaledToFill()
-                
                 VStack {
                     Text("A new day starts on the village and you are...")
                         .font(.custom("Almendra-Regular", size: 35))
@@ -37,14 +30,15 @@ struct StoryView: View {
                     
             } .onAppear {
                 fadeInOut =  true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
                     fadeInOut = false
                     changeView = true
+                    multiplayerManager.sendGamePhase(.cardPlay)
                 }
             }
             
             .fullScreenCover(isPresented: $changeView) {
-                RoleView()
+                GameStatusView()
             }
         }
     }

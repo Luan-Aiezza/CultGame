@@ -90,13 +90,13 @@ extension GameViewModel {
         }
 
         turnEmptyCard()
-
-        if currentPhase == .cardPlay {
-            currentPhase = .discussion
-        } else if currentPhase == .discussion {
-            currentPhase = .cardPlay
-            playAllActiveCards()
-        }
+//
+//        if currentPhase == .cardPlay {
+//            currentPhase = .discussion
+//        } else if currentPhase == .discussion {
+//            currentPhase = .cardPlay
+//            playAllActiveCards()
+//        }
     }
 
     func playAllActiveCards() {

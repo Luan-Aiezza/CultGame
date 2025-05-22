@@ -5,12 +5,15 @@ import Combine
 
 class GameViewModel: ObservableObject, Observable {
     // MARK: - Estado geral do jogo
-    @Published var currentPhase: GamePhase = .roleSelection {
+    @Published var currentPhase: GamePhase = .pairing {
         didSet {
             if multiplayerManager.isHosting {
-                startTimer()
                 handlePhaseChange()
-                print("Startou pelo host")
+                
+                if currentPhase != .pairing && currentPhase != .roleSelection {
+                    //startTimer()
+                    print(currentPhase)
+                }
             }
         }
     }
@@ -119,22 +122,22 @@ class GameViewModel: ObservableObject, Observable {
     }
     
     // MARK: - Recebe personagem sorteado
-    @objc func handleCharacterAssignment(_ notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let peerID = userInfo["peerID"] as? MCPeerID,
-            let character = userInfo["character"] as? Character
-        else { return }
-        
-        DispatchQueue.main.async {
-            self.assignedCharacters[peerID] = character
-            
-            //Se for o próprio jogador, atualiza também localmente
-            if peerID == self.peerID {
-                self.player.character = character
-            }
-        }
-    }
+//    @objc func handleCharacterAssignment(_ notification: Notification) {
+//        guard
+//            let userInfo = notification.userInfo,
+//            let peerID = userInfo["peerID"] as? MCPeerID,
+//            let character = userInfo["character"] as? Character
+//        else { return }
+//        
+//        DispatchQueue.main.async {
+//            self.assignedCharacters[peerID] = character
+//            
+//            //Se for o próprio jogador, atualiza também localmente
+//            if peerID == self.peerID {
+//                self.player.character = character
+//            }
+//        }
+//    }
     
     // MARK: - Verificação de vitória
     func checkVictoryConditions() {
@@ -171,7 +174,6 @@ class GameViewModel: ObservableObject, Observable {
     
     // MARK: - Pontos (fé/heresia)
     
-    // MARK: - Computed: Pontos
     var points: Int {
         get {
             switch player.role {
@@ -202,10 +204,7 @@ class GameViewModel: ObservableObject, Observable {
     // MARK: - Init
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterAssignment(_:)), name: .didReceiveCharacter, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
     }
-    
-    
 }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Cult_Game_tvOSApp: App {
+    @StateObject var multiplayerManager = MultiplayerManager.shared
+    
     var body: some Scene {
         WindowGroup {
-            HostGameView()
+            GameView()
+                .environmentObject(multiplayerManager)
                 .ignoresSafeArea()
         }
     }

@@ -28,6 +28,7 @@ struct SelectCard: View {
 
 struct PlayCardView: View {
     @EnvironmentObject var vm: GameViewModel
+    @ObservedObject var pvm = PlayCardViewModel()
     @State private var selectedCard: Card? = nil
     
     var body: some View {
@@ -43,6 +44,7 @@ struct PlayCardView: View {
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard)
+                        
                         .dropDestination(for: Card.self) { items, location in
                             if let card = items.first {
                                 selectedCard = card
@@ -68,14 +70,25 @@ struct PlayCardView: View {
                             }
                         }
                     }
+                    Button("Testar MurderView") {
+                        pvm.isShowingMurderView.toggle()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top, 20)
                 }
+                MurderView()
+                    .environmentObject(pvm)
+                    .opacity(pvm.isShowingMurderView ? 1 : 0)
+                    .animation(.easeInOut, value: pvm.isShowingMurderView)
+                
             }
+            
         }
     }
 }
 
 
-#Preview {
-    PlayCardView()
-        .environment(GameViewModel())
-}
+//#Preview {
+//    PlayCardView( pvm: <#PlayCardViewModel#>)
+//        .environment(GameViewModel())
+//}

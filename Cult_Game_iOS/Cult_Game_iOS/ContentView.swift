@@ -37,53 +37,8 @@ struct ContentView: View {
                     
                     // FASE DE JOGO
                     if multiplayerManager.currentPhase == .cardPlay {
-
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(viewModel.activeCards) { card in
-                                    VStack {
-                                        Image(systemName: "rectangle")
-                                            .resizable()
-                                            .frame(width: 100, height: 100)
-                                        Text(card.name)
-                                        Button("Show") {
-                                            selectedCard = card
-                                        }
-                                    }
-                                    .padding()
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(8)
-                                }
-                            }
-                        }
-
-
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(viewModel.player.hand) { card in
-                                    VStack {
-                                        Image(systemName: "rectangle")
-                                            .resizable()
-                                            .frame(width: 100, height: 100)
-                                        Text(card.name)
-                                        Button("Show") {
-                                            selectedCard = card
-                                        }
-                                    }
-                                    .padding()
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(8)
-                                }
-                            }
-                        }
-
-                        Button("Buy card") {
-                            viewModel.replenishHandIfNeeded()
-                        }
-                        Button("Skip round") {
-                            viewModel.skipCard()
-                        }
-                        .padding()
+                        PlayCardView()
+                            .environmentObject(viewModel)
                     }
 
                     // FASE DE DISCUSSÃO

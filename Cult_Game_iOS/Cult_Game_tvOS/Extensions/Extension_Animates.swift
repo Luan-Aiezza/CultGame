@@ -146,11 +146,18 @@ extension HostGameView {
     }
 
 }
-extension HowToPlayView {
+//extension HowToPlayView {
+//    
+//    var scene: SKScene {
+//    }
+//}
+//      ripple.position = self.scene.childNode(withName: "stone_water")!.position
+
+extension TvTransitionTextsView {
     
     var scene: SKScene {
         
-//      ripple.position = self.scene.childNode(withName: "stone_water")!.position
+//        ripple.position = self.scene.childNode(withName: "stone_water")!.position
         
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
@@ -158,6 +165,7 @@ extension HowToPlayView {
             animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
+            animateFire(in: scene)
             animateBonfire(in: scene)
             
             return scene

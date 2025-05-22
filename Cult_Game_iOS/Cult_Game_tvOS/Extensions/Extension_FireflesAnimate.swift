@@ -18,7 +18,6 @@ extension GameStatusView {
     }
     
 }
-
 extension GameRoundView {
     
     func animateFireflies(in scene: SKScene) {
@@ -70,7 +69,8 @@ extension HostGameView {
     }
     
 }
-extension HowToPlayView {
+
+extension TvTransitionTextsView {
     
     func animateFireflies(in scene: SKScene) {
         guard let emitter = SKEmitterNode(fileNamed: "Fireflies.sks") else {

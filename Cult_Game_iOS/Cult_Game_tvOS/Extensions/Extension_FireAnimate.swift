@@ -26,6 +26,7 @@ extension GameStatusView {
         scene.addChild(emitter2)
     }
 }
+
 extension HomeScreenView {
     
     func animateFire(in scene: SKScene) {
@@ -76,7 +77,8 @@ extension HostGameView {
         scene.addChild(emitter2)
     }
 }
-extension HowToPlayView {
+
+extension TvTransitionTextsView {
     
     func animateFire(in scene: SKScene) {
         

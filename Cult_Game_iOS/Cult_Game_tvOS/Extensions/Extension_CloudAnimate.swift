@@ -22,7 +22,7 @@ extension GameStatusView {
     
 }
 
-extension GameRoundView {
+extension TvTransitionTextsView {
     
     // MARK: - Animação de nuvens
     func animateClouds(in scene: SKScene) {

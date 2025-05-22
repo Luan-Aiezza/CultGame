@@ -70,7 +70,7 @@ extension GameViewModel {
         turnEnteredCardPlayOnce()
 
         proceedToDiscussionIfReady()
-        //checkVictoryConditions()
+        
     }
 
     func skipCard() {

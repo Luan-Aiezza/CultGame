@@ -64,7 +64,7 @@ public class CardDeck {
 
             if card.isActive == true {
                 vm.followers += card.followersEffect
-                //card.isActive = false
+               
             }
         }
 

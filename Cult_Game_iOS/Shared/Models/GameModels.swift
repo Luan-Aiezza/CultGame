@@ -36,10 +36,6 @@ struct GameUpdate: Codable {
     var sharedFollowers: Int
 }
 
-//enum GameOutcome {
-//    case cultistVictory
-//    case hereticVictory
-//}
 
 struct GameRules {
     static let maxFollowers = 40

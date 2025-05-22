@@ -147,33 +147,6 @@ class GameViewModel: ObservableObject, Observable {
     }
     
     // MARK: - Verificação de vitória
-//    func checkVictoryConditions() {
-//        print("⚖️ Verificando condições de vitória...")
-//        
-//        let cultists = multiplayerManager.connectedPeers.filter {
-//            multiplayerManager.getRoles(for: [$0])[$0] == .cultist
-//        }
-//        
-//        let heretics = multiplayerManager.connectedPeers.filter {
-//            multiplayerManager.getRoles(for: [$0])[$0] == .heretic
-//        }
-//        
-//        let activeHeretics = heretics.filter {
-//            multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
-//        }
-//        
-//        if followers <= 0 {
-//            print("🏴 Vitória dos Hereges: seguidores chegaram a 0")
-//            endGame(with: .hereticVictory)
-//            return
-//        }
-//        
-//        if followers >= GameRules.maxFollowers {
-//            print("✝️ Vitória dos Cultistas: seguidores chegaram ao máximo")
-//            endGame(with: .cultistVictory)
-//            return
-//        }
-//    }
     
     
     func evaluateVictory() {

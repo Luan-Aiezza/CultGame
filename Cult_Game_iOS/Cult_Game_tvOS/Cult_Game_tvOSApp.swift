@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 @main
 struct Cult_Game_tvOSApp: App {
+    
+    init(){
+        FontManager.registerFonts()
+    }
     
     var body: some Scene {
         

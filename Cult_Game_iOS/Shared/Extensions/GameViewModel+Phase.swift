@@ -9,7 +9,7 @@ extension GameViewModel {
     }
     
     func advancePhaseAfterTimer() {
-        switch currentPhase {
+        switch multiplayerManager.currentPhase {
         case .cardPlay:
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
@@ -18,6 +18,7 @@ extension GameViewModel {
             currentPhase = .elimination
             multiplayerManager.currentPhase = .elimination
             multiplayerManager.sendGamePhase(.elimination)
+            
         case .elimination:
             currentPhase = .eliminationResults
             multiplayerManager.currentPhase = .eliminationResults
@@ -26,12 +27,19 @@ extension GameViewModel {
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
+            evaluateVictory()//////////////////////
+
         default:
             break
         }
     }
     
     func handlePhaseChange() {
+        
+        if isHost, case .cardPlay = currentPhase {
+            evaluateVictory()////////////////////////////////
+        }
+
         switch currentPhase {
         case .cardPlay:
             if player.hasEnteredCardPlayOnce {

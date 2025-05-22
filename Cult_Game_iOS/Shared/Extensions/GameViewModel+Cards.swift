@@ -70,7 +70,7 @@ extension GameViewModel {
         turnEnteredCardPlayOnce()
 
         proceedToDiscussionIfReady()
-        checkVictoryConditions()
+        //checkVictoryConditions()
     }
 
     func skipCard() {
@@ -91,13 +91,14 @@ extension GameViewModel {
 
         turnEmptyCard()
 
-        if currentPhase == .cardPlay {
+        if case .cardPlay = currentPhase {
             currentPhase = .discussion
-        } else if currentPhase == .discussion {
+        } else if case .discussion = currentPhase {
             currentPhase = .cardPlay
             playAllActiveCards()
         }
     }
+
 
     func playAllActiveCards() {
         activeCards.removeAll { $0.isActive == false }

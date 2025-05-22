@@ -36,8 +36,7 @@ struct ContentView: View {
                     timerView
                     
                     // FASE DE JOGO
-                    if multiplayerManager.currentPhase == .cardPlay {
-
+                    if case .cardPlay = multiplayerManager.currentPhase {
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(viewModel.activeCards) { card in
@@ -87,7 +86,7 @@ struct ContentView: View {
                     }
 
                     // FASE DE DISCUSSÃO
-                    else if multiplayerManager.currentPhase == .discussion {
+                    else if case .discussion = multiplayerManager.currentPhase {
                         Text("Discussion Phase")
                             .font(.title)
                             .padding()
@@ -104,10 +103,10 @@ struct ContentView: View {
                         }
                         .padding()
                     }
-                    else if multiplayerManager.currentPhase == .elimination {
+                    else if case .elimination = multiplayerManager.currentPhase {
                         EliminationView(multiplayerManager: multiplayerManager, viewModel: viewModel)
                     }
-                    else if multiplayerManager.currentPhase == .eliminationResults {
+                    else if case .eliminationResults = multiplayerManager.currentPhase {
                         EliminationResultsView(viewModel: viewModel)
                     }
                 }

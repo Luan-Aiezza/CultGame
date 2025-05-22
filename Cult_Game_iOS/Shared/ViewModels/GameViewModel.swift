@@ -38,6 +38,16 @@ class GameViewModel: ObservableObject, Observable {
     // MARK: - Array global de players
     @Published var players: [MCPeerID: PlayerModel] = [:]
     
+    @Published var gameOutcome: GameOutcome?
+
+    @objc func handleVictory(_ notification: Notification) {
+        if let outcome = notification.object as? GameOutcome {
+            self.gameOutcome = outcome
+            self.currentPhase = .victory(outcome)
+        }//////////////////
+    }
+
+    
     func assignRole(_ role: PlayerRole) {
         player.role = role
     }
@@ -137,11 +147,39 @@ class GameViewModel: ObservableObject, Observable {
     }
     
     // MARK: - Verificação de vitória
-    func checkVictoryConditions() {
-        print("⚖️ Verificando condições de vitória...")
-        
+//    func checkVictoryConditions() {
+//        print("⚖️ Verificando condições de vitória...")
+//        
+//        let cultists = multiplayerManager.connectedPeers.filter {
+//            multiplayerManager.getRoles(for: [$0])[$0] == .cultist
+//        }
+//        
+//        let heretics = multiplayerManager.connectedPeers.filter {
+//            multiplayerManager.getRoles(for: [$0])[$0] == .heretic
+//        }
+//        
+//        let activeHeretics = heretics.filter {
+//            multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
+//        }
+//        
+//        if followers <= 0 {
+//            print("🏴 Vitória dos Hereges: seguidores chegaram a 0")
+//            endGame(with: .hereticVictory)
+//            return
+//        }
+//        
+//        if followers >= GameRules.maxFollowers {
+//            print("✝️ Vitória dos Cultistas: seguidores chegaram ao máximo")
+//            endGame(with: .cultistVictory)
+//            return
+//        }
+//    }
+    
+    
+    func evaluateVictory() {
         let cultists = multiplayerManager.connectedPeers.filter {
-            multiplayerManager.getRoles(for: [$0])[$0] == .cultist
+            multiplayerManager.getRoles(for: [$0])[$0] == .cultist &&
+            multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
         }
         
         let heretics = multiplayerManager.connectedPeers.filter {
@@ -151,19 +189,22 @@ class GameViewModel: ObservableObject, Observable {
         let activeHeretics = heretics.filter {
             multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
         }
-        
-        if followers <= 0 {
-            print("🏴 Vitória dos Hereges: seguidores chegaram a 0")
-            endGame(with: .hereticVictory)
-            return
-        }
-        
+
         if followers >= GameRules.maxFollowers {
-            print("✝️ Vitória dos Cultistas: seguidores chegaram ao máximo")
-            endGame(with: .cultistVictory)
-            return
-        }
+            multiplayerManager.sendVictory(.cultistVictoryFollowers)
+        } else if activeHeretics.isEmpty {
+            multiplayerManager.sendVictory(.cultistVictoryElimination)
+        } else if followers <= 0 {
+            multiplayerManager.sendVictory(.hereticVictoryFollowers)
+        } else if activeHeretics.count >= cultists.count {
+            multiplayerManager.sendVictory(.hereticVictoryBalance)
+        } else {
+            // Segue normalmente para próxima fase se não houver vitória
+            currentPhase = .cardPlay
+            multiplayerManager.sendGamePhase(.cardPlay)
+        }//////////////////////////
     }
+
     
     func assignCharacter(_ character: Character) {
         player.character = character
@@ -204,6 +245,8 @@ class GameViewModel: ObservableObject, Observable {
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterAssignment(_:)), name: .didReceiveCharacter, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVictory(_:)), name: .didReceiveVictory, object: nil)//////////////////
+
         
     }
     

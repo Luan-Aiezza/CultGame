@@ -2,30 +2,44 @@
 import Foundation
 import SwiftUI
 
+
+
 struct CardPlayAction: Codable {
     var playerID: String
     var card: Card
     var playerRole: PlayerRole
 }
 
-enum GamePhase: String, Codable {
+enum GameOutcome: String, Codable {
+    case cultistVictoryFollowers
+    case cultistVictoryElimination
+    case hereticVictoryFollowers
+    case hereticVictoryBalance
+}/////////////////
+
+
+enum GamePhase: Codable {
     case pairing
     case roleSelection
     case cardPlay
     case discussion
     case elimination
     case eliminationResults
+    case victory(GameOutcome) ////////////////
 }
+
+
+
 
 struct GameUpdate: Codable {
     var sharedFaithPoints: Int
     var sharedFollowers: Int
 }
 
-enum GameOutcome {
-    case cultistVictory
-    case hereticVictory
-}
+//enum GameOutcome {
+//    case cultistVictory
+//    case hereticVictory
+//}
 
 struct GameRules {
     static let maxFollowers = 40
@@ -60,6 +74,8 @@ enum MultiplayerMessage: Codable {
     case vote(String)
     case setInactive(String)
     case updatePlayers([String: PlayerModel])
+    case victory(GameOutcome)/////////////////////////////////
+
     
     enum CodingKeys: String, CodingKey {
         case type, data
@@ -73,6 +89,8 @@ enum MultiplayerMessage: Codable {
         case vote
         case setInactive
         case updatePlayers
+        case victory////////////////////////
+
     }
     
     // Manual Encoding
@@ -104,6 +122,11 @@ enum MultiplayerMessage: Codable {
         case .updatePlayers(let players):
             try container.encode(MessageType.updatePlayers, forKey: .type)
             try container.encode(players, forKey: .data)
+            
+        case .victory(let outcome):
+            try container.encode(MessageType.victory, forKey: .type)
+            try container.encode(outcome, forKey: .data)////////////////////
+
         }
     }
     
@@ -136,6 +159,11 @@ enum MultiplayerMessage: Codable {
         case .updatePlayers:
             let players = try container.decode([String: PlayerModel].self, forKey: .data)
             self = .updatePlayers(players)
+            
+        case .victory:
+            let outcome = try container.decode(GameOutcome.self, forKey: .data)
+            self = .victory(outcome)////////////////////////////
+
         }
     }
     

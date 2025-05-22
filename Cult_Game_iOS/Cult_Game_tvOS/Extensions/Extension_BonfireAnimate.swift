@@ -15,6 +15,7 @@ extension GameStatusView {
 
         scene.addChild(emitter1)
     }
+    
 }
 
 extension GameRoundView {

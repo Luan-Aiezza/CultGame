@@ -45,9 +45,9 @@ extension GameRoundView {
     
     var scene: SKScene {
         
-//        ripple.position = self.scene.childNode(withName: "stone_water")!.position
+//      ripple.position = self.scene.childNode(withName: "stone_water")!.position
         
-        if let scene = SKScene(fileNamed: "EndScene") {
+        if let scene = SKScene(fileNamed: "RoundScene.sks") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
             animateClouds(in: scene) // <- Animação das nuvens

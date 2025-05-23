@@ -7,14 +7,13 @@
 
 /// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
 /// BOTAO DE SAIR DA PARTIDA
-/// ANIMACAO MASCARA SAINDO
 
 
 import SwiftUI
 import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
-
+// View que exibe o personagem herege com um efeito de brilho animado e um círculo pulsante
 struct GlowingCircleView: View {
     let characterImageName: String
 
@@ -66,15 +65,47 @@ struct GlowingCircleView: View {
         }
     }
 }
+//exibe a imagem do herege derrotado, escurecendo gradualmente e desaparecendo com fade-out
+struct HereticDefeatImageView: View {
+    let imageName: String
 
+    @State private var darkness: Double = 0.0
+    @State private var fadeOut: Double = 1.0
 
-extension GameOutcome {
-    var isHereticVictory: Bool {
-        self == .hereticVictoryFollowers || self == .hereticVictoryBalance
+    var body: some View {
+        Image(imageName)
+            .resizable()
+            .scaledToFit()
+            .offset(x: -135, y: -350)
+            .frame(width: 150, height: 160)
+            .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
+            .opacity(fadeOut) // fade out da imagem
+            .onAppear {
+                withAnimation(.easeIn(duration: 18)) {
+                    darkness = 1.0 // totalmente preto
+                }
+                withAnimation(.easeOut(duration: 17).delay(2)) {
+                    fadeOut = 0.0 // desaparece
+                }
+            }
     }
 }
 
 
+
+// Extensão com propriedades auxiliares para verificar se a vitória foi dos hereges ou cultistas
+extension GameOutcome {
+    var isHereticVictory: Bool {
+        self == .hereticVictoryFollowers || self == .hereticVictoryBalance
+    }
+    var isCultistVictory: Bool {
+            self == .cultistVictoryFollowers || self == .cultistVictoryElimination
+        }
+}
+
+
+// conteudo da tela de vitória (título, descrição, fundo)
 
 struct VictoryScreenContent {
     let title: String
@@ -119,17 +150,21 @@ struct VictoryScreenContent {
         }
     }
 }
-
+// tela de vitória para tvOS, exibe elementos visuais com base no resultado da partida
 struct VictoryTvView: View {
         let outcome: GameOutcome
         @State private var navigateToWaiting = false
         @ObservedObject var viewModel: GameViewModel
         let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
         
+    //Retorna o conteúdo visual apropriado (título, descrição e fundo) com base no resultado da partida
         var content: VictoryScreenContent {
             VictoryScreenContent.for( outcome: outcome)
         }
-        
+
+    
+    
+    // Recupera o nome da imagem  do personagem herege (caso ele tenha vencido)
         var hereticImageName: String? {
             // Verifica se a vitória foi dos hereges
             guard outcome.isHereticVictory else { return nil }
@@ -142,6 +177,22 @@ struct VictoryTvView: View {
             
             return nil
         }
+    
+    
+    
+    // Recupera o nome da imagem de derrota do herege com base no personagem (caso os cultistas tenham vencido)
+        var hereticDefeatImageName: String? {
+        guard outcome.isCultistVictory else { return nil }
+        
+        if let model = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic })?.value {
+            return "Heretic\(model.character.rawValue.capitalized)Died"
+        }
+        
+        return nil
+        }
+    
+    
+    // Retorna o nome formatado do personagem herege (apenas se os hereges vencerem)
         var hereticName: String? {
             guard outcome.isHereticVictory else { return nil }
             return viewModel.multiplayerManager.players
@@ -149,13 +200,12 @@ struct VictoryTvView: View {
                 .value.character.rawValue.capitalized
         }
         
+    
+    
         var body: some View {
-          
-
             ZStack {
                 
-                
-                SpriteView(scene: scene)
+                SpriteView(scene: scene)//animacao do fundo
                     .ignoresSafeArea(.all)
                 
                 Image(content.backgroundImageName)
@@ -169,6 +219,8 @@ struct VictoryTvView: View {
                     Spacer()
                     HStack {
                         Spacer()
+                        
+                        // Botão no canto superior direito para sair da partida e voltar para a tela de espera
                         Button(action: {
                             viewModel.resetGame()
                             navigateToWaiting = true
@@ -181,8 +233,11 @@ struct VictoryTvView: View {
                         .padding(.trailing,5)
                         .padding(.bottom, 24)
                     }
-                    //Spacer()
+                   
                     
+                    
+                    // Exibe os textos de título e descrição da vitória
+
                     Text(content.title)
                         .font(.custom("VinerHandITC", size: 60))
                         .bold()
@@ -208,8 +263,10 @@ struct VictoryTvView: View {
                         .frame(width: 400, height: 150)
                                //, alignment: .center)
                         .padding(.horizontal, 32)
-                    
 
+                    
+                    
+                    // Exibe o personagem herege vitorioso, com destaque visual e nome
                     if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
 
                         ZStack {
@@ -223,8 +280,6 @@ struct VictoryTvView: View {
                             }
 
                         }
-                        
-                        
                         if let name = hereticName {
                             Text("Heretic – \(name)")
                                 .font(.custom("VinerHandITC", size: 30))
@@ -234,28 +289,25 @@ struct VictoryTvView: View {
                                 .frame(width: 450, height: 150, alignment: .center)
                                 .padding(.horizontal, 24)
                         }
+
+                    } else {// Se a vitória foi dos cultistas, mostra a animação de derrota do herege
+                        if let defeatImage = hereticDefeatImageName {
+                            HereticDefeatImageView(imageName: defeatImage)
+                        }
+
                         
-                        
-                        //nome do herege
-                    } else {
-                        Image("victory_image_cultist")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 200)
                     }
                     
                     Spacer()
                     NavigationLink(destination: HostGameView(), isActive: $navigateToWaiting) {
                         EmptyView()
-                    }
+                    }// Link para navegar de volta pra tela de host quando o botaao É PRESSIOANDO
+
                     
                 }
                 .padding()
             }
-            .onAppear {
-//                print("✅ isHereticVictory: \(outcome.isHereticVictory)")
-//                print("🧿 hereticImageName: \(hereticImageName ?? "NIL")")
-            }
+
 
 
         }
@@ -279,31 +331,34 @@ extension GameViewModel {
     }
 }
 
+
+
+// Exemplos de visualização da tela de vitóri
+
 //
-//#Preview("Vitória herege - Followers") {
-//    VictoryTvView(
-//
-//        outcome: .hereticVictoryFollowers,
-//        viewModel: GameViewModel.previewModel()
-//    )
-//}
-    
-    
-//    #Preview("Vitória cultista - elimination") {
-//        VictoryTvView(
-//            
-//            outcome: .cultistVictoryElimination,
-//            viewModel: GameViewModel.previewModel()
-//        )
-//    }
-#Preview("Vitória herege- mais hereges que cultistas") {
+#Preview("Vitória herege - Followers") {
     VictoryTvView(
 
-        outcome: .hereticVictoryBalance,
+        outcome: .hereticVictoryFollowers,
         viewModel: GameViewModel.previewModel()
     )
 }
+    
+//#Preview("Vitória cultista - elimination") {
+//    VictoryTvView(
+//        
+//        outcome: .cultistVictoryElimination,
+//        viewModel: GameViewModel.previewModel()
+//    )
+//}
+//#Preview("Vitória herege- mais hereges que cultistas") {
+//    VictoryTvView(
 //
+//        outcome: .hereticVictoryBalance,
+//        viewModel: GameViewModel.previewModel()
+//    )
+//}
+////
 //#Preview("Vitória cultista - followers") {
 //    VictoryTvView(
 //        

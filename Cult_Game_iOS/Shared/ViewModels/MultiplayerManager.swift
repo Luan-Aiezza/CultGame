@@ -273,6 +273,7 @@ extension MultiplayerManager: MCSessionDelegate {
                         player.character = character
                         self.players[peer] = player
                         self.sendPlayersToAll()
+                        print(self.players)
                     }
                 }
             case .kickPlayer:

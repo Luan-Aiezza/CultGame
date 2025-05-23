@@ -42,10 +42,10 @@ struct RoleView: View {
                     
                     VStack{
                         if let role = viewModel.player.role {
-                            if let character = viewModel.player.character {
+                            if let character = viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID]?.character {
                                 switch role {
                                 case .cultist:
-                                    Image("\(String(describing: viewModel.player.role?.rawValue))_\(String(describing: viewModel.player.character?.displayName))_001")
+                                    Image("\(String(describing: viewModel.player.role?.rawValue))_\(String(describing: character.displayName.lowercased()))_001")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 250, height: 350)
@@ -53,7 +53,7 @@ struct RoleView: View {
                                         .padding(.bottom, 30)
                                     
                                 case .heretic:
-                                    Image("\(viewModel.player.role?.rawValue ?? "heretic")_\(viewModel.player.character!.rawValue)_001")
+                                    Image("\(viewModel.player.role?.rawValue ?? "heretic")_\(character.displayName.lowercased())_001")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 250, height: 350)

@@ -119,7 +119,7 @@ extension VictoryTvView {
         
 //        ripple.position = self.scene.childNode(withName: "stone_water")!.position
         
-        if let scene = SKScene(fileNamed: "MyScene") {
+        if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
             //animateClouds(in: scene) // <- Animação das nuvens

@@ -8,7 +8,7 @@
 /// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
 /// BOTAO DE SAIR DA PARTIDA
 /// ANIMACAO MASCARA SAINDO
-/// ANIMACAO FOGUEIRA
+
 
 import SwiftUI
 import MultipeerConnectivity
@@ -83,36 +83,34 @@ struct VictoryScreenContent {
     
 
     
-    static func `for`(role: PlayerRole, outcome: GameOutcome) -> VictoryScreenContent {
-        switch (role, outcome) {
+    static func `for`(outcome: GameOutcome) -> VictoryScreenContent {
+        switch ( outcome) {
             
-        case (.cultist, .cultistVictoryFollowers),
-            (.cultist, .cultistVictoryElimination):
+        case
+            ( .cultistVictoryElimination):
             return .init(
-                title: "The Cult Has Triumphed!",
-                description: "The flame and unity of the cult burned brighter.",
+                title: "The cult remained dominant",
+                description: "The flame and unity of the cult burned brighter – the heretic was unmasked",
                 backgroundImageName: "FilterBlack"
                 
             )
             
-        case (.heretic, .cultistVictoryFollowers),
-            (.heretic, .cultistVictoryElimination):
+        case ( .cultistVictoryFollowers):
             return .init(
-                title: "You Were Discovered!",
-                description: "Heresy whispered too much. The cult heard. Now, the veil of lies burns in flames.",
+                title: "The cult remained dominan",
+                description: "When the last faithful heart was won, the cultists reached their peak — and the cult reigned supreme.",
                 backgroundImageName: "FilterBlack"
             )
             
-        case (.heretic, .hereticVictoryFollowers),
-            (.heretic, .hereticVictoryBalance):
+        case ( .hereticVictoryFollowers):
             return .init(
                 title: "The cult has been defeated!",
                 description: "There are no souls left to sustain the cult – the followers have reached zero.",
                 backgroundImageName: "FilterRed"
             )
             
-        case (.cultist, .hereticVictoryFollowers),
-            (.cultist, .hereticVictoryBalance):
+        case
+            ( .hereticVictoryBalance):
             return .init(
                 title: "The Cult Was Defeated!",
                 description: "The heretic served heresy as if it were faith — and you drank it to the last drop.",
@@ -123,14 +121,13 @@ struct VictoryScreenContent {
 }
 
 struct VictoryTvView: View {
-        let role: PlayerRole
         let outcome: GameOutcome
         @State private var navigateToWaiting = false
         @ObservedObject var viewModel: GameViewModel
         let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
         
         var content: VictoryScreenContent {
-            VictoryScreenContent.for(role: role, outcome: outcome)
+            VictoryScreenContent.for( outcome: outcome)
         }
         
         var hereticImageName: String? {
@@ -138,14 +135,19 @@ struct VictoryTvView: View {
             guard outcome.isHereticVictory else { return nil }
             
             // Procura o jogador que é o herege
-            if let (peer, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
+            if let (_, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
                 let character = model.character
                 return "\(character.rawValue.capitalized)H"
             }
             
             return nil
         }
-        
+        var hereticName: String? {
+            guard outcome.isHereticVictory else { return nil }
+            return viewModel.multiplayerManager.players
+                .first(where: { $0.value.role == .heretic })?
+                .value.character.rawValue.capitalized
+        }
         
         var body: some View {
           
@@ -182,17 +184,17 @@ struct VictoryTvView: View {
                     //Spacer()
                     
                     Text(content.title)
-                        .font(.custom("VinerHandITC", size: 50))
+                        .font(.custom("VinerHandITC", size: 60))
                         .bold()
                         .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                         .multilineTextAlignment(.center)
                         
-                        .frame(width: 260, alignment: .center) // largura fixa
+                        .frame(width: 450, height: 150, alignment: .center) // largura fixa
                         .padding(.horizontal, 24)
 
                     
                     Text(content.description)
-                        .font(.custom("Almendra", size: 24))
+                        .font(.custom("Almendra", size: 30))
                         .foregroundColor({
                             switch outcome {
                             case .hereticVictoryFollowers, .hereticVictoryBalance:
@@ -203,26 +205,9 @@ struct VictoryTvView: View {
                         }())
                         .multilineTextAlignment(.center)
                         .lineSpacing(0.2)
-                        .frame(width: 312, alignment: .center)
+                        .frame(width: 400, height: 150)
+                               //, alignment: .center)
                         .padding(.horizontal, 32)
-
-                   // Spacer()
-//
-//                    SpriteView(scene: scene)
-//                        .ignoresSafeArea(.all)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    // COLOCAR AQUI O FOGO
-                    
-                    
-                    
-                    
                     
 
                     if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
@@ -238,6 +223,20 @@ struct VictoryTvView: View {
                             }
 
                         }
+                        
+                        
+                        if let name = hereticName {
+                            Text("Heretic – \(name)")
+                                .font(.custom("VinerHandITC", size: 30))
+                                .bold()
+                                .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                                .multilineTextAlignment(.center)
+                                .frame(width: 450, height: 150, alignment: .center)
+                                .padding(.horizontal, 24)
+                        }
+                        
+                        
+                        //nome do herege
                     } else {
                         Image("victory_image_cultist")
                             .resizable()
@@ -280,36 +279,36 @@ extension GameViewModel {
     }
 }
 
-
-#Preview("Vitória herege - herege") {
-    VictoryTvView(
-        role: .heretic,
-        outcome: .hereticVictoryFollowers,
-        viewModel: GameViewModel.previewModel()
-    )
-}
+//
+//#Preview("Vitória herege - Followers") {
+//    VictoryTvView(
+//
+//        outcome: .hereticVictoryFollowers,
+//        viewModel: GameViewModel.previewModel()
+//    )
+//}
     
-
-//    #Preview("Vitória cultista - cultista") {
+    
+//    #Preview("Vitória cultista - elimination") {
 //        VictoryTvView(
-//            role: .cultist,
+//            
 //            outcome: .cultistVictoryElimination,
 //            viewModel: GameViewModel.previewModel()
 //        )
 //    }
-    
-    //#Preview("Vitória cultista - herege") {
-    //    VictoryTvView(
-    //        role: .heretic,
-    //        outcome: .cultistVictory,
-    //        viewModel: GameViewModel.previewModel()
-    //    )
-    //}
-    //#Preview("Vitória herege- cultista") {
-    //    VictoryTvView(
-    //        role: .cultist,
-    //        outcome: .hereticVictory,
-    //        viewModel: GameViewModel.previewModel()
-    //    )
-    //}
+#Preview("Vitória herege- mais hereges que cultistas") {
+    VictoryTvView(
 
+        outcome: .hereticVictoryBalance,
+        viewModel: GameViewModel.previewModel()
+    )
+}
+//
+//#Preview("Vitória cultista - followers") {
+//    VictoryTvView(
+//        
+//        outcome: .cultistVictoryFollowers,
+//        viewModel: GameViewModel.previewModel()
+//    )
+//}
+//

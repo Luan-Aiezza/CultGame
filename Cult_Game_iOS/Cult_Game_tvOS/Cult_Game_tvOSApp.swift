@@ -9,7 +9,9 @@ import SwiftUI
 
 @main
 struct Cult_Game_tvOSApp: App {
+    
     var body: some Scene {
+        
         WindowGroup {
             TvTransitionTextsView()
                 .ignoresSafeArea()

@@ -9,6 +9,7 @@ struct HostGameView: View {
     @ObservedObject private var viewModel = GameViewModel()
     
     var body: some View {
+        
         VStack(spacing: 20) {
             Text("Waiting players...")
                 .font(.title)

@@ -1,45 +1,76 @@
 import SwiftUI
 import SpriteKit
-import AVFoundation
+import Combine
 
 struct GameStatusView: View {
-    
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    var Audio = AudioManager.shared //Background Music
     
+    var tvResponse = 1.5
+
     var body: some View {
+        
         ZStack {
-            // VIEW DO MAPA
+            
+            // Fundo com a cena do SpriteKit
             SpriteView(scene: scene)
-                .ignoresSafeArea(.all)
-            
-            
-            //A PARTIR DAQUI SERÁ UI
-                VStack(spacing: 10) {
-                    Text("Faith points: \(multiplayerManager.globalState.sharedFaithPoints)")
-                        .foregroundColor(.green)
-                        .font(.title2)
+                .ignoresSafeArea()
 
-                    ForEach(multiplayerManager.globalState.heresyPoints.sorted(by: { $0.key < $1.key }), id: \.key) { peerName, heresy in
-                        HStack {
-                            Text("Heretic: \(peerName.prefix(10))")
-                            Spacer()
-                            Text("Heresy: \(heresy)")
-                        }
-                        .foregroundColor(.red)
-                        .font(.title3)
+            // UI sobreposta
+            
+            VStack {
+                
+                // TIMER CENTRAL SUPERIOR
+                HStack {
+                    Spacer()
+                    ZStack(alignment: .center) {
+                        TimerView()
+                            .frame(width: 194 * tvResponse, height: 74 * tvResponse)
+                            .background(Color(red: 0.16, green: 0.15, blue: 0.13))
+                        Image("TimerBar")
+                            .resizable()
+                            .frame(width: 200 * tvResponse, height: 80 * tvResponse)
                     }
+                    Spacer()
+                }
+                Spacer()
 
-                    Text("Followers: \(multiplayerManager.globalState.followers)")
-                        .foregroundColor(.blue)
-                        .font(.title2)
+                HStack {
+                    // ÍCONES DOS JOGADORES - CANTO INFERIOR ESQUERDO
+                    ZStack(alignment: .center) {
+                        playerIconsView
+                            .frame(width: 388 * tvResponse, height: 60 * tvResponse)
+                            .background(Color(red: 0.16, green: 0.15, blue: 0.13))
+                            .cornerRadius(16)
+
+                        Image("PlayersBorder")
+                            .resizable()
+                            .frame(width: 394 * tvResponse, height: 66 * tvResponse)
+                    }.padding(.leading, 80*tvResponse)
+                    
+                    Spacer()
+
+                    // BARRAS DE STATUS - CANTO INFERIOR DIREITO
+                    VStack(spacing: 12) {
+                        StatusBarView()
+                    }
+                    .padding(.trailing, 80*tvResponse)
+                    .frame(width: 365*tvResponse)
                 }
                 .padding()
             }
-        .onAppear{
-            Audio.playBackgroundMusic(named: "OST")
-        }
-            .padding()
+        }.onAppear {
+            AudioManager.shared.playBackgroundMusic(named: "OST")
         }
     }
-
+    var playerIconsView: some View {
+        HStack(spacing: 8) {
+            ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
+                Image("FoxIcon")//trocar pelo icone do jogador
+                    .resizable()
+                    .frame(width: 36*tvResponse, height: 36*tvResponse)
+            }
+        }
+        .background(Color(red: 0.16, green: 0.15, blue: 0.13))
+        .cornerRadius(16)
+    }
+}

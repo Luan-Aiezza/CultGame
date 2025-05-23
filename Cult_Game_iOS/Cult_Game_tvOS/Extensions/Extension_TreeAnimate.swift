@@ -18,6 +18,7 @@ extension GameStatusView {
 
         // Define o novo ponto de ancoragem
         tree.anchorPoint = CGPoint(x: 0.5, y: 0.1)
+        tree.lightingBitMask = 1
 
         // Compensa o deslocamento vertical causado pela mudança no anchorPoint
         let deltaY = tree.size.height * (0.5 - 0.1) // Diferença de 40% da altura

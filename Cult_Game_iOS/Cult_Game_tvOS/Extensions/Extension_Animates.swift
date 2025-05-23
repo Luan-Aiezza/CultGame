@@ -85,7 +85,7 @@ extension GameRoundView {
         if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            animateClouds(in: scene) // <- Animação das nuvens
+            //animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateBonfire(in: scene)

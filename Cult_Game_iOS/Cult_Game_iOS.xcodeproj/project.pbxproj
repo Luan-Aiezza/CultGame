@@ -37,6 +37,7 @@
 				ViewModels/CardDistributionManager.swift,
 				ViewModels/GameViewModel.swift,
 				ViewModels/MultiplayerManager.swift,
+				ViewModels/TimerManager.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
@@ -56,6 +57,7 @@
 				ViewModels/CardDistributionManager.swift,
 				ViewModels/GameViewModel.swift,
 				ViewModels/MultiplayerManager.swift,
+				ViewModels/TimerManager.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};

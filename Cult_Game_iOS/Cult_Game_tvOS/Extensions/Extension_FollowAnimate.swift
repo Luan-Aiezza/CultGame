@@ -17,6 +17,7 @@ extension GameStatusView {
 
         for i in 0..<followerCount {
             let follower = SKSpriteNode(imageNamed: "Seguidor")
+            follower.lightingBitMask = 1
             follower.name = "Follower_\(i)"
             follower.zPosition = -1
             follower.setScale(0.03)

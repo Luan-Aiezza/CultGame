@@ -171,29 +171,40 @@ class GameViewModel: ObservableObject, Observable {
             multiplayerManager.getRoles(for: [$0])[$0] == .cultist &&
             multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
         }
-        
+
         let heretics = multiplayerManager.connectedPeers.filter {
             multiplayerManager.getRoles(for: [$0])[$0] == .heretic
         }
-        
+
         let activeHeretics = heretics.filter {
             multiplayerManager.getPlayerStates(for: [$0])[$0]?.state == .active
         }
 
+        var outcome: GameOutcome?
+
         if followers >= GameRules.maxFollowers {
-            multiplayerManager.sendVictory(.cultistVictoryFollowers)
+            outcome = .cultistVictoryFollowers
         } else if activeHeretics.isEmpty {
-            multiplayerManager.sendVictory(.cultistVictoryElimination)
+            outcome = .cultistVictoryElimination
         } else if followers <= 0 {
-            multiplayerManager.sendVictory(.hereticVictoryFollowers)
+            outcome = .hereticVictoryFollowers
         } else if activeHeretics.count >= cultists.count {
-            multiplayerManager.sendVictory(.hereticVictoryBalance)
+            outcome = .hereticVictoryBalance
+        }
+
+        if let outcome {
+            print("🏁 Vitória detectada: \(outcome)")
+            multiplayerManager.sendVictory(outcome)       // informa todos os peers
+            self.gameOutcome = outcome                    // salva no local para navegação no iOS
+            self.currentPhase = .victory(outcome)         // ativa a navegação condicional
         } else {
-            // Segue normalmente para próxima fase se não houver vitória
+            // segue o jogo
+            print("🔄 Nenhuma vitória detectada")
             currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
-        }//////////////////////////
+        }
     }
+
 
     
     func assignCharacter(_ character: Character) {

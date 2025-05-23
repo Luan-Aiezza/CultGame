@@ -54,7 +54,11 @@ struct WaitingForPlayersView: View {
                 Text("Waiting for Players...")
                     .font(Font.custom("Almendra-Regular", size: 18))
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                    .padding(.bottom, 90)
+                    .padding(.bottom, 24)
+
+                
+
+                Spacer()
             }
             .padding(.horizontal)
         }
@@ -74,9 +78,9 @@ struct WaitingForPlayersView: View {
 //}
 
 
-
-
-#Preview {
-    //WaitingForPlayersView(viewModel: GameViewModel.previewModel())
-}
-
+//
+//#Preview {
+//    let vm = GameViewModel.previewModel()
+//    vm.multiplayerManager.isHosting = true
+//    return WaitingForPlayersView(viewModel: vm)
+//}

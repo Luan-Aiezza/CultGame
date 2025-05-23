@@ -47,15 +47,15 @@ struct GlowingCircleView: View {
                 .frame(width: 300, height: 280)
                 .blur(radius: 4)
                 .opacity(0.8)
-                .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: animateGlow)
+                //.animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: animateGlow)
 
-            Circle()
-                .fill(Color.white.opacity(0.9))
-                .frame(width: 5, height: 9)
-                .offset(y: -150)
-                .blur(radius: 20)
-                .shadow(color: .yellow, radius: 6)
-                .rotationEffect(.degrees(angle))
+//            Circle()
+//                .fill(Color.white.opacity(0.9))
+//                .frame(width: 5, height: 9)
+//                .offset(y: -150)
+//                .blur(radius: 20)
+//                .shadow(color: .yellow, radius: 6)
+//                .rotationEffect(.degrees(angle))
         }
         .onAppear {
             animateGlow = true
@@ -312,38 +312,38 @@ struct VictoryTvView: View {
 
         }
     }
-
-extension GameViewModel {
-    static func previewModel() -> GameViewModel {
-        let vm = GameViewModel()
-        let peer = MCPeerID(displayName: "You")
-        vm.multiplayerManager._setFakePeerID(peer)
-        vm.multiplayerManager.connectedPeers = [peer]
-        
-        var me = PlayerModel()
-        me.role = .heretic
-        me.character = .fox
-        
-        vm.multiplayerManager.players[peer] = me
-        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
-        
-        return vm
-    }
-}
+//
+//extension GameViewModel {
+//    static func previewModel() -> GameViewModel {
+//        let vm = GameViewModel()
+//        let peer = MCPeerID(displayName: "You")
+//        vm.multiplayerManager._setFakePeerID(peer)
+//        vm.multiplayerManager.connectedPeers = [peer]
+//        
+//        var me = PlayerModel()
+//        me.role = .heretic
+//        me.character = .fox
+//        
+//        vm.multiplayerManager.players[peer] = me
+//        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
+//        
+//        return vm
+//    }
+//}
 
 
 
 // Exemplos de visualização da tela de vitóri
 
 //
-#Preview("Vitória herege - Followers") {
-    VictoryTvView(
-
-        outcome: .hereticVictoryFollowers,
-        viewModel: GameViewModel.previewModel()
-    )
-}
-    
+//#Preview("Vitória herege - Followers") {
+//    VictoryTvView(
+//
+//        outcome: .hereticVictoryFollowers,
+//        viewModel: GameViewModel.previewModel()
+//    )
+//}
+//    
 //#Preview("Vitória cultista - elimination") {
 //    VictoryTvView(
 //        

@@ -29,7 +29,17 @@ struct SelectCard: View {
 struct PlayCardView: View {
     @EnvironmentObject var vm: GameViewModel
     @State private var selectedCard: Card? = nil
-    
+
+    @ViewBuilder
+    var destinationView: some View {
+        if let outcome = vm.gameOutcome,
+           let role = vm.player.role {
+            VictoryScreenView(role: role, outcome: outcome, viewModel: vm)
+        } else {
+            EmptyView()
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -40,7 +50,7 @@ struct PlayCardView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
-                
+
                 VStack {
                     SelectCard(selectedCard: $selectedCard)
                         .dropDestination(for: Card.self) { items, location in
@@ -50,8 +60,7 @@ struct PlayCardView: View {
                             }
                             return false
                         }
-                    
-                    
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(vm.player.hand) { card in
@@ -62,17 +71,27 @@ struct PlayCardView: View {
                                         selectedCard = card
                                     }
                                     .scrollTransition { content, phase in
-                                        content
-                                            .scaleEffect(phase.isIdentity ? 1 : 0.8)
+                                        content.scaleEffect(phase.isIdentity ? 1 : 0.8)
                                     }
                             }
                         }
                     }
                 }
+
+                NavigationLink(
+                    destination: destinationView,
+                    isActive: Binding(
+                        get: { vm.gameOutcome != nil },
+                        set: { _ in }
+                    )
+                ) {
+                    EmptyView()
+                }
             }
         }
     }
 }
+
 
 
 #Preview {

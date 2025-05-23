@@ -254,23 +254,23 @@ struct VictoryScreenView: View {
         }
     }
 
-extension GameViewModel {
-    static func previewModel() -> GameViewModel {
-        let vm = GameViewModel()
-        let peer = MCPeerID(displayName: "You")
-        vm.multiplayerManager._setFakePeerID(peer)
-        vm.multiplayerManager.connectedPeers = [peer]
-        
-        var me = PlayerModel()
-        me.role = .heretic
-        me.character = .fox
-        
-        vm.multiplayerManager.players[peer] = me
-        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
-        
-        return vm
-    }
-}
+//extension GameViewModel {
+//    static func previewModel() -> GameViewModel {
+//        let vm = GameViewModel()
+//        let peer = MCPeerID(displayName: "You")
+//        vm.multiplayerManager._setFakePeerID(peer)
+//        vm.multiplayerManager.connectedPeers = [peer]
+//        
+//        var me = PlayerModel()
+//        me.role = .heretic
+//        me.character = .fox
+//        
+//        vm.multiplayerManager.players[peer] = me
+//        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
+//        
+//        return vm
+//    }
+//}
 
 
 //#Preview("Vitória herege - herege") {
@@ -281,14 +281,14 @@ extension GameViewModel {
 //    )
 //}
     
-
-    #Preview("Vitória cultista - cultista") {
-        VictoryScreenView(
-            role: .cultist,
-            outcome: .cultistVictoryElimination,
-            viewModel: GameViewModel.previewModel()
-        )
-    }
+//
+//    #Preview("Vitória cultista - cultista") {
+//        VictoryScreenView(
+//            role: .cultist,
+//            outcome: .cultistVictoryElimination,
+//            viewModel: GameViewModel.previewModel()
+//        )
+//    }
     
     //#Preview("Vitória cultista - herege") {
     //    VictoryScreenView(

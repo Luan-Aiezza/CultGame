@@ -77,6 +77,6 @@ struct WaitingForPlayersView: View {
 
 
 #Preview {
-    WaitingForPlayersView(viewModel: GameViewModel.previewModel())
+    //WaitingForPlayersView(viewModel: GameViewModel.previewModel())
 }
 

@@ -24,6 +24,12 @@ struct HostGameView: View {
                         Text("No role")
                             .foregroundColor(.gray)
                     }
+                    
+                    if let character = multiplayerManager.players[peer]?.character {
+                        Text(character.displayName)
+                    } else {
+                        Text("no character")
+                    }
                 }
             }
             .frame(maxHeight: 300)
@@ -55,16 +61,6 @@ struct HostGameView: View {
                 .font(.footnote)
             
             Spacer()
-            
-            // Status do jogo
-//            if gameStarted {
-//                GameStatusView()
-//                    .transition(.slide)
-//                Spacer()
-//                
-//                timerView
-//                    .padding(.bottom)
-//            }
         }
         .onAppear {
             multiplayerManager.startHosting()

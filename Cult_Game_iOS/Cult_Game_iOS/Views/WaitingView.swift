@@ -17,7 +17,7 @@ struct WaitingView: View {
             Text("esperando personagem")
             
             Button {
-                print(vm.currentPhase)
+               print("algo")
             } label: {
                 Text("Teste de fase")
                     .padding(200)

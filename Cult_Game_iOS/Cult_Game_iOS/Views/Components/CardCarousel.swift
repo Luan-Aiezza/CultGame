@@ -7,17 +7,24 @@ extension Int {
     }
 }
 
-func blockMessage() -> some View {
+func blockMessage(cardType : CardType) -> some View {
     ZStack {
         Image("tip_001")
             .resizable()
             .scaledToFit()
-            .frame(width: 150)
+            .frame(width: 140)
         
-        Text("O culto não tem pontos de fé suficiente para escolher uma carta")
-            .font(.custom("Almendra-Regular", size: 16))
-            .foregroundColor(Color.title)
-            .padding(.horizontal, 8)
+        if cardType == .cultist || cardType == .common {
+            Text("O culto não tem pontos de fé suficiente para escolher a carta")
+                .font(.custom("Almendra-Regular", size: 16))
+                .foregroundColor(Color.title)
+                .padding(.horizontal, 8)
+        } else {
+            Text("Você não tem heresia suficiente para escolher a carta")
+                .font(.custom("Almendra-Regular", size: 16))
+                .foregroundColor(Color.title)
+                .padding(.horizontal, 8)
+        }
     }
 }
 

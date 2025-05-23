@@ -24,7 +24,7 @@ struct GameView: View {
             case .elimination:
                 VotingView()
             case .eliminationResults:
-                ResultView()
+                VotingResultView()
             }
         }// on appear se precisar
     }

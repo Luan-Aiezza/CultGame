@@ -10,27 +10,27 @@ import Foundation
 public class CardDeck {
     
     let commonCards: [Card] = [
-        Card(name: "Pray", faithCost: 2, heresyCost: 0, followersEffect: 5, description: "Increases fervor.", imageName: "orar", type: .common, rarity: 1),
-        Card(name: "Sing Hymns", faithCost: 1, heresyCost: 0, followersEffect: 3, description: "Attracts the curious.", imageName: "hinos", type: .common, rarity: 5),
-        Card(name: "Meditate", faithCost: 1, heresyCost: 0, followersEffect: 2, description: "Improves spiritual clarity.", imageName: "meditar", type: .common, rarity: 3),
-        Card(name: "Give Sermon", faithCost: 3, heresyCost: 0, followersEffect: 6, description: "Inspires the faithful.", imageName: "sermao", type: .common, rarity: 4),
-        Card(name: "Hand Out Pamphlets", faithCost: 1, heresyCost: 0, followersEffect: 4, description: "Spreads the word.", imageName: "panfleto", type: .common, rarity: 2)
+        Card(name: "Pray", faithCost: 2, heresyCost: 0, followersEffect: 5, effectsDescription: "", description: "Increases fervor.", imageName: "orar", type: .common, rarity: 1),
+        Card(name: "Sing Hymns", faithCost: 1, heresyCost: 0, followersEffect: 3, effectsDescription: "", description: "Attracts the curious.", imageName: "hinos", type: .common, rarity: 5),
+        Card(name: "Meditate", faithCost: 1, heresyCost: 0, followersEffect: 2, effectsDescription: "", description: "Improves spiritual clarity.", imageName: "meditar", type: .common, rarity: 3),
+        Card(name: "Give Sermon", faithCost: 3, heresyCost: 0, followersEffect: 6, effectsDescription: "", description: "Inspires the faithful.", imageName: "sermao", type: .common, rarity: 4),
+        Card(name: "Hand Out Pamphlets", faithCost: 1, heresyCost: 0, followersEffect: 4, effectsDescription: "", description: "Spreads the word.", imageName: "panfleto", type: .common, rarity: 2)
     ]
 
     var cultistCards: [Card] = [
-        Card(name: "Secret Ritual", faithCost: 4, heresyCost: 0, followersEffect: 10, description: "Strengthens cult ties.", imageName: "ritual", type: .cultist, rarity: 10),
-        Card(name: "Dark Meditation", faithCost: 2, heresyCost: 1, followersEffect: 6, description: "Empowers inner darkness.", imageName: "meditacao_sombria", type: .cultist, rarity: 4),
-        Card(name: "Blood Offering", faithCost: 5, heresyCost: 2, followersEffect: 12, description: "Demands loyalty through sacrifice.", imageName: "oferta", type: .cultist, rarity: 6)
+        Card(name: "Secret Ritual", faithCost: 4, heresyCost: 0, followersEffect: 10, effectsDescription: "", description: "Strengthens cult ties.", imageName: "ritual", type: .cultist, rarity: 10),
+        Card(name: "Dark Meditation", faithCost: 2, heresyCost: 1, followersEffect: 6, effectsDescription: "", description: "Empowers inner darkness.", imageName: "meditacao_sombria", type: .cultist, rarity: 4),
+        Card(name: "Blood Offering", faithCost: 5, heresyCost: 2, followersEffect: 12, effectsDescription: "", description: "Demands loyalty through sacrifice.", imageName: "oferta", type: .cultist, rarity: 6)
     ]
 
     let heresyCards: [Card] = [
-        Card(name: "Spread Doubts", faithCost: 2, heresyCost: 0, followersEffect: -5, description: "Shakes the followers' faith.", imageName: "duvida", type: .heresy, rarity: 2),
-        Card(name: "Sabotage Ritual", faithCost: 3, heresyCost: 0, followersEffect: -8, description: "Weakens the cultists.", imageName: "sabotar", type: .heresy, rarity: 5),
-        Card(name: "Whisper Lies", faithCost: 2, heresyCost: 1, followersEffect: -4, description: "Turns trust into confusion.", imageName: "mentiras", type: .heresy, rarity: 3),
-        Card(name: "Infiltrate Cult", faithCost: 4, heresyCost: 2, followersEffect: -10, description: "Breaks inner ranks.", imageName: "infiltracao", type: .heresy, rarity: 6)
+        Card(name: "Spread Doubts", faithCost: 2, heresyCost: 0, followersEffect: -5, effectsDescription: "", description: "Shakes the followers' faith.", imageName: "duvida", type: .heresy, rarity: 2),
+        Card(name: "Sabotage Ritual", faithCost: 3, heresyCost: 0, followersEffect: -8, effectsDescription: "", description: "Weakens the cultists.", imageName: "sabotar", type: .heresy, rarity: 5),
+        Card(name: "Whisper Lies", faithCost: 2, heresyCost: 1, followersEffect: -4, effectsDescription: "", description: "Turns trust into confusion.", imageName: "mentiras", type: .heresy, rarity: 3),
+        Card(name: "Infiltrate Cult", faithCost: 4, heresyCost: 2, followersEffect: -10, effectsDescription: "", description: "Breaks inner ranks.", imageName: "infiltracao", type: .heresy, rarity: 6)
     ]
 
-    let assassinationCard = Card(name: "Assassination", faithCost: 5, heresyCost: 0, followersEffect: 0, description: "Eliminates a player.", imageName: "assassinato", type: .assassination, rarity: 10)
+    let assassinationCard = Card(name: "Assassination", faithCost: 5, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "Eliminates a player.", imageName: "assassinato", type: .assassination, rarity: 10)
     
     var specialCards: [SpecificCard] = []
 
@@ -43,7 +43,7 @@ public class CardDeck {
             name: "Church Ritual",
             faithCost: 2,
             followersEffect: 5,
-            heresyCost: 0,
+            heresyCost: 0, effectsDescription: "",
             description: "Continues to add 5 followers every turn",
             imageName: "orar",
             type: .common,
@@ -72,7 +72,7 @@ public class CardDeck {
             name: "Burst of Faith",
             faithCost: 3,
             followersEffect: 15,
-            heresyCost: 0,
+            heresyCost: 0, effectsDescription: "",
             description: "Adds 15 followers after 4 rounds",
             imageName: "fe",
             type: .common,
@@ -103,7 +103,7 @@ public class CardDeck {
             name: "Forbidden Knowledge",
             faithCost: 3,
             followersEffect: 0,
-            heresyCost: 3,
+            heresyCost: 3, effectsDescription: "",
             description: "After 3 turns, adds 10 followers and 2 heresy.",
             imageName: "conhecimento",
             type: .cultist,

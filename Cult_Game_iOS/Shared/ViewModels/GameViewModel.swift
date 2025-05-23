@@ -29,7 +29,7 @@ class GameViewModel: ObservableObject, Observable {
 
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
-    public var emptyCard = Card(name: "", faithCost: 0, heresyCost: 0, followersEffect: 0, description: "", imageName: "", type: .empty, rarity: 0)
+    public var emptyCard = Card(name: "", faithCost: 0, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "", imageName: "", type: .empty, rarity: 0)
     
     var availableTime: Int = 30
     var timer: Timer?

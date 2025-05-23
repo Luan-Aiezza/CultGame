@@ -22,17 +22,19 @@ class Card: Identifiable, Equatable, Codable, Transferable {
     let faithCost: Int
     let heresyCost : Int
     let followersEffect: Int
+    let effectsDescription : String
     let description: String
     let imageName: String
     let type: CardType
     var rarity : Int
     
-    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, description: String, imageName: String, type: CardType, rarity: Int) {
+    init(name: String, faithCost: Int, heresyCost: Int, followersEffect: Int, effectsDescription: String, description: String, imageName: String, type: CardType, rarity: Int) {
         self.id = UUID()
         self.name = name
         self.faithCost = faithCost
         self.heresyCost = heresyCost
         self.followersEffect = followersEffect
+        self.effectsDescription = effectsDescription
         self.description = description
         self.imageName = imageName
         self.type = type

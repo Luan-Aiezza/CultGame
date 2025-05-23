@@ -30,11 +30,4 @@ extension GameViewModel {
     func addRound() {
         round += 1
     }
-
-    func proceedToDiscussionIfReady() {
-        currentPhase = .discussion
-        if player.usedCard == nil {
-            turnEmptyCard()
-        }
-    }
 }

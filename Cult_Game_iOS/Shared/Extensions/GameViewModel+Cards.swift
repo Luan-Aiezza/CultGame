@@ -38,26 +38,22 @@ extension GameViewModel {
             break
         }
         addCard(pool: pool, needed: needed)
-        
-        print("CHEGOU NO FINAL DE REPLENISH HAND IF NEEDED!!!!!!!")
     }
 
     
     func playCard(_ card: Card) {
         guard player.usedCard != nil else {
-            print("you've already played a card this round")
             return
         }
 
         guard points >= card.faithCost else {
-            print("⚠️ Pontos insuficientes para usar a carta.")
             return
         }
 
         assignCard(card: card)
         removeCardFromHand(card: card)
 
-        card.play(vm: self) // envia para host
+        card.play(vm: self)
 
         print("""
         🃏 Carta jogada: \(card.name)
@@ -66,21 +62,15 @@ extension GameViewModel {
         👥 Fiéis: \(globalState.followers)
         """)
 
-        // Impede skip
         turnEnteredCardPlayOnce()
-
-        proceedToDiscussionIfReady()
         checkVictoryConditions()
     }
 
     func skipCard() {
         guard player.usedCard != nil else {
-            print("you've already chosen a card this round")
             return
         }
-
-        print("⏭ Rodada skipada")
-
+        
         let action = CardPlayAction(playerID: peerID.displayName, card: emptyCard, playerRole: player.role!)
 
         if isHost {
@@ -90,13 +80,6 @@ extension GameViewModel {
         }
 
         turnEmptyCard()
-//
-//        if currentPhase == .cardPlay {
-//            currentPhase = .discussion
-//        } else if currentPhase == .discussion {
-//            currentPhase = .cardPlay
-//            playAllActiveCards()
-//        }
     }
 
     func playAllActiveCards() {

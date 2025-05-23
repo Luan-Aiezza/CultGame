@@ -4,25 +4,32 @@ import AVFoundation
 
 struct DiscussionView: View {
     @StateObject var timerManager = GameTimerManager()
-    @EnvironmentObject var multiplayerManager : MultiplayerManager
-    var Audio = AudioManager.shared //Background Music
-    
+    @EnvironmentObject var multiplayerManager: MultiplayerManager
+    @State private var showResultView = false
+    let Audio = AudioManager.shared
+
     var body: some View {
         ZStack {
-            VStack {
-                Text("Tempo restante: \(timerManager.timeRemaining)")
-                    .foregroundColor(.yellow)
-                    .font(.title)
-                
-                Text("Discussion")
-            }
+            if showResultView {
+                ResultView()
+            } else {
+                VStack {
+                    Text("Tempo restante: \(timerManager.timeRemaining)")
+                        .foregroundColor(.yellow)
+                        .font(.title)
 
-        }
-        .onAppear{
-            Audio.playBackgroundMusic(named: "OST")
-            timerManager.start(duration: 20)
-        }
-            .padding()
+                    Text("Discussion")
+                }
+                .onAppear {
+                    Audio.playBackgroundMusic(named: "OST")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+                        withAnimation {
+                            showResultView = true
+                        }
+                    }
+                }
+                .padding()
+            }
         }
     }
-
+}

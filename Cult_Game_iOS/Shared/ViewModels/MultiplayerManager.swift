@@ -20,6 +20,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     )
     @Published var round = 0
     @Published var currentPhase: GamePhase = .pairing
+    @Published var pendingEffects: [GameEffects] = []
     
     private let serviceType = "cult-game"
     
@@ -27,7 +28,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
     
-    private var _myPeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
     public let myPeerID = MCPeerID(displayName: "\(UIDevice.current.name)_\(UUID().uuidString.prefix(4))")
     
     var isHosting: Bool = false
@@ -130,28 +130,40 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
         DispatchQueue.main.async {
-            print("\n🎯 Ação recebida do jogador \(peerID.displayName): carta \(action.card.name)")
-            
-            if action.playerRole == .cultist {
-                print("🙏 Reduzindo fé em \(action.card.faithCost)")
-                self.globalState.sharedFaithPoints -= action.card.faithCost
-            } else {
-                print("🔥 Aumentando heresia de \(action.card.faithCost)")
-                self.globalState.heresyPoints[peerID.displayName, default: 0] += action.card.faithCost
-            }
-            
-            print("👥 Alterando seguidores em \(action.card.followersEffect)")
-            self.globalState.followers += action.card.followersEffect
-            
-            print("📬 Novo estado global: \n - Fé: \(self.globalState.sharedFaithPoints)\n - Heresia total: \(self.globalState.heresyPoints.values.reduce(0, +))\n - Seguidores: \(self.globalState.followers)")
-            
-            self.sendGlobalStateToAllPlayers()
-            NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
-            
-            
-            GameViewModel().checkVictoryConditions() //precisa estar vinculada ao mesmo GameViewModel do host,
+            let faithChange = action.playerRole == .cultist ? -action.card.faithCost : 0
+            let heresyChange = action.playerRole == .heretic ? action.card.faithCost : 0
+            let followersChange = action.card.followersEffect
+
+            let effect = GameEffects(
+                peerID: peerID,
+                faithChange: faithChange,
+                heresyChange: heresyChange,
+                followersChange: followersChange
+            )
+
+            self.pendingEffects.append(effect)
         }
     }
+    
+    func applyPendingEffects() {
+        for effect in pendingEffects {
+            if effect.faithChange != 0 {
+                globalState.sharedFaithPoints += effect.faithChange
+            }
+
+            if effect.heresyChange != 0 {
+                globalState.heresyPoints[effect.peerID.displayName, default: 0] += effect.heresyChange
+            }
+
+            globalState.followers += effect.followersChange
+        }
+
+        pendingEffects.removeAll()
+        sendGlobalStateToAllPlayers()
+        NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
+    }
+
+
     
     
     func assignRolesRandomly(to players: [MCPeerID]) {
@@ -163,20 +175,6 @@ class MultiplayerManager: NSObject, ObservableObject {
             sendRole(.cultist, to: cultist)
         }
     }
-    
-//    func assignCharactersRandomly(to players: [MCPeerID]) {
-//        let allCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
-//        let shuffledCharacters = allCharacters.shuffled()
-//        
-//        for (index, player) in players.enumerated() {
-//            if index < shuffledCharacters.count {
-//                let character = shuffledCharacters[index]
-//                sendCharacter(character, to: player)
-//            } else {
-//                print("⚠️ Mais jogadores do que personagens disponíveis!")
-//            }
-//        }
-//    }
     
     func sendCharacter(_ character: Character, to peer: MCPeerID) {
         let message = MultiplayerMessage.characterAssignment(character)
@@ -191,8 +189,6 @@ class MultiplayerManager: NSObject, ObservableObject {
             try? session.send(data, toPeers: [peer], with: .reliable)
         }
     }
-    
-    // Função criada para eliminar um jogador do jogo
     
     func eliminate(peer: MCPeerID) {
         let message = MultiplayerMessage.kickPlayer
@@ -318,14 +314,6 @@ extension Notification.Name {
     static let didReceiveRole = Notification.Name("didReceiveRole")
     static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
 }
-
-#if DEBUG
-extension MultiplayerManager {
-    func _setFakePeerID(_ fakeID: MCPeerID) {
-        self._myPeerID = fakeID
-    }
-}
-#endif
 
 extension Dictionary {
     func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {

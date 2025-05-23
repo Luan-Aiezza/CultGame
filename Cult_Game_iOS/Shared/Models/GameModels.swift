@@ -1,11 +1,19 @@
 // GameModels.swift
 import Foundation
 import SwiftUI
+import MultipeerConnectivity
 
 struct CardPlayAction: Codable {
     var playerID: String
     var card: Card
     var playerRole: PlayerRole
+}
+
+struct GameEffects {
+    let peerID: MCPeerID
+    let faithChange: Int
+    let heresyChange: Int
+    let followersChange: Int
 }
 
 enum GamePhase: String, Codable {

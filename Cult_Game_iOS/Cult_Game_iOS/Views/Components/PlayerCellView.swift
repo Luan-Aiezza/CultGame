@@ -57,12 +57,12 @@ struct PlayerCellView: View {
                     .cornerRadius(10)
 
                 HStack(spacing: 10) {
-                    Image(player.character.rawValue)
+                    Image(player.character?.rawValue ?? "nil")
                         .resizable()
                         .scaledToFit()
                         .frame(width: height - 15, height: height - 15)
 
-                    Text(player.character.displayName)
+                    Text(player.character?.displayName ?? "nil")
                         .foregroundColor(.title)
                         .fontWeight(isSelected ? .bold : .regular)
                         .lineLimit(1)

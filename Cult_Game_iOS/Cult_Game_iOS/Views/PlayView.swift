@@ -23,6 +23,7 @@ struct PlayView: View {
                 
                 NavigationLink {
                     GameView()
+                        .environmentObject(vm)
                 } label: {
                     Text("Play")
                         .font(.custom("VinerHandITC", size: 40))

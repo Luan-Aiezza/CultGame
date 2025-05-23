@@ -16,6 +16,7 @@ struct GameView: View {
             switch multiplayerManager.currentPhase {
             case .pairing:
                 WaitingView()
+                    .environmentObject(vm)
             case .roleSelection:
                 StoryView()
             case .cardPlay:

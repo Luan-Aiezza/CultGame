@@ -24,7 +24,7 @@ struct GameView: View {
             case .discussion:
                 DiscussionView() //pegar da Mari
             case .elimination:
-                EliminationView() // SAM!!
+                EliminationView() // SAM!! 
             case .eliminationResults:
                 EliminationResultsView() // SAM!!
             }
@@ -42,6 +42,14 @@ struct GameView: View {
                     vm.assignCharacter(role)
                 }
             }
+            
+            NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
+                if let character = notification.object as? Character {
+                    // Atualize a UI com o personagem recebido
+                    print("🎨 Recebi meu personagem: \(character)")
+                }
+            }
+
         }
     }
 }

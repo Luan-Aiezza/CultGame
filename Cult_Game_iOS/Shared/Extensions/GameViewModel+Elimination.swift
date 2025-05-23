@@ -9,7 +9,7 @@ import Foundation
 import MultipeerConnectivity
 
 extension GameViewModel {
-
+    
     func addVote(to peerID: MCPeerID) {
         let message = MultiplayerMessage.vote(peerID.displayName)
         multiplayerManager.sendMessage(message)

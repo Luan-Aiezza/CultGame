@@ -24,6 +24,7 @@ struct PlayView: View {
                 NavigationLink {
                     GameView()
                         .environmentObject(vm)
+                        .navigationBarBackButtonHidden(true)
                 } label: {
                     Text("Play")
                         .font(.custom("VinerHandITC", size: 40))
@@ -32,6 +33,7 @@ struct PlayView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

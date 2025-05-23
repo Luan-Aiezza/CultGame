@@ -8,7 +8,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     @Published var hostPeerID: MCPeerID?
     
-    @Published private var availableCharacters: [Character] = [.fox, .panda, .bunny, .tiger, .deer, .pig, .wolf]
     @Published var assignedRoles: [MCPeerID: PlayerRole] = [:]
     @Published var playerStates: [MCPeerID: PlayerModel] = [:]
     @Published var connectedPeers: [MCPeerID] = []
@@ -21,7 +20,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var round = 0
     @Published var currentPhase: GamePhase = .pairing
     @Published var pendingEffects: [GameEffects] = []
-    
     
     private let serviceType = "cult-game"
     
@@ -48,13 +46,19 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
-//    func handleReceivedData(_ data: Data, from peerID: MCPeerID) {
-//        if let phase = try? JSONDecoder().decode(GamePhase.self, from: data) {
-//            DispatchQueue.mainasync {
-//                self.currentPhase = phase
-//            }
-//        }
-//    }
+    //    func handleReceivedData(_ data: Data, from peerID: MCPeerID) {
+    //        if let phase = try? JSONDecoder().decode(GamePhase.self, from: data) {
+    //            DispatchQueue.mainasync {
+    //                self.currentPhase = phase
+    //            }
+    //        }
+    //    }
+    func addCharacter(to peerID: MCPeerID) {
+        print(peerID.displayName)
+        let message = MultiplayerMessage.characterAssignment(peerID.displayName)
+        sendMessage(message)
+        print("entrou aqui")
+    }
     
     func startHosting() {
         isHosting = true
@@ -69,6 +73,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         browser?.delegate = self
         browser?.startBrowsingForPeers()
+        print("faf")
     }
     
     func goToNextRound() {
@@ -134,14 +139,14 @@ class MultiplayerManager: NSObject, ObservableObject {
             let faithChange = action.playerRole == .cultist ? -action.card.faithCost : 0
             let heresyChange = action.playerRole == .heretic ? action.card.faithCost : 0
             let followersChange = action.card.followersEffect
-
+            
             let effect = GameEffects(
                 peerID: peerID,
                 faithChange: faithChange,
                 heresyChange: heresyChange,
                 followersChange: followersChange
             )
-
+            
             self.pendingEffects.append(effect)
         }
     }
@@ -151,20 +156,20 @@ class MultiplayerManager: NSObject, ObservableObject {
             if effect.faithChange != 0 {
                 globalState.sharedFaithPoints += effect.faithChange
             }
-
+            
             if effect.heresyChange != 0 {
                 globalState.heresyPoints[effect.peerID.displayName, default: 0] += effect.heresyChange
             }
-
+            
             globalState.followers += effect.followersChange
         }
-
+        
         pendingEffects.removeAll()
         sendGlobalStateToAllPlayers()
         NotificationCenter.default.post(name: .didReceiveGameData, object: nil)
     }
-
-
+    
+    
     
     
     func assignRolesRandomly(to players: [MCPeerID]) {
@@ -174,13 +179,6 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
         for cultist in shuffled.dropFirst() {
             sendRole(.cultist, to: cultist)
-        }
-    }
-    
-    func sendCharacter(_ character: Character, to peer: MCPeerID) {
-        let message = MultiplayerMessage.characterAssignment(character)
-        if let data = try? JSONEncoder().encode(message) {
-            try? session.send(data, toPeers: [peer], with: .reliable)
         }
     }
     
@@ -204,20 +202,13 @@ extension MultiplayerManager: MCSessionDelegate {
         DispatchQueue.main.async {
             switch state {
             case .connected:
-                self.connectedPeers.append(peerID)
-                self.players[peerID] = PlayerModel()
-                
-                if !self.availableCharacters.isEmpty {
-                    let character = self.availableCharacters.removeFirst()
-                    self.sendCharacter(character, to: peerID)
-                    print("👤 Atribuído personagem \(character) para \(peerID.displayName)")
-                } else {
-                    print("⚠️ Sem personagens disponíveis para \(peerID.displayName)")
-                }
-                
+                    self.connectedPeers.append(peerID)
+                    self.players[peerID] = PlayerModel()
+                    self.addCharacter(to: peerID)
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
                 self.players.removeValue(forKey: peerID)
+                
             default:
                 break
             }
@@ -225,6 +216,11 @@ extension MultiplayerManager: MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        print("👥 Peers conectados: \(session.connectedPeers)")
+        guard !session.connectedPeers.isEmpty else {
+            print("⚠️ Nenhum peer conectado")
+            return
+        }
         if let message = try? JSONDecoder().decode(MultiplayerMessage.self, from: data) {
             switch message {
             case .attPhase(let phase):
@@ -235,10 +231,25 @@ extension MultiplayerManager: MCSessionDelegate {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .didReceiveRole, object: role)
                 }
-            case .characterAssignment(let character):
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: .didReceiveCharacter, object: character)
+            case .characterAssignment(let peerDisplayName):
+                print("entrou aqui 2")
+                
+                let usedCharacters = self.players.values.compactMap { $0.character }
+                let availableCharacters = Character.allCases.filter { !usedCharacters.contains($0) }
+                guard let character = availableCharacters.first else {
+                    print("⚠️ Sem personagens disponíveis para \(peerID.displayName)")
+                    return
                 }
+                DispatchQueue.main.async {
+                    if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
+                       
+                        var player = self.players[peer] {
+                        player.character = character
+                        self.players[peer] = player
+                        self.sendPlayersToAll()
+                    }
+                }
+                print(players)
             case .kickPlayer:
                 DispatchQueue.main.async {
                     MultiplayerManager.shared.disconnect()
@@ -253,7 +264,6 @@ extension MultiplayerManager: MCSessionDelegate {
                         self.sendPlayersToAll()
                     }
                 }
-                
             case .setInactive(let peerDisplayName):
                 DispatchQueue.main.async {
                     if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),

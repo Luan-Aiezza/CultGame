@@ -94,7 +94,7 @@ struct MurderView: View {
 let mockPlayers: [PlayerModel] = [
     PlayerModel(
         id: "1",
-        hand: [Card(name: "Preach", faithCost: 2, heresyCost: 0, followersEffect: 4, description: "Inspires hope.", imageName: "preach", type: .common, rarity: 2)],
+        hand: [Card(name: "Preach", faithCost: 2, heresyCost: 0, followersEffect: 4, effectsDescription: "", description: "Inspires hope.", imageName: "preach", type: .common, rarity: 2)],
         role: .cultist,
         personalHeresyPoints: 1,
         state: .active,
@@ -102,7 +102,7 @@ let mockPlayers: [PlayerModel] = [
     ),
     PlayerModel(
         id: "2",
-        hand: [Card(name: "Question Faith", faithCost: 0, heresyCost: 2, followersEffect: -3, description: "Sows doubt.", imageName: "question", type: .common, rarity: 3)],
+        hand: [Card(name: "Question Faith", faithCost: 0, heresyCost: 2, followersEffect: -3, effectsDescription: "", description: "Sows doubt.", imageName: "question", type: .common, rarity: 3)],
         role: .cultist,
         personalHeresyPoints: 3,
         state: .active,
@@ -110,7 +110,7 @@ let mockPlayers: [PlayerModel] = [
     ),
     PlayerModel(
         id: "3",
-        hand: [Card(name: "Fast", faithCost: 1, heresyCost: 0, followersEffect: 1, description: "Shows devotion.", imageName: "fast", type: .common, rarity: 4)],
+        hand: [Card(name: "Fast", faithCost: 1, heresyCost: 0, followersEffect: 1, effectsDescription: "", description: "Shows devotion.", imageName: "fast", type: .common, rarity: 4)],
         role: .cultist,
         personalHeresyPoints: 0,
         state: .active,
@@ -118,7 +118,7 @@ let mockPlayers: [PlayerModel] = [
     ),
     PlayerModel(
         id: "4",
-        hand: [Card(name: "Whisper Heresy", faithCost: 0, heresyCost: 3, followersEffect: -4, description: "Spreads doubt.", imageName: "whisper", type: .common, rarity: 2)],
+        hand: [Card(name: "Whisper Heresy", faithCost: 0, heresyCost: 3, followersEffect: -4, effectsDescription: "", description: "Spreads doubt.", imageName: "whisper", type: .common, rarity: 2)],
         role: .cultist,
         personalHeresyPoints: 5,
         state: .active,
@@ -126,7 +126,7 @@ let mockPlayers: [PlayerModel] = [
     ),
     PlayerModel(
         id: "5",
-        hand: [Card(name: "Light Candles", faithCost: 1, heresyCost: 0, followersEffect: 2, description: "Symbolic ritual.", imageName: "candles", type: .common, rarity: 1)],
+        hand: [Card(name: "Light Candles", faithCost: 1, heresyCost: 0, followersEffect: 2, effectsDescription: "", description: "Symbolic ritual.", imageName: "candles", type: .common, rarity: 1)],
         role: .cultist,
         personalHeresyPoints: 0,
         state: .active,
@@ -134,7 +134,7 @@ let mockPlayers: [PlayerModel] = [
     ),
     PlayerModel(
         id: "6",
-        hand: [Card(name: "Blaspheme", faithCost: 0, heresyCost: 4, followersEffect: -5, description: "Shocks the faithful.", imageName: "blaspheme", type: .common, rarity: 1)],
+        hand: [Card(name: "Blaspheme", faithCost: 0, heresyCost: 4, followersEffect: -5, effectsDescription: "", description: "Shocks the faithful.", imageName: "blaspheme", type: .common, rarity: 1)],
         role: .heretic,
         personalHeresyPoints: 6,
         state: .active,

@@ -11,14 +11,8 @@ enum PlayerRole: String, Codable {
     case heretic
 }
 
-enum Character : String, Codable {
-    case fox
-    case panda
-    case bunny
-    case tiger
-    case deer
-    case pig
-    case wolf
+enum Character: String, Codable, CaseIterable {
+    case fox, panda, bunny, tiger, deer, pig, wolf
 }
 
 struct PlayerModel: Codable, Identifiable {

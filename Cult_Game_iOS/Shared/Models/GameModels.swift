@@ -62,10 +62,9 @@ enum CardType: String, Codable {
 
 enum MultiplayerMessage: Codable {
     case attPhase(GamePhase)
-    
     case roleAssignment(PlayerRole)
     case kickPlayer
-    case characterAssignment(Character)
+    case characterAssignment(String)
     case vote(String)
     case setInactive(String)
     case updatePlayers([String: PlayerModel])
@@ -99,9 +98,9 @@ enum MultiplayerMessage: Codable {
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
             //decodificar a mensagem do personagem
-        case .characterAssignment(let character):
+        case .characterAssignment(let peerID):
             try container.encode(MessageType.characterAssignment, forKey: .type)
-            try container.encode(character, forKey: .data)
+            try container.encode(peerID, forKey: .data)
         case .vote(let peerID):
             try container.encode(MessageType.vote, forKey: .type)
             try container.encode(peerID, forKey: .data)
@@ -132,8 +131,8 @@ enum MultiplayerMessage: Codable {
             self = .kickPlayer
             //decodificar a mensagem do personagem
         case .characterAssignment:
-            let character = try container.decode(Character.self, forKey: .data)
-            self = .characterAssignment(character)
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .characterAssignment(peerID)
         case .vote:
             let peerID = try container.decode(String.self, forKey: .data)
             self = .vote(peerID)

@@ -5,13 +5,14 @@
 //  Created by Grecia Cristina on 20/05/25.
 //
 /// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
-/// FUNDO DO CIRCULO NO FIGMA
 /// BOTAO DE SAIR DA PARTIDA
-/// APLICAR FILTROS NOS FUNDOS
 /// ANIMACAO MASCARA SAINDO
 /// ANIMACAO FOGUEIRA 
 
 import SwiftUI
+import MultipeerConnectivity
+import SpriteKit
+import AVFoundation
 
 struct GlowingCircleView: View {
     let characterImageName: String
@@ -23,14 +24,11 @@ struct GlowingCircleView: View {
 
     var body: some View {
         ZStack {
-            Circle()
-                .fill(baseColor)
-                .frame(width: 300, height: 300)
 
             Image(characterImageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 280, height: 300)
+                .frame(width: 270, height: 300)
                 .offset(x: 0, y: 10)
 
             Circle()
@@ -46,7 +44,7 @@ struct GlowingCircleView: View {
                     ),
                     lineWidth: 10
                 )
-                .frame(width: 300, height: 300)
+                .frame(width: 300, height: 280)
                 .blur(radius: 4)
                 .opacity(0.8)
                 .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: animateGlow)
@@ -69,6 +67,11 @@ struct GlowingCircleView: View {
 }
 
 
+extension GameOutcome {
+    var isHereticVictory: Bool {
+        self == .hereticVictoryFollowers || self == .hereticVictoryBalance
+    }
+}
 
 
 
@@ -76,147 +79,180 @@ struct VictoryScreenContent {
     let title: String
     let description: String
     let backgroundImageName: String
-    //let icon: String
-    
 
     
     static func `for`(role: PlayerRole, outcome: GameOutcome) -> VictoryScreenContent {
         switch (role, outcome) {
-        case (.cultist, .cultistVictory):
+            
+        case (.cultist, .cultistVictoryFollowers),
+            (.cultist, .cultistVictoryElimination):
             return .init(
                 title: "The Cult Has Triumphed!",
                 description: "The flame and unity of the cult burned brighter.",
-                backgroundImageName: "bg_cultist_win"
-                //icon: "🔥"
+                backgroundImageName: "CultistVictory"
             )
-        case (.heretic, .cultistVictory):
+            
+        case (.heretic, .cultistVictoryFollowers),
+            (.heretic, .cultistVictoryElimination):
             return .init(
                 title: "You Were Discovered!",
                 description: "Heresy whispered too much. The cult heard. Now, the veil of lies burns in flames.",
-                backgroundImageName: "bg_heretic_loss"
-                //icon: "💀"
+                backgroundImageName: "CultistVictory"
             )
-        case (.heretic, .hereticVictory):
+            
+        case (.heretic, .hereticVictoryFollowers),
+            (.heretic, .hereticVictoryBalance):
             return .init(
                 title: "You Have Won!",
                 description: "You served heresy as if it were faith — and they drank it to the last drop.",
-                backgroundImageName: "bg_heretic_win"
-                //GlowingCircleView()
-
+                backgroundImageName: "HereticVictory"
             )
-        case (.cultist, .hereticVictory):
+            
+        case (.cultist, .hereticVictoryFollowers),
+            (.cultist, .hereticVictoryBalance):
             return .init(
                 title: "The Cult Was Defeated!",
                 description: "The heretic served heresy as if it were faith — and you drank it to the last drop.",
-                backgroundImageName: "bg_cultist_loss"
-               // GlowingCircleView()
-
+                backgroundImageName: "HereticVictory"
             )
         }
     }
 }
 
 struct VictoryScreenView: View {
-    let role: PlayerRole
-    let outcome: GameOutcome
-    @State private var navigateToWaiting = false
-    @ObservedObject var viewModel: GameViewModel
-    let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
-    
-    var content: VictoryScreenContent {
-        VictoryScreenContent.for(role: role, outcome: outcome)
-    }
-    
-    var hereticImageName: String? {
-        // Verifica se a vitória foi dos hereges
-        guard outcome == .hereticVictory else { return nil }
-
-        // Procura o jogador que é o herege
-        if let (peer, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
-            let character = model.character
-            return "\(character.rawValue.capitalized)H" // Exemplo: "FoxH"
+        let role: PlayerRole
+        let outcome: GameOutcome
+        @State private var navigateToWaiting = false
+        @ObservedObject var viewModel: GameViewModel
+        let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
+        
+        var content: VictoryScreenContent {
+            VictoryScreenContent.for(role: role, outcome: outcome)
         }
-
-        return nil
-    }
-
-    
-    var body: some View {
-        ZStack {
-            Color.black // <- fundo preto
-                    .ignoresSafeArea()
-//            Image(content.)
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
+        
+        var hereticImageName: String? {
+            // Verifica se a vitória foi dos hereges
+            guard outcome.isHereticVictory else { return nil }
             
-            VStack(spacing: 20) {
-                Spacer()
-                
-                Text(content.title)
-                    .font(.custom("VinerHandITC", size: 40))
-                    .frame(maxWidth: .infinity)
-                    .bold()
-                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 24)
-
-                Text(content.description)
-                    .font(.custom("Almendra", size: 20))
-                    .foregroundColor(
-                        (outcome == .hereticVictory) ? hereticRed : Color(red: 1.0, green: 0.91, blue: 0.75)
-                    )
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 32)
-                Spacer()
-                
-//                Text(content.icon)
-//                    .font(.system(size: 80))
-                
-                
-                Spacer()
-                
-                if outcome == .hereticVictory, let imageName = hereticImageName {
-                    GlowingCircleView(characterImageName: imageName)
-                } else {
-                    Image("victory_image_cultist")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 200)
-                }
-
-
-
-                        // 7. Elemento animado (ex: emoji de fogo ou futura fogueira animada)
-//                Text(content.icon)
-//                            .font(.system(size: 80))
-//                            .padding(.bottom)
-                
-                Button("Continue") {
-                    viewModel.resetGame()
-                    navigateToWaiting = true
-                }
-
-                .font(.custom("Almendra", size: 20))
-                .padding()
-                .background(Color.white.opacity(0.2))
-                .foregroundColor(.white)
-                .clipShape(Capsule())
-
-                NavigationLink(destination: WaitingForPlayersView(viewModel: viewModel), isActive: $navigateToWaiting) {
-                    EmptyView()
-                }
-
+            // Procura o jogador que é o herege
+            if let (peer, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
+                let character = model.character
+                return "\(character.rawValue.capitalized)H"
             }
-            .padding()
+            
+            return nil
+        }
+        
+        
+        var body: some View {
+
+            ZStack {
+                
+                Image(content.backgroundImageName)
+                                .resizable()
+                                .scaledToFill()
+                                .ignoresSafeArea()
+                
+               
+                
+                VStack(spacing: 20) {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            viewModel.resetGame()
+                            navigateToWaiting = true
+                        }) {
+                            Image("exit")
+                                .resizable()
+                                .frame(width: 65, height: 50)
+                                .foregroundColor(.white)
+                        }
+                        .padding(.trailing,5)
+                        .padding(.bottom, 24)
+                    }
+                    //Spacer()
+                    
+                    Text(content.title)
+                        .font(.custom("VinerHandITC", size: 50))
+                        .bold()
+                        .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                        .multilineTextAlignment(.center)
+                        
+                        .frame(width: 260, alignment: .center) // largura fixa
+                        .padding(.horizontal, 24)
+
+                    
+                    Text(content.description)
+                        .font(.custom("Almendra", size: 24))
+                        .foregroundColor({
+                            switch outcome {
+                            case .hereticVictoryFollowers, .hereticVictoryBalance:
+                                return hereticRed
+                            default:
+                                return Color(red: 1.0, green: 0.91, blue: 0.75)
+                            }
+                        }())
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(0.2)
+                        .frame(width: 312, alignment: .center)
+                        .padding(.horizontal, 32)
+
+                   // Spacer()
+//            
+//                    SpriteView(scene: scene)
+//                        .ignoresSafeArea(.all)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    // COLOCAR AQUI O FOGO
+                    
+                    
+                    
+                    
+                    
+
+                    if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
+
+                        ZStack {
+                            Image("CircleHeretic")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 300, height: 293)
+
+                            if let imageName = hereticImageName {
+                                GlowingCircleView(characterImageName: imageName)
+                            }
+
+                        }
+                    } else {
+                        Image("victory_image_cultist")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 200)
+                    }
+                    
+                    Spacer()
+                    NavigationLink(destination: WaitingForPlayersView(viewModel: viewModel), isActive: $navigateToWaiting) {
+                        EmptyView()
+                    }
+                    
+                }
+                .padding()
+            }
+            .onAppear {
+//                print("✅ isHereticVictory: \(outcome.isHereticVictory)")
+//                print("🧿 hereticImageName: \(hereticImageName ?? "NIL")")
+            }
+
+
         }
     }
-}
-
-
-// No final de VictoryScreenView.swift 👇
-import MultipeerConnectivity
 
 extension GameViewModel {
     static func previewModel() -> GameViewModel {
@@ -224,43 +260,48 @@ extension GameViewModel {
         let peer = MCPeerID(displayName: "You")
         vm.multiplayerManager._setFakePeerID(peer)
         vm.multiplayerManager.connectedPeers = [peer]
-
+        
         var me = PlayerModel()
         me.role = .heretic
-        me.character = .deer
-
+        me.character = .fox
+        
         vm.multiplayerManager.players[peer] = me
-        vm.attPlayer(newPlayer: me) // 🔧 Evita erro de private(set)
-
+        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
+        
         return vm
     }
 }
-//#Preview("Vitória cultista - cultista") {
-//    VictoryScreenView(
-//        role: .cultist,
-//        outcome: .cultistVictory,
-//        viewModel: GameViewModel.previewModel()
-//    )
-//}
 
-//#Preview("Vitória cultista - herege") {
+
+//#Preview("Vitória herege - herege") {
 //    VictoryScreenView(
 //        role: .heretic,
-//        outcome: .cultistVictory,
+//        outcome: .hereticVictoryFollowers,
 //        viewModel: GameViewModel.previewModel()
 //    )
 //}
-//#Preview("Vitória herege- cultista") {
-//    VictoryScreenView(
-//        role: .cultist,
-//        outcome: .hereticVictory,
-//        viewModel: GameViewModel.previewModel()
-//    )
-//}
-#Preview("Vitória herege - herege") {
-    VictoryScreenView(
-        role: .cultist,
-        outcome: .hereticVictory,
-        viewModel: GameViewModel.previewModel()
-    )
-}
+    
+
+    #Preview("Vitória cultista - cultista") {
+        VictoryScreenView(
+            role: .cultist,
+            outcome: .cultistVictoryElimination,
+            viewModel: GameViewModel.previewModel()
+        )
+    }
+    
+    //#Preview("Vitória cultista - herege") {
+    //    VictoryScreenView(
+    //        role: .heretic,
+    //        outcome: .cultistVictory,
+    //        viewModel: GameViewModel.previewModel()
+    //    )
+    //}
+    //#Preview("Vitória herege- cultista") {
+    //    VictoryScreenView(
+    //        role: .cultist,
+    //        outcome: .hereticVictory,
+    //        viewModel: GameViewModel.previewModel()
+    //    )
+    //}
+

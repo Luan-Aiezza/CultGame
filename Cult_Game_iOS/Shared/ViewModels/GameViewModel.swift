@@ -96,7 +96,24 @@ class GameViewModel: ObservableObject, Observable {
         player.hasEnteredCardPlayOnce = true
     }
     
-    
+    func resetGame() {
+        // Reinicializa variáveis importantes
+        currentPhase = .roleSelection
+        round = 0
+        timeRemaining = availableTime
+        player = PlayerModel()
+        activeCards.removeAll()
+        deckManager = CardDistributionManager.shared
+        multiplayerManager.players.removeAll()
+        multiplayerManager.assignedRoles.removeAll()
+        multiplayerManager.playerStates.removeAll()
+        multiplayerManager.globalState = GlobalGameState(
+            sharedFaithPoints: GameRules.initialFaithPoints,
+            heresyPoints: [:],
+            followers: GameRules.initialFollowers
+        )
+    }
+
     
     // MARK: - Estado global
     var globalState: GlobalGameState {

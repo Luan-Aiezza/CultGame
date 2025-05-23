@@ -32,4 +32,3 @@ extension TvTransitionTextsView {
         scene.addChild(emitter1)
     }
 }
-

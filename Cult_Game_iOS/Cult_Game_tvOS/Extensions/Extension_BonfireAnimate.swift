@@ -44,7 +44,7 @@ extension TvTransitionTextsView {
             return
         }
         emitter1.name = "Bonfire"
-        emitter1.position = CGPoint(x: -18, y: -22)
+        emitter1.position = CGPoint(x: 5, y: -22)
         emitter1.zPosition = 5  // Ajusta para ficar acima do fundo
 
         scene.addChild(emitter1)
@@ -60,7 +60,7 @@ extension VictoryTvView {
             return
         }
         emitter1.name = "Bonfire"
-        emitter1.position = CGPoint(x: -18, y: -22)
+        emitter1.position = CGPoint(x: 5, y: -22)
         emitter1.zPosition = 5  // Ajusta para ficar acima do fundo
 
         scene.addChild(emitter1)

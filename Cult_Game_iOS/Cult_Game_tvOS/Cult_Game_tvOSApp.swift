@@ -11,8 +11,7 @@ import SwiftUI
 struct Cult_Game_tvOSApp: App {
     var body: some Scene {
         WindowGroup {
-            TvTransitionTextsView()
-            
+            VictoryTvView(outcome: .cultistVictoryElimination, viewModel: GameViewModel())
                 .ignoresSafeArea()
         }
     }

@@ -3,7 +3,7 @@ import MultipeerConnectivity
 
 class MultiplayerManager: NSObject, ObservableObject {
     
-    //MARK
+    //singleton
     static let shared = MultiplayerManager()
     
     @Published var hostPeerID: MCPeerID?
@@ -20,6 +20,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var round = 0
     @Published var currentPhase: GamePhase = .pairing
     @Published var pendingEffects: [GameEffects] = []
+    @Published var killed : PlayerModel? = PlayerModel(id: "", hand: [], usedCard: nil, role: .cultist, personalHeresyPoints: 0, hasEnteredCardPlayOnce: true, state: .active, votes: 0, character: .panda)
     
     private let serviceType = "cult-game"
     
@@ -45,23 +46,6 @@ class MultiplayerManager: NSObject, ObservableObject {
             self.currentPhase = phase
         }
     }
-    
-    //    func handleReceivedData(_ data: Data, from peerID: MCPeerID) {
-    //        if let phase = try? JSONDecoder().decode(GamePhase.self, from: data) {
-    //            DispatchQueue.mainasync {
-    //                self.currentPhase = phase
-    //            }
-    //        }
-    //    }
-    //    func addCharacter(to peerID: MCPeerID) {
-    //        guard peerID != myPeerID else { return }
-    //
-    //        print(peerID.displayName)
-    //
-    //        let message = MultiplayerMessage.characterAssignment(peerID.displayName)
-    //        sendMessage(message)
-    //    }
-    
     
     func addCharacter(to peerID: MCPeerID) {
         
@@ -93,22 +77,8 @@ class MultiplayerManager: NSObject, ObservableObject {
                 self.sendPlayersToAll()
             }
         }
-        
-//        if players.values.allSatisfy({ $0.character == nil }) {
-//            var player = players[peerID] ?? PlayerModel()
-//            player.character = .fox
-//            players[peerID] = player
-//            sendPlayersToAll()
-//            print("🦊 Primeiro player recebeu .fox")
-//            print(self.players)
-//            return
-//        }
-//        
-//        let message = MultiplayerMessage.characterAssignment(peerID.displayName)
-//        sendMessage(message)
     }
 
-//    }
     func sendVictory(_ outcome: GameOutcome) {
         let message = MultiplayerMessage.victory(outcome)
         sendMessage(message)///////////////////////////victory
@@ -342,6 +312,7 @@ extension MultiplayerManager: MCSessionDelegate {
                        var player = self.players[peer] {
                         player.state = .inactive
                         self.players[peer] = player
+                        self.killed = player
                     }
                 }
             case .updatePlayers(let decoded):

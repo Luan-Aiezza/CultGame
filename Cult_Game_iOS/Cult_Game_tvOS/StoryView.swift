@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct StoryView: View {
-    @EnvironmentObject var vm: GameViewModel
     @EnvironmentObject var multiplayerManager: MultiplayerManager
     @State private var fadeInOut : Bool = false
     @State private var changeView : Bool = false

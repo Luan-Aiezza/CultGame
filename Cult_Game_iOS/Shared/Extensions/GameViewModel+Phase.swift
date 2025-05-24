@@ -27,6 +27,7 @@ extension GameViewModel {
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
             evaluateVictory()//////////////////////
+            multiplayerManager.killed = nil
 
         default:
             break

@@ -3,29 +3,42 @@ import SpriteKit
 import AVFoundation
 
 struct ResultView: View {
-    @StateObject var timerManager = GameTimerManager()
     @EnvironmentObject var multiplayerManager : MultiplayerManager
-    var Audio = AudioManager.shared //Background Music
     
     var body: some View {
         ZStack {
-            VStack {
-                Text("Tempo restante: \(timerManager.timeRemaining)")
-                    .foregroundColor(.yellow)
-                    .font(.title)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 40)
+                        .fill(Color.black.opacity(0.6))
+                        .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/3)
+                    VStack() {
+                        
+                    Text("Resultados da Rodada")
+                            .font(.custom("VinerHandITC", size: 46))
+                            .foregroundColor(Color.title)
+                            .padding(.vertical, 20)
+                        StatusBarView()
+                        
+                        if let killedName = multiplayerManager.killed?.character?.displayName {
+                            Text("\(killedName) foi eliminado!")
+                                    .font(.custom("VinerHandITC", size: 46))
+                                    .foregroundColor(Color.title)
+                                    .padding(.vertical, 20)
+                            
+                            ZStack {
+                                Image("\(killedName.capitalized)")
+                                Image(systemName: "xmark.app")
+                                    .font(.system(size: 64))
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        
+                    }
                 
-                Text("Result")
-                
-                Text("Fé: \(multiplayerManager.globalState.sharedFaithPoints)")
-                Text("Seguidores: \(multiplayerManager.globalState.followers)")
-                
-                Text("Heresia: \(multiplayerManager.globalState.heresyPoints)")
             }
 
         }
         .onAppear{
-            Audio.playBackgroundMusic(named: "OST")
-            timerManager.start(duration: 20)
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                 multiplayerManager.applyPendingEffects()
             }
@@ -39,3 +52,7 @@ struct ResultView: View {
         }
     }
 
+#Preview {
+    ResultView()
+        .environmentObject(MultiplayerManager.shared)
+}

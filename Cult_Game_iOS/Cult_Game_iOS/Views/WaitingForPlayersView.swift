@@ -32,7 +32,7 @@ struct WaitingForPlayersView: View {
             VStack {
                 Spacer()
 
-                Text(viewModel.player.character.displayName)
+                Text(viewModel.player.character!.displayName)
                     .font(Font.custom("Almendra-Regular", size: 38))
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     .padding(.bottom, 16)
@@ -42,7 +42,7 @@ struct WaitingForPlayersView: View {
                         .resizable()
                         .frame(width: 200, height: 200)
 
-                    Image(viewModel.player.character.displayName)
+                    Image(viewModel.player.character!.displayName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 180, height: 185)

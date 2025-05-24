@@ -25,7 +25,7 @@ struct VictoryTvView: View {
         // Procura o jogador que é o herege
         if let (_, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
             let character = model.character
-            return "\(character.rawValue.capitalized)H"
+            return "\(character!.rawValue.capitalized)H"
         }
         
         return nil
@@ -36,7 +36,7 @@ struct VictoryTvView: View {
         guard outcome.isCultistVictory else { return nil }
         
         if let model = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic })?.value {
-            return "Heretic\(model.character.rawValue.capitalized)Died"
+            return "Heretic\(model.character!.rawValue.capitalized)Died"
         }
         
         return nil
@@ -47,7 +47,7 @@ struct VictoryTvView: View {
         guard outcome.isHereticVictory else { return nil }
         return viewModel.multiplayerManager.players
             .first(where: { $0.value.role == .heretic })?
-            .value.character.rawValue.capitalized
+            .value.character!.rawValue.capitalized
     }
     
     var body: some View {

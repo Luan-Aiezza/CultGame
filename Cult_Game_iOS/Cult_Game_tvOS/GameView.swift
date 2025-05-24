@@ -25,6 +25,8 @@ struct GameView: View {
                 VotingView()
             case .eliminationResults:
                 VotingResultView()
+            case .victory(_):
+                VictoryTvView(outcome: .cultistVictoryElimination, viewModel: GameViewModel())
             }
         }// on appear se precisar
     }

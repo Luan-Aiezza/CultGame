@@ -4,9 +4,6 @@ import SpriteKit
 extension GameStatusView {
     
     var scene: SKScene {
-        
-        //        ripple.position = self.scene.childNode(withName: "stone_water")!.position
-        
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
@@ -40,6 +37,107 @@ extension GameStatusView {
     }
     
 }
+
+extension HowToPlayView {
+    
+    var scene: SKScene {
+        if let scene = SKScene(fileNamed: "MyScene") {
+            scene.scaleMode = .aspectFill
+            applyLinearFiltering(to: scene)
+            //animateClouds(in: scene) // <- Animação das nuvens
+            animateRain(in: scene)
+            animateSmoke(in: scene)
+            
+            return scene
+        } else {
+            let fallback = SKScene(size: CGSize(width: 300, height: 300))
+            fallback.backgroundColor = .red
+            return fallback
+        }
+    }
+    
+    // MARK: - Aplica .linear nos nós
+    func applyLinearFiltering(to node: SKNode) {
+        if let spriteNode = node as? SKSpriteNode, let texture = spriteNode.texture {
+            texture.filteringMode = .linear
+        }
+        
+        for child in node.children {
+            applyLinearFiltering(to: child)
+        }
+        
+    }
+    
+}
+
+extension HostGameView {
+    
+    var scene: SKScene {
+        if let scene = SKScene(fileNamed: "MyScene") {
+            scene.scaleMode = .aspectFill
+            applyLinearFiltering(to: scene)
+            //animateClouds(in: scene) // <- Animação das nuvens
+            animateFireflies(in: scene)
+            animateFire(in: scene)
+            animateRain(in: scene)
+            animateSmoke(in: scene)
+            
+            return scene
+        } else {
+            let fallback = SKScene(size: CGSize(width: 300, height: 300))
+            fallback.backgroundColor = .red
+            return fallback
+        }
+    }
+    
+    // MARK: - Aplica .linear nos nós
+    func applyLinearFiltering(to node: SKNode) {
+        if let spriteNode = node as? SKSpriteNode, let texture = spriteNode.texture {
+            texture.filteringMode = .linear
+        }
+        
+        for child in node.children {
+            applyLinearFiltering(to: child)
+        }
+        
+    }
+    
+}
+
+extension HomeScreenView {
+    
+    var scene: SKScene {
+        if let scene = SKScene(fileNamed: "MyScene") {
+            scene.scaleMode = .aspectFill
+            applyLinearFiltering(to: scene)
+            //animateClouds(in: scene) // <- Animação das nuvens
+            animateFireflies(in: scene)
+            animateFire(in: scene)
+            animateRain(in: scene)
+            animateSmoke(in: scene)
+            
+            return scene
+        } else {
+            let fallback = SKScene(size: CGSize(width: 300, height: 300))
+            fallback.backgroundColor = .red
+            return fallback
+        }
+    }
+    
+    // MARK: - Aplica .linear nos nós
+    func applyLinearFiltering(to node: SKNode) {
+        if let spriteNode = node as? SKSpriteNode, let texture = spriteNode.texture {
+            texture.filteringMode = .linear
+        }
+        
+        for child in node.children {
+            applyLinearFiltering(to: child)
+        }
+        
+    }
+    
+}
+
 
 extension TvTransitionTextsView {
     
@@ -79,8 +177,6 @@ extension TvTransitionTextsView {
 extension GameRoundView {
     
     var scene: SKScene {
-        
-        //        ripple.position = self.scene.childNode(withName: "stone_water")!.position
         
         if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill

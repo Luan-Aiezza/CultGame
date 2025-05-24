@@ -74,7 +74,7 @@ struct VictoryTvView: View {
                             .frame(width: 65, height: 50)
                             .foregroundColor(.white)
                     }
-                    .padding(.trailing,5)
+                    .padding(.trailing, 95)
                     .padding(.bottom, 24)
                 }
                  

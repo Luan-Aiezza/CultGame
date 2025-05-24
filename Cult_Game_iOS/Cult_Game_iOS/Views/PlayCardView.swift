@@ -37,6 +37,18 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     
+    @State private var selectedCard: Card? = nil
+
+    @ViewBuilder
+    var destinationView: some View {
+        if let outcome = vm.gameOutcome,
+           let role = vm.player.role {
+            VictoryScreenView(role: role, outcome: outcome, viewModel: vm)
+        } else {
+            EmptyView()
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -68,7 +80,7 @@ struct PlayCardView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
-                
+
                 VStack {
                     
                     
@@ -155,6 +167,16 @@ struct PlayCardView: View {
                         .opacity(pvm.isShowingMurderView ? 1 : 0)
                         .animation(.easeInOut, value: pvm.isShowingMurderView)
                 }
+
+                NavigationLink(
+                    destination: destinationView,
+                    isActive: Binding(
+                        get: { vm.gameOutcome != nil },
+                        set: { _ in }
+                    )
+                ) {
+                    EmptyView()
+                }
             }
         }
         .onAppear {
@@ -169,6 +191,8 @@ struct PlayCardView: View {
         }
     }
 }
+
+
 
 #Preview {
     PlayCardView(pvm: PlayCardViewModel())

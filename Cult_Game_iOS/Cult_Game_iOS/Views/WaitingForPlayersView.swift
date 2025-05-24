@@ -31,6 +31,31 @@ struct WaitingForPlayersView: View {
             
             VStack {
                 Spacer()
+
+                Text(viewModel.player.character.displayName)
+                    .font(Font.custom("Almendra-Regular", size: 38))
+                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                    .padding(.bottom, 16)
+
+                ZStack {
+                    Image("PlayerCardBackground")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+
+                    Image(viewModel.player.character.displayName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 180, height: 185)
+                        .offset(x: 0, y: 5)
+                }
+
+                Spacer()
+
+                Text("Waiting for Players...")
+                    .font(Font.custom("Almendra-Regular", size: 18))
+                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                    .padding(.bottom, 24)
+
                 
                 if let character = viewModel.player.character {
                     
@@ -89,3 +114,22 @@ struct WaitingForPlayersView: View {
         .environment(GameViewModel())
 }
 
+//extension GameViewModel {
+//    static func previewModel() -> GameViewModel {
+//        let vm = GameViewModel()
+//        let peer = MCPeerID(displayName: "You")
+//        vm.multiplayerManager._setFakePeerID(peer)
+//        vm.multiplayerManager.connectedPeers = [peer]
+//
+//        vm.assignCharacter(.bunny)
+//        return vm
+//    }
+//}
+
+
+//
+//#Preview {
+//    let vm = GameViewModel.previewModel()
+//    vm.multiplayerManager.isHosting = true
+//    return WaitingForPlayersView(viewModel: vm)
+//}

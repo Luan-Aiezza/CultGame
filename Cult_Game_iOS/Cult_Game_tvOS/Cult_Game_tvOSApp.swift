@@ -13,8 +13,7 @@ struct Cult_Game_tvOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            GameView()
-                .environmentObject(multiplayerManager)
+            VictoryTvView(outcome: .cultistVictoryElimination, viewModel: GameViewModel())
                 .ignoresSafeArea()
         }
     }

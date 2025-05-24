@@ -37,6 +37,12 @@ struct HostGameView: View {
                                     Text("No role")
                                         .foregroundColor(.gray)
                                 }
+                                if let character = viewModel.multiplayerManager.players[peer]?.character {
+                                    Text( character.displayName)
+                                } else {
+                                    Text("No character")
+                                        .foregroundColor(.gray)
+                                }
                             }
                             .frame(maxWidth: .infinity, minHeight: 80)
                             .background(Color.black.opacity(0.5))
@@ -83,6 +89,7 @@ struct HostGameView: View {
     }
     
     func startGame() {
+        print(viewModel.multiplayerManager.players)
         if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
             errorMessage = "You need to connect between 1 and 7 players"
             return

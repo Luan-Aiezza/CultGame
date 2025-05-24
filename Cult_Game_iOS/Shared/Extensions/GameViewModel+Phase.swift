@@ -5,7 +5,6 @@ extension GameViewModel {
     
     func selectRole(_ selectedRole: PlayerRole) {
         assignRole(selectedRole)
-        currentPhase = .cardPlay
     }
     
     func advancePhaseAfterTimer() {
@@ -40,21 +39,18 @@ extension GameViewModel {
             evaluateVictory()////////////////////////////////
         }
 
-        switch currentPhase {
-        case .cardPlay:
+        switch multiplayerManager.currentPhase {
+            case .cardPlay:
             if player.hasEnteredCardPlayOnce {
-                globalState.heresyPoints[peerID.displayName, default: 0] += 1
+                globalState.heresyPoints[peerID.displayName, default: 0] += 1000
             }
             turnEnteredCardPlayOnce()
-            print("hand antes: \(player.hand)")
             replenishHandIfNeeded()
-            print("hand depois: \(player.hand)")
             addRound()
             playAllActiveCards()
 
             if player.usedCard == nil {
                 turnEmptyCard()
-                print("turn empty card foi ativado durante handle phase")
             }
 
         default: break
@@ -63,12 +59,5 @@ extension GameViewModel {
 
     func addRound() {
         round += 1
-    }
-
-    func proceedToDiscussionIfReady() {
-        currentPhase = .discussion
-        if player.usedCard == nil {
-            turnEmptyCard()
-        }
     }
 }

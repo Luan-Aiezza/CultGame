@@ -32,7 +32,7 @@ extension GameRoundView {
 
         scene.addChild(emitter1)
     }
-    
+
 }
 
 extension TvTransitionTextsView {
@@ -50,4 +50,3 @@ extension TvTransitionTextsView {
         scene.addChild(emitter1)
     }
 }
-

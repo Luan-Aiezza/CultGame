@@ -42,8 +42,10 @@ struct StoryView: View {
                     changeView = true
                 }
             }
-        }.navigationDestination(isPresented: $changeView) {
-            RoleView()
+            
+            .fullScreenCover(isPresented: $changeView) {
+                RoleView()
+            }
         }
     }
 }

@@ -22,17 +22,18 @@ struct PlayView: View {
                     .scaledToFill()
                 
                 NavigationLink {
-                    WaitingForPlayersView(viewModel: vm)
+                    GameView()
+                        .environmentObject(vm)
+                        .navigationBarBackButtonHidden(true)
                 } label: {
                     Text("Play")
                         .font(.custom("VinerHandITC", size: 40))
                         .foregroundStyle(Color.title)
                         
                 }
-
-                    
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

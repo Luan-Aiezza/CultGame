@@ -103,6 +103,14 @@ struct CardView: View {
                     .frame(width: width * 0.75)
                     .position(x: width / 2, y: height * 0.7)
                 
+                // Descrição dos Efeitos
+                Text(card.effectsDescription)
+                    .font(.custom("Almendra-Regular", size: width * 0.045))
+                    .foregroundStyle(.black.opacity(0.9))
+                    .multilineTextAlignment(.leading)
+                    .frame(width: width * 0.75)
+                    .position(x: width / 2, y: height * 0.84)
+                
                 // Custo
                 if let cost = costAttribute {
                     HStack(spacing: 0) {
@@ -146,6 +154,6 @@ struct CardView: View {
 
 
 #Preview {
-    CardView(card: Card(name: "Profanation", faithCost: 0, heresyCost: 10, followersEffect: -10, description: "Whispers about forgotten gods infiltrate among the faithful. Gradually, eyes turn to other altars.", imageName: "card_profanation", type: .heresy, rarity: 1))
+    CardView(card: Card(name: "Profanation", faithCost: 0, heresyCost: 10, followersEffect: -10, effectsDescription: "adds faith every round", description: "Whispers about forgotten gods infiltrate among the faithful. Gradually, eyes turn to other altars.", imageName: "card_profanation", type: .heresy, rarity: 1))
         .frame(width: 350, height: 490)
 }

@@ -1,13 +1,18 @@
 // GameModels.swift
 import Foundation
 import SwiftUI
-
-
+import MultipeerConnectivity
 
 struct CardPlayAction: Codable {
     var playerID: String
     var card: Card
     var playerRole: PlayerRole
+}
+struct GameEffects {
+    let peerID: MCPeerID
+    let faithChange: Int
+    let heresyChange: Int
+    let followersChange: Int
 }
 
 enum GameOutcome: String, Codable {
@@ -40,8 +45,8 @@ struct GameUpdate: Codable {
 struct GameRules {
     static let maxFollowers = 40
     static let initialFollowers = 35
-    static let maxFaithPoints = 80
-    static let initialFaithPoints = 45
+    static let maxFaithPoints = 1000
+    static let initialFaithPoints = 1000
     
 }
 
@@ -66,7 +71,7 @@ enum MultiplayerMessage: Codable {
     case attPhase(GamePhase)
     case roleAssignment(PlayerRole)
     case kickPlayer
-    case characterAssignment(Character)
+    case characterAssignment(String)
     case vote(String)
     case setInactive(String)
     case updatePlayers([String: PlayerModel])
@@ -104,9 +109,9 @@ enum MultiplayerMessage: Codable {
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
             //decodificar a mensagem do personagem
-        case .characterAssignment(let character):
+        case .characterAssignment(let peerID):
             try container.encode(MessageType.characterAssignment, forKey: .type)
-            try container.encode(character, forKey: .data)
+            try container.encode(peerID, forKey: .data)
         case .vote(let peerID):
             try container.encode(MessageType.vote, forKey: .type)
             try container.encode(peerID, forKey: .data)
@@ -142,8 +147,8 @@ enum MultiplayerMessage: Codable {
             self = .kickPlayer
             //decodificar a mensagem do personagem
         case .characterAssignment:
-            let character = try container.decode(Character.self, forKey: .data)
-            self = .characterAssignment(character)
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .characterAssignment(peerID)
         case .vote:
             let peerID = try container.decode(String.self, forKey: .data)
             self = .vote(peerID)

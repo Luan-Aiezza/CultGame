@@ -6,21 +6,16 @@
 //
 
 import SwiftUI
-import SpriteKit
 
 @main
 struct Cult_Game_tvOSApp: App {
-    
-    init(){
-        FontManager.registerFonts()
-    }
+    @StateObject var multiplayerManager = MultiplayerManager.shared
     
     var body: some Scene {
         WindowGroup {
-            TvTransitionTextsView(type: .introSequence, isFirstRound: true) {
-                print("Sequência finalizada!")
-            }
-            .ignoresSafeArea()
+            GameView()
+                .environmentObject(multiplayerManager)
+                .ignoresSafeArea()
         }
     }
 }

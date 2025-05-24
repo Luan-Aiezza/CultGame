@@ -3,7 +3,7 @@ import MultipeerConnectivity
 
 struct EliminationResultsView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var viewModel: GameViewModel
+    @EnvironmentObject var viewModel: GameViewModel
     
     var body: some View {
         VStack(spacing: 20) {

@@ -4,6 +4,9 @@ extension GameViewModel {
     
     func startTimer() {
         timeRemaining = availableTime
+        if currentPhase == .cardPlay {
+            timeRemaining = 300
+        }
         timer?.invalidate()
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -16,7 +19,7 @@ extension GameViewModel {
             timeRemaining -= 1
         } else {
             timer?.invalidate()
-            advancePhaseAfterTimer()
+//            advancePhaseAfterTimer()
         }
     }
 }

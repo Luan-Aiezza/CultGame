@@ -7,11 +7,53 @@ struct TvTransitionTextsView: View {
     enum SequenceType {
         case introSequence, endSequence
     }
-    
+
     let type: SequenceType
+    let isFirstRound: Bool
     let onComplete: () -> Void
     
     @State private var currentStep = 0
+    @State private var selectedText: String = ""
+    
+    private var customTextColor: Color {
+        Color(red: 227 / 255, green: 206 / 255, blue: 167 / 255)
+    }
+
+    // Frases
+    private let fixedIntroText = "The village awakens under the gaze of dawn — eyes open to what is yet to come..."
+    
+    private let introAlternatives = [
+        "The first light of morning touches the village - and with it, the weight of past choices.",
+        "The sun rises over the village - the cycle begins again, and sacrifice may lie ahead.",
+        "The light of the new day dawns on the village - but not everyone should have woken up.",
+        "Morning blooms over the village - but beneath its beauty, the silence of what is to come grows.",
+        "The day rises again - but the village is no longer the same, and the cult never forgets.",
+        "Dawn is breaking over the village - but something ancient is also awakening over the land.",
+        "The sun breaks through the horizon - and with it, the eyes of the occult once again turn to the village.",
+        "The mist subsides in the morning - but there are eyes in the forest that have never stopped watching.",
+        "Dawn is breaking over the village - and the air carries the omen of a new call.",
+        "The village awakens under the gaze of the cult - and there is a traitor among those who pray.",
+        "The new sun rises - and the eyes of the cult seek the face of the traitor."
+    ]
+    
+    private let endSequenceAlternatives = [
+        "The last light of the day fades — and with it, the silence that precedes the verdict.",
+        "The evening has arrived like a warning. It’s time to choose paths, and some have no return.",
+        "The sky is covered in gray — it is the time for heavy words and sealed fates.",
+        "The last breath of the day carries a strange weight. Now, it’s time to decide what will endure.",
+        "The shadow advances over the village — and with it, the moment to point, to judge… and to lose.",
+        "The sun slowly drowns on the horizon — and with it, poorly buried secrets begin to breathe.",
+        "The dusk stitches the village with threads of mistrust. Each shadow, a blind spot.",
+        "Night announces itself like an ancient whisper, sliding through half-open doors and averted gazes.",
+        "The day says goodbye in silence — the kind that weighs before the sentence.",
+        "With nightfall, no promises remain — only consequences.",
+        "The sky darkens, but eyes turn against one another.",
+        "The night has closed like an ancient book — but no day ends without leaving marks on the pages of tomorrow.",
+        "The cult’s time has run out — and now, under the moon’s gaze, the village wonders what comes next.",
+        "Everything seemed too calm. As if someone had silenced the chaos before it could begin.",
+        "The shadow has fallen like a sacred veil. What has been done can no longer be undone.",
+        "The night rose heavy — as if bearing the weight of a newborn secret."
+    ]
     
     var body: some View {
         ZStack {
@@ -39,27 +81,28 @@ struct TvTransitionTextsView: View {
             contentForStep(currentStep)
         }
         .onAppear {
+            if type == .introSequence {
+                selectedText = isFirstRound ? fixedIntroText : (introAlternatives.randomElement() ?? fixedIntroText)
+            } else {
+                selectedText = endSequenceAlternatives.randomElement() ?? ""
+            }
             advanceStep(after: 5)
         }
     }
-    
-    private var customTextColor: Color {
-        Color(red: 227 / 255, green: 206 / 255, blue: 167 / 255)
-    }
-    
+
     @ViewBuilder
     private func contentForStep(_ step: Int) -> some View {
         switch type {
         case .introSequence:
             switch step {
             case 0:
-                centeredText("The village awakens under the gaze of dawn — eyes open to what is yet to come...")
+                centeredText(selectedText)
             case 1:
                 centeredImageWithText(image: "PhoneIcon", text: "Your role awaits you")
             case 2:
                 centeredTextWithImage(text: "Distributing cards", image: "DeckIcon")
             default:
-                Text("Completed")
+                EmptyView()
             }
             
         case .endSequence:
@@ -75,11 +118,11 @@ struct TvTransitionTextsView: View {
                 }
                 .transition(.opacity)
             case 1:
-                centeredText("The last light of day fades — and with it, the silence before the verdict.")
+                centeredText(selectedText)
             case 2:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
-                Text("Completed")
+                EmptyView()
             }
         }
     }
@@ -124,7 +167,7 @@ struct TvTransitionTextsView: View {
             withAnimation {
                 currentStep += 1
             }
-            if currentStep < 3 {
+            if (type == .introSequence && currentStep < 3) || (type == .endSequence && currentStep < 2) {
                 advanceStep(after: 5)
             } else {
                 onComplete()

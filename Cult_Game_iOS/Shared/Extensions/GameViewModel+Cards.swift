@@ -63,7 +63,6 @@ extension GameViewModel {
         """)
 
         turnEnteredCardPlayOnce()
-        checkVictoryConditions()
     }
 
     func skipCard() {
@@ -81,6 +80,7 @@ extension GameViewModel {
 
         turnEmptyCard()
     }
+
 
     func playAllActiveCards() {
         activeCards.removeAll { $0.isActive == false }

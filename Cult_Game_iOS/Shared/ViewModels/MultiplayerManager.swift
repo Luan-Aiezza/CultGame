@@ -107,7 +107,12 @@ class MultiplayerManager: NSObject, ObservableObject {
 //        let message = MultiplayerMessage.characterAssignment(peerID.displayName)
 //        sendMessage(message)
     }
-    
+//    }
+    func sendVictory(_ outcome: GameOutcome) {
+        let message = MultiplayerMessage.victory(outcome)
+        sendMessage(message)///////////////////////////victory
+    }
+
     func startHosting() {
         isHosting = true
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
@@ -197,7 +202,7 @@ class MultiplayerManager: NSObject, ObservableObject {
                 heresyChange: heresyChange,
                 followersChange: followersChange
             )
-            
+
             self.pendingEffects.append(effect)
         }
     }
@@ -346,6 +351,10 @@ extension MultiplayerManager: MCSessionDelegate {
                     }
                     self.players = updated
                 }
+            case .victory(let outcome):
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .didReceiveVictory, object: outcome)
+                }////////////////////////
             }
         } else {
             handleReceived(data, from: peerID)
@@ -393,6 +402,8 @@ extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
     static let didReceiveRole = Notification.Name("didReceiveRole")
     static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
+    static let didReceiveVictory = Notification.Name("didReceiveVictory")////////////////
+
 }
 
 extension Dictionary {

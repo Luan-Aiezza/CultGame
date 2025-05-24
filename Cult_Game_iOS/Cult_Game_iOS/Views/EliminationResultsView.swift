@@ -27,6 +27,8 @@ struct EliminationResultsView: View {
                     Text("Erro ao processar eliminação.")
                 }
                 
+                
+                
                 Button("Continuar") {
                     // Ação para ir pra próxima etapa do jogo
                 }

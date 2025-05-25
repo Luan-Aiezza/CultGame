@@ -10,6 +10,8 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var multiplayerManager: MultiplayerManager
     
+    @EnvironmentObject var gameViewModel: GameViewModel
+    
     var body: some View {
         ZStack {
             switch multiplayerManager.currentPhase {
@@ -34,5 +36,6 @@ struct GameView: View {
 
 #Preview {
     GameView()
+        .environmentObject(MultiplayerManager.shared)
         .environmentObject(GameViewModel())
 }

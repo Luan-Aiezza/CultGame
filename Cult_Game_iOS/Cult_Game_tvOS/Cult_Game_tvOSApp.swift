@@ -10,10 +10,17 @@ import SwiftUI
 @main
 struct Cult_Game_tvOSApp: App {
     @StateObject var multiplayerManager = MultiplayerManager.shared
+    @StateObject var gameViewModel = GameViewModel()
+    
+    init() {
+        FontManager.registerFonts()
+    }
     
     var body: some Scene {
         WindowGroup {
-            VictoryTvView(outcome: .cultistVictoryElimination, viewModel: GameViewModel())
+            GameView()
+                .environmentObject(multiplayerManager)
+                .environmentObject(gameViewModel)
                 .ignoresSafeArea()
         }
     }

@@ -31,8 +31,10 @@ extension GameViewModel {
         if topVoted.count == 1, let toEliminate = topVoted.first {
             turnPlayerInactive(to: toEliminate)
             eliminatedPlayer = toEliminate
+            multiplayerManager.voted = multiplayerManager.players[toEliminate]
         } else {
             isTie = true
+            multiplayerManager.voted = nil
         }
         
         // Zera os votos de todos os jogadores

@@ -20,7 +20,8 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var round = 0
     @Published var currentPhase: GamePhase = .pairing
     @Published var pendingEffects: [GameEffects] = []
-    @Published var killed : PlayerModel? = PlayerModel(id: "", hand: [], usedCard: nil, role: .cultist, personalHeresyPoints: 0, hasEnteredCardPlayOnce: true, state: .active, votes: 0, character: .panda)
+    @Published var killed : PlayerModel? = nil
+    @Published var voted : PlayerModel? = nil
     
     private let serviceType = "cult-game"
     

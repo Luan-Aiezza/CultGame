@@ -19,7 +19,7 @@ struct CardView: View {
     var icon : String {
         switch card.type {
         case .common:
-            return "common"
+            return "cultist"
         case .cultist:
             return "cultist"
         case .heresy:
@@ -27,7 +27,7 @@ struct CardView: View {
         case .assassination:
             return "heresy"
         case .empty:
-            return "common"
+            return "cultist"
         }
     }
     

@@ -23,69 +23,50 @@ extension GameViewModel {
         let message = MultiplayerMessage.setInactive(peerID)
         multiplayerManager.sendMessage(message)
         
+        if var player = multiplayerManager.players[peerID] {
+            player.state = .inactive
+            multiplayerManager.players[peerID] = player
+        }
     }
     
     func evaluateVotes() {
         let votePairs = multiplayerManager.players.map { (peerID, player) in
             (peerID, player.votes)
         }
-        
+
+        print("📥 Votos recebidos:")
+        for (id, count) in votePairs {
+            print("- \(id): \(count) votos")
+        }
+
         let maxVotes = votePairs.map { $0.1 }.max() ?? 0
         let topVoted = votePairs.filter { $0.1 == maxVotes }.map { $0.0 }
-        
+
+        print("🏆 Top votado(s): \(topVoted), maxVotes: \(maxVotes)")
+
         if topVoted.count == 1, let toEliminate = topVoted.first {
             turnPlayerInactive(to: toEliminate)
             eliminatedPlayer = toEliminate
             multiplayerManager.voted = multiplayerManager.players[toEliminate]
+            print("✅ Eliminado: \(eliminatedPlayer ?? "nulo")")
+            print("🎯 Voted: \(multiplayerManager.voted?.character?.displayName ?? "nulo")")
         } else {
             isTie = true
             multiplayerManager.voted = nil
+            print("⚖️ Empate detectado")
         }
-        
-        // Zera os votos de todos os jogadores
+
+        // Resetar votos
         for (peerID, var player) in multiplayerManager.players {
             player.votes = 0
             multiplayerManager.players[peerID] = player
         }
-        
-        // Envia o estado atualizado para todos os peers
-//        multiplayerManager.sendPlayersToAll()
-        
+
         didEvaluate = true
-        
-        // Será usada assim quando for passada para TV
-        
-        // Apenas o host deve executar esta lógica
-//        guard multiplayerManager.isHosting else {
-//            didEvaluate = true
-//            return
-//        }
-//
-//        let votePairs = multiplayerManager.players.map { (peerID, player) in
-//            (peerID, player.votes)
-//        }
-//
-//        let maxVotes = votePairs.map { $0.1 }.max() ?? 0
-//        let topVoted = votePairs.filter { $0.1 == maxVotes }.map { $0.0 }
-//
-//        if topVoted.count == 1, let toEliminate = topVoted.first {
-//            viewModel.turnPlayerInactive(to: toEliminate)
-//            eliminatedPlayer = toEliminate
-//        } else {
-//            isTie = true
-//        }
-//
-//        // Zera os votos de todos os jogadores
-//        for (peerID, var player) in multiplayerManager.players {
-//            player.votes = 0
-//            multiplayerManager.players[peerID] = player
-//        }
-//
-//        // Envia o estado atualizado para todos os peers
-//        multiplayerManager.sendPlayersToAll()
-//
-//        didEvaluate = true
-        
-        
+        print("✅ Estado final na função:")
+        print("- eliminatedPlayer: \(eliminatedPlayer ?? "nulo")")
+        print("- isTie: \(isTie)")
+        print("- didEvaluate: \(didEvaluate)")
     }
+
 }

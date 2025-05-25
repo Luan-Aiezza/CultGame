@@ -79,8 +79,3 @@ struct RoleView: View {
         }
     }
 }
-
-#Preview {
-    RoleView()
-        .environment(GameViewModel())
-}

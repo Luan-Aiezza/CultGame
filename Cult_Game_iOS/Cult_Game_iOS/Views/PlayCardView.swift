@@ -149,32 +149,22 @@ struct PlayCardView: View {
                         Button {
                             if let selectedCard = selectedCard,
                                let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
-                                
-                                if cardToPlay.type != .assassination {
                                     if !skippedRound {
                                         vm.playCard(cardToPlay)
                                         stringShow = "Você já jogou uma carta."
                                         showBlockMessage = true
                                         playedCard = true
+                                        
+                                        if cardToPlay.type == .assassination {
+                                            showMurderView = true
+                                        }
                                     }
-                                } else {
-                                    showMurderView = true
-                                    vm.playCard(cardToPlay)
-                                    stringShow = "Você já jogou uma carta."
-                                    showBlockMessage = true
-                                    playedCard = true
-                                }
                             }
                         } label: {
                             Image("cardViewButton")
                         }
                     }
                     .padding()
-                    
-                    MurderView()
-                        .environmentObject(pvm)
-                        .opacity(pvm.isShowingMurderView ? 1 : 0)
-                        .animation(.easeInOut, value: pvm.isShowingMurderView)
                 }
 
                 NavigationLink(
@@ -203,11 +193,4 @@ struct PlayCardView: View {
                 }
         }
     }
-}
-
-
-
-#Preview {
-    PlayCardView(pvm: PlayCardViewModel())
-        .environment(GameViewModel())
 }

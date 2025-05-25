@@ -9,9 +9,6 @@ struct EliminationResultsView: View {
         VStack(spacing: 20) {
             if !viewModel.didEvaluate {
                 ProgressView("Calculando eliminação...")
-                    .onAppear {
-                        viewModel.evaluateVotes()
-                    }
             } else {
                 if viewModel.isTie {
                     Text("Empate! Ninguém foi eliminado.")
@@ -35,6 +32,16 @@ struct EliminationResultsView: View {
                 .padding()
                 .buttonStyle(.borderedProminent)
             }
+        }
+        .onAppear() {
+            print("VAI CALCULAR VOTOS")
+            viewModel.evaluateVotes()
+            print("TERMINOU CALCULAR VOTOS")
+            
+            print("🔍 EliminatedPlayer no View: \(String(describing: viewModel.eliminatedPlayer))")
+            print("🔍 isTie no View: \(String(describing: viewModel.isTie))")
+            print("🔍 didEvaluate no View: \(String(describing: viewModel.isTie))")
+
         }
         .padding()
     }

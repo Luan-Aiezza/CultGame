@@ -9,7 +9,7 @@ import AVFoundation
 struct VictoryTvView: View {
     let outcome: GameOutcome
     @State private var navigateToWaiting = false
-    @ObservedObject var viewModel: GameViewModel
+    @EnvironmentObject var viewModel: GameViewModel
     let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
     
     //Retorna o conteúdo visual apropriado (título, descrição e fundo) com base no resultado da partida

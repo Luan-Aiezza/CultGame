@@ -35,6 +35,14 @@ struct MurderView: View {
                 Color.black.opacity(0.8)
                     .ignoresSafeArea()
                     .transition(.opacity)
+                
+                Image("background_002")
+                    .resizable()
+                    .overlay {
+                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                    }
+                    .ignoresSafeArea()
+                    .scaledToFill()
 
                 VStack {
                     Spacer()

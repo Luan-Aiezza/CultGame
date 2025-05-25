@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct GameView: View {
-    @EnvironmentObject var multiplayerManager: MultiplayerManager
-    
-    @EnvironmentObject var gameViewModel: GameViewModel
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @EnvironmentObject var vm: GameViewModel
     
     var body: some View {
         ZStack {
@@ -28,14 +27,10 @@ struct GameView: View {
             case .eliminationResults:
                 VotingResultView()
             case .victory(_):
-                VictoryTvView(outcome: .cultistVictoryElimination, viewModel: GameViewModel())
+                if let outcome = vm.gameOutcome {
+                    VictoryTvView(outcome: outcome)
+                }
             }
         }// on appear se precisar
     }
-}
-
-#Preview {
-    GameView()
-        .environmentObject(MultiplayerManager.shared)
-        .environmentObject(GameViewModel())
 }

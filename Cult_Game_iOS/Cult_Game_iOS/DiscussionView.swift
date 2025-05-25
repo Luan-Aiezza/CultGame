@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct DiscussionView: View {
+    
+    @EnvironmentObject var vm : GameViewModel
     var body: some View {
         Text("DiscussionView")
+            .onAppear() {
+                print("estado atual do player:  \(vm.player.character?.displayName) = \(vm.player.state)")
+            }
     }
 }
 

@@ -15,7 +15,7 @@ enum Character: String, Codable, CaseIterable {
     case fox, panda, bunny, tiger, deer, pig, wolf
 }
 
-struct PlayerModel: Codable, Identifiable {
+struct PlayerModel: Codable, Identifiable, Equatable {
     var id: String = UUID().uuidString
     
     var hand: [Card] = []

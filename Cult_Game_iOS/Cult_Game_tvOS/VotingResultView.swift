@@ -4,7 +4,7 @@ import AVFoundation
 
 struct VotingResultView: View {
     @StateObject var timerManager = GameTimerManager()
-    @EnvironmentObject var multiplayerManager : MultiplayerManager
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var gameViewModel : GameViewModel
     var Audio = AudioManager.shared
     
@@ -29,34 +29,27 @@ struct VotingResultView: View {
                 }
                 
                 else {
-                    if let killedName = multiplayerManager.voted?.character?.displayName {
-                        Text("\(killedName) foi eliminado!")
-                            .font(.custom("VinerHandITC", size: 60))
-                            .foregroundStyle(Color.title)
-                        Text("A chama daquela alma se apagou. Mas o verdadeiro profanador ainda respira entre os fiéis.")
-                            .font(.custom("Almendra-Regular", size: 30))
-                            .frame(width: UIScreen.main.bounds.width/3)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(Color.subtitleResult)
-                        
-                        Image(killedName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                            .rotationEffect(.degrees(15))
-                            .opacity(0.5)
-                            .padding(.top, 230)
+                    if multiplayerManager.voted != nil {
+                        if let killedName = multiplayerManager.voted?.character?.displayName {
+                            Text("\(killedName) foi eliminado!")
+                                .font(.custom("VinerHandITC", size: 60))
+                                .foregroundStyle(Color.title)
+                            Text("A chama daquela alma se apagou. Mas o verdadeiro profanador ainda respira entre os fiéis.")
+                                .font(.custom("Almendra-Regular", size: 30))
+                                .frame(width: UIScreen.main.bounds.width/3)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(Color.subtitleResult)
+                            
+                            Image(killedName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .rotationEffect(.degrees(15))
+                                .opacity(0.5)
+                                .padding(.top, 230)
+                        }
                     }
-                    else {
-                        Text("Ninguém foi eliminado")
-                            .font(.custom("VinerHandITC", size: 60))
-                            .foregroundStyle(Color.title)
-                        Text("As línguas se calaram diante do julgamento")
-                            .font(.custom("Almendra-Regular", size: 30))
-                            .frame(width: UIScreen.main.bounds.width/3)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(Color.subtitleResult)
-                    }
+                    
                 }
                 Spacer()
             }
@@ -66,14 +59,8 @@ struct VotingResultView: View {
         }
         .onAppear{
             Audio.playBackgroundMusic(named: "OST")
-            timerManager.start(duration: 20)
+            timerManager.start(duration: 10)
         }
             .padding()
         }
     }
-
-#Preview {
-    VotingResultView(timerManager: GameTimerManager())
-        .environmentObject(MultiplayerManager.shared)
-        .environmentObject(GameViewModel())
-}

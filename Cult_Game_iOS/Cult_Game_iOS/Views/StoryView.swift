@@ -49,8 +49,3 @@ struct StoryView: View {
         }
     }
 }
-
-#Preview {
-    StoryView()
-        .environment(GameViewModel())
-}

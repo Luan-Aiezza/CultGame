@@ -13,24 +13,29 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-            switch multiplayerManager.currentPhase {
-            case .pairing:
-                WaitingView()
-                    .environmentObject(vm)
-            case .roleSelection:
-                StoryView()
-            case .cardPlay:
-                MurderView()
-            case .discussion:
-                DiscussionView() //pegar da Mari
-            case .elimination:
-                EliminationView() // SAM!! 
-            case .eliminationResults:
-                EliminationResultsView() // SAM!!
-            case.victory:
-                EliminationResultsView()
+            
+            if vm.player.state == .inactive {
+                VStack {
+                    Text("você foi eliminado")
+                }
+            } else {
+                switch multiplayerManager.currentPhase {
+                case .pairing:
+                    WaitingView()
+                case .roleSelection:
+                    StoryView()
+                case .cardPlay:
+                    PlayCardView()
+                case .discussion:
+                    DiscussionView()
+                case .elimination:
+                    EliminationView()
+                case .eliminationResults:
+                    EliminationResultsView()
+                case.victory:
+                    EliminationResultsView()
+                }
             }
-        
         }.onAppear {
             multiplayerManager.joinSession()
 
@@ -55,9 +60,4 @@ struct GameView: View {
 
         }
     }
-}
-
-#Preview {
-    GameView()
-        .environmentObject(GameViewModel())
 }

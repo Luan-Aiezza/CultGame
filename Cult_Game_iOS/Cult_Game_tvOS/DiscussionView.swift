@@ -4,7 +4,7 @@ import AVFoundation
 
 struct DiscussionView: View {
     @StateObject var timerManager = GameTimerManager()
-    @EnvironmentObject var multiplayerManager: MultiplayerManager
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var showResultView = true
     let Audio = AudioManager.shared
     var tvResponse = 1.5
@@ -28,7 +28,7 @@ struct DiscussionView: View {
                         HStack {
                             Spacer()
                             ZStack(alignment: .center) {
-                                TimerView()
+                                TimerView(timerManager: timerManager)
                                     .frame(width: 194 * tvResponse, height: 74 * tvResponse)
                                     .background(Color(red: 0.16, green: 0.15, blue: 0.13))
                                 Image("TimerBar")
@@ -67,7 +67,10 @@ struct DiscussionView: View {
             }
         }
         .onAppear {
-            timerManager.start(duration: 20)
+            
+            print("estou no discussion view")
+            
+            timerManager.start(duration: 10)
             
             Audio.playBackgroundMusic(named: "OST")
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {

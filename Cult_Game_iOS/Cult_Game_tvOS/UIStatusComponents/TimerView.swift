@@ -3,7 +3,7 @@ import SpriteKit
 import Combine
 
 struct TimerView: View {
-    @StateObject private var timerManager = GameTimerManager()
+    @StateObject var timerManager : GameTimerManager
     
     var body: some View {
         timerView

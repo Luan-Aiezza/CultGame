@@ -86,11 +86,6 @@ struct CardCarouselView: View {
                             }
                             
                         }
-                        .onAppear(){
-                            if isCardCentered(index) {
-                                showBlockMessage = true
-                            }
-                        }
                         .overlay {
                             if vm.points < card.faithCost || skippedRound == true {
                                 ZStack {
@@ -110,6 +105,14 @@ struct CardCarouselView: View {
         }
         .onAppear(){
             cards = vm.player.hand
+            
+            let centerIndex = Int(snappedItem).positiveMod(cards.count)
+                if cards.indices.contains(centerIndex) {
+                    let centerCard = cards[centerIndex]
+                    showBlockMessage = vm.points < centerCard.faithCost
+                } else {
+                    showBlockMessage = false
+                }
         }
         .simultaneousGesture(
             DragGesture()

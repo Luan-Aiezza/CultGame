@@ -107,13 +107,6 @@ struct WaitingForPlayersView: View {
 //}
 //
 
-
-
-#Preview {
-    WaitingForPlayersView()
-        .environment(GameViewModel())
-}
-
 //extension GameViewModel {
 //    static func previewModel() -> GameViewModel {
 //        let vm = GameViewModel()

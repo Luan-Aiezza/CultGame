@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoryView: View {
-    @EnvironmentObject var multiplayerManager: MultiplayerManager
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var fadeInOut : Bool = false
     @State private var changeView : Bool = false
     
@@ -28,6 +28,9 @@ struct StoryView: View {
                     .animation(.easeIn(duration: 2), value: fadeInOut)
                     
             } .onAppear {
+                
+                print("esou no story view")
+                
                 fadeInOut =  true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
                     fadeInOut = false
@@ -41,9 +44,4 @@ struct StoryView: View {
             }
         }
     }
-}
-
-#Preview {
-    StoryView()
-        .environment(GameViewModel())
 }

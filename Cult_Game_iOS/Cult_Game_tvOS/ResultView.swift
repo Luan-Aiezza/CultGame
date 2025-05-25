@@ -3,7 +3,7 @@ import SpriteKit
 import AVFoundation
 
 struct ResultView: View {
-    @EnvironmentObject var multiplayerManager : MultiplayerManager
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     
     var body: some View {
         ZStack {

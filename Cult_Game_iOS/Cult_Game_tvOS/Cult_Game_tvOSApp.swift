@@ -12,10 +12,6 @@ struct Cult_Game_tvOSApp: App {
     @StateObject var multiplayerManager = MultiplayerManager.shared
     @StateObject var gameViewModel = GameViewModel()
     
-    init() {
-        FontManager.registerFonts()
-    }
-    
     var body: some Scene {
         WindowGroup {
             GameView()

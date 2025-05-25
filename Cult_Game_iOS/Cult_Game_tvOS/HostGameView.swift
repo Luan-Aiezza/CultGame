@@ -5,11 +5,11 @@ import SpriteKit
 
 // MARK: - Host Game View
 struct HostGameView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var playerRoles: [String: PlayerRole] = [:]
     @State private var gameStarted = false
     @State private var errorMessage: String?
-    @ObservedObject private var viewModel = GameViewModel()
     private let horizontalPadding: CGFloat = 60
     private let horizontalSpacing: CGFloat = 32
     private let verticalSpacing: CGFloat = 40
@@ -146,11 +146,11 @@ struct HostGameView: View {
         }
         
         assignRoles()
-        viewModel.currentPhase = .cardPlay
-        multiplayerManager.currentPhase = .cardPlay
-        multiplayerManager.sendGamePhase(.cardPlay)
         gameStarted = true
         errorMessage = nil
+        viewModel.advancePhaseAfterTimer()
+        
+        print("apertei o botao de start no hosting")
     }
     
     

@@ -194,12 +194,11 @@ class GameViewModel: ObservableObject, Observable {
             print("🏁 Vitória detectada: \(outcome)")
             multiplayerManager.sendVictory(outcome)       // informa todos os peers
             self.gameOutcome = outcome                    // salva no local para navegação no iOS
-            self.currentPhase = .victory(outcome)         // ativa a navegação condicional
+            multiplayerManager.currentPhase = .victory(outcome)         // ativa a navegação condicional
         } else {
             // segue o jogo
             print("🔄 Nenhuma vitória detectada")
-            currentPhase = .cardPlay
-            multiplayerManager.sendGamePhase(.cardPlay)
+            advancePhaseAfterTimer()
         }
     }
 

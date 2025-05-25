@@ -36,8 +36,3 @@ struct PlayView: View {
         .navigationBarBackButtonHidden(true)
     }
 }
-
-#Preview {
-    PlayView()
-        .environment(GameViewModel())
-}

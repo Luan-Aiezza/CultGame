@@ -10,84 +10,134 @@ struct HostGameView: View {
     @State private var gameStarted = false
     @State private var errorMessage: String?
     @ObservedObject private var viewModel = GameViewModel()
+    private let horizontalPadding: CGFloat = 60
+    private let horizontalSpacing: CGFloat = 32
+    private let verticalSpacing: CGFloat = 40
+    private let cardHeight: CGFloat = 120
+    private let maxPlayersPerRow = 4
     
     let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 4)
     
     var body: some View {
-        ZStack {
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
+        GeometryReader { geometry in
+            let availableWidth = geometry.size.width - (horizontalPadding * 2) - (horizontalSpacing * CGFloat(maxPlayersPerRow - 1))
+            let cardWidth = availableWidth / CGFloat(maxPlayersPerRow)
             
-            VStack(spacing: 20) {
-                Text("Waiting for Players...")
-                    .font(Font.custom("VinerHandITC", size: 30))
-                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+            let players = multiplayerManager.players.filter { (peerID, player) in
+                let isNotTV = !peerID.contains("TV")
+                let isActive = player.state == .active
+                return isNotTV && isActive
+            }
+            let playerList = Array(players.values)
+            
+            let firstRow = Array(playerList.prefix(maxPlayersPerRow))
+            let secondRow = Array(playerList.dropFirst(maxPlayersPerRow))
+            ZStack {
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
                 
-//                ScrollView {
-//                    LazyVGrid(columns: columns, spacing: 20) {
-//                        ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
-//                            VStack {
-//                                Text(peer.displayName.prefix(10))
-//                                    .font(.headline)
-//                                    .foregroundColor(.white)
-//                                if let role = playerRoles[peer.displayName] {
-//                                    Text(role == .cultist ? "Cultist" : "Heretic")
-//                                        .foregroundColor(role == .cultist ? .green : .red)
-//                                } else {
-//                                    Text("No role")
-//                                        .foregroundColor(.gray)
-//                                }
-//                                if let character = viewModel.multiplayerManager.players[peer]?.character {
-//                                    Text( character.displayName)
-//                                } else {
-//                                    Text("No character")
-//                                        .foregroundColor(.gray)
-//                                }
-//                            }
-//                            .frame(maxWidth: .infinity, minHeight: 80)
-//                            .background(Color.black.opacity(0.5))
-//                            .cornerRadius(10)
-//                        }
-//                    }
-//                }
-//                .frame(height: 200)
-                
-                if let errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                }
-                
-                Button(action: startGame) {
-                    Image("buttonStart")
+                VStack(spacing: 20) {
+                    Text("Waiting for Players...")
+                        .font(Font.custom("VinerHandITC", size: 30))
+                        .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                    
+                    VStack(spacing: verticalSpacing) {
+                        HStack(spacing: horizontalSpacing) {
+                            ForEach(firstRow, id: \.id) { player in
+                                PlayerElimView(
+                                    player: player,
+                                    isSelected: false,
+                                    glowRotation: .constant(0),
+                                    onSelect: {}, // sem interação
+                                    width: cardWidth,
+                                    height: cardHeight
+                                )
+                            }
+                        }
+                        
+                        if !secondRow.isEmpty {
+                            HStack(spacing: horizontalSpacing) {
+                                Spacer(minLength: (geometry.size.width - (cardWidth + horizontalSpacing) * CGFloat(secondRow.count - 1) - cardWidth) / 2)
+                                ForEach(secondRow, id: \.id) { player in
+                                    PlayerElimView(
+                                        player: player,
+                                        isSelected: false,
+                                        glowRotation: .constant(0),
+                                        onSelect: {}, // sem interação
+                                        width: cardWidth,
+                                        height: cardHeight
+                                    )
+                                }
+                                Spacer(minLength: (geometry.size.width - (cardWidth + horizontalSpacing) * CGFloat(secondRow.count - 1) - cardWidth) / 2)
+                            }
+                        }
+                    }
+                    
+                    //                ScrollView {
+                    //                    LazyVGrid(columns: columns, spacing: 20) {
+                    //                        ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
+                    //                            VStack {
+                    //                                Text(peer.displayName.prefix(10))
+                    //                                    .font(.headline)
+                    //                                    .foregroundColor(.white)
+                    //                                if let role = playerRoles[peer.displayName] {
+                    //                                    Text(role == .cultist ? "Cultist" : "Heretic")
+                    //                                        .foregroundColor(role == .cultist ? .green : .red)
+                    //                                } else {
+                    //                                    Text("No role")
+                    //                                        .foregroundColor(.gray)
+                    //                                }
+                    //                                if let character = viewModel.multiplayerManager.players[peer]?.character {
+                    //                                    Text( character.displayName)
+                    //                                } else {
+                    //                                    Text("No character")
+                    //                                        .foregroundColor(.gray)
+                    //                                }
+                    //                            }
+                    //                            .frame(maxWidth: .infinity, minHeight: 80)
+                    //                            .background(Color.black.opacity(0.5))
+                    //                            .cornerRadius(10)
+                    //                        }
+                    //                    }
+                    //                }
+                    //                .frame(height: 200)
+                    
+                    if let errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    Button(action: startGame) {
+                        Image("buttonStart")
                         //.resizable()
                         //.frame(width: 80, height: 80)
-                        .foregroundColor(gameStarted ? .gray : .blue)
-                }.buttonStyle(.borderless)
-                .disabled(gameStarted)
-                
-                Text("Players connected: \(multiplayerManager.connectedPeers.count)")
-                    .font(Font.custom("VinerHandITC", size: 30))
-                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                
-                Spacer()
-                
-                if gameStarted {
-                    GameStatusView()
-                        .transition(.slide)
+                            .foregroundColor(gameStarted ? .gray : .blue)
+                    }.buttonStyle(.borderless)
+                        .disabled(gameStarted)
+                    
+                    Text("Players connected: \(multiplayerManager.connectedPeers.count)")
+                        .font(Font.custom("VinerHandITC", size: 30))
+                        .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     
                     Spacer()
                     
-                    timerView
-                        .padding(.bottom)
+                    if gameStarted {
+                        GameStatusView()
+                            .transition(.slide)
+                        
+                        Spacer()
+                        
+                        timerView
+                            .padding(.bottom)
+                    }
                 }
-            }
-            .onAppear {
-                multiplayerManager.startHosting()
+                .onAppear {
+                    multiplayerManager.startHosting()
+                }
             }
         }
     }
-    
     func startGame() {
         print(viewModel.multiplayerManager.players)
         if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
@@ -102,6 +152,7 @@ struct HostGameView: View {
         gameStarted = true
         errorMessage = nil
     }
+    
     
     func assignRoles() {
         var players = multiplayerManager.connectedPeers.shuffled()
@@ -133,6 +184,7 @@ struct HostGameView: View {
                 .cornerRadius(8)
         }
     }
+    
 }
 
 // MARK: - How To Play (Placeholder)

@@ -10,13 +10,17 @@ import MultipeerConnectivity
 
 extension GameViewModel {
     
-    func addVote(to peerID: MCPeerID) {
-        let message = MultiplayerMessage.vote(peerID.displayName)
-        multiplayerManager.sendMessage(message)
+    func addVote(to peerID: String) {
+        if var player = multiplayerManager.players[peerID] {
+            player.votes += 1
+            multiplayerManager.players[peerID] = player
+            print("mandando voto para \(peerID) que agora está com \(player.votes) votos")
+            multiplayerManager.sendPlayersToAll()
+        }
     }
     
-    func turnPlayerInactive(to peerID: MCPeerID) {
-        let message = MultiplayerMessage.setInactive(peerID.displayName)
+    func turnPlayerInactive(to peerID: String) {
+        let message = MultiplayerMessage.setInactive(peerID)
         multiplayerManager.sendMessage(message)
     }
     

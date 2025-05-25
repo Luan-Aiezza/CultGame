@@ -2,10 +2,25 @@ import SwiftUI
 import MultipeerConnectivity
 
 struct EliminationView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+    var myCharacter: Character? {
+        let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
+        let character = viewModel.multiplayerManager.players.first {
+            $0.key == myDisplayName
+        }?.value.character
+        
+        print("Meu personagem atual: \(String(describing: character))")
+        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
+        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
+        
+        print(viewModel.multiplayerManager.players)
+        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
+        return character
+    }
 
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
@@ -38,20 +53,36 @@ struct EliminationView: View {
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
                         .foregroundColor(.title)
-                        .padding(.bottom, 24)
+                        .padding(.bottom, 48)
 
                     LazyVGrid(columns: columns, spacing: verticalSpacing) {
-                        ForEach(mockPlayers.filter { $0.state == .active }, id: \.id) { player in
+                        ForEach(
+                            multiplayerManager.players.filter { (peerID, player) in
+                                let isNotMyPeer = player.character != myCharacter
+                                let isActive = player.state == .active
+                                return isNotMyPeer && isActive
+                            },
+                            id: \.key
+                        ) { peerID, player in
+                            let playerID = peerID
+
                             PlayerElimView(
                                 player: player,
-                                isSelected: player.id == selectedPlayerID,
+                                isSelected: playerID == selectedPlayerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
-                                    selectedPlayerID = player.id
-                                    voteConfirmed = false
-                                    glowRotation = 0 // reinicia rotação
-                                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                        glowRotation = 360
+                                    if selectedPlayerID == playerID {
+                                        // Deseleciona
+                                        selectedPlayerID = nil
+                                        glowRotation = 0
+                                    } else {
+                                        // Seleciona novo player
+                                        selectedPlayerID = playerID
+                                        voteConfirmed = false
+                                        glowRotation = 0
+                                        withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                                            glowRotation = 360
+                                        }
                                     }
                                 },
                                 width: cardWidth,
@@ -61,7 +92,7 @@ struct EliminationView: View {
                     }
                     .padding(.top, 20)
 
-                    Spacer(minLength: 320)
+                    Spacer(minLength: 520)
                 }
                 .padding(.horizontal, horizontalPadding)
 
@@ -84,7 +115,11 @@ struct EliminationView: View {
 
                     // Botão Done
                     Button(action: {
-                        voteConfirmed = true
+                        if (selectedPlayerID != nil) {
+                            voteConfirmed = true
+                            viewModel.addVote(to: selectedPlayerID ?? " ")
+                        }
+                        
                         //TODO: Adicionar tela da Mari
                     }) {
                         Text("Done")
@@ -113,86 +148,3 @@ struct EliminationView: View {
 #Preview {
     EliminationView()
 }
-
-//
-//struct EliminationView: View {
-//    @ObservedObject var multiplayerManager = MultiplayerManager.shared
-//    @EnvironmentObject var viewModel: GameViewModel
-//    
-//    @State private var selectedPeer: MCPeerID? = nil
-//    @State private var voteConfirmed = false
-//    
-//    var body: some View {
-//        VStack(spacing: 16) {
-//            Text("Selecione um jogador para eliminar")
-//                .font(.headline)
-//                .padding(.top)
-//            
-//            ForEach(multiplayerManager.connectedPeers.filter {
-//                let isNotMyPeer = $0 != multiplayerManager.myPeerID
-//                let isNotTV = !$0.displayName.contains("TV")
-//                let isActive = multiplayerManager.players[$0]?.state == .active
-//                return isNotMyPeer && isNotTV && isActive
-//            }, id: \.self) { peer in
-//                if let player = multiplayerManager.players[peer] {
-//                    Button(action: {
-//                        selectedPeer = peer
-//                        voteConfirmed = false
-//                    }) {
-//                        HStack {
-//                            Text(peer.displayName)
-//                                .fontWeight(peer == selectedPeer ? .bold : .regular)
-//                                .foregroundColor(.primary)
-//                            Spacer()
-//                            Text(player.role?.rawValue.capitalized ?? "Sem papel")
-//                                .foregroundColor(.secondary)
-//                        }
-//                        .padding()
-//                        .frame(maxWidth: .infinity)
-//                        .background(
-//                            RoundedRectangle(cornerRadius: 10)
-//                                .stroke(peer == selectedPeer ? Color.red : Color.gray.opacity(0.2), lineWidth: peer == selectedPeer ? 2 : 1)
-//                                .background(
-//                                    peer == selectedPeer ? Color.red.opacity(0.1) : Color.clear
-//                                )
-//                        )
-//                    }
-//                    .buttonStyle(PlainButtonStyle())
-//                }
-//            }
-//            
-//            if let selected = selectedPeer {
-//                Text("Selecionado: \(selected.displayName)")
-//                    .foregroundColor(.red)
-//                    .padding(.top, 10)
-//                
-//                if !voteConfirmed {
-//                    Button("Confirmar Voto") {
-//                        if multiplayerManager.players[selected] != nil {
-//                            viewModel.addVote(to: selected)
-//                            voteConfirmed = true
-//                        }
-//                    }
-//                    .padding(.top, 5)
-//                } else {
-//                    Text("Voto confirmado!")
-//                        .foregroundColor(.green)
-//                        .font(.subheadline)
-//                }
-//            }
-//            
-//            Spacer()
-//            
-//            Button("Voltar para Discussão") {
-//                viewModel.currentPhase = .discussion
-//            }
-//            .padding()
-//            
-//            Button("Ir para Jogada de Cartas") {
-//                viewModel.currentPhase = .cardPlay
-//            }
-//            .padding()
-//        }
-//        .padding()
-//    }
-//}

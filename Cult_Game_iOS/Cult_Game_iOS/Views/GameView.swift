@@ -20,14 +20,17 @@ struct GameView: View {
             case .roleSelection:
                 StoryView()
             case .cardPlay:
-                PlayCardView()
+                EliminationView()
             case .discussion:
                 DiscussionView() //pegar da Mari
             case .elimination:
                 EliminationView() // SAM!! 
             case .eliminationResults:
                 EliminationResultsView() // SAM!!
+            case.victory:
+                EliminationResultsView()
             }
+        
         }.onAppear {
             multiplayerManager.joinSession()
 

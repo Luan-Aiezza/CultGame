@@ -136,8 +136,8 @@ struct VictoryScreenView: View {
             
             // Procura o jogador que é o herege
             if let (peer, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
-                let character = model.character
-                return "\(character.rawValue.capitalized)H"
+                let character = model.character?.displayName
+                return "\(String(describing: character?.capitalized))H"
             }
             
             return nil
@@ -238,7 +238,7 @@ struct VictoryScreenView: View {
                     }
                     
                     Spacer()
-                    NavigationLink(destination: WaitingForPlayersView(viewModel: viewModel), isActive: $navigateToWaiting) {
+                    NavigationLink(destination: WaitingForPlayersView().environment(viewModel), isActive: $navigateToWaiting) {
                         EmptyView()
                     }
                     

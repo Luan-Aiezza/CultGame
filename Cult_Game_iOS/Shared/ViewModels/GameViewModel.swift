@@ -16,7 +16,7 @@ class GameViewModel: ObservableObject, Observable {
     @Published var timeRemaining: Int = 30
     @Published var round: Int = 0
     @Published var activeCards: [SpecificCard] = []
-    @State var eliminatedPlayer: MCPeerID?
+    @State var eliminatedPlayer: String?
     @State var isTie: Bool = false
     @State var didEvaluate: Bool = false
     

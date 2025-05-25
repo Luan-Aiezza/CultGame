@@ -23,34 +23,34 @@ struct HostGameView: View {
                     .font(Font.custom("VinerHandITC", size: 30))
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                 
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
-                            VStack {
-                                Text(peer.displayName.prefix(10))
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                if let role = playerRoles[peer.displayName] {
-                                    Text(role == .cultist ? "Cultist" : "Heretic")
-                                        .foregroundColor(role == .cultist ? .green : .red)
-                                } else {
-                                    Text("No role")
-                                        .foregroundColor(.gray)
-                                }
-                                if let character = viewModel.multiplayerManager.players[peer]?.character {
-                                    Text( character.displayName)
-                                } else {
-                                    Text("No character")
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                            .frame(maxWidth: .infinity, minHeight: 80)
-                            .background(Color.black.opacity(0.5))
-                            .cornerRadius(10)
-                        }
-                    }
-                }
-                .frame(height: 200)
+//                ScrollView {
+//                    LazyVGrid(columns: columns, spacing: 20) {
+//                        ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
+//                            VStack {
+//                                Text(peer.displayName.prefix(10))
+//                                    .font(.headline)
+//                                    .foregroundColor(.white)
+//                                if let role = playerRoles[peer.displayName] {
+//                                    Text(role == .cultist ? "Cultist" : "Heretic")
+//                                        .foregroundColor(role == .cultist ? .green : .red)
+//                                } else {
+//                                    Text("No role")
+//                                        .foregroundColor(.gray)
+//                                }
+//                                if let character = viewModel.multiplayerManager.players[peer]?.character {
+//                                    Text( character.displayName)
+//                                } else {
+//                                    Text("No character")
+//                                        .foregroundColor(.gray)
+//                                }
+//                            }
+//                            .frame(maxWidth: .infinity, minHeight: 80)
+//                            .background(Color.black.opacity(0.5))
+//                            .cornerRadius(10)
+//                        }
+//                    }
+//                }
+//                .frame(height: 200)
                 
                 if let errorMessage {
                     Text(errorMessage)

@@ -11,7 +11,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var assignedRoles: [MCPeerID: PlayerRole] = [:]
     @Published var playerStates: [MCPeerID: PlayerModel] = [:]
     @Published var connectedPeers: [MCPeerID] = []
-    @Published var players: [MCPeerID: PlayerModel] = [:]
+    @Published var players: [String: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(
         sharedFaithPoints: 5,
         heresyPoints: [:],
@@ -53,7 +53,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         print ("adicionando para \(peerID.displayName)")
         guard peerID != myPeerID else { return }
         // Se este for o primeiro player conectado, atribuímos diretamente o personagem .fox
-        if players[peerID]?.character != nil { return }
+        if players[peerID.displayName]?.character != nil { return }
         
         if peerID.displayName.contains("Apple TV") {
             return
@@ -68,9 +68,9 @@ class MultiplayerManager: NSObject, ObservableObject {
         DispatchQueue.main.async {
             if let peer = self.connectedPeers.first(where: { $0.displayName == peerID.displayName }),
                
-                var player = self.players[peer] {
+                var player = self.players[peer.displayName] {
                 player.character = character
-                self.players[peer]?.character = character
+                self.players[peer.displayName]?.character = character
                 self.sendPlayersToAll()
                 print("Players com personagem")
                 print("\(peerID.displayName) recebeu \(character)")
@@ -108,7 +108,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {
             let stablePeers = session.connectedPeers.filter { peer in
-                self.players[peer] != nil
+                self.players[peer.displayName] != nil
             }
             try? session.send(data, toPeers: stablePeers, with: .reliable)        }
     }
@@ -117,7 +117,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(globalState) {
             let stablePeers = session.connectedPeers.filter { peer in
-                self.players[peer] != nil
+                self.players[peer.displayName] != nil
             }
             try? session.send(data, toPeers: stablePeers, with: .reliable)        }
     }
@@ -238,8 +238,8 @@ extension MultiplayerManager: MCSessionDelegate {
                     self.connectedPeers.append(peerID)
                 }
                 // Garantir que o player já existe antes de atribuir personagem
-                if self.players[peerID] == nil {
-                    self.players[peerID] = PlayerModel()
+                if self.players[peerID.displayName] == nil {
+                    self.players[peerID.displayName] = PlayerModel()
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -252,7 +252,7 @@ extension MultiplayerManager: MCSessionDelegate {
                 
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
-                self.players.removeValue(forKey: peerID)
+                self.players.removeValue(forKey: peerID.displayName)
                 
             default:
                 break
@@ -286,9 +286,9 @@ extension MultiplayerManager: MCSessionDelegate {
                 DispatchQueue.main.async {
                     if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
                        
-                        var player = self.players[peer] {
+                        var player = self.players[peer.displayName] {
                         player.character = character
-                        self.players[peer]?.character = character
+                        self.players[peer.displayName]?.character = character
                         self.sendPlayersToAll()
                         print(self.players)
                     }
@@ -301,27 +301,25 @@ extension MultiplayerManager: MCSessionDelegate {
             case .vote(let peerDisplayName):
                 DispatchQueue.main.async {
                     if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
-                       var player = self.players[peer] {
+                       var player = self.players[peer.displayName] {
                         player.votes += 1
-                        self.players[peer] = player
+                        self.players[peer.displayName] = player
                         self.sendPlayersToAll()
+                        
                     }
                 }
             case .setInactive(let peerDisplayName):
                 DispatchQueue.main.async {
                     if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
-                       var player = self.players[peer] {
+                       var player = self.players[peer.displayName] {
                         player.state = .inactive
-                        self.players[peer] = player
+                        self.players[peer.displayName] = player
                         self.killed = player
                     }
                 }
             case .updatePlayers(let decoded):
                 DispatchQueue.main.async {
-                    let updated = decoded.mapKeys { displayName in
-                        self.connectedPeers.first(where: { $0.displayName == displayName }) ?? MCPeerID(displayName: displayName)
-                    }
-                    self.players = updated
+                    self.players = decoded
                 }
             case .victory(let outcome):
                 DispatchQueue.main.async {
@@ -335,9 +333,9 @@ extension MultiplayerManager: MCSessionDelegate {
     
     func sendPlayersToAll() {
         guard !session.connectedPeers.isEmpty else { return }
-        let serializablePlayers = players.mapKeys { $0.displayName }
-        let message = MultiplayerMessage.updatePlayers(serializablePlayers)
+        let message = MultiplayerMessage.updatePlayers(players)
         sendMessage(message)
+        print(players)
     }
     
     // Métodos exigidos mas não utilizados
@@ -348,7 +346,7 @@ extension MultiplayerManager: MCSessionDelegate {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(message) {
             let stablePeers = session.connectedPeers.filter { peer in
-                self.players[peer] != nil
+                self.players[peer.displayName] != nil
             }
             try? session.send(data, toPeers: stablePeers, with: .reliable)        }
     }

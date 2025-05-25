@@ -37,7 +37,6 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     
-    @State private var selectedCard: Card? = nil
 
     @ViewBuilder
     var destinationView: some View {

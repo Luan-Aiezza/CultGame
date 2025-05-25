@@ -4,7 +4,7 @@ import MultipeerConnectivity
 struct EliminationResultsView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var viewModel: GameViewModel
-    
+ 
     var body: some View {
         VStack(spacing: 20) {
             if !viewModel.didEvaluate {

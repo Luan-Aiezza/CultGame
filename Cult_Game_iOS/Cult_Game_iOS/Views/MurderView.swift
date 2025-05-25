@@ -2,10 +2,25 @@ import SwiftUI
 import MultipeerConnectivity
 
 struct MurderView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+    var myCharacter: Character? {
+        let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
+        let character = viewModel.multiplayerManager.players.first {
+            $0.key == myDisplayName
+        }?.value.character
+        
+        print("Meu personagem atual: \(String(describing: character))")
+        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
+        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
+        
+        print(viewModel.multiplayerManager.players)
+        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
+        return character
+    }
 
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
@@ -37,7 +52,15 @@ struct MurderView: View {
                         .padding(.bottom, 24)
 
                     LazyVGrid(columns: columns, spacing: verticalSpacing) {
-                        ForEach(mockPlayers.filter { $0.state == .active }, id: \.id) { player in
+                        ForEach(
+                            multiplayerManager.players.filter { (peerID, player) in
+                                let isNotMyPeer = player.character != myCharacter
+                                let isActive = player.state == .active
+                                return isNotMyPeer && isActive
+                            },
+                            id: \.key
+                        ) { peerID, player in
+                            let playerID = player.id
                             PlayerCellView(
                                 player: player,
                                 isSelected: player.id == selectedPlayerID,

@@ -290,7 +290,6 @@ extension MultiplayerManager: MCSessionDelegate {
                         player.character = character
                         self.players[peer.displayName]?.character = character
                         self.sendPlayersToAll()
-                        print(self.players)
                     }
                 }
             case .kickPlayer:
@@ -310,11 +309,10 @@ extension MultiplayerManager: MCSessionDelegate {
                 }
             case .setInactive(let peerDisplayName):
                 DispatchQueue.main.async {
-                    if let peer = self.connectedPeers.first(where: { $0.displayName == peerDisplayName }),
-                       var player = self.players[peer.displayName] {
+                    if var player = self.players[peerDisplayName] {
                         player.state = .inactive
-                        self.players[peer.displayName] = player
-                        self.killed = player
+                        self.players[peerDisplayName] = player
+                        self.sendPlayersToAll()
                     }
                 }
             case .updatePlayers(let decoded):
@@ -335,7 +333,6 @@ extension MultiplayerManager: MCSessionDelegate {
         guard !session.connectedPeers.isEmpty else { return }
         let message = MultiplayerMessage.updatePlayers(players)
         sendMessage(message)
-        print(players)
     }
     
     // Métodos exigidos mas não utilizados

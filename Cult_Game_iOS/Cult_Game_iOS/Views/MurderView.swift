@@ -13,12 +13,6 @@ struct MurderView: View {
             $0.key == myDisplayName
         }?.value.character
         
-        print("Meu personagem atual: \(String(describing: character))")
-        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
-        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
-        
-        print(viewModel.multiplayerManager.players)
-        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
         return character
     }
 
@@ -60,17 +54,23 @@ struct MurderView: View {
                             },
                             id: \.key
                         ) { peerID, player in
-                            let playerID = player.id
                             PlayerCellView(
                                 player: player,
-                                isSelected: player.id == selectedPlayerID,
+                                isSelected: selectedPlayerID == peerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
-                                    selectedPlayerID = player.id
-                                    voteConfirmed = false
-                                    glowRotation = 0 // reinicia rotação
-                                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                        glowRotation = 360
+                                    if selectedPlayerID == peerID {
+                                        // Deseleciona
+                                        selectedPlayerID = nil
+                                        glowRotation = 0
+                                    } else {
+                                        // Seleciona novo player
+                                        selectedPlayerID = peerID
+                                        voteConfirmed = false
+                                        glowRotation = 0
+                                        withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                                            glowRotation = 360
+                                        }
                                     }
                                 },
                                 width: cardWidth,
@@ -80,13 +80,19 @@ struct MurderView: View {
                     }
                     .padding(.top, 20)
 
-                    Spacer(minLength: 220)
+                    Spacer(minLength: 520)
                 }
                 .padding(.horizontal, horizontalPadding)
 
                 // Botão
                 Button(action: {
-                    voteConfirmed = true
+                    if (selectedPlayerID != nil) {
+                        voteConfirmed = true
+                        viewModel.turnPlayerInactive(to: selectedPlayerID ?? " ")
+                        DispatchQueue.main.async {
+                            print(viewModel.multiplayerManager.players)
+                        }
+                    }
                 }) {
                     Text("Done")
                         .font(.custom("Almendra-Regular", size: 26))
@@ -111,57 +117,3 @@ struct MurderView: View {
 #Preview {
     MurderView()
 }
-
-// MARK: - Mock para preview e testes locais
-
-let mockPlayers: [PlayerModel] = [
-    PlayerModel(
-        id: "1",
-        hand: [Card(name: "Preach", faithCost: 2, heresyCost: 0, followersEffect: 4, effectsDescription: "", description: "Inspires hope.", imageName: "preach", type: .common, rarity: 2)],
-        role: .cultist,
-        personalHeresyPoints: 1,
-        state: .active,
-        character: .fox
-    ),
-    PlayerModel(
-        id: "2",
-        hand: [Card(name: "Question Faith", faithCost: 0, heresyCost: 2, followersEffect: -3, effectsDescription: "", description: "Sows doubt.", imageName: "question", type: .common, rarity: 3)],
-        role: .cultist,
-        personalHeresyPoints: 3,
-        state: .active,
-        character: .panda
-    ),
-    PlayerModel(
-        id: "3",
-        hand: [Card(name: "Fast", faithCost: 1, heresyCost: 0, followersEffect: 1, effectsDescription: "", description: "Shows devotion.", imageName: "fast", type: .common, rarity: 4)],
-        role: .cultist,
-        personalHeresyPoints: 0,
-        state: .active,
-        character: .bunny
-    ),
-    PlayerModel(
-        id: "4",
-        hand: [Card(name: "Whisper Heresy", faithCost: 0, heresyCost: 3, followersEffect: -4, effectsDescription: "", description: "Spreads doubt.", imageName: "whisper", type: .common, rarity: 2)],
-        role: .cultist,
-        personalHeresyPoints: 5,
-        state: .active,
-        character: .tiger
-    ),
-    PlayerModel(
-        id: "5",
-        hand: [Card(name: "Light Candles", faithCost: 1, heresyCost: 0, followersEffect: 2, effectsDescription: "", description: "Symbolic ritual.", imageName: "candles", type: .common, rarity: 1)],
-        role: .cultist,
-        personalHeresyPoints: 0,
-        state: .active,
-        character: .deer
-    ),
-    PlayerModel(
-        id: "6",
-        hand: [Card(name: "Blaspheme", faithCost: 0, heresyCost: 4, followersEffect: -5, effectsDescription: "", description: "Shocks the faithful.", imageName: "blaspheme", type: .common, rarity: 1)],
-        role: .heretic,
-        personalHeresyPoints: 6,
-        state: .active,
-        character: .pig
-    )
-]
-

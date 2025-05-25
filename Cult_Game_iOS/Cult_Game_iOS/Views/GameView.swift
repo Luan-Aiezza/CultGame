@@ -20,7 +20,7 @@ struct GameView: View {
             case .roleSelection:
                 StoryView()
             case .cardPlay:
-                EliminationView()
+                MurderView()
             case .discussion:
                 DiscussionView() //pegar da Mari
             case .elimination:

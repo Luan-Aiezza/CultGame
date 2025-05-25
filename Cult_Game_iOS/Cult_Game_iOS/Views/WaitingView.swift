@@ -16,12 +16,6 @@ struct WaitingView: View {
             $0.key == myDisplayName
         }?.value.character
         
-        print("Meu personagem atual: \(String(describing: character))")
-        print("Meu peer \(vm.multiplayerManager.myPeerID)")
-        print("Meu display Name \(vm.multiplayerManager.myPeerID)")
-        
-        print(vm.multiplayerManager.players)
-        print(vm.multiplayerManager.players[vm.multiplayerManager.myPeerID.displayName] ?? "dad" )
         return character
     }
     

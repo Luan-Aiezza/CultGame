@@ -12,13 +12,13 @@ struct EliminationView: View {
         let character = viewModel.multiplayerManager.players.first {
             $0.key == myDisplayName
         }?.value.character
-        
-        print("Meu personagem atual: \(String(describing: character))")
-        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
-        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
-        
-        print(viewModel.multiplayerManager.players)
-        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
+//        
+//        print("Meu personagem atual: \(String(describing: character))")
+//        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
+//        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
+//        
+//        print(viewModel.multiplayerManager.players)
+//        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
         return character
     }
 
@@ -64,20 +64,19 @@ struct EliminationView: View {
                             },
                             id: \.key
                         ) { peerID, player in
-                            let playerID = peerID
 
                             PlayerElimView(
                                 player: player,
-                                isSelected: playerID == selectedPlayerID,
+                                isSelected: peerID == selectedPlayerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
-                                    if selectedPlayerID == playerID {
+                                    if selectedPlayerID == peerID {
                                         // Deseleciona
                                         selectedPlayerID = nil
                                         glowRotation = 0
                                     } else {
                                         // Seleciona novo player
-                                        selectedPlayerID = playerID
+                                        selectedPlayerID = peerID
                                         voteConfirmed = false
                                         glowRotation = 0
                                         withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {

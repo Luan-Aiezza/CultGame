@@ -20,8 +20,15 @@ extension GameViewModel {
     }
     
     func turnPlayerInactive(to peerID: String) {
+        if var player = multiplayerManager.players[peerID] {
+            print("mandando morte para \(peerID) que antes estava com estado \(player.state) ")
+        }
         let message = MultiplayerMessage.setInactive(peerID)
         multiplayerManager.sendMessage(message)
+        if var player = multiplayerManager.players[peerID] {
+            print("mandando morte para \(peerID) que agora está com estado \(player.state) ")
+        }
+        
     }
     
     func evaluateVotes() {

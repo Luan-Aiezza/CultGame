@@ -36,6 +36,7 @@ struct PlayCardView: View {
     @State var stringShow = "O culto não tem pontos de fé suficientes para escolher uma carta"
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
+    @State private var showMurderView = false
     
 
     @ViewBuilder
@@ -148,7 +149,16 @@ struct PlayCardView: View {
                         Button {
                             if let selectedCard = selectedCard,
                                let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
-                                if !skippedRound {
+                                
+                                if cardToPlay.type != .assassination {
+                                    if !skippedRound {
+                                        vm.playCard(cardToPlay)
+                                        stringShow = "Você já jogou uma carta."
+                                        showBlockMessage = true
+                                        playedCard = true
+                                    }
+                                } else {
+                                    showMurderView = true
                                     vm.playCard(cardToPlay)
                                     stringShow = "Você já jogou uma carta."
                                     showBlockMessage = true
@@ -176,6 +186,10 @@ struct PlayCardView: View {
                 ) {
                     EmptyView()
                 }
+                .fullScreenCover(isPresented: $showMurderView) {
+                    MurderView()
+                }
+
             }
         }
         .onAppear {

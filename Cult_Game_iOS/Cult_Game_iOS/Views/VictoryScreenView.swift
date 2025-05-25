@@ -123,7 +123,7 @@ struct VictoryScreenView: View {
         let role: PlayerRole
         let outcome: GameOutcome
         @State private var navigateToWaiting = false
-        @ObservedObject var viewModel: GameViewModel
+    @EnvironmentObject var viewModel: GameViewModel
         let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
         
         var content: VictoryScreenContent {

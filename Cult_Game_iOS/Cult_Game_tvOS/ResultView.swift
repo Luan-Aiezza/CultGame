@@ -39,6 +39,10 @@ struct ResultView: View {
 
         }
         .onAppear{
+            
+            print("voted: \(multiplayerManager.voted)")
+            
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                 multiplayerManager.applyPendingEffects()
             }

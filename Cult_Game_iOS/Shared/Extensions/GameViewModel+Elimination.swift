@@ -47,7 +47,9 @@ extension GameViewModel {
         if topVoted.count == 1, let toEliminate = topVoted.first {
             turnPlayerInactive(to: toEliminate)
             eliminatedPlayer = toEliminate
-            multiplayerManager.voted = multiplayerManager.players[toEliminate]
+            
+        self.multiplayerManager.voted =  self.multiplayerManager.players[toEliminate]
+            
             print("✅ Eliminado: \(eliminatedPlayer ?? "nulo")")
             print("🎯 Voted: \(multiplayerManager.voted?.character?.displayName ?? "nulo")")
         } else {
@@ -55,18 +57,19 @@ extension GameViewModel {
             multiplayerManager.voted = nil
             print("⚖️ Empate detectado")
         }
-
         // Resetar votos
         for (peerID, var player) in multiplayerManager.players {
             player.votes = 0
             multiplayerManager.players[peerID] = player
         }
 
-        didEvaluate = true
+        self.didEvaluate = true
+        
         print("✅ Estado final na função:")
         print("- eliminatedPlayer: \(eliminatedPlayer ?? "nulo")")
         print("- isTie: \(isTie)")
         print("- didEvaluate: \(didEvaluate)")
+        print("- voted do multiplayer: \(multiplayerManager.voted)")
     }
 
 }

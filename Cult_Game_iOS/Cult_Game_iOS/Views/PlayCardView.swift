@@ -43,7 +43,7 @@ struct PlayCardView: View {
     var destinationView: some View {
         if let outcome = vm.gameOutcome,
            let role = vm.player.role {
-            VictoryScreenView(role: role, outcome: outcome, viewModel: vm)
+            VictoryScreenView(role: role, outcome: outcome)
         } else {
             EmptyView()
         }

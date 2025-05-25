@@ -16,12 +16,11 @@ class GameViewModel: ObservableObject, Observable {
     @Published var timeRemaining: Int = 30
     @Published var round: Int = 0
     @Published var activeCards: [SpecificCard] = []
-    @State var eliminatedPlayer: String?
-    @State var isTie: Bool = false
-    @State var didEvaluate: Bool = false
+    @Published var eliminatedPlayer: String?
+    @Published var isTie: Bool = false
+    @Published var didEvaluate: Bool = false
     
     @Published var deckManager = CardDistributionManager.shared
-
     var deck = CardDeck()
     let multiplayerManager = MultiplayerManager.shared
     public var emptyCard = Card(name: "", faithCost: 0, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "", imageName: "", type: .empty, rarity: 0)
@@ -201,7 +200,14 @@ class GameViewModel: ObservableObject, Observable {
             advancePhaseAfterTimer()
         }
     }
-
+    
+    func createEliminatedPlayer(player: String) {
+        eliminatedPlayer = player
+    }
+    
+    func isEvaluated() {
+        didEvaluate = true
+    }
 
     
     func assignCharacter(_ character: Character) {

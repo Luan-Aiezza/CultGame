@@ -61,7 +61,6 @@ struct CardCarouselView: View {
     @Binding var showBlockMessage : Bool
     @Binding var cards : [Card]
     @Binding var skippedRound : Bool
-    
     @State var snappedItem = 0.0
     @State var draggingItem = 0.0
     @State var activeIndex: Int = 0

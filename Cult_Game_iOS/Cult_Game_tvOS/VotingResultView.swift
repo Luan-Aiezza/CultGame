@@ -20,7 +20,7 @@ struct VotingResultView: View {
 
             VStack {
                 // Caso de empate
-                if gameViewModel.isTie {
+                if multiplayerManager.voted == nil {
                     Text("Empate!")
                         .font(.custom("VinerHandITC", size: 60))
                         .foregroundStyle(Color.title)
@@ -33,9 +33,7 @@ struct VotingResultView: View {
                 }
 
                 // Caso de jogador eliminado
-                else if let eliminatedID = gameViewModel.eliminatedPlayer,
-                        let eliminatedPlayer = multiplayerManager.players[eliminatedID],
-                        let killedName = eliminatedPlayer.character?.displayName {
+                else if let killedName = multiplayerManager.voted {
 
                     Text("\(killedName) foi eliminado!")
                         .font(.custom("VinerHandITC", size: 60))
@@ -47,7 +45,7 @@ struct VotingResultView: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
 
-                    Image(killedName)
+                    Image("fox")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 200)

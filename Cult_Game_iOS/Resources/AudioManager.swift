@@ -43,7 +43,6 @@ class AudioManager {
     // MARK: - Musica de Background
     func playBackgroundMusic(named name: String) {
         guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
-            print("Background music file \(name).mp3 not found.")
             return
         }
 
@@ -54,7 +53,7 @@ class AudioManager {
             backgroundMusicPlayer?.prepareToPlay()
             backgroundMusicPlayer?.play()
         } catch {
-            print("Could not play background music \(name): \(error.localizedDescription)")
+            print("")
         }
     }
 
@@ -80,7 +79,6 @@ class AudioManager {
     // MARK: - Internal
     private func createPlayer(for name: String) -> AVAudioPlayer? {
         guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
-            print("Sound file \(name).mp3 not found.")
             return nil
         }
 
@@ -89,7 +87,7 @@ class AudioManager {
             player.prepareToPlay()
             return player
         } catch {
-            print("Failed to create player for \(name): \(error.localizedDescription)")
+            print("")
             return nil
         }
     }

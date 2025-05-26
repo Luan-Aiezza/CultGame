@@ -46,8 +46,14 @@ extension GameViewModel {
 
         if topVoted.count == 1, let toEliminate = topVoted.first {
             eliminatedPlayer = toEliminate
-            self.multiplayerManager.voted = self.multiplayerManager.players[toEliminate]
+            
+            //TODO: mandar mensagem para o host atualizar multiplayerManager.host
+            
+            multiplayerManager.testSendPhaseToHost(frase: toEliminate)
+            
+            
             turnPlayerInactive(to: toEliminate)
+            multiplayerManager.sendPlayersToAll()
             
             print("✅ Eliminado: \(eliminatedPlayer ?? "nulo")")
             print("🎯 Voted: \(multiplayerManager.voted?.character?.displayName ?? "nulo")")

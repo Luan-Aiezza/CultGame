@@ -13,6 +13,7 @@ struct PlayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                
                 Image("background_002")
                     .resizable()
                     .overlay {
@@ -25,6 +26,7 @@ struct PlayView: View {
                     GameView()
                         .environmentObject(vm)
                         .navigationBarBackButtonHidden(true)
+
                 } label: {
                     Text("Play")
                         .font(.custom("VinerHandITC", size: 40))

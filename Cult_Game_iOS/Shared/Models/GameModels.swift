@@ -75,7 +75,9 @@ enum MultiplayerMessage: Codable {
     case vote(String)
     case setInactive(String)
     case updatePlayers([String: PlayerModel])
-    case victory(GameOutcome)/////////////////////////////////
+    case victory(GameOutcome)
+    case setVoted(String)
+    /////////////////////////////////
 
     
     enum CodingKeys: String, CodingKey {
@@ -90,7 +92,8 @@ enum MultiplayerMessage: Codable {
         case vote
         case setInactive
         case updatePlayers
-        case victory////////////////////////
+        case victory
+        case setVoted
 
     }
     
@@ -128,6 +131,9 @@ enum MultiplayerMessage: Codable {
             try container.encode(MessageType.victory, forKey: .type)
             try container.encode(outcome, forKey: .data)////////////////////
 
+        case .setVoted(let peerID):
+            try container.encode(MessageType.setVoted, forKey: .type)
+            try container.encode(peerID, forKey: .data)////////////////////
         }
     }
     
@@ -165,6 +171,9 @@ enum MultiplayerMessage: Codable {
             let outcome = try container.decode(GameOutcome.self, forKey: .data)
             self = .victory(outcome)////////////////////////////
 
+        case .setVoted:
+            let voted = try container.decode(String.self, forKey: .data)
+            self = .setVoted(voted)
         }
     }
     

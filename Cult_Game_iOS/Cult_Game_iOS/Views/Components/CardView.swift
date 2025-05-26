@@ -1,3 +1,5 @@
+
+
 //
 //  CardView.swift
 //  Cult_Game_iOS
@@ -13,52 +15,18 @@ struct CardAttribute {
 }
 
 struct CardView: View {
-    
     var card: Card
+    @State private var cardAttributes: [CardAttribute] = []
     
-    var icon : String {
+    var icon: String {
         switch card.type {
-        case .common:
-            return "cultist"
-        case .cultist:
-            return "cultist"
-        case .heresy:
-            return "sabotage"
-        case .assassination:
-            return "heresy"
-        case .empty:
-            return "cultist"
+        case .common: return "cultist"
+        case .cultist: return "cultist"
+        case .heresy: return "sabotage"
+        case .assassination: return "heresy"
+        case .empty: return "cultist"
         }
     }
-    
-    var costAttribute: CardAttribute? {
-        switch card.type {
-        case .heresy, .assassination:
-            return card.heresyCost > 0 ? CardAttribute(value: card.heresyCost, iconName: "heresy") : nil
-        case .cultist, .common:
-            return card.faithCost > 0 ? CardAttribute(value: card.faithCost, iconName: "faith") : nil
-        default:
-            return nil
-        }
-    }
-
-    var effectAttribute: CardAttribute? {
-        if card.followersEffect != 0 {
-            return CardAttribute(value: card.followersEffect, iconName: "followers")
-        }
-        
-        if card.faithCost < 0 {
-            return CardAttribute(value: abs(card.faithCost), iconName: "faith")
-        }
-        
-        if card.heresyCost < 0 {
-            return CardAttribute(value: abs(card.heresyCost), iconName: "heresy")
-        }
-
-        return nil
-    }
-
-    
     
     var body: some View {
         GeometryReader { geometry in
@@ -66,12 +34,13 @@ struct CardView: View {
             let height = geometry.size.height
             
             ZStack {
-                // Imagem da carta
+                // Card background image
                 Image("card_001")
                     .resizable()
                     .scaledToFit()
                     .frame(width: width, height: height)
                 
+                // Card type icon
                 Image(icon)
                     .resizable()
                     .scaledToFit()
@@ -80,14 +49,14 @@ struct CardView: View {
                     .padding(.bottom, 3)
                     .position(x: width - (width * 0.8), y: height * 0.12)
                 
-                
+                // Main card image
                 Image(card.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: width/2.5, height: height/2.5)
                     .position(x: width / 2, y: height * 0.275)
                 
-                // Título
+                // Card title
                 Text(card.name.capitalized)
                     .font(.custom("VinerHandITC", size: width * 0.08))
                     .foregroundStyle(Color.cardTitle)
@@ -95,7 +64,7 @@ struct CardView: View {
                     .multilineTextAlignment(.center)
                     .position(x: width * 0.5, y: height * 0.530)
                 
-                // Descrição
+                // Card description
                 Text(card.description)
                     .font(.custom("Almendra-Regular", size: width * 0.055))
                     .foregroundStyle(.black.opacity(0.7))
@@ -103,7 +72,7 @@ struct CardView: View {
                     .frame(width: width * 0.75)
                     .position(x: width / 2, y: height * 0.7)
                 
-                // Descrição dos Efeitos
+                // Effects description
                 Text(card.effectsDescription)
                     .font(.custom("Almendra-Regular", size: width * 0.045))
                     .foregroundStyle(.black.opacity(0.9))
@@ -111,14 +80,14 @@ struct CardView: View {
                     .frame(width: width * 0.75)
                     .position(x: width / 2, y: height * 0.84)
                 
-                // Custo
-                if let cost = costAttribute {
+                // Cost display (safe access)
+                if cardAttributes.count > 0 {
+                    let cost = cardAttributes[0]
                     HStack(spacing: 0) {
-                        Text("-\(cost.value)")
+                        Text("\(cost.value >= 0 ? "+" : "-")\(cost.value)")
                             .font(.custom("VinerHandITC", size: width * 0.075))
                             .foregroundStyle(.black.opacity(0.7))
-                   
-
+                       
                         Image(cost.iconName)
                             .resizable()
                             .scaledToFit()
@@ -127,11 +96,12 @@ struct CardView: View {
                     }
                     .position(x: width * 0.28, y: height * 0.915)
                 }
-
-                // Efeito
-                if let effect = effectAttribute {
+                
+                // Effect display (safe access)
+                if cardAttributes.count > 1 {
+                    let effect = cardAttributes[1]
                     HStack(spacing: 0) {
-                        Text("\(effect.value > 0 ? "+" : "")\(effect.value)")
+                        Text("\(effect.value >= 0 ? "+" : "-")\(effect.value)")
                             .font(.custom("VinerHandITC", size: width * 0.075))
                             .foregroundStyle(.black.opacity(0.7))
 
@@ -141,19 +111,40 @@ struct CardView: View {
                             .frame(width: width * 0.08, height: width * 0.06)
                             .padding(.bottom, 3)
                     }
+
                     .position(x: width * 0.74, y: height * 0.915)
                 }
-
-                
-                
+            }
+            .onAppear {
+                setupCardAttributes()
             }
         }
     }
-}
+    
+    private func setupCardAttributes() {
+        var attributes: [CardAttribute] = []
+        
+        if card.followersEffect != 0 {
+            attributes.append(CardAttribute(value: card.followersEffect, iconName: "followers"))
+        }
 
+        switch card.type {
+        case .heresy, .assassination:
+            if card.heresyCost != 0 {
+                attributes.append(CardAttribute(value: card.heresyCost, iconName: "heresy"))
+            }
+        case .cultist, .common:
+            if card.faithCost != 0 {
+                attributes.append(CardAttribute(value: card.faithCost, iconName: "faith"))
+            }
+        default:
+            break
+        }
 
-
-#Preview {
-    CardView(card: Card(name: "Profanation", faithCost: 0, heresyCost: 10, followersEffect: -10, effectsDescription: "adds faith every round", description: "Whispers about forgotten gods infiltrate among the faithful. Gradually, eyes turn to other altars.", imageName: "card_profanation", type: .heresy, rarity: 1))
-        .frame(width: 350, height: 490)
+        while attributes.count < 2 {
+            attributes.append(CardAttribute(value: 0, iconName: "faith"))
+        }
+        
+        cardAttributes = attributes
+    }
 }

@@ -39,7 +39,7 @@ struct WaitingView: View {
                             .resizable()
                             .frame(width: 200, height: 200)
                         
-                        Image("\(character.displayName.lowercased())")
+                        Image("\(character.displayName.capitalized)")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 180, height: 180)

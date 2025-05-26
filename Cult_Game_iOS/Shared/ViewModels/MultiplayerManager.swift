@@ -45,8 +45,8 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     //teste
-    func testSendPhaseToHost(frase : String) {
-        let message = MultiplayerMessage.vote(frase)
+    func eliminateVoted(peerID : String) {
+        let message = MultiplayerMessage.vote(peerID)
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
         }
@@ -120,7 +120,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     func send(_ action: CardPlayAction) {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {
-            let stablePeers = self.playerPeers
+            let stablePeers = self.connectedPeers
             try? session.send(data, toPeers: stablePeers, with: .reliable)        }
     }
     
@@ -128,7 +128,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     func sendGlobalStateToAllPlayers() {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(globalState) {
-            let stablePeers = self.playerPeers
+            let stablePeers = self.connectedPeers
             try? session.send(data, toPeers: stablePeers, with: .reliable)        }
     }
     
@@ -174,8 +174,9 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     func handleReceived(_ action: CardPlayAction, from peerID: MCPeerID) {
         DispatchQueue.main.async {
-            let faithChange = action.playerRole == .cultist ? -action.card.faithCost : 0
-            let heresyChange = action.playerRole == .heretic ? action.card.faithCost : 0
+            print("HANDLE RECEIVED DA CARTA: \(action)")
+            let faithChange =  action.card.faithCost
+            let heresyChange = action.card.faithCost
             let followersChange = action.card.followersEffect
             let effect = GameEffects(
                 peerID: peerID,
@@ -189,6 +190,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     func applyPendingEffects() {
+        print("PENDING EFFECTS: \(pendingEffects)")
         for effect in pendingEffects {
             if effect.faithChange != 0 {
                 globalState.sharedFaithPoints += effect.faithChange
@@ -364,7 +366,7 @@ extension MultiplayerManager: MCSessionDelegate {
     func sendMessage(_ message: MultiplayerMessage) {
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(message) {
-            let stablePeers = self.playerPeers
+            let stablePeers = self.connectedPeers
             try? session.send(data, toPeers: stablePeers, with: .reliable)
         }
     }

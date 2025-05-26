@@ -49,7 +49,7 @@ extension GameViewModel {
             
             //TODO: mandar mensagem para o host atualizar multiplayerManager.host
             
-            multiplayerManager.testSendPhaseToHost(frase: toEliminate)
+            multiplayerManager.eliminateVoted(peerID: toEliminate)
             
             
             turnPlayerInactive(to: toEliminate)

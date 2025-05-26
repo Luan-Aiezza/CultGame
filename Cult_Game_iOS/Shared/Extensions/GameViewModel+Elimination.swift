@@ -45,10 +45,9 @@ extension GameViewModel {
         print("🏆 Top votado(s): \(topVoted), maxVotes: \(maxVotes)")
 
         if topVoted.count == 1, let toEliminate = topVoted.first {
-            turnPlayerInactive(to: toEliminate)
             eliminatedPlayer = toEliminate
-            
-        self.multiplayerManager.voted =  self.multiplayerManager.players[toEliminate]
+            self.multiplayerManager.voted = self.multiplayerManager.players[toEliminate]
+            turnPlayerInactive(to: toEliminate)
             
             print("✅ Eliminado: \(eliminatedPlayer ?? "nulo")")
             print("🎯 Voted: \(multiplayerManager.voted?.character?.displayName ?? "nulo")")

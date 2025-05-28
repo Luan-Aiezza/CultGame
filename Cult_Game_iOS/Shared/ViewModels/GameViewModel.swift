@@ -19,6 +19,7 @@ class GameViewModel: ObservableObject, Observable {
     @Published var eliminatedPlayer: String?
     @Published var isTie: Bool = false
     @Published var didEvaluate: Bool = false
+    @Published var voteOccurred: Bool = false/////////////////////
     
     @Published var deckManager = CardDistributionManager.shared
     var deck = CardDeck()
@@ -65,7 +66,10 @@ class GameViewModel: ObservableObject, Observable {
     func turnEmptyCard() {
         player.usedCard = emptyCard
     }
-    
+    func setRole(_ role: PlayerRole) {
+        player.role = role
+
+       }/////////
     func receiveInitialCards() {
         player.hand.removeAll()
         switch player.role {
@@ -92,7 +96,13 @@ class GameViewModel: ObservableObject, Observable {
     func turnEnteredCardPlayOnce() {
         player.hasEnteredCardPlayOnce = true
     }
-    
+    func clearEliminationResults() {
+            eliminatedPlayer = nil
+            isTie = false
+            voteOccurred = false
+            didEvaluate = false
+            multiplayerManager.voted = nil
+        }
     func resetGame() {
         // Reinicializa variáveis importantes
         currentPhase = .roleSelection
@@ -120,6 +130,7 @@ class GameViewModel: ObservableObject, Observable {
     
     var isHost: Bool { multiplayerManager.isHosting }
     var peerID: MCPeerID { multiplayerManager.myPeerID }
+    //var peerID: MCPeerID { multiplayerManager.peerID }
     
     // Personagens sorteados (por peer)
     @Published var assignedCharacters: [MCPeerID: Character] = [:]

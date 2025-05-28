@@ -240,13 +240,14 @@ extension MultiplayerManager: MCSessionDelegate {
             case .connected:
 //                guard peerID != self.myPeerID else { return } // <- impede adicionar a si mesmo
                 
-//                if peerID.displayName.contains("Apple TV") {
-//                    return
-//                }
-                
                 if !self.connectedPeers.contains(peerID) {
                     self.connectedPeers.append(peerID)
                 }
+                
+                if peerID.displayName.contains("Apple TV") {
+                    return
+                }
+                
                 // Garantir que o player já existe antes de atribuir personagem
                 if self.players[peerID.displayName] == nil {
                     self.players[peerID.displayName] = PlayerModel()

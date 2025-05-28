@@ -4,7 +4,7 @@ import Combine
 
 struct GameStatusView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var timer = GameTimerManager()
+    var timer = GameTimerManager()
     
     var tvResponse = 1.5
 

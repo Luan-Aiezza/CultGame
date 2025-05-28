@@ -37,7 +37,7 @@ struct HostGameView: View {
     @State private var canPlay = false
     @State private var errorMessage: String?
     @State var showBlockMessage = false
-    @State var stringShow = "Mínimo de 5 jogadores"
+    @State var stringShow = "Minimum of 5 players"
     
     private let horizontalPadding: CGFloat = 180
     private let horizontalSpacing: CGFloat = 90
@@ -68,7 +68,7 @@ struct HostGameView: View {
                         .ignoresSafeArea()
                 
                 VStack {
-                    Text("Pareando com jogadores")
+                    Text("Pairing with players")
                         .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                         .padding(.top, 48)
                     

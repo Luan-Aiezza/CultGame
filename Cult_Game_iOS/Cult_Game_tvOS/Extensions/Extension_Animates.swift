@@ -7,7 +7,7 @@ extension GameStatusView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)
@@ -44,7 +44,7 @@ extension HowToPlayView1 {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateRain(in: scene)
             animateSmoke(in: scene)
             
@@ -76,7 +76,7 @@ extension HostGameView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateFireflies(in: scene)
             animateBonfire(in: scene)
             animateRain(in: scene)
@@ -110,7 +110,6 @@ extension HomeScreenView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
             animateFireflies(in: scene)
             animateFire(in: scene)
             animateRain(in: scene)
@@ -146,7 +145,7 @@ extension TvTransitionTextsView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)
@@ -181,7 +180,7 @@ extension GameRoundView {
         if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateBonfire(in: scene)
@@ -218,7 +217,6 @@ extension VictoryTvView {
         if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)
@@ -252,7 +250,7 @@ extension ResultView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)
@@ -288,7 +286,7 @@ extension DiscussionView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)
@@ -324,7 +322,7 @@ extension VotingView {
         if let scene = SKScene(fileNamed: "MyScene") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
-            //animateClouds(in: scene) // <- Animação das nuvens
+            animateClouds(in: scene) // <- Animação das nuvens
             animateTrees(in: scene)
             animateFireflies(in: scene)
             animateFire(in: scene)

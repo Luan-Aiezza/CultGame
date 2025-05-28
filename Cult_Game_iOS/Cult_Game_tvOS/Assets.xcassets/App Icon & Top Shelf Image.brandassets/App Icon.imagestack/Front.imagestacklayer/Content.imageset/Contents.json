@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Rectangle 12.png",
+      "filename" : "appIcon_AppleTV_Deck400x240.png",
       "idiom" : "tv",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon 16.png",
+      "filename" : "appIcon_AppleTV_Deck400x240x2.png",
       "idiom" : "tv",
       "scale" : "2x"
     }

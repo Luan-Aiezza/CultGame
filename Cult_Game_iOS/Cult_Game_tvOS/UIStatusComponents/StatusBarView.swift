@@ -43,6 +43,7 @@ struct StatusBarAnimatedView: View {
                         Text(title)
                             .font(.custom("Almendra-Regular", size: 24*tvResponse))
                             .frame(alignment: .leading)
+                            .colorInvert()
                             .opacity(0.5)
                     }
                     .padding(.leading, 42)
@@ -52,6 +53,7 @@ struct StatusBarAnimatedView: View {
 
             Text("\(value)/\(max)")
                 .font(.custom("Almendra-Regular", size: 24*tvResponse))
+                .colorInvert()
                 .frame(alignment: .center)
 
             Image("BarBorder")

@@ -10,7 +10,7 @@ extension GameStatusView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -31,7 +31,7 @@ extension HostGameView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -52,7 +52,7 @@ extension GameRoundView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -73,7 +73,7 @@ extension TvTransitionTextsView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -94,7 +94,7 @@ extension ResultView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -115,7 +115,7 @@ extension DiscussionView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -136,7 +136,7 @@ extension VotingView {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena
@@ -156,7 +156,7 @@ extension HowToPlayView1 {
             return
         }
 
-        smoke.position = CGPoint(x: scene.size.width/4 - scene.size.width, y: 100)
+        smoke.position = CGPoint(x: scene.size.width/6 - scene.size.width, y: 100)
         smoke.zPosition = 6 // atrás de tudo, como plano de fundo
 
         // Altera o alcance de emissão para preencher toda a altura da cena

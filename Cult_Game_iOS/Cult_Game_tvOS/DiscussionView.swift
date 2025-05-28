@@ -3,7 +3,7 @@ import SpriteKit
 import AVFoundation
 
 struct DiscussionView: View {
-    @StateObject var timerManager = GameTimerManager()
+    var timerManager = GameTimerManager()
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var showResultView = true
     let Audio = AudioManager.shared

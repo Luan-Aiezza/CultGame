@@ -23,7 +23,7 @@ enum GameOutcome: String, Codable {
 }/////////////////
 
 
-enum GamePhase: Codable {
+enum GamePhase: Codable, Equatable {
     case pairing
     case roleSelection
     case cardPlay

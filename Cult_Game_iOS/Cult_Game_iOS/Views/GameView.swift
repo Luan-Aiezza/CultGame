@@ -10,16 +10,13 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @State var visiblePhase: GamePhase = .pairing
     
     var body: some View {
         ZStack {
             
-            if vm.player.state == .inactive {
-                VStack {
-                    Text("você foi eliminado")
-                }
-            } else {
-                switch multiplayerManager.currentPhase {
+            
+                switch visiblePhase {
                 case .pairing:
                     WaitingView()
                 case .roleSelection:
@@ -35,8 +32,21 @@ struct GameView: View {
                 case.victory:
                     EliminationResultsView()
                 }
+            
+        }
+        .onReceive(multiplayerManager.$currentPhase) { newPhase in
+            // Impede que a phase visível vá para .discussion automaticamente
+            if vm.player.state == .inactive {
+                return
             }
-        }.onAppear {
+            if newPhase == .discussion {
+                // Mantenha a fase visível como está
+                print("Tentativa de ir para .discussion ignorada")
+            } else {
+                visiblePhase = newPhase
+            }
+        }
+        .onAppear {
             multiplayerManager.joinSession()
 
             NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in

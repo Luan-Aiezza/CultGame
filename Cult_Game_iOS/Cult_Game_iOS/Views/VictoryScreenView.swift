@@ -1,307 +1,284 @@
-//
-//  VictoryScreenView.swift
-//  Cult_Game_iOS
-//
-//  Created by Grecia Cristina on 20/05/25.
-//
+
 /// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
 /// BOTAO DE SAIR DA PARTIDA
 /// ANIMACAO MASCARA SAINDO
-/// ANIMACAO FOGUEIRA 
+/// ANIMACAO FOGUEIRA
 
 import SwiftUI
 import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
 
-struct GlowingCircleView: View {
-    let characterImageName: String
-
-    @State private var animateGlow = false
-    @State private var angle: Double = 0
-
-    let baseColor = Color(red: 0.282, green: 0.043, blue: 0.004) // #480B01
-
-    var body: some View {
-        ZStack {
-
-            Image(characterImageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 270, height: 300)
-                .offset(x: 0, y: 10)
-
-            Circle()
-                .stroke(
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            Color.red.opacity(0.4),
-                            Color.red.opacity(0.9),
-                            Color.red.opacity(0.4)
-                        ]),
-                        startPoint: animateGlow ? .leading : .trailing,
-                        endPoint: animateGlow ? .trailing : .leading
-                    ),
-                    lineWidth: 10
-                )
-                .frame(width: 300, height: 280)
-                .blur(radius: 4)
-                .opacity(0.8)
-                .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: animateGlow)
-
-            Circle()
-                .fill(Color.white.opacity(0.9))
-                .frame(width: 5, height: 9)
-                .offset(y: -150)
-                .blur(radius: 20)
-                .shadow(color: .yellow, radius: 6)
-                .rotationEffect(.degrees(angle))
-        }
-        .onAppear {
-            animateGlow = true
-            withAnimation(Animation.linear(duration: 9).repeatForever(autoreverses: false)) {
-                angle = 360
-            }
-        }
-    }
-}
-
-
-extension GameOutcome {
-    var isHereticVictory: Bool {
-        self == .hereticVictoryFollowers || self == .hereticVictoryBalance
-    }
-}
-
-
-
-struct VictoryScreenContent {
-    let title: String
-    let description: String
-    let backgroundImageName: String
-
-    
-    static func `for`(role: PlayerRole, outcome: GameOutcome) -> VictoryScreenContent {
-        switch (role, outcome) {
-            
-        case (.cultist, .cultistVictoryFollowers),
-            (.cultist, .cultistVictoryElimination):
-            return .init(
-                title: "The Cult Has Triumphed!",
-                description: "The flame and unity of the cult burned brighter.",
-                backgroundImageName: "CultistVictory"
-            )
-            
-        case (.heretic, .cultistVictoryFollowers),
-            (.heretic, .cultistVictoryElimination):
-            return .init(
-                title: "You Were Discovered!",
-                description: "Heresy whispered too much. The cult heard. Now, the veil of lies burns in flames.",
-                backgroundImageName: "CultistVictory"
-            )
-            
-        case (.heretic, .hereticVictoryFollowers),
-            (.heretic, .hereticVictoryBalance):
-            return .init(
-                title: "You Have Won!",
-                description: "You served heresy as if it were faith — and they drank it to the last drop.",
-                backgroundImageName: "HereticVictory"
-            )
-            
-        case (.cultist, .hereticVictoryFollowers),
-            (.cultist, .hereticVictoryBalance):
-            return .init(
-                title: "The Cult Was Defeated!",
-                description: "The heretic served heresy as if it were faith — and you drank it to the last drop.",
-                backgroundImageName: "HereticVictory"
-            )
-        }
-    }
-}
-
 struct VictoryScreenView: View {
-        let role: PlayerRole
-        let outcome: GameOutcome
-        @State private var navigateToWaiting = false
+    
+    let role: PlayerRole
+    let outcome: GameOutcome
+    @State private var navigateToWaiting = false
     @EnvironmentObject var viewModel: GameViewModel
-        let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
-        
-        var content: VictoryScreenContent {
-            VictoryScreenContent.for(role: role, outcome: outcome)
-        }
-        
-        var hereticImageName: String? {
-            // Verifica se a vitória foi dos hereges
-            guard outcome.isHereticVictory else { return nil }
-            
-            // Procura o jogador que é o herege
-            if let (peer, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
-                let character = model.character?.displayName
-                return "\(String(describing: character?.capitalized))H"
-            }
-            
-            return nil
-        }
-        
-        
-        var body: some View {
-
-            ZStack {
-                
-                Image(content.backgroundImageName)
-                                .resizable()
-                                .scaledToFill()
-                                .ignoresSafeArea()
-                
-               
-                
-                VStack(spacing: 20) {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            viewModel.resetGame()
-                            navigateToWaiting = true
-                        }) {
-                            Image("exit")
-                                .resizable()
-                                .frame(width: 65, height: 50)
-                                .foregroundColor(.white)
-                        }
-                        .padding(.trailing,5)
-                        .padding(.bottom, 24)
-                    }
-                    //Spacer()
-                    
-                    Text(content.title)
-                        .font(.custom("VinerHandITC", size: 50))
-                        .bold()
-                        .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                        .multilineTextAlignment(.center)
-                        
-                        .frame(width: 260, alignment: .center) // largura fixa
-                        .padding(.horizontal, 24)
-
-                    
-                    Text(content.description)
-                        .font(.custom("Almendra", size: 24))
-                        .foregroundColor({
-                            switch outcome {
-                            case .hereticVictoryFollowers, .hereticVictoryBalance:
-                                return hereticRed
-                            default:
-                                return Color(red: 1.0, green: 0.91, blue: 0.75)
-                            }
-                        }())
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(0.2)
-                        .frame(width: 312, alignment: .center)
-                        .padding(.horizontal, 32)
-
-                   // Spacer()
-//            
-//                    SpriteView(scene: scene)
-//                        .ignoresSafeArea(.all)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    // COLOCAR AQUI O FOGO
-                    
-                    
-                    
-                    
-                    
-
-                    if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
-
-                        ZStack {
-                            Image("CircleHeretic")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 300, height: 293)
-
-                            if let imageName = hereticImageName {
-                                GlowingCircleView(characterImageName: imageName)
-                            }
-
-                        }
-                    } else {
-                        Image("victory_image_cultist")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 200)
-                    }
-                    
-                    Spacer()
-                    NavigationLink(destination: WaitingForPlayersView().environment(viewModel), isActive: $navigateToWaiting) {
-                        EmptyView()
-                    }
-                    
-                }
-                .padding()
-            }
-            .onAppear {
-//                print("✅ isHereticVictory: \(outcome.isHereticVictory)")
-//                print("🧿 hereticImageName: \(hereticImageName ?? "NIL")")
-            }
-
-
-        }
+    let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
+    @State var isDisconnected = false
+    var content: VictoryScreenContent {
+        VictoryScreenContent.for(role: role, outcome: outcome)
     }
-
-//extension GameViewModel {
-//    static func previewModel() -> GameViewModel {
-//        let vm = GameViewModel()
-//        let peer = MCPeerID(displayName: "You")
-//        vm.multiplayerManager._setFakePeerID(peer)
-//        vm.multiplayerManager.connectedPeers = [peer]
-//        
-//        var me = PlayerModel()
-//        me.role = .heretic
-//        me.character = .fox
-//        
-//        vm.multiplayerManager.players[peer] = me
-//        vm.attPlayer(newPlayer: me) // Garante que o jogador local receba a info
-//        
-//        return vm
-//    }
-//}
-
-
-//#Preview("Vitória herege - herege") {
-//    VictoryScreenView(
-//        role: .heretic,
-//        outcome: .hereticVictoryFollowers,
-//        viewModel: GameViewModel.previewModel()
-//    )
-//}
     
-//
-//    #Preview("Vitória cultista - cultista") {
-//        VictoryScreenView(
-//            role: .cultist,
-//            outcome: .cultistVictoryElimination,
-//            viewModel: GameViewModel.previewModel()
-//        )
-//    }
-    
-    //#Preview("Vitória cultista - herege") {
-    //    VictoryScreenView(
-    //        role: .heretic,
-    //        outcome: .cultistVictory,
-    //        viewModel: GameViewModel.previewModel()
-    //    )
-    //}
-    //#Preview("Vitória herege- cultista") {
-    //    VictoryScreenView(
-    //        role: .cultist,
-    //        outcome: .hereticVictory,
-    //        viewModel: GameViewModel.previewModel()
-    //    )
-    //}
+    var hereticImageName: String? {
+        // Verifica se a vitória foi dos hereges
+        guard outcome.isHereticVictory else { return nil }
+        
+        // Procura o jogador que é o herege
+        if let (_, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
+            let character = model.character
+            return "\(character?.rawValue.capitalized)H"
+        }
 
+        return nil
+    }
+    var hereticDefeatImageName: String? {
+        guard outcome.isCultistVictory else { return nil }
+        
+        if let model = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic })?.value {
+            return "Heretic\(model.character?.rawValue.capitalized)DiedIPHONE"
+        }
+        
+        return nil
+    }
+            
+            var body: some View {
+                
+                
+                ZStack {
+                    
+                    SpriteView(scene: scene)
+                        .ignoresSafeArea()
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+//                                multiplayerManager.disconnect()
+//                                isDisconnected = true
+                            }) {
+                                Image("exit")
+                                    .resizable()
+                                    .frame(width: 48, height: 35)
+                                    .foregroundColor(.white)
+                            }
+                            .padding(.trailing, 17.4)
+                        }
+                        .padding(.top, 16)
+                        
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    VStack(spacing: 40) {
+                        
+                        Text(content.title)
+                            .font(.custom("VinerHandITC", size: 45))
+                            .bold()
+                            .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                            .multilineTextAlignment(.center)
+                        
+                            .frame(width: 260, alignment: .center) // largura fixa
+                            .padding(.horizontal, 24)
+                            .padding(.top, 80)
+                        
+                        
+                        Text(content.description)
+                            .font(.custom("Almendra-Regular", size: 24))
+                            .foregroundColor({
+                                switch outcome {
+                                case .hereticVictoryFollowers, .hereticVictoryBalance:
+                                    return hereticRed
+                                default:
+                                    return Color(red: 211/255, green: 180/255, blue: 125/255, opacity: 1)
+                                }
+                            }())
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(0.2)
+                            .frame(width: 312, alignment: .center)
+                            .padding(.horizontal, 32)
+                        
+                        
+                        if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
+                            
+                            ZStack {
+                                Image("CircleHeretic")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 300, height: 293)
+                                
+                                if let imageName = hereticImageName {
+                                    GlowingCircleView(characterImageName: imageName)
+                                }
+                                
+                            }
+                        } else {
+                            
+                            if let defeatImage = hereticDefeatImageName {
+                                HereticDefeatImageViewiphone(imageName: defeatImage)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        
+                    }.navigationDestination(isPresented: $isDisconnected) {
+                        PlayView()
+                    }
+                    .padding()
+                }
+                .onAppear {
+                }
+            }
+        }
+        
+struct HereticDefeatImageViewiphone: View {
+    let imageName: String
+    
+    @State private var darkness: Double = 0.0
+    @State private var fadeOut: Double = 1.0
+    
+    var body: some View {
+        Image(imageName)
+            .resizable()
+            .scaledToFit()
+            .offset(x: -8, y: -120)
+            .frame(width: 115, height: 130)
+            .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
+            .opacity(fadeOut) // fade out da imagem
+            .onAppear {
+                withAnimation(.easeIn(duration: 8)) {
+                    darkness = 1.0 // totalmente preto
+                }
+                withAnimation(.easeOut(duration: 15).delay(2)) {
+                    fadeOut = 0.0 // desaparece
+                }
+            }
+    }
+}
+extension GameViewModel {
+    static func previewModel() -> GameViewModel {
+        let vm = GameViewModel()
+        let peer = MCPeerID(displayName: "You")
+        vm.multiplayerManager.setFakePeerID(peer)
+        vm.multiplayerManager.connectedPeers = [peer]
+
+        var me = PlayerModel()
+        me.role = .heretic
+        me.character = .deer
+
+        vm.multiplayerManager.players[peer.displayName] = me
+        vm.attPlayer(newPlayer: me)
+
+        // ✅ Adiciona o herege
+        let hereticPeer = MCPeerID(displayName: "Herege")
+        let heretic = PlayerModel(
+            id: hereticPeer.displayName,
+            role: .heretic,
+            state: .active,
+            character: .fox
+        )
+        vm.multiplayerManager.players[hereticPeer.displayName] = heretic
+        vm.multiplayerManager.connectedPeers.append(hereticPeer)
+
+        return vm
+    }
+}
+struct DefeatedImageView: View {
+    let imageName: String
+    
+    @State private var darkness: Double = 0.0
+    @State private var fadeOut: Double = 1.0
+    
+    var body: some View {
+        Image(imageName)
+            .resizable()
+            .scaledToFit()
+            .offset(x: -8, y: -120)
+            .frame(width: 115, height: 130)
+            .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
+            .opacity(fadeOut) // fade out da imagem
+            .onAppear {
+                withAnimation(.easeIn(duration: 8)) {
+                    darkness = 1.0 // totalmente preto
+                }
+                withAnimation(.easeOut(duration: 15).delay(2)) {
+                    fadeOut = 0.0 // desaparece
+                }
+            }
+    }
+}
+
+#if DEBUG
+        
+        @MainActor
+        struct VictoryScreenView_Previews: PreviewProvider {
+            static var previews: some View {
+                Group {
+                    // Heretic venceu — jogador é herege
+                    VictoryScreenView(
+                        role: .heretic,
+                        outcome: .hereticVictoryFollowers
+                    )
+                    .environmentObject(makePreviewViewModel(role: .heretic, outcome: .hereticVictoryFollowers))
+                    .previewDisplayName("Heretic Victory – Heretic View")
+                    
+                    // Heretic venceu — jogador é cultista
+                    VictoryScreenView(
+                        role: .cultist,
+                        outcome: .hereticVictoryBalance
+                    )
+                    .environmentObject(makePreviewViewModel(role: .cultist, outcome: .hereticVictoryBalance))
+                    .previewDisplayName("Heretic Victory – Cultist View")
+                    
+                    // Cultist venceu — jogador é cultista
+                    VictoryScreenView(
+                        role: .cultist,
+                        outcome: .cultistVictoryFollowers
+                    )
+                    .environmentObject(makePreviewViewModel(role: .cultist, outcome: .cultistVictoryFollowers))
+                    .previewDisplayName("Cultist Victory – Cultist View")
+                    
+                    // Cultist venceu — jogador é herege
+                    VictoryScreenView(
+                        role: .heretic,
+                        outcome: .cultistVictoryElimination
+                    )
+                    .environmentObject(makePreviewViewModel(role: .heretic, outcome: .cultistVictoryElimination))
+                    .previewDisplayName("Cultist Victory – Heretic View")
+                }
+            }
+            
+            static func makePreviewViewModel(role: PlayerRole, outcome: GameOutcome) -> GameViewModel {
+                let vm = GameViewModel()
+                let peer = MCPeerID(displayName: "You")
+                vm.multiplayerManager.setFakePeerID(peer)
+                vm.multiplayerManager.connectedPeers = [peer]
+
+                var me = PlayerModel()
+                me.role = role
+                me.character = .deer
+                vm.multiplayerManager.players[peer.displayName] = me
+                vm.attPlayer(newPlayer: me)
+
+                if outcome.isHereticVictory {
+                    let hereticPeer = MCPeerID(displayName: "Herege")
+                    let heretic = PlayerModel(
+                        id: hereticPeer.displayName,
+                        role: .heretic,
+                        state: .active,
+                        character: .fox
+                    )
+                    vm.multiplayerManager.players[hereticPeer.displayName] = heretic
+                    vm.multiplayerManager.connectedPeers.append(hereticPeer)
+                }
+
+                return vm
+            }
+
+        }
+        
+#endif

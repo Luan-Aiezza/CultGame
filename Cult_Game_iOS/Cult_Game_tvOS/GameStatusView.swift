@@ -59,6 +59,10 @@ struct GameStatusView: View {
                 }
                 .padding(.bottom, -40)
             }
+        }
+        .onDisappear{
+            AudioManager.shared.stopBackgroundMusic()
+
         }.onAppear {
             timer.start(duration: 30) //180
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
@@ -66,10 +70,11 @@ struct GameStatusView: View {
     }
     var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(Array(multiplayerManager.players), id: \.key) { (key, player) in
-                Image("\(String(describing: player.character?.displayName.lowercased()))")
-                    .resizable()
-                    .frame(width: 36*tvResponse, height: 36*tvResponse)
+            ForEach(multiplayerManager.players.values.filter { $0.state == .active }, id: \.id) { player in
+                let character = player.character?.displayName.capitalized
+                    Image("\(character)")
+                        .resizable()
+                        .frame(width: 36 * tvResponse, height: 36 * tvResponse)
             }
 
 

@@ -5,16 +5,16 @@ import AVFoundation
 struct TvTransitionTextsView: View {
     
     enum SequenceType {
-        case introSequence, middleSequence, endSequence
+        case introSequence, endSequence
     }
 
     let type: SequenceType
     let isFirstRound: Bool
-//    let onComplete: () -> Void
+    let onComplete: () -> Void
+   //let onComplete: any View
     
     @State private var currentStep = 0
     @State private var selectedText: String = ""
-    @ObservedObject var vm: GameViewModel = GameViewModel()
     
     private var customTextColor: Color {
         Color(red: 227 / 255, green: 206 / 255, blue: 167 / 255)
@@ -63,9 +63,21 @@ struct TvTransitionTextsView: View {
                 .ignoresSafeArea(.all)
             
             // Radial gradient overlay
-            Color.black
-                .opacity(0.8)
+            Rectangle()
+                .fill(
+                    RadialGradient(
+                        gradient: Gradient(stops: [
+                            .init(color: Color.black.opacity(0.7), location: 0.107),
+                            .init(color: Color.black.opacity(0.56), location: 0.6394),
+                            .init(color: Color.black.opacity(0.413), location: 1.0)
+                        ]),
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 600
+                    )
+                )
                 .ignoresSafeArea()
+            
             // Step-specific content
             contentForStep(currentStep)
         }
@@ -92,12 +104,13 @@ struct TvTransitionTextsView: View {
                 centeredTextWithImage(text: "Distributing cards", image: "DeckIcon")
             default:
                 EmptyView()
+                //GameStatusView()
             }
             
-        case .middleSequence:
-            switch step{
+        case .endSequence:
+            switch step {
             case 0:
-                VStack(spacing: 100) {
+                VStack(spacing: 12) {
                     centeredText("In the darkness of the last night, the other cult members acted — but what did they do?")
                     Text("Time to discuss the cult's hidden choices")
                         .font(.custom("Almendra-Regular", size: 35))
@@ -106,19 +119,13 @@ struct TvTransitionTextsView: View {
                         .padding()
                 }
                 .transition(.opacity)
-            default:
-                VotingView()
-                    .environment(vm)
-            }
-            
-        case .endSequence:
-            switch step {
-            case 0:
-                centeredText(selectedText)
             case 1:
+                centeredText(selectedText)
+            case 2:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
                 EmptyView()
+                //VotingView()
             }
         }
     }
@@ -153,7 +160,7 @@ struct TvTransitionTextsView: View {
                 .multilineTextAlignment(.center)
             Image(image)
                 .resizable()
-                .frame(width: 399, height: 399)
+                .frame(width: 160, height: 271)
         }
         .transition(.opacity)
     }
@@ -165,10 +172,9 @@ struct TvTransitionTextsView: View {
             }
             if (type == .introSequence && currentStep < 3) || (type == .endSequence && currentStep < 2) {
                 advanceStep(after: 5)
-            }
-//            else {
-//                onComplete()
-//            }
+            } else {///////
+                onComplete()///
+            }///////
         }
     }
 }

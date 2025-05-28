@@ -65,7 +65,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				ViewModels/PlayCardViewModel.swift,
 				Views/Components/PlayerElimView.swift,
 				Views/WaitingForPlayersView.swift,
 			);

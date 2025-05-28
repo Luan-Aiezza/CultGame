@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "iniciar_habilitado.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

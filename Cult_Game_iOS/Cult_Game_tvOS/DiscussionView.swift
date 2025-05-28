@@ -72,7 +72,7 @@ struct DiscussionView: View {
             
             timerManager.start(duration: 10)
             
-            Audio.playBackgroundMusic(named: "OST")
+            Audio.playBackgroundMusic(named: "Background_Elimination")
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                 withAnimation {
                     showResultView = false

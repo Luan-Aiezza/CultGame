@@ -61,7 +61,7 @@ struct GameStatusView: View {
             }
         }.onAppear {
             timer.start(duration: 20)
-            AudioManager.shared.playBackgroundMusic(named: "OST")
+            AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }
     var playerIconsView: some View {

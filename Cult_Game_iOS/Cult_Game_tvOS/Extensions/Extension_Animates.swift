@@ -111,7 +111,7 @@ extension HomeScreenView {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
             animateFireflies(in: scene)
-            animateFire(in: scene)
+            animateBonfire(in: scene)
             animateRain(in: scene)
             animateSmoke(in: scene)
             

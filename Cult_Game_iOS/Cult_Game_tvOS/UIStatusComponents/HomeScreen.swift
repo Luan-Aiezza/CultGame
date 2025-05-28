@@ -20,11 +20,21 @@ struct HomeScreenView: View {
             ZStack {
                 SpriteView(scene: scene)
                     .ignoresSafeArea()
+                
+                // Camada de gradiente radial para escurecer a tela
+                RadialGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.2), Color.black]),
+                    center: .center,
+                    startRadius: 10,
+                    endRadius: 800
+                )
+                .ignoresSafeArea()
 
                 VStack(spacing: 40) {
-                    Text("logo")
-                        .font(Font.custom("VinerHandITC", size: 50))
-                        .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+                    Image("Logo_1")
+                        .resizable()
+                        .frame(width: 1203, height: 233)
+                    Spacer()
 
                     // Botão "Parear"
                     NavigationLink(destination: HostGameView()) {
@@ -45,6 +55,8 @@ struct HomeScreenView: View {
                     .focused($focusedButton, equals: .howToPlay)
                 }
             }
+        }.onAppear {
+            AudioManager.shared.playBackgroundMusic(named: "Intro_Game_OST")
         }
     }
 

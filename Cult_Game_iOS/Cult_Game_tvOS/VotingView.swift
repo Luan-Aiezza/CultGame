@@ -61,7 +61,7 @@ struct VotingView: View {
             }
         }.onAppear {
             timer.start(duration: 10)
-            AudioManager.shared.playBackgroundMusic(named: "OST")
+            AudioManager.shared.playBackgroundMusic(named: "Background_Elimination")
         }
     }
     var playerIconsView: some View {

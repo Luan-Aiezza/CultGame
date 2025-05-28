@@ -23,12 +23,12 @@ struct HomeScreenView: View {
 
                     }.buttonStyle(.borderless)
                     
-                    NavigationLink(destination: HowToPlayView()) {
-                            Image("howToPlayButton")
-                                //.resizable()
-                                .frame(width: 100, height: 100)
-
-                    }.buttonStyle(.borderless)
+//                    NavigationLink(destination: HowToPlayView()) {
+//                            Image("howToPlayButton")
+//                                //.resizable()
+//                                .frame(width: 100, height: 100)
+//
+//                    }.buttonStyle(.borderless)
                 }
             }
         }

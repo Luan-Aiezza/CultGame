@@ -141,7 +141,7 @@ struct HostGameView: View {
     func startGame() {
         print(viewModel.multiplayerManager.players)
         if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
-            errorMessage = "You need to connect between 1 and 7 players"
+            errorMessage = "You need to connect between 5 and 7 players"
             return
         }
         
@@ -185,20 +185,6 @@ struct HostGameView: View {
         }
     }
     
-}
-
-// MARK: - How To Play (Placeholder)
-struct HowToPlayView: View {
-    var body: some View {
-        ZStack {
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-            
-            Text("Aqui vai o tutorial de como jogar.")
-                .font(.title)
-                .foregroundColor(.white)
-        }
-    }
 }
 
 // MARK: - Preview

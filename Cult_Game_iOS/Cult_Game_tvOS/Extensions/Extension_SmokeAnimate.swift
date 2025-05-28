@@ -76,7 +76,7 @@ extension HostGameView {
         scene.addChild(emitter2)
     }
 }
-extension HowToPlayView {
+extension HowToPlayView1 {
     
     func animateSmoke(in scene: SKScene) {
         
@@ -179,4 +179,3 @@ extension VotingView {
         scene.addChild(emitter2)
     }
 }
-

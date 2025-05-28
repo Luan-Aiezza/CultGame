@@ -49,7 +49,7 @@ extension HostGameView {
         
     }
 }
-extension HowToPlayView {
+extension HowToPlayView1 {
     
     func animateRain(in scene: SKScene) {
         

@@ -27,7 +27,7 @@ struct HomeScreenView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: HostGameView()) {
+                    NavigationLink(destination: GameView()) {
                         Image("pairButton")
                             //.resizable()
                             .frame(width: 100, height: 100)

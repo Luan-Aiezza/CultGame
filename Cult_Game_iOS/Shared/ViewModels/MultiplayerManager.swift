@@ -240,9 +240,9 @@ extension MultiplayerManager: MCSessionDelegate {
             case .connected:
 //                guard peerID != self.myPeerID else { return } // <- impede adicionar a si mesmo
                 
-                if !self.connectedPeers.contains(peerID) {
+//                if !self.connectedPeers.contains(peerID) {
                     self.connectedPeers.append(peerID)
-                }
+//                }
                 
                 if peerID.displayName.contains("Apple TV") {
                     return

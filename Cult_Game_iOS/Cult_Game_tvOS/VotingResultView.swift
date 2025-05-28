@@ -60,7 +60,7 @@ struct VotingResultView: View {
         }
         .onAppear {
             gameViewModel.evaluateVotes()
-            Audio.playBackgroundMusic(named: "Background_Elimination")
+            Audio.playBackgroundMusic(named: "OST")
             timerManager.start(duration: 20)
         }
         .padding()

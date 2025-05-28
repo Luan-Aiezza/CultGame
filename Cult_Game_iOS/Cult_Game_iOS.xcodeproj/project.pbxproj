@@ -25,6 +25,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
@@ -44,6 +45,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Extensions/GameViewModel+Cards.swift",
+				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
 				"Extensions/GameViewModel+Phase.swift",
 				"Extensions/GameViewModel+Timer.swift",
@@ -414,7 +416,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 9F6L7TWMC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
@@ -451,7 +453,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 9F6L7TWMC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
@@ -488,7 +490,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 9F6L7TWMC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
@@ -519,7 +521,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cult_Game_tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = ML6SRSMNS9;
+				DEVELOPMENT_TEAM = 9F6L7TWMC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";

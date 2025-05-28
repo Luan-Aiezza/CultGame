@@ -179,3 +179,4 @@ extension VotingView {
         scene.addChild(emitter2)
     }
 }
+

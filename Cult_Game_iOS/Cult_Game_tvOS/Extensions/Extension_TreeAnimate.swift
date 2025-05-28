@@ -301,7 +301,7 @@ func applyWindEffect(to tree: SKSpriteNode) {
     let delay = Double.random(in: 0.0...1.5)
     tree.run(SKAction.sequence([.wait(forDuration: delay), loop]))
 }
-extension HowToPlayView1 {
+extension HowToPlayView1 {//aqui
     
     // MARK: - Animação de árvores
     func animateTrees(in scene: SKScene) {

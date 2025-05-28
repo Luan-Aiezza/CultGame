@@ -9,13 +9,14 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @EnvironmentObject var vm: GameViewModel
+    @ObservedObject var vm: GameViewModel = GameViewModel()
     
     var body: some View {
         ZStack {
             switch multiplayerManager.currentPhase {
             case .pairing:
                 HostGameView()
+                    .environmentObject(vm)
             case .roleSelection:
                 StoryView()
             case .cardPlay:
@@ -26,6 +27,7 @@ struct GameView: View {
                 VotingView()
             case .eliminationResults:
                 VotingResultView()
+                    .environmentObject(vm)
             case .victory(_):
                 if let outcome = vm.gameOutcome {
                     VictoryTvView(outcome: outcome)

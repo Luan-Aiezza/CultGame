@@ -7,18 +7,12 @@ struct EliminationView: View {
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+    @State private var showFollowTvView = false
     var myCharacter: Character? {
         let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
         let character = viewModel.multiplayerManager.players.first {
             $0.key == myDisplayName
         }?.value.character
-//        
-//        print("Meu personagem atual: \(String(describing: character))")
-//        print("Meu peer \(viewModel.multiplayerManager.myPeerID)")
-//        print("Meu display Name \(viewModel.multiplayerManager.myPeerID)")
-//        
-//        print(viewModel.multiplayerManager.players)
-//        print(viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName] ?? "dad" )
         return character
     }
 
@@ -117,6 +111,7 @@ struct EliminationView: View {
                         if (selectedPlayerID != nil) {
                             voteConfirmed = true
                             viewModel.addVote(to: selectedPlayerID ?? " ")
+                            showFollowTvView = true
                         }
                         
                         //TODO: Adicionar tela da Mari
@@ -139,6 +134,11 @@ struct EliminationView: View {
                 .frame(maxWidth: .infinity)
 
                 .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
+                if showFollowTvView {
+                    FollowTvView()
+                        .transition(.opacity)
+                        .zIndex(5)
+                }
             }
         }
     }

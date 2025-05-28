@@ -142,24 +142,6 @@ class GameViewModel: ObservableObject, Observable {
         print("🏁 Fim de jogo — resultado: \(outcome)")
     }
     
-    // MARK: - Recebe personagem sorteado
-//    @objc func handleCharacterAssignment(_ notification: Notification) {
-//        guard
-//            let userInfo = notification.userInfo,
-//            let peerID = userInfo["peerID"] as? MCPeerID,
-//            let character = userInfo["character"] as? Character
-//        else { return }
-//        
-//        DispatchQueue.main.async {
-//            self.assignedCharacters[peerID] = character
-//            
-//            //Se for o próprio jogador, atualiza também localmente
-//            if peerID == self.peerID {
-//                self.player.character = character
-//            }
-//        }
-//    }
-    
     // MARK: - Verificação de vitória
     
     

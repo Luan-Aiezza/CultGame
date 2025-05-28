@@ -37,6 +37,8 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     @State private var showMurderView = false
+    @State private var showFollowTvView = false
+    @State private var cardsBlocked = false
     
 
     @ViewBuilder
@@ -132,6 +134,7 @@ struct PlayCardView: View {
                             cards: $hand,
                             skippedRound: $skippedRound
                         )
+                        .disabled(cardsBlocked)
                     }
                     
                     HStack(spacing: 50) {
@@ -179,7 +182,28 @@ struct PlayCardView: View {
                 .fullScreenCover(isPresented: $showMurderView) {
                     MurderView()
                 }
+                
+                if showFollowTvView {
+                    FollowTvView()
+                        .transition(.opacity)
+                        .zIndex(5)
+                }
 
+            }
+        }
+        .onReceive(vm.multiplayerManager.$currentPhase) { newPhase in
+            if newPhase == .discussion {
+                showFollowTvView = true
+                cardsBlocked = true // já bloqueia imediatamente
+                showBlockMessage = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    withAnimation {
+                        skippedRound = true
+                        showFollowTvView = false
+                        showBlockMessage = false
+                        stringShow = "Cartas bloqueadas, hora de discutir!"
+                    }
+                }
             }
         }
         .onAppear {

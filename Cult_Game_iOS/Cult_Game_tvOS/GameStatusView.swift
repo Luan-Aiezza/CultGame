@@ -66,11 +66,13 @@ struct GameStatusView: View {
     }
     var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
-                Image("FoxIcon")//trocar pelo icone do jogador
+            ForEach(Array(multiplayerManager.players), id: \.key) { (key, player) in
+                Image("\(String(describing: player.character?.displayName.lowercased()))")
                     .resizable()
                     .frame(width: 36*tvResponse, height: 36*tvResponse)
             }
+
+
         }
         .background(Color(red: 0.16, green: 0.15, blue: 0.13))
         .cornerRadius(16)

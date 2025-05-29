@@ -10,7 +10,7 @@ struct TvTransitionTextsView: View {
 
     let type: SequenceType
     let isFirstRound: Bool
-    let onComplete: () -> Void
+//    let onComplete: () -> Void
     
     @State private var currentStep = 0
     @State private var selectedText: String = ""
@@ -62,21 +62,9 @@ struct TvTransitionTextsView: View {
                 .ignoresSafeArea(.all)
             
             // Radial gradient overlay
-            Rectangle()
-                .fill(
-                    RadialGradient(
-                        gradient: Gradient(stops: [
-                            .init(color: Color.black.opacity(0.7), location: 0.107),
-                            .init(color: Color.black.opacity(0.56), location: 0.6394),
-                            .init(color: Color.black.opacity(0.413), location: 1.0)
-                        ]),
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 600
-                    )
-                )
+            Color.black
+                .opacity(0.8)
                 .ignoresSafeArea()
-            
             // Step-specific content
             contentForStep(currentStep)
         }
@@ -157,7 +145,7 @@ struct TvTransitionTextsView: View {
                 .multilineTextAlignment(.center)
             Image(image)
                 .resizable()
-                .frame(width: 160, height: 271)
+                .frame(width: 399, height: 399)
         }
         .transition(.opacity)
     }
@@ -169,9 +157,10 @@ struct TvTransitionTextsView: View {
             }
             if (type == .introSequence && currentStep < 3) || (type == .endSequence && currentStep < 2) {
                 advanceStep(after: 5)
-            } else {
-                onComplete()
             }
+//            else {
+//                onComplete()
+//            }
         }
     }
 }

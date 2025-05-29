@@ -16,10 +16,7 @@ struct StoryView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    Text("A new day starts on the village and you are...")
-                        .font(.custom("Almendra-Regular", size: 35))
-                        .foregroundStyle(Color.title)
-                        .multilineTextAlignment(.center)
+                    TvTransitionTextsView(type: .introSequence, isFirstRound: true)
                 }
                 
                 Color.black
@@ -28,8 +25,6 @@ struct StoryView: View {
                     .animation(.easeIn(duration: 2), value: fadeInOut)
                     
             } .onAppear {
-                
-                print("esou no story view")
                 
                 fadeInOut =  true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {

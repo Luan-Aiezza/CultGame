@@ -19,12 +19,16 @@ struct GameView: View {
                     .environmentObject(vm)
             case .roleSelection:
                 StoryView()
+                    .environmentObject(vm)
             case .cardPlay:
                 GameStatusView()
+                    .environmentObject(vm)
             case .discussion:
                 DiscussionView()
+                    .environmentObject(vm)
             case .elimination:
                 VotingView()
+                    .environmentObject(vm)
             case .eliminationResults:
                 VotingResultView()
                     .environmentObject(vm)

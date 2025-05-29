@@ -9,6 +9,7 @@ struct HomeScreenView: View {
     }
 
     @FocusState private var focusedButton: FocusedButton?
+    @EnvironmentObject var vm: GameViewModel
     
     // Detecta idioma do sistema
     var isPortuguese: Bool {
@@ -37,7 +38,7 @@ struct HomeScreenView: View {
                     Spacer()
 
                     // Botão "Parear"
-                    NavigationLink(destination: HostGameView()) {
+                    NavigationLink(destination: GameView().environmentObject(vm)) {
                         Image(getImageName(button: .pair))
                             .resizable()
                             .frame(width: 400, height: 100)

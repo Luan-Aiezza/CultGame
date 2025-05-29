@@ -60,7 +60,7 @@ struct VotingView: View {
                 .padding()
             }
         }.onAppear {
-            timer.start(duration: 10)
+            timer.start(duration: 60)
             AudioManager.shared.playBackgroundMusic(named: "Background_Elimination")
         }
     }

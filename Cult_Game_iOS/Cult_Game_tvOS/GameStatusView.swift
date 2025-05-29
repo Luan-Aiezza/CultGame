@@ -60,7 +60,7 @@ struct GameStatusView: View {
                 .padding()
             }
         }.onAppear {
-            timer.start(duration: 20)
+            timer.start(duration: 180)
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

@@ -70,7 +70,7 @@ struct DiscussionView: View {
             
             print("estou no discussion view")
             
-            timerManager.start(duration: 10)
+            timerManager.start(duration: 180)
             
             Audio.playBackgroundMusic(named: "Background_Elimination")
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {

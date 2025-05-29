@@ -162,7 +162,7 @@ extension GameViewModel {
     static func previewModel() -> GameViewModel {
         let vm = GameViewModel()
         let peer = MCPeerID(displayName: "You")
-        vm.multiplayerManager.setFakePeerID(peer)
+        //vm.multiplayerManager.setFakePeerID()
         vm.multiplayerManager.connectedPeers = [peer]
 
         var me = PlayerModel()
@@ -255,7 +255,7 @@ struct DefeatedImageView: View {
             static func makePreviewViewModel(role: PlayerRole, outcome: GameOutcome) -> GameViewModel {
                 let vm = GameViewModel()
                 let peer = MCPeerID(displayName: "You")
-                vm.multiplayerManager.setFakePeerID(peer)
+                //vm.multiplayerManager.setFakePeerID(peer)
                 vm.multiplayerManager.connectedPeers = [peer]
 
                 var me = PlayerModel()

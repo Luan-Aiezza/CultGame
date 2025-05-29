@@ -143,7 +143,7 @@ extension GameViewModel {
 
         // ✅ Define o peer fake no manager
         let testPeer = MCPeerID(displayName: peerID)
-        vm.multiplayerManager.setFakePeerID(testPeer)
+        //vm.multiplayerManager.setFakePeerID(testPeer)
 
         // ✅ Cria e registra o player eliminado
         let player = PlayerModel(
@@ -169,7 +169,7 @@ func previewEliminated() -> GameViewModel {
     let peerID = "JogadorTest"
 
     let testPeer = MCPeerID(displayName: peerID)
-    vm.multiplayerManager.setFakePeerID(testPeer)
+    //vm.multiplayerManager.setFakePeerID(testPeer)
 
     let player = PlayerModel(
         id: peerID,

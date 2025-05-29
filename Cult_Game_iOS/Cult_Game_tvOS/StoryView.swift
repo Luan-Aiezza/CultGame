@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct StoryView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
@@ -15,6 +16,13 @@ struct StoryView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
+                    .overlay {
+                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                    }
+
+                
                 VStack {
                     TvTransitionTextsView(type: .introSequence, isFirstRound: true)
                 }

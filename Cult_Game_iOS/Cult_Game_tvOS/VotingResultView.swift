@@ -33,7 +33,7 @@ struct VotingResultView: View {
                 }
 
                 // Caso de jogador eliminado
-                else if let killedName = multiplayerManager.voted {
+                else if let killedName = multiplayerManager.voted?.character?.displayName {
 
                     Text("\(killedName) foi eliminado!")
                         .font(.custom("VinerHandITC", size: 60))
@@ -45,7 +45,7 @@ struct VotingResultView: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
 
-                    Image("fox")
+                    Image("\(killedName)")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 200)
@@ -61,6 +61,7 @@ struct VotingResultView: View {
         .onAppear {
             gameViewModel.evaluateVotes()
             Audio.playBackgroundMusic(named: "Background_Elimination")
+            timerManager.start(duration: 20)
         }
         .padding()
     }

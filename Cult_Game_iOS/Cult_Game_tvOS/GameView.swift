@@ -35,8 +35,9 @@ struct GameView: View {
             case .victory(_):
                 if let outcome = vm.gameOutcome {
                     VictoryTvView(outcome: outcome)
+                        .environmentObject(vm)
                 }
             }
-        }// on appear se precisar
+        }
     }
 }

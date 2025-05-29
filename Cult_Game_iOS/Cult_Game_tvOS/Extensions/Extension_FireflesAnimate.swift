@@ -158,7 +158,8 @@ extension VotingView {
     }
     
 }
-extension HowToPlayView1 {//aqui
+
+extension StoryView {
     
     func animateFireflies(in scene: SKScene) {
         guard let emitter = SKEmitterNode(fileNamed: "Fireflies.sks") else {

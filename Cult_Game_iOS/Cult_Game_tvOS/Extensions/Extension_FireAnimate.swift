@@ -234,8 +234,9 @@ extension VotingResultView {
         scene.addChild(emitter2)
     }
 }
-extension HowToPlayView1 {//aqui
 
+
+extension StoryView {
     
     func animateFire(in scene: SKScene) {
         

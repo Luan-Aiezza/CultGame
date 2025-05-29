@@ -3,6 +3,8 @@ import MultipeerConnectivity
 import SpriteKit
 
 struct HomeScreenView: View {
+    @EnvironmentObject var vm: GameViewModel
+    
     enum FocusedButton: Hashable {
         case pair
         case howToPlay

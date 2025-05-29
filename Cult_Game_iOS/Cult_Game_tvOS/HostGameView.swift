@@ -153,7 +153,7 @@ struct HostGameView: View {
                 }
             }
             .onChange(of: multiplayerManager.players.count) { count in
-                canPlay = count <= 2
+                canPlay = count >= 0
             }
             .onAppear {
                 multiplayerManager.startHosting()
@@ -162,7 +162,7 @@ struct HostGameView: View {
     }
     
     func startGame() {
-        if multiplayerManager.connectedPeers.count < 0 || multiplayerManager.connectedPeers.count > 7 {
+        if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
             showBlockMessage = true
             return
         }
@@ -171,6 +171,7 @@ struct HostGameView: View {
         gameStarted = true
         errorMessage = nil
         viewModel.advancePhaseAfterTimer()
+        print(multiplayerManager.currentPhase)
     }
     
     func assignRoles() {
@@ -192,6 +193,18 @@ struct HostGameView: View {
             multiplayerManager.sendRole(role, to: peer)
         }
     }
+    
+    private var timerView: some View {
+        VStack {
+            Text("Phase: \(multiplayerManager.currentPhase)")
+            Text("Time left: \(viewModel.timeRemaining)s")
+                .font(.headline)
+                .padding(8)
+                .background(Color.yellow.opacity(0.3))
+                .cornerRadius(8)
+        }
+    }
+    
 }
 
 // MARK: - Preview

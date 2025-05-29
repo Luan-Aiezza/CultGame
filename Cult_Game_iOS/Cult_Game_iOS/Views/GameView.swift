@@ -1,9 +1,6 @@
-//
 //  GameView.swift
 //  Cult_Game_iOS
-//
 //  Created by Jessica Rodrigues on 22/05/25.
-//
 
 import SwiftUI
 
@@ -14,44 +11,39 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-            
-            
                 switch visiblePhase {
                 case .pairing:
                     WaitingView()
-                        .environmentObject(vm)
                 case .roleSelection:
                     StoryView()
-                        .environmentObject(vm)
                 case .cardPlay:
                     PlayCardView()
-                        .environmentObject(vm)
                 case .discussion:
                     DiscussionView()
-                        .environmentObject(vm)
                 case .elimination:
                     EliminationView()
-                        .environmentObject(vm)
                 case .eliminationResults:
                     EliminationResultsView()
-                        .environmentObject(vm)
                 case.victory:
                     EliminationResultsView()
-                        .environmentObject(vm)
                 }
+            
         }
-//        .onReceive(multiplayerManager.$currentPhase) { newPhase in
-//            // Impede que a phase visível vá para .discussion automaticamente
-//            if vm.player.state == .inactive {
-//                return
-//            }
-//            if newPhase == .discussion {
-//                // Mantenha a fase visível como está
-//                print("Tentativa de ir para .discussion ignorada")
-//            } else {
-//                visiblePhase = newPhase
-//            }
-//        }
+        .onReceive(multiplayerManager.$currentPhase) { newPhase in
+            // Impede que a phase visível vá para .discussion automaticamente
+            if let player = vm.players[vm.peerID] {
+                if player.state == .inactive {
+                    print("\(vm.player.id) - \(vm.player.state) ELIMINADOOO!!")
+                    return
+                }
+                if newPhase == .discussion {
+                    // Mantenha a fase visível como está
+                    print("Tentativa de ir para .discussion ignorada")
+                } else {
+                    visiblePhase = newPhase
+                }
+            }
+        }
         .onAppear {
             multiplayerManager.joinSession()
 

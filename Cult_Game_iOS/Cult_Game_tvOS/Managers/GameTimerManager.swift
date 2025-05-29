@@ -46,6 +46,8 @@ class GameTimerManager: ObservableObject {
     
     func advancePhaseAfterTimer() {
         switch multiplayerManager.currentPhase {
+        case .roleSelection:
+            multiplayerManager.sendGamePhase(.cardPlay)
         case .cardPlay:
             multiplayerManager.sendGamePhase(.discussion)
         case .discussion:

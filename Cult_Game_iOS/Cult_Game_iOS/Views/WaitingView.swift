@@ -5,6 +5,7 @@
 //  Created by Jessica Rodrigues on 22/05/25.
 //
 import SwiftUI
+import SpriteKit
 
 struct WaitingView: View {
     @EnvironmentObject var vm: GameViewModel
@@ -21,11 +22,18 @@ struct WaitingView: View {
     
     var body: some View {
         ZStack {
-            Image("BackgroundWaitingForPlayers")
-                .resizable()
-                .scaledToFill()
+            // Fundo com a cena do SpriteKit
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
-                .overlay(Color.black.opacity(0.5))
+            
+            // Camada de gradiente radial para escurecer a tela
+            RadialGradient(
+                gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
+                center: .center,
+                startRadius: 10,
+                endRadius: 300
+            )
+            .ignoresSafeArea()
             
             if let character = myCharacter {
                 VStack {
@@ -46,6 +54,13 @@ struct WaitingView: View {
                     }
                     .padding(.horizontal)
                 }
+            } else{
+                VStack{
+                    Spacer()
+                    Text("Waiting for players...")
+                        .font(Font.custom("Almendra-Regular", size: 23))
+                        .foregroundColor(Color(red:211/255, green:180/255, blue:125/255))
+                }.padding(.bottom)
             }
         }
     }

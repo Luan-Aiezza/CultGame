@@ -70,6 +70,13 @@
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
+		CF7BFB542DEA05B20058730A /* Exceptions for "Cult_Game_tvOS" folder in "Cult_Game_iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -102,6 +109,9 @@
 		};
 		CFFE156A2DCA633100CFF322 /* Cult_Game_tvOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CF7BFB542DEA05B20058730A /* Exceptions for "Cult_Game_tvOS" folder in "Cult_Game_iOS" target */,
+			);
 			path = Cult_Game_tvOS;
 			sourceTree = "<group>";
 		};

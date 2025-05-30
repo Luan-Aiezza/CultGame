@@ -4,7 +4,7 @@
 //
 //  Created by Jessica Rodrigues on 20/05/25.
 //
-
+import SpriteKit
 import SwiftUI
 
 struct PlayView: View {
@@ -14,25 +14,44 @@ struct PlayView: View {
         NavigationStack {
             ZStack {
                 
-                Image("background_002")
-                    .resizable()
-                    .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                    }
+                // Fundo com a cena do SpriteKit
+                SpriteView(scene: scene)
                     .ignoresSafeArea()
-                    .scaledToFill()
                 
-                NavigationLink {
-                    GameView()
-                        .environmentObject(vm)
-                        .navigationBarBackButtonHidden(true)
-
-                } label: {
-                    Text("Play")
-                        .font(.custom("VinerHandITC", size: 40))
-                        .foregroundStyle(Color.title)
-                        
+                // Camada de gradiente radial para escurecer a tela
+                RadialGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
+                    center: .center,
+                    startRadius: 10,
+                    endRadius: 300
+                )
+                .ignoresSafeArea()
+                
+                VStack{
+                    Image("TitleGamePhone")
+                        .resizable()
+                        .frame(width: 309, height: 154)
+                    Spacer()
+                    
+                    ZStack{
+                        Image("cultist_button_001")
+                            .resizable()
+                            .frame(width: 200, height: 51)
+                        NavigationLink {
+                            GameView()
+                                .environmentObject(vm)
+                                .navigationBarBackButtonHidden(true)
+                            
+                        } label: {
+                            Text("Pair")
+                                .font(.custom("Almendra-Regular", size: 26))
+                                .foregroundStyle(Color.title)
+                            
+                        }
+                    }
                 }
+                .padding(.bottom)
+                .padding(.top, 104)
             }
         }
         .navigationBarBackButtonHidden(true)

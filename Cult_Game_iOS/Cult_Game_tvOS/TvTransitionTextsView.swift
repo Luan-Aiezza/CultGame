@@ -5,7 +5,7 @@ import AVFoundation
 struct TvTransitionTextsView: View {
     
     enum SequenceType {
-        case introSequence, endSequence
+        case introSequence, middleSequence, endSequence
     }
 
     let type: SequenceType
@@ -14,6 +14,7 @@ struct TvTransitionTextsView: View {
     
     @State private var currentStep = 0
     @State private var selectedText: String = ""
+    @ObservedObject var vm: GameViewModel = GameViewModel()
     
     private var customTextColor: Color {
         Color(red: 227 / 255, green: 206 / 255, blue: 167 / 255)
@@ -93,8 +94,8 @@ struct TvTransitionTextsView: View {
                 EmptyView()
             }
             
-        case .endSequence:
-            switch step {
+        case .middleSequence:
+            switch step{
             case 0:
                 VStack(spacing: 12) {
                     centeredText("In the darkness of the last night, the other cult members acted — but what did they do?")
@@ -105,9 +106,16 @@ struct TvTransitionTextsView: View {
                         .padding()
                 }
                 .transition(.opacity)
-            case 1:
+            default:
+                VotingView()
+                    .environment(vm)
+            }
+            
+        case .endSequence:
+            switch step {
+            case 0:
                 centeredText(selectedText)
-            case 2:
+            case 1:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
                 EmptyView()

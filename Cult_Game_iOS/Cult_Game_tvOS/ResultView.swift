@@ -7,41 +7,38 @@ struct ResultView: View {
     
     var body: some View {
         ZStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 40)
-                        .fill(Color.black.opacity(0.6))
-                        .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/3)
-                    VStack() {
-                        
-                    Text("Resultados da Rodada")
+            ZStack {
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(Color.black.opacity(0.6))
+                    .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/3)
+                VStack() {
+                    
+                    Text("Round results")
+                        .font(.custom("VinerHandITC", size: 46))
+                        .foregroundColor(Color.title)
+                        .padding(.vertical, 20)
+                    StatusBarView()
+                    
+                    if let killedName = multiplayerManager.killed?.character?.displayName {
+                        Text("\(killedName) was eliminated!")
                             .font(.custom("VinerHandITC", size: 46))
                             .foregroundColor(Color.title)
                             .padding(.vertical, 20)
-                        StatusBarView()
                         
-                        if let killedName = multiplayerManager.killed?.character?.displayName {
-                            Text("\(killedName) foi eliminado!")
-                                    .font(.custom("VinerHandITC", size: 46))
-                                    .foregroundColor(Color.title)
-                                    .padding(.vertical, 20)
-                            
-                            ZStack {
-                                Image("\(killedName.capitalized)")
-                                Image(systemName: "xmark.app")
-                                    .font(.system(size: 64))
-                                    .foregroundColor(.red)
-                            }
+                        ZStack {
+                            Image("\(killedName.capitalized)")
+                            Image(systemName: "xmark.app")
+                                .font(.system(size: 64))
+                                .foregroundColor(.red)
                         }
-                        
                     }
+                    
+                }
                 
             }
-
+            
         }
         .onAppear{
-            
-            print("voted: \(multiplayerManager.voted)")
-            
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                 multiplayerManager.applyPendingEffects()
@@ -52,9 +49,10 @@ struct ResultView: View {
             }
             
         }
-            .padding()
-        }
+        .padding()
+        
     }
+}
 
 #Preview {
     ResultView()

@@ -27,8 +27,9 @@ struct GameView: View {
                 DiscussionView()
                     .environmentObject(vm)
             case .elimination:
-                VotingView()
+                TvTransitionTextsView(type: .middleSequence, isFirstRound: true)
                     .environmentObject(vm)
+//                VotingView()
             case .eliminationResults:
                 VotingResultView()
                     .environmentObject(vm)

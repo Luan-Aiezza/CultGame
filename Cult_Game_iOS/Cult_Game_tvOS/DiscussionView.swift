@@ -21,7 +21,6 @@ struct DiscussionView: View {
             } else {
                 ZStack {
                     // UI sobreposta
-                    
                     VStack {
                         
                         // TIMER CENTRAL SUPERIOR

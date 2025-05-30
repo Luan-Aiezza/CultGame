@@ -3,7 +3,7 @@ import SpriteKit
 import AVFoundation
 
 struct VotingResultView: View {
-    @StateObject var timerManager = GameTimerManager()
+    var timerManager = GameTimerManager()
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var gameViewModel: GameViewModel
     var Audio = AudioManager.shared

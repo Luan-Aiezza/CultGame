@@ -49,7 +49,7 @@ struct StatusBarAnimatedView: View {
                     .padding(.leading, 42)
                 }
             }
-            .frame(width: 359 * tvResponse, height: 29 * tvResponse)
+            .frame(width: 355 * tvResponse, height: 29 * tvResponse)
 
             Text("\(value)/\(max)")
                 .font(.custom("Almendra-Regular", size: 24*tvResponse))

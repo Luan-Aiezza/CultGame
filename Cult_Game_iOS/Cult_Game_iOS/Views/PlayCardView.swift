@@ -164,7 +164,7 @@ struct PlayCardView: View {
                                     }
                             }
                         } label: {
-                            Image("cardViewButton")
+                            Image("cardDoneButton")
                         }
                     }
                     .padding()

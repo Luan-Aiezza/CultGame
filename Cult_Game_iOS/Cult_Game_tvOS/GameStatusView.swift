@@ -57,10 +57,10 @@ struct GameStatusView: View {
                     .padding(.trailing, 80*tvResponse)
                     .frame(width: 365*tvResponse)
                 }
-                .padding()
+                .padding(.bottom, -40)
             }
         }.onAppear {
-            timer.start(duration: 180)
+            timer.start(duration: 30) //180
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

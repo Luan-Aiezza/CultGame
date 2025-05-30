@@ -97,7 +97,7 @@ struct TvTransitionTextsView: View {
         case .middleSequence:
             switch step{
             case 0:
-                VStack(spacing: 12) {
+                VStack(spacing: 100) {
                     centeredText("In the darkness of the last night, the other cult members acted — but what did they do?")
                     Text("Time to discuss the cult's hidden choices")
                         .font(.custom("Almendra-Regular", size: 35))

@@ -23,7 +23,7 @@ struct WaitingForPlayersView: View {
     
     var body: some View {
         ZStack {
-            Image("BackgroundWaitingForPlayers")
+            Image("background_002")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -86,7 +86,7 @@ struct WaitingForPlayersView: View {
                     
                 }
                 else {
-                    Text("sem personagem ainda...")
+                    Text("No player...")
                         .zIndex(6)
                 }
             }

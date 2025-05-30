@@ -14,11 +14,12 @@ struct Cult_Game_tvOSApp: App {
     
     init(){
         FontManager.registerFonts()
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     var body: some Scene {
         WindowGroup {
-            VotingResultView()
+            HomeScreenView()
                 .environmentObject(multiplayerManager)
                 .environmentObject(gameViewModel)
                 .ignoresSafeArea()

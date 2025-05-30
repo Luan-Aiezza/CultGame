@@ -78,7 +78,7 @@ struct HostGameView: View {
                     
                     Button(action: startGame) {
                         ZStack {
-                            Image(canPlay ? "buttonStart" : "disableStart")
+                            Image("buttonStart")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 95) // altura fixa, mas largura flexível
@@ -146,7 +146,7 @@ struct HostGameView: View {
                             .frame(width: 76, height: 74)
                             .padding(.bottom)
                         Text("\(playerList.count)/7")
-                            .font(Font.custom("VinerHandITC", size: 60))
+                            .font(Font.custom("Almendra-Regular", size: 60))
                             .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     }
                     

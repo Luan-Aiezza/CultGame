@@ -68,7 +68,7 @@ struct HomeScreenView: View {
 
         switch button {
         case .pair:
-            return focused ? "b_parear_\(lang)_on" : "b_parear_\(lang)_off"
+            return focused ? "b_jogar_\(lang)_on" : "b_jogar_\(lang)_off"
         case .howToPlay:
             return focused ? "b_como_jogar_\(lang)_on" : "b_como_jogar_\(lang)_off"
         }

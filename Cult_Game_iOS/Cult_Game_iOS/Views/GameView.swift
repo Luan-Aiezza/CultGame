@@ -29,21 +29,6 @@ struct GameView: View {
                 }
             
         }
-        .onReceive(multiplayerManager.$currentPhase) { newPhase in
-            // Impede que a phase visível vá para .discussion automaticamente
-            if let player = vm.players[vm.peerID] {
-                if player.state == .inactive {
-                    print("\(vm.player.id) - \(vm.player.state) ELIMINADOOO!!")
-                    return
-                }
-                if newPhase == .discussion {
-                    // Mantenha a fase visível como está
-                    print("Tentativa de ir para .discussion ignorada")
-                } else {
-                    visiblePhase = newPhase
-                }
-            }
-        }
         .onAppear {
             multiplayerManager.joinSession()
 

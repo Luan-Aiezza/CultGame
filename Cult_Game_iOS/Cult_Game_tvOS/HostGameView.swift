@@ -192,19 +192,7 @@ struct HostGameView: View {
         for (peer, role) in roles {
             multiplayerManager.sendRole(role, to: peer)
         }
-    }
-    
-    private var timerView: some View {
-        VStack {
-            Text("Phase: \(multiplayerManager.currentPhase)")
-            Text("Time left: \(viewModel.timeRemaining)s")
-                .font(.headline)
-                .padding(8)
-                .background(Color.yellow.opacity(0.3))
-                .cornerRadius(8)
-        }
-    }
-    
+    }    
 }
 
 // MARK: - Preview

@@ -77,18 +77,19 @@ struct VictoryTvView: View {
                         viewModel.resetGame()
                         navigateToWaiting = true
                     }) {
-                        Image("exit")
+                        Image("Exit")
                             .resizable()
-                            .frame(width: 65, height: 50)
-                            .foregroundColor(.white)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 44, height: 40)
                     }
+                    .tint(Color.accentButton)
                     .padding(.trailing, 95)
                     .padding(.bottom, 24)
                 }
                  
                 // Exibe os textos de título e descrição da vitória
                 Text(content.title)
-                    .font(.custom("VinerHandITC", size: 60))
+                    .font(.custom("VinerHandITC", size: 70))
                     .bold()
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     .multilineTextAlignment(.center)
@@ -96,7 +97,7 @@ struct VictoryTvView: View {
                     .padding(.horizontal, 24)
                 
                 Text(content.description)
-                    .font(.custom("Almendra-Regular", size: 30))
+                    .font(.custom("Almendra-Regular", size: 36))
                     .foregroundColor({
                         switch outcome {
                         case .hereticVictoryFollowers, .hereticVictoryBalance:
@@ -107,7 +108,7 @@ struct VictoryTvView: View {
                     }())
                     .multilineTextAlignment(.center)
                     .lineSpacing(0.2)
-                    .frame(width: 793.5, height: 72)
+                    .frame(width: 793.5, height: 144)
                     .padding(.horizontal, 32)
                 
                 Spacer()
@@ -139,11 +140,13 @@ struct VictoryTvView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: HostGameView(), isActive: $navigateToWaiting) {
+                NavigationLink(destination: HomeScreenView(), isActive: $navigateToWaiting) {
                     EmptyView()
                 }// Link para navegar de volta pra tela de host quando o botaao É PRESSIOANDO
             }
             .padding()
+        }.onAppear{
+            AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }
 }

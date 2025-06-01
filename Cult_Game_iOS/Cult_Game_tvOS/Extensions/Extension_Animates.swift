@@ -394,7 +394,7 @@ extension VotingResultView {
     var scene: SKScene {
         if let scene = SKScene(fileNamed: "BackViewScene") {
             scene.scaleMode = .aspectFill
-            animateFire(in: scene)
+            animateBonfire(in: scene)
 
             
             return scene

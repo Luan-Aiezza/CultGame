@@ -21,12 +21,12 @@ struct VotingResultView: View {
             VStack {
                 // Caso de empate
                 if gameViewModel.isTie {
-                    Text("Empate!")
-                        .font(.custom("VinerHandITC", size: 60))
+                    Text("Draw!")
+                        .font(.custom("VinerHandITC", size: 70))
                         .foregroundStyle(Color.title)
 
-                    Text("Há olhares desconfiados e o culto se contorce sob o peso da suspeita")
-                        .font(.custom("Almendra-Regular", size: 30))
+                    Text("There are suspicious looks and the cult writhes under the weight of suspicion")
+                        .font(.custom("Almendra-Regular", size: 36))
                         .frame(width: UIScreen.main.bounds.width / 3)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
@@ -35,12 +35,12 @@ struct VotingResultView: View {
                 // Caso de jogador eliminado
                 else if let killedName = multiplayerManager.voted?.character?.displayName {
 
-                    Text("\(killedName) foi eliminado!")
-                        .font(.custom("VinerHandITC", size: 60))
+                    Text("\(killedName) has been eliminated!")
+                        .font(.custom("VinerHandITC", size: 70))
                         .foregroundStyle(Color.title)
 
-                    Text("A chama daquela alma se apagou. Mas o verdadeiro profanador ainda respira entre os fiéis.")
-                        .font(.custom("Almendra-Regular", size: 30))
+                    Text("The flame of that soul has gone out. But the true defiler still breathes among the faithful.")
+                        .font(.custom("Almendra-Regular", size: 36))
                         .frame(width: UIScreen.main.bounds.width / 3)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
@@ -53,12 +53,12 @@ struct VotingResultView: View {
                         .opacity(0.5)
                         .padding(.top, 230)
                 } else {
-                    Text("Ninguém foi votado!")
-                        .font(.custom("VinerHandITC", size: 60))
+                    Text("Draw! No one was voted!")
+                        .font(.custom("VinerHandITC", size: 70))
                         .foregroundStyle(Color.title)
 
-                    Text("O culto se calou...")
-                        .font(.custom("Almendra-Regular", size: 30))
+                    Text("The cult fell silent...")
+                        .font(.custom("Almendra-Regular", size: 36))
                         .frame(width: UIScreen.main.bounds.width / 3)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
@@ -66,12 +66,13 @@ struct VotingResultView: View {
 
                 Spacer()
             }
-            .padding(.vertical, 200)
+            .padding(.vertical, 100)
         }
         .onAppear {
             gameViewModel.evaluateVotes()
             timerManager.start(duration: 20)
-            Audio.playBackgroundMusic(named: "Background_Elimination")
+            Audio.setVolume(to: 0.4)
+            Audio.playSound(named: "BonfireRise")
         }
         .padding()
     }

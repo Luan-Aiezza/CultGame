@@ -96,7 +96,10 @@ struct MurderView: View {
                 Button(action: {
                     if (selectedPlayerID != nil) {
                         voteConfirmed = true
-                        vm.turnPlayerInactive(to: selectedPlayerID ?? " ")
+                        if let peer = selectedPlayerID {
+                            vm.kill(peer: peer)
+                            print("assassinou fulano")
+                        }
                         DispatchQueue.main.async {
                             print(vm.multiplayerManager.players)
                         }

@@ -49,10 +49,14 @@ class GameViewModel: ObservableObject, Observable {
     func turnEmptyCard() {
         player.usedCard = emptyCard
     }
-    func setRole(_ role: PlayerRole) {
+    func setRole(role: PlayerRole) {
         player.role = role
+    }
 
-       }
+    func setState(state: PlayerState) {
+        player.state = state
+    }
+    
     func receiveInitialCards() {
         player.hand.removeAll()
         switch player.role {

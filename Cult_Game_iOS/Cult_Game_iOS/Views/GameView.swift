@@ -11,7 +11,7 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-                switch visiblePhase {
+            switch visiblePhase {
                 case .pairing:
                     WaitingView()
                 case .roleSelection:
@@ -29,8 +29,23 @@ struct GameView: View {
                 }
             
         }
+        .onReceive(multiplayerManager.$currentPhase) { newPhase in
+            // Impede que a phase visível vá para .discussion automaticamente
+            if vm.player.state == .inactive {
+                return
+            }
+            if newPhase == .discussion {
+                // Mantenha a fase visível como está
+                print("Tentativa de ir para .discussion ignorada")
+            } else {
+                visiblePhase = newPhase
+            }
+        }
         .onAppear {
             multiplayerManager.joinSession()
+
+            UIApplication.shared.isIdleTimerDisabled = true
+                
 
             NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                 if let role = notification.object as? PlayerRole {
@@ -51,6 +66,9 @@ struct GameView: View {
                 }
             }
 
+        }
+        .onDisappear {
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 }

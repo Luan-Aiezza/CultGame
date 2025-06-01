@@ -10,29 +10,35 @@ extension GameViewModel {
     func advancePhaseAfterTimer() {
         switch multiplayerManager.currentPhase {
         case .pairing:
+            print("current phase: \(multiplayerManager.currentPhase)")
             currentPhase = .roleSelection
             multiplayerManager.currentPhase = .roleSelection
             multiplayerManager.sendGamePhase(.roleSelection)
         case .roleSelection:
+            print("current phase: \(multiplayerManager.currentPhase)")
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
         case .cardPlay:
+            print("current phase: \(multiplayerManager.currentPhase)")
             multiplayerManager.killed = nil
             multiplayerManager.voted = nil
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
             multiplayerManager.sendGamePhase(.discussion)
         case .discussion:
+            print("current phase: \(multiplayerManager.currentPhase)")
             evaluateVictory()
             currentPhase = .elimination
             multiplayerManager.currentPhase = .elimination
             multiplayerManager.sendGamePhase(.elimination)
         case .elimination:
+            print("current phase: \(multiplayerManager.currentPhase)")
             currentPhase = .eliminationResults
             multiplayerManager.currentPhase = .eliminationResults
             multiplayerManager.sendGamePhase(.eliminationResults)
         case .eliminationResults:
+            print("current phase: \(multiplayerManager.currentPhase)")
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)

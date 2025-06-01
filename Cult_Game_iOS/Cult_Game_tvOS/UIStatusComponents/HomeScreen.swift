@@ -11,7 +11,6 @@ struct HomeScreenView: View {
     }
 
     @FocusState private var focusedButton: FocusedButton?
-    @EnvironmentObject var vm: GameViewModel
     
     // Detecta idioma do sistema
     var isPortuguese: Bool {

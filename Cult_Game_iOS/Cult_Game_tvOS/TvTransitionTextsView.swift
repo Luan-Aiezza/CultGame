@@ -10,7 +10,7 @@ struct TvTransitionTextsView: View {
 
     let type: SequenceType
     let isFirstRound: Bool
-    let onComplete: () -> Void
+    //let onComplete: () -> Void
    //let onComplete: any View
     
     @State private var currentStep = 0
@@ -160,7 +160,8 @@ struct TvTransitionTextsView: View {
                 .multilineTextAlignment(.center)
             Image(image)
                 .resizable()
-                .frame(width: 160, height: 271)
+                .scaledToFill()
+                .frame(maxWidth: 160, maxHeight: 271)
         }
         .transition(.opacity)
     }
@@ -172,8 +173,6 @@ struct TvTransitionTextsView: View {
             }
             if (type == .introSequence && currentStep < 3) || (type == .endSequence && currentStep < 2) {
                 advanceStep(after: 5)
-            } else {///////
-                onComplete()///
             }///////
         }
     }

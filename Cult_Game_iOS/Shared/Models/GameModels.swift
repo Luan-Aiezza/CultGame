@@ -47,7 +47,7 @@ struct GameRules {
     static let initialFollowers = 35
     static let initialHeresy = 0
     static let maxFaithPoints = 1000
-    static let initialFaithPoints = 1000
+    static let initialFaithPoints = 5
     
 }
 

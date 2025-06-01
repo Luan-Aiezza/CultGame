@@ -12,7 +12,7 @@ struct VotingResultView: View {
         ZStack {
             // Background scene
             SpriteView(scene: scene)
-                .ignoresSafeArea(.all)
+                .ignoresSafeArea()
 
             // Dark gradient overlay
             LinearGradient(colors: [Color.black.opacity(0.5), Color.clear], startPoint: .top, endPoint: .bottom)
@@ -20,7 +20,7 @@ struct VotingResultView: View {
 
             VStack {
                 // Caso de empate
-                if multiplayerManager.voted == nil {
+                if gameViewModel.isTie {
                     Text("Empate!")
                         .font(.custom("VinerHandITC", size: 60))
                         .foregroundStyle(Color.title)
@@ -52,6 +52,16 @@ struct VotingResultView: View {
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
                         .padding(.top, 230)
+                } else {
+                    Text("Ninguém foi votado!")
+                        .font(.custom("VinerHandITC", size: 60))
+                        .foregroundStyle(Color.title)
+
+                    Text("O culto se calou...")
+                        .font(.custom("Almendra-Regular", size: 30))
+                        .frame(width: UIScreen.main.bounds.width / 3)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(Color.subtitleResult)
                 }
 
                 Spacer()
@@ -60,8 +70,8 @@ struct VotingResultView: View {
         }
         .onAppear {
             gameViewModel.evaluateVotes()
-            Audio.playBackgroundMusic(named: "Background_Elimination")
             timerManager.start(duration: 20)
+            Audio.playBackgroundMusic(named: "Background_Elimination")
         }
         .padding()
     }

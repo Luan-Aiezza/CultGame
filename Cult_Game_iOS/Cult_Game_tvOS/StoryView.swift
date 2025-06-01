@@ -9,6 +9,7 @@ import SwiftUI
 import SpriteKit
 
 struct StoryView: View {
+    @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var fadeInOut : Bool = false
     @State private var changeView : Bool = false
@@ -38,12 +39,13 @@ struct StoryView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
                     fadeInOut = false
                     changeView = true
-                    multiplayerManager.sendGamePhase(.cardPlay)
+                    vm.advancePhaseAfterTimer()
                 }
             }
             
             .fullScreenCover(isPresented: $changeView) {
                 GameStatusView()
+                    .environmentObject(vm)
             }
         }
     }

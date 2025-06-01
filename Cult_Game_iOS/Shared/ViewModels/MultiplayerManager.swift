@@ -107,7 +107,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         
         
         //Manda um personagem um player
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             if let peer = self.connectedPeers.first(where: { $0.displayName == peerID.displayName }),
                let _ = self.players[peer.displayName] {
                 self.players[peer.displayName]?.character = character
@@ -124,6 +124,10 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     //papel
     public func sendRole(_ role: PlayerRole, to peer: MCPeerID) {
+        var player = players[peer.displayName]
+        player?.role = role
+        players[peer.displayName] = player
+        
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: [peer], with: .reliable)

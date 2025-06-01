@@ -29,6 +29,16 @@ extension GameViewModel {
         }
     }
     
+    func kill(peer : String) {
+        multiplayerManager.eliminateKilled(peerID: peer)
+        turnPlayerInactive(to: peer)
+        multiplayerManager.sendPlayersToAll()
+        
+        if peerID == peer {
+            setState(state: .inactive)
+        }
+    }
+    
     func evaluateVotes() {
         let votePairs = multiplayerManager.players.map { (peerID, player) in
             (peerID, player.votes)
@@ -43,24 +53,25 @@ extension GameViewModel {
         let topVoted = votePairs.filter { $0.1 == maxVotes }.map { $0.0 }
 
         print("🏆 Top votado(s): \(topVoted), maxVotes: \(maxVotes)")
+        
+        if maxVotes < 1 {
+            return
+        }
 
         if topVoted.count == 1, let toEliminate = topVoted.first {
             eliminatedPlayer = toEliminate
             
-            //TODO: mandar mensagem para o host atualizar multiplayerManager.host
-            
             multiplayerManager.eliminateVoted(peerID: toEliminate)
-            
-            
             turnPlayerInactive(to: toEliminate)
             multiplayerManager.sendPlayersToAll()
             
-            print("✅ Eliminado: \(eliminatedPlayer ?? "nulo")")
-            print("🎯 Voted: \(multiplayerManager.voted?.character?.displayName ?? "nulo")")
+            if peerID == toEliminate {
+                setState(state: .inactive)
+            }
+
         } else {
             isTie = true
             multiplayerManager.voted = nil
-            print("⚖️ Empate detectado")
         }
         // Resetar votos
         for (peerID, var player) in multiplayerManager.players {
@@ -69,12 +80,5 @@ extension GameViewModel {
         }
 
         self.didEvaluate = true
-        
-        print("✅ Estado final na função:")
-        print("- eliminatedPlayer: \(eliminatedPlayer ?? "nulo")")
-        print("- isTie: \(isTie)")
-        print("- didEvaluate: \(didEvaluate)")
-        print("- voted do multiplayer: \(multiplayerManager.voted)")
     }
-
 }

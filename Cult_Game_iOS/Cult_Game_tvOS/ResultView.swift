@@ -10,7 +10,7 @@ struct ResultView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 40)
                     .fill(Color.black.opacity(0.6))
-                    .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/3)
+                    .ignoresSafeArea()
                 VStack() {
                     
                     Text("Round results")
@@ -27,9 +27,6 @@ struct ResultView: View {
                         
                         ZStack {
                             Image("\(killedName.capitalized)")
-                            Image(systemName: "xmark.app")
-                                .font(.system(size: 64))
-                                .foregroundColor(.red)
                         }
                     }
                     

@@ -22,7 +22,7 @@ extension GameViewModel {
         print("entrou em evaluate victory")
         
         let players = multiplayerManager.players
-        print("players")
+        print("players: \(players)")
         
         let cultists = players.filter { (_, player) in
             player.role == .cultist && player.state == .active

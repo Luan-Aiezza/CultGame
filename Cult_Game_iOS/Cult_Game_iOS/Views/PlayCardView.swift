@@ -9,12 +9,21 @@ import SwiftUI
 
 struct SelectCard: View {
     @Binding var selectedCard: Card?
+    @Binding var zoomedCard: Card?
+    @Binding var showZoomedCard : Bool
     
     var body: some View {
         if let card = selectedCard {
             CardView(card: card)
                 .frame(width: 154, height: 216)
                 .padding(.bottom, 100)
+                .draggable(card)
+                .onTapGesture {
+                    withAnimation {
+                        zoomedCard = card
+                        showZoomedCard = true
+                }
+            }
         } else {
             Image("selectCard")
                 .resizable()
@@ -27,6 +36,7 @@ struct SelectCard: View {
 
 struct PlayCardView: View {
     @EnvironmentObject var vm: GameViewModel
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @ObservedObject var pvm = PlayCardViewModel()
     @State var selectedCard: Card? = nil
     @State var hand: [Card] = []
@@ -37,10 +47,8 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     @State private var showMurderView = false
-    @State private var showFollowTvView = false
-    @State private var cardsBlocked = false
     
-
+    
     @ViewBuilder
     var destinationView: some View {
         if let outcome = vm.gameOutcome,
@@ -50,10 +58,26 @@ struct PlayCardView: View {
             EmptyView()
         }
     }
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
+                
+                Color.clear
+                    .background(
+                        Image("background_002")
+                            .resizable()
+                            .scaledToFill()
+                            .overlay(
+                                LinearGradient(
+                                    colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                    )
+                    .ignoresSafeArea()
+                    .zIndex(0)
                 
                 if let card = zoomedCard, showZoomedCard {
                     Color.black.opacity(0.6)
@@ -75,19 +99,8 @@ struct PlayCardView: View {
                         .zIndex(4)
                 }
                 
-                Image("background_002")
-                    .resizable()
-                    .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                    }
-                    .ignoresSafeArea()
-                    .scaledToFill()
-
                 VStack {
-                    
-                    
-                    
-                    SelectCard(selectedCard: $selectedCard)
+                    SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
                         .padding(.vertical, 50)
                         .dropDestination(for: Card.self) { items, location in
                             if let card = items.first {
@@ -125,6 +138,14 @@ struct PlayCardView: View {
                                     }
                             }
                         }
+                        .dropDestination(for: Card.self) { items, location in
+                            if let card = selectedCard {
+                                    hand.append(card)
+                                    selectedCard = nil
+                                    return true
+                            }
+                            return false
+                        }
                     } else {
                         CardCarouselView(
                             selectedCard: $selectedCard,
@@ -134,7 +155,6 @@ struct PlayCardView: View {
                             cards: $hand,
                             skippedRound: $skippedRound
                         )
-                        .disabled(cardsBlocked)
                     }
                     
                     HStack(spacing: 50) {
@@ -152,24 +172,25 @@ struct PlayCardView: View {
                         Button {
                             if let selectedCard = selectedCard,
                                let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
-                                    if !skippedRound {
-                                        vm.playCard(cardToPlay)
-                                        stringShow = "Você já jogou uma carta."
-                                        showBlockMessage = true
-                                        playedCard = true
-                                        
-                                        if cardToPlay.type == .assassination {
-                                            showMurderView = true
-                                        }
+                                if !skippedRound {
+                                    vm.playCard(cardToPlay)
+                                    stringShow = "Você já jogou uma carta."
+                                    showBlockMessage = true
+                                    playedCard = true
+                                    
+                                    if cardToPlay.type == .assassination {
+                                        showMurderView = true
                                     }
+                                }
                             }
                         } label: {
-                            Image("cardDoneButton")
+                            Image("cardViewButton")
                         }
                     }
+                    .frame(maxWidth: 500)
                     .padding()
                 }
-
+                
                 NavigationLink(
                     destination: destinationView,
                     isActive: Binding(
@@ -180,31 +201,9 @@ struct PlayCardView: View {
                     EmptyView()
                 }
                 .fullScreenCover(isPresented: $showMurderView) {
-                    MurderView().environmentObject(vm)
+                    MurderView()
                 }
                 
-                if showFollowTvView {
-                    FollowTvView()
-                        .environmentObject(vm)
-                        .transition(.opacity)
-                        .zIndex(5)
-                }
-
-            }
-        }
-        .onReceive(vm.multiplayerManager.$currentPhase) { newPhase in
-            if newPhase == .discussion {
-                showFollowTvView = true
-                cardsBlocked = true // já bloqueia imediatamente
-                showBlockMessage = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    withAnimation {
-                        skippedRound = true
-                        showFollowTvView = false
-                        showBlockMessage = false
-                        stringShow = "Cartas bloqueadas, hora de discutir!"
-                    }
-                }
             }
         }
         .onAppear {
@@ -214,8 +213,24 @@ struct PlayCardView: View {
             if vm.player.role == .cultist {
                 self.stringShow = "Your cult does not have enough faith to play this card."
             } else {
-                    self.stringShow = "You do not have enough heresy to play this card."
+                self.stringShow = "You do not have enough heresy to play this card."
+            }
+        }
+        .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
+            
+            if newValue == .discussion {
+                if selectedCard == nil {
+                    vm.skipCard()
+                    skippedRound = true
+                    stringShow = "Você pulou esta rodada."
+                    showBlockMessage = true
                 }
+            }
         }
     }
 }
+
+#Preview(body: {
+    PlayCardView()
+        .environmentObject(GameViewModel())
+})

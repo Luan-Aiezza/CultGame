@@ -110,7 +110,7 @@ struct EliminationView: View {
                     Button(action: {
                         if (selectedPlayerID != nil) {
                             voteConfirmed = true
-                            viewModel.addVote(to: selectedPlayerID ?? " ")
+                            viewModel
                             showFollowTvView = true
                         }
                         

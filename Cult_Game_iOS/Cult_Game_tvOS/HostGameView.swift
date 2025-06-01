@@ -78,7 +78,7 @@ struct HostGameView: View {
                     
                     Button(action: startGame) {
                         ZStack {
-                            Image("buttonStart")
+                            Image(canPlay ? "buttonStart" : "disableStart")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 95) // altura fixa, mas largura flexível
@@ -146,14 +146,14 @@ struct HostGameView: View {
                             .frame(width: 76, height: 74)
                             .padding(.bottom)
                         Text("\(playerList.count)/7")
-                            .font(Font.custom("Almendra-Regular", size: 60))
+                            .font(Font.custom("VinerHandITC", size: 60))
                             .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     }
                     
                 }
             }
             .onChange(of: multiplayerManager.players.count) { count in
-                canPlay = count >= 2
+                canPlay = count <= 2
             }
             .onAppear {
                 multiplayerManager.startHosting()
@@ -162,7 +162,7 @@ struct HostGameView: View {
     }
     
     func startGame() {
-        if multiplayerManager.connectedPeers.count < 1 || multiplayerManager.connectedPeers.count > 7 {
+        if multiplayerManager.connectedPeers.count < 0 || multiplayerManager.connectedPeers.count > 7 {
             showBlockMessage = true
             return
         }
@@ -192,18 +192,6 @@ struct HostGameView: View {
             multiplayerManager.sendRole(role, to: peer)
         }
     }
-    
-    private var timerView: some View {
-        VStack {
-            Text("Phase: \(multiplayerManager.currentPhase)")
-            Text("Time left: \(viewModel.timeRemaining)s")
-                .font(.headline)
-                .padding(8)
-                .background(Color.yellow.opacity(0.3))
-                .cornerRadius(8)
-        }
-    }
-    
 }
 
 // MARK: - Preview

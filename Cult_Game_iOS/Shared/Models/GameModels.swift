@@ -9,7 +9,7 @@ struct CardPlayAction: Codable {
     var playerRole: PlayerRole
 }
 struct GameEffects {
-    let peerID: MCPeerID
+    let peerID: String
     let faithChange: Int
     let heresyChange: Int
     let followersChange: Int
@@ -45,6 +45,7 @@ struct GameUpdate: Codable {
 struct GameRules {
     static let maxFollowers = 40
     static let initialFollowers = 35
+    static let initialHeresy = 0
     static let maxFaithPoints = 1000
     static let initialFaithPoints = 1000
     
@@ -73,11 +74,10 @@ enum MultiplayerMessage: Codable {
     case kickPlayer
     case characterAssignment(String)
     case vote(String)
+    case kill(String)
     case setInactive(String)
     case updatePlayers([String: PlayerModel])
     case victory(GameOutcome)
-    case setVoted(String)
-    /////////////////////////////////
 
     
     enum CodingKeys: String, CodingKey {
@@ -90,10 +90,10 @@ enum MultiplayerMessage: Codable {
         case kickPlayer
         case characterAssignment
         case vote
+        case kill
         case setInactive
         case updatePlayers
         case victory
-        case setVoted
 
     }
     
@@ -118,6 +118,10 @@ enum MultiplayerMessage: Codable {
         case .vote(let peerID):
             try container.encode(MessageType.vote, forKey: .type)
             try container.encode(peerID, forKey: .data)
+        
+        case .kill(let peerID):
+            try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(peerID, forKey: .data)
             
         case .setInactive(let peerID):
             try container.encode(MessageType.setInactive, forKey: .type)
@@ -129,11 +133,7 @@ enum MultiplayerMessage: Codable {
             
         case .victory(let outcome):
             try container.encode(MessageType.victory, forKey: .type)
-            try container.encode(outcome, forKey: .data)////////////////////
-
-        case .setVoted(let peerID):
-            try container.encode(MessageType.setVoted, forKey: .type)
-            try container.encode(peerID, forKey: .data)////////////////////
+            try container.encode(outcome, forKey: .data)///////////////////
         }
     }
     
@@ -158,7 +158,9 @@ enum MultiplayerMessage: Codable {
         case .vote:
             let peerID = try container.decode(String.self, forKey: .data)
             self = .vote(peerID)
-            
+        case .kill:
+            let peerID = try container.decode(String.self, forKey: .data)
+            self = .kill(peerID)
         case .setInactive:
             let peerID = try container.decode(String.self, forKey: .data)
             self = .setInactive(peerID)
@@ -170,10 +172,6 @@ enum MultiplayerMessage: Codable {
         case .victory:
             let outcome = try container.decode(GameOutcome.self, forKey: .data)
             self = .victory(outcome)////////////////////////////
-
-        case .setVoted:
-            let voted = try container.decode(String.self, forKey: .data)
-            self = .setVoted(voted)
         }
     }
     

@@ -28,7 +28,7 @@ struct VictoryScreenView: View {
         // Procura o jogador que é o herege
         if let (_, model) = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic }) {
             let character = model.character
-            return "\(character?.rawValue.capitalized)H"
+            return "\(String(describing: character?.rawValue.capitalized))H"
         }
 
         return nil
@@ -37,7 +37,7 @@ struct VictoryScreenView: View {
         guard outcome.isCultistVictory else { return nil }
         
         if let model = viewModel.multiplayerManager.players.first(where: { $0.value.role == .heretic })?.value {
-            return "Heretic\(model.character?.rawValue.capitalized)DiedIPHONE"
+            return "Heretic\(String(describing: model.character?.rawValue.capitalized))DiedIPHONE"
         }
         
         return nil
@@ -211,74 +211,3 @@ struct DefeatedImageView: View {
             }
     }
 }
-
-#if DEBUG
-        
-        @MainActor
-        struct VictoryScreenView_Previews: PreviewProvider {
-            static var previews: some View {
-                Group {
-                    // Heretic venceu — jogador é herege
-                    VictoryScreenView(
-                        role: .heretic,
-                        outcome: .hereticVictoryFollowers
-                    )
-                    .environmentObject(makePreviewViewModel(role: .heretic, outcome: .hereticVictoryFollowers))
-                    .previewDisplayName("Heretic Victory – Heretic View")
-                    
-                    // Heretic venceu — jogador é cultista
-                    VictoryScreenView(
-                        role: .cultist,
-                        outcome: .hereticVictoryBalance
-                    )
-                    .environmentObject(makePreviewViewModel(role: .cultist, outcome: .hereticVictoryBalance))
-                    .previewDisplayName("Heretic Victory – Cultist View")
-                    
-                    // Cultist venceu — jogador é cultista
-                    VictoryScreenView(
-                        role: .cultist,
-                        outcome: .cultistVictoryFollowers
-                    )
-                    .environmentObject(makePreviewViewModel(role: .cultist, outcome: .cultistVictoryFollowers))
-                    .previewDisplayName("Cultist Victory – Cultist View")
-                    
-                    // Cultist venceu — jogador é herege
-                    VictoryScreenView(
-                        role: .heretic,
-                        outcome: .cultistVictoryElimination
-                    )
-                    .environmentObject(makePreviewViewModel(role: .heretic, outcome: .cultistVictoryElimination))
-                    .previewDisplayName("Cultist Victory – Heretic View")
-                }
-            }
-            
-            static func makePreviewViewModel(role: PlayerRole, outcome: GameOutcome) -> GameViewModel {
-                let vm = GameViewModel()
-                let peer = MCPeerID(displayName: "You")
-                //vm.multiplayerManager.setFakePeerID(peer)
-                vm.multiplayerManager.connectedPeers = [peer]
-
-                var me = PlayerModel()
-                me.role = role
-                me.character = .deer
-                vm.multiplayerManager.players[peer.displayName] = me
-                vm.attPlayer(newPlayer: me)
-
-                if outcome.isHereticVictory {
-                    let hereticPeer = MCPeerID(displayName: "Herege")
-                    let heretic = PlayerModel(
-                        id: hereticPeer.displayName,
-                        role: .heretic,
-                        state: .active,
-                        character: .fox
-                    )
-                    vm.multiplayerManager.players[hereticPeer.displayName] = heretic
-                    vm.multiplayerManager.connectedPeers.append(hereticPeer)
-                }
-
-                return vm
-            }
-
-        }
-        
-#endif

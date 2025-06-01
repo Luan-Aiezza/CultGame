@@ -57,9 +57,9 @@ extension GameViewModel {
 
         print("""
         🃏 Carta jogada: \(card.name)
-        ✝️ Fé: \(globalState.sharedFaithPoints)
-        🔥 Heresia: \(globalState.heresyPoints)
-        👥 Fiéis: \(globalState.followers)
+        ✝️ Fé: \(multiplayerManager.globalState.sharedFaithPoints)
+        🔥 Heresia: \(multiplayerManager.globalState.heresyPoints)
+        👥 Fiéis: \(multiplayerManager.globalState.followers)
         """)
 
         turnEnteredCardPlayOnce()
@@ -70,7 +70,7 @@ extension GameViewModel {
             return
         }
         
-        let action = CardPlayAction(playerID: peerID.displayName, card: emptyCard, playerRole: player.role!)
+        let action = CardPlayAction(playerID: peerID, card: emptyCard, playerRole: player.role!)
 
         if isHost {
             multiplayerManager.handleReceived(action, from: peerID)

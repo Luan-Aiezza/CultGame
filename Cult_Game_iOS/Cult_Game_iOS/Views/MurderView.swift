@@ -2,14 +2,14 @@ import SwiftUI
 import MultipeerConnectivity
 
 struct MurderView: View {
-    @EnvironmentObject var viewModel: GameViewModel
+    @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     var myCharacter: Character? {
-        let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
-        let character = viewModel.multiplayerManager.players.first {
+        let myDisplayName = vm.multiplayerManager.myPeerID.displayName
+        let character = vm.multiplayerManager.players.first {
             $0.key == myDisplayName
         }?.value.character
         
@@ -96,9 +96,9 @@ struct MurderView: View {
                 Button(action: {
                     if (selectedPlayerID != nil) {
                         voteConfirmed = true
-                        viewModel.turnPlayerInactive(to: selectedPlayerID ?? " ")
+                        vm.turnPlayerInactive(to: selectedPlayerID ?? " ")
                         DispatchQueue.main.async {
-                            print(viewModel.multiplayerManager.players)
+                            print(vm.multiplayerManager.players)
                         }
                     }
                 }) {

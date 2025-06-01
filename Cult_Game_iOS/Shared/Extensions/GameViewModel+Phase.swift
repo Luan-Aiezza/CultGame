@@ -19,10 +19,12 @@ extension GameViewModel {
             multiplayerManager.sendGamePhase(.cardPlay)
         case .cardPlay:
             multiplayerManager.killed = nil
+            multiplayerManager.voted = nil
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
             multiplayerManager.sendGamePhase(.discussion)
         case .discussion:
+            evaluateVictory()
             currentPhase = .elimination
             multiplayerManager.currentPhase = .elimination
             multiplayerManager.sendGamePhase(.elimination)
@@ -34,7 +36,7 @@ extension GameViewModel {
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
-            evaluateVictory()//////////////////////
+            evaluateVictory()
         default:
             break
         }
@@ -53,7 +55,7 @@ extension GameViewModel {
             }
             turnEnteredCardPlayOnce()
             replenishHandIfNeeded()
-            addRound()
+            multiplayerManager.goToNextRound()
             playAllActiveCards()
 
             if player.usedCard == nil {
@@ -62,9 +64,5 @@ extension GameViewModel {
 
         default: break
         }
-    }
-
-    func addRound() {
-        round += 1
     }
 }

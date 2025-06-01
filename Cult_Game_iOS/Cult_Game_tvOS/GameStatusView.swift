@@ -72,7 +72,7 @@ struct GameStatusView: View {
         HStack(spacing: 8) {
             ForEach(multiplayerManager.players.values.filter { $0.state == .active }, id: \.id) { player in
                 let character = player.character?.displayName.capitalized
-                    Image("\(character)")
+                Image("\(String(describing: character))")
                         .resizable()
                         .frame(width: 36 * tvResponse, height: 36 * tvResponse)
             }

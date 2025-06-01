@@ -44,16 +44,6 @@ class Card: Identifiable, Equatable, Codable, Transferable {
     
     func play(vm: GameViewModel) {
         guard let role = vm.player.role else { return }
-        let action = CardPlayAction(playerID: vm.peerID.displayName, card: self, playerRole: role)
-        
-        print("🃏 Jogador \(action.playerID) tentou usar carta \(self.name) como \(role)")
-        
-        if vm.isHost {
-            print("🔧 Host aplicando carta localmente")
-            vm.multiplayerManager.handleReceived(action, from: vm.peerID)
-        } else {
-            print("📡 Enviando carta para host")
-            vm.multiplayerManager.send(action)
-        }
+        let action = CardPlayAction(playerID: vm.peerID, card: self, playerRole: role)
     }
 }

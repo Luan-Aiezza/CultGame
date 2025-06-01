@@ -9,7 +9,7 @@ struct EliminationResultsView: View {
     @State var isDisconnected = false
 
     var isPlayerEliminated: Bool {
-        viewModel.eliminatedPlayer == viewModel.peerID.displayName
+        viewModel.eliminatedPlayer == viewModel.peerID
     }
 
 

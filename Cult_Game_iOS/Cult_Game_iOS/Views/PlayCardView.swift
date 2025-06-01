@@ -180,11 +180,12 @@ struct PlayCardView: View {
                     EmptyView()
                 }
                 .fullScreenCover(isPresented: $showMurderView) {
-                    MurderView()
+                    MurderView().environmentObject(vm)
                 }
                 
                 if showFollowTvView {
                     FollowTvView()
+                        .environmentObject(vm)
                         .transition(.opacity)
                         .zIndex(5)
                 }

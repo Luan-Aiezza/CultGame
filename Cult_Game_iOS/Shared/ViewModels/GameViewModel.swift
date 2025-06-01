@@ -116,7 +116,7 @@ class GameViewModel: ObservableObject, Observable {
         multiplayerManager.playerStates.removeAll()
         multiplayerManager.globalState = GlobalGameState(
             sharedFaithPoints: GameRules.initialFaithPoints,
-            heresyPoints: [:],
+            heresyPoints: 0,
             followers: GameRules.initialFollowers
         )
     }
@@ -215,7 +215,7 @@ class GameViewModel: ObservableObject, Observable {
             case .cultist:
                 return globalState.sharedFaithPoints
             case .heretic:
-                return globalState.heresyPoints[peerID.displayName, default: 0]
+                return globalState.heresyPoints
             default:
                 return 0
             }
@@ -225,7 +225,7 @@ class GameViewModel: ObservableObject, Observable {
             case .cultist:
                 globalState.sharedFaithPoints = newValue
             case .heretic:
-                globalState.heresyPoints[peerID.displayName] = newValue
+                globalState.heresyPoints = newValue
             default: break
             }
         }

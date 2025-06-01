@@ -58,7 +58,7 @@ extension GameViewModel {
         print("""
         🃏 Carta jogada: \(card.name)
         ✝️ Fé: \(globalState.sharedFaithPoints)
-        🔥 Heresia: \(globalState.heresyPoints[peerID.displayName, default: 0])
+        🔥 Heresia: \(globalState.heresyPoints)
         👥 Fiéis: \(globalState.followers)
         """)
 

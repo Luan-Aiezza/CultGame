@@ -53,7 +53,7 @@ struct GameRules {
 // Estado global sincronizado
 struct GlobalGameState: Codable {
     var sharedFaithPoints: Int
-    var heresyPoints: [String: Int] // ID do herege -> pontos
+    var heresyPoints: Int
     var followers: Int
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var vm: GameViewModel = GameViewModel()
+    @EnvironmentObject var vm: GameViewModel
     
     var body: some View {
         ZStack {
@@ -27,9 +27,8 @@ struct GameView: View {
                 DiscussionView()
                     .environmentObject(vm)
             case .elimination:
-                TvTransitionTextsView(type: .middleSequence, isFirstRound: true)
+                VotingView()
                     .environmentObject(vm)
-//                VotingView()
             case .eliminationResults:
                 VotingResultView()
                     .environmentObject(vm)

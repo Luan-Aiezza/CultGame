@@ -20,7 +20,6 @@ struct Cult_Game_tvOSApp: App {
     var body: some Scene {
         WindowGroup {
             HomeScreenView()
-                .environmentObject(multiplayerManager)
                 .environmentObject(gameViewModel)
                 .ignoresSafeArea()
         }

@@ -49,7 +49,7 @@ extension GameViewModel {
         switch multiplayerManager.currentPhase {
             case .cardPlay:
             if player.hasEnteredCardPlayOnce {
-                globalState.heresyPoints[peerID.displayName, default: 0] += 1000
+                globalState.heresyPoints += 1000
             }
             turnEnteredCardPlayOnce()
             replenishHandIfNeeded()

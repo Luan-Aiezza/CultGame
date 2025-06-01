@@ -18,7 +18,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     @Published var players: [String: PlayerModel] = [:]
     @Published var globalState = GlobalGameState(
         sharedFaithPoints: 5,
-        heresyPoints: [:],
+        heresyPoints: 0,
         followers: GameRules.initialFollowers
     )
     @Published var round = 0
@@ -197,7 +197,7 @@ class MultiplayerManager: NSObject, ObservableObject {
             }
             
             if effect.heresyChange != 0 {
-                globalState.heresyPoints[effect.peerID.displayName, default: 0] += effect.heresyChange
+                globalState.heresyPoints += effect.heresyChange
             }
             
             globalState.followers += effect.followersChange

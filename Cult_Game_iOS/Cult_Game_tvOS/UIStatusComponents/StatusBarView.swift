@@ -86,8 +86,8 @@ struct StatusBarView: View {
         StatusBarAnimatedView(iconBar: "FaithIcon", title: "Faith", value: multiplayerManager.globalState.sharedFaithPoints, max: 85, color: Color(red: 1, green: 0.84, blue: 0.4), background: Color(red: 1, green: 0.94, blue: 0.76), flash: Color(red: 1, green: 0.7, blue: 0.2))
 
         StatusBarAnimatedView(iconBar: "FaithfulIcon", title: "Faithful", value: multiplayerManager.globalState.followers, max: 100, color: .white, background: Color(white: 0.85), flash: Color(white: 0.7))
-
-        StatusBarAnimatedView(iconBar: "HeresyIcon", title: "Heresy", value: multiplayerManager.globalState.followers, max: 100, color: Color(red: 0.85, green: 0.2, blue: 0.2), background: Color(red: 1.0, green: 0.7, blue: 0.7), flash: Color(red: 0.5, green: 0, blue: 0))
+        
+        StatusBarAnimatedView(iconBar: "HeresyIcon", title: "Heresy", value: multiplayerManager.globalState.heresyPoints, max: 100, color: Color(red: 0.85, green: 0.2, blue: 0.2), background: Color(red: 1.0, green: 0.7, blue: 0.7), flash: Color(red: 0.5, green: 0, blue: 0))
     }
     
     func statusBar(iconBar: String, title: String, value: Int, max: Int, color: Color, background: Color, flash: Color) -> some View {

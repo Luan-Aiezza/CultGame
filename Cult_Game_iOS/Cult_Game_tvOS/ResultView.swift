@@ -11,6 +11,8 @@ struct ResultView: View {
                 RoundedRectangle(cornerRadius: 40)
                     .fill(Color.black.opacity(0.6))
                     .ignoresSafeArea()
+                    .scaledToFill()
+                
                 VStack() {
                     
                     Text("Round results")

@@ -51,7 +51,7 @@ extension GameViewModel {
     func handlePhaseChange() {
         
         if isHost, case .cardPlay = multiplayerManager.currentPhase {
-            evaluateVictory()////////////////////////////////
+            evaluateVictory()
         }
 
         switch multiplayerManager.currentPhase {

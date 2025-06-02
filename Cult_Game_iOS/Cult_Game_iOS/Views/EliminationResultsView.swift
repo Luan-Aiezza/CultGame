@@ -187,7 +187,3 @@ func previewEliminated() -> GameViewModel {
 
     return vm
 }
-#Preview("Eliminated View") {
-    EliminationResultsView()
-        .environmentObject(GameViewModel.previewEliminated())
-}

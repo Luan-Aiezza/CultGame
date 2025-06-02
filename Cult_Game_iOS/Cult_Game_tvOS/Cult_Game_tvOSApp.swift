@@ -19,7 +19,7 @@ struct Cult_Game_tvOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            VictoryTvView(outcome: .hereticVictoryBalance)
+            HomeScreenView()
                 .environmentObject(gameViewModel)
                 .ignoresSafeArea()
         }

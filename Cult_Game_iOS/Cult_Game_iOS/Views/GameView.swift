@@ -24,10 +24,14 @@ struct GameView: View {
                     EliminationView()
                 case .eliminationResults:
                     EliminationResultsView()
-                case.victory:
-                    VictoryScreenView()
+                case.victory(_):
+                    if let outcome = vm.gameOutcome {
+                        if let role = vm.player.role {
+                            VictoryScreenView(role: role, outcome: outcome)
+                            .environmentObject(vm)
+                    }
                 }
-            
+            }
         }
         .onReceive(multiplayerManager.$currentPhase) { newPhase in
             // Impede que a phase visível vá para .discussion automaticamente

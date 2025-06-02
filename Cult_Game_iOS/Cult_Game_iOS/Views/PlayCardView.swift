@@ -44,7 +44,7 @@ struct PlayCardView: View {
     @State var zoomedCard: Card? = nil
     @State var showZoomedCard = false
     @State var showBlockMessage = false
-    @State var stringShow = "O culto não tem pontos de fé suficientes para escolher uma carta"
+    @State var stringShow = "The cult does not have enough faith points to choose a card"
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     @State private var showMurderView = false
@@ -152,12 +152,14 @@ struct PlayCardView: View {
                             if !playedCard && selectedCard == nil {
                                 vm.skipCard()
                                 skippedRound = true
-                                stringShow = "Você pulou esta rodada."
+                                stringShow = "You skiped this round!"
                                 showBlockMessage = true
                             }
                         } label: {
                             ZStack {
                                 Image("CardDoneButton")
+                                    .resizable()
+                                    .frame(width:124,height:48)
                             }
                         }
                         
@@ -166,7 +168,7 @@ struct PlayCardView: View {
                                let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
                                 if !skippedRound {
                                     vm.playCard(cardToPlay)
-                                    stringShow = "Você já jogou uma carta."
+                                    stringShow = "You already played a card!"
                                     showBlockMessage = true
                                     playedCard = true
                                     
@@ -177,6 +179,8 @@ struct PlayCardView: View {
                             }
                         } label: {
                             Image("cardViewButton")
+                                .resizable()
+                                .frame(width:124,height:48)
                         }
                     }
                     .frame(maxWidth: 500)
@@ -208,7 +212,7 @@ struct PlayCardView: View {
             
             if newPhase == .discussion {
                 // Mantenha a fase visível como está
-                print("Tentativa de ir para .discussion ignorada")
+//                print("Tentativa de ir para .discussion ignorada")
             }
         }
         .onAppear {

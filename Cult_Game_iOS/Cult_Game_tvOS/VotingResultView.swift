@@ -13,6 +13,7 @@ struct VotingResultView: View {
             // Background scene
             SpriteView(scene: scene)
                 .ignoresSafeArea()
+                .scaledToFill()
 
             // Dark gradient overlay
             LinearGradient(colors: [Color.black.opacity(0.5), Color.clear], startPoint: .top, endPoint: .bottom)

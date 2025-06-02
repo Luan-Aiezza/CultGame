@@ -45,5 +45,7 @@ class Card: Identifiable, Equatable, Codable, Transferable {
     func play(vm: GameViewModel) {
         guard let role = vm.player.role else { return }
         let action = CardPlayAction(playerID: vm.peerID, card: self, playerRole: role)
+        
+        vm.multiplayerManager.send(action)
     }
 }

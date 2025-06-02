@@ -11,6 +11,7 @@ import MultipeerConnectivity
 extension GameViewModel {
     
     func addVote(to peerID: String) {
+        print("entrou em mandar votos")
         if var player = multiplayerManager.players[peerID] {
             player.votes += 1
             multiplayerManager.players[peerID] = player

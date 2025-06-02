@@ -67,7 +67,6 @@
 				Assets.xcassets,
 				ViewModels/PlayCardViewModel.swift,
 				Views/Components/PlayerElimView.swift,
-				Views/SpriteScenePhone/PhoneViewScene.sks,
 				Views/WaitingForPlayersView.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;

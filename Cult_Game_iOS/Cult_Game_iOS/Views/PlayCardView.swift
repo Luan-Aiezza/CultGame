@@ -85,9 +85,13 @@ struct PlayCardView: View {
                         .zIndex(4)
                 }
                 
-                // Fundo com a cena do SpriteKit
-                SpriteView(scene: scene)
+                Image("background_002")
+                    .resizable()
+                    .overlay {
+                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                    }
                     .ignoresSafeArea()
+                    .scaledToFill()
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
@@ -157,7 +161,7 @@ struct PlayCardView: View {
                             }
                         } label: {
                             ZStack {
-                                Image("CardDoneButton")
+                                Image("cardViewButton")
                                     .resizable()
                                     .frame(width:124,height:48)
                             }
@@ -178,20 +182,20 @@ struct PlayCardView: View {
                                 }
                             }
                         } label: {
-                            Image("cardViewButton")
+                            Image("CardDoneButton")
                                 .resizable()
                                 .frame(width:124,height:48)
                         }
                     }
                     .frame(maxWidth: 500)
                     .padding()
-                    if showFollowTvView {
-                        FollowTvView()
-                            .transition(.opacity)
-                            .zIndex(5)
-                    }
+                   
                 }
-                
+                if showFollowTvView {
+                    FollowTvView()
+                        .transition(.opacity)
+                        .zIndex(5)
+                }
                 NavigationLink(
                     destination: destinationView,
                     isActive: Binding(

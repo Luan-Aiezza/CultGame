@@ -19,7 +19,6 @@ struct VotingView: View {
             // UI sobreposta
             
             VStack {
-                
                 // TIMER CENTRAL SUPERIOR
                 HStack {
                     Spacer()

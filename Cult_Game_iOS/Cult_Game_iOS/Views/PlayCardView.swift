@@ -157,10 +157,7 @@ struct PlayCardView: View {
                             }
                         } label: {
                             ZStack {
-                                Text("Skip")
-                                    .font(.custom("Almendra-Regular", size: 16))
-                                    .foregroundColor(Color.title)
-                                Image("cultist_button_001")
+                                Image("CardDoneButton")
                             }
                         }
                         
@@ -179,10 +176,7 @@ struct PlayCardView: View {
                                 }
                             }
                         } label: {
-                            Text("Done")
-                                .font(.custom("Almendra-Regular", size: 16))
-                                .foregroundColor(Color.title)
-                            Image("cultist_button_001")
+                            Image("cardViewButton")
                         }
                     }
                     .frame(maxWidth: 500)

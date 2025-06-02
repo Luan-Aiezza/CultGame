@@ -25,7 +25,7 @@ struct GameView: View {
                 case .eliminationResults:
                     EliminationResultsView()
                 case.victory:
-                    EliminationResultsView()
+                    VictoryScreenView()
                 }
             
         }

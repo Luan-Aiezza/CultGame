@@ -94,6 +94,15 @@ struct HowToPlayView1: View {
             ZStack {
                 SpriteView(scene: scene)
                     .ignoresSafeArea()
+                
+                // Camada de gradiente radial para escurecer a tela
+                RadialGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.2), Color.black]),
+                    center: .center,
+                    startRadius: 10,
+                    endRadius: 600
+                )
+                .ignoresSafeArea()
 
                 // Imagem do manual no centro
                 Image(imageNames[currentIndex])

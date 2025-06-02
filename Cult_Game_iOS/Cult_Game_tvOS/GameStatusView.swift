@@ -57,7 +57,7 @@ struct GameStatusView: View {
                     .padding(.trailing, 80*tvResponse)
                     .frame(width: 365*tvResponse)
                 }
-                .padding(.bottom, -40)
+                .padding(.bottom, 20)
             }
         }
         .onDisappear{

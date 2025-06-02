@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct SelectCard: View {
     @Binding var selectedCard: Card?
@@ -63,22 +64,6 @@ struct PlayCardView: View {
         NavigationStack {
             ZStack {
                 
-                Color.clear
-                    .background(
-                        Image("background_002")
-                            .resizable()
-                            .scaledToFill()
-                            .overlay(
-                                LinearGradient(
-                                    colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                    )
-                    .ignoresSafeArea()
-                    .zIndex(0)
-                
                 if let card = zoomedCard, showZoomedCard {
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
@@ -94,10 +79,15 @@ struct PlayCardView: View {
                         }
                         .zIndex(2)
                 }
+                
                 if showBlockMessage && !showZoomedCard {
                     blockMessageView(show: $stringShow)
                         .zIndex(4)
                 }
+                
+                // Fundo com a cena do SpriteKit
+                SpriteView(scene: scene)
+                    .ignoresSafeArea()
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
@@ -166,7 +156,12 @@ struct PlayCardView: View {
                                 showBlockMessage = true
                             }
                         } label: {
-                            Image("cardViewButton")
+                            ZStack {
+                                Text("Skip")
+                                .font(.custom("Almendra-Regular", size: 16))
+                                .foregroundColor(Color.title)
+                                Image("cultist_button_001")
+                            }
                         }
                         
                         Button {
@@ -184,7 +179,10 @@ struct PlayCardView: View {
                                 }
                             }
                         } label: {
-                            Image("cardViewButton")
+                            Text("Done")
+                            .font(.custom("Almendra-Regular", size: 16))
+                            .foregroundColor(Color.title)
+                            Image("cultist_button_001")
                         }
                     }
                     .frame(maxWidth: 500)
@@ -219,7 +217,7 @@ struct PlayCardView: View {
         .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
             
             if newValue == .discussion {
-                if selectedCard == nil {
+                if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
                     stringShow = "Você pulou esta rodada."

@@ -75,7 +75,7 @@ struct VotingResultView: View {
                 gameViewModel.advancePhaseAfterTimer()
             })
             
-//            timerManager.start(duration: 20)
+            timerManager.start(duration: 10)
             Audio.setVolume(to: 0.4)
             Audio.playSound(named: "BonfireRise")
         }

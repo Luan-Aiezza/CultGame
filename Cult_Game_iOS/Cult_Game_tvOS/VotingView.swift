@@ -63,7 +63,7 @@ struct VotingView: View {
             AudioManager.shared.stopBackgroundMusic()
         }
         .onAppear {
-            timer.start(duration: 10)
+            timer.start(duration: 30)
             AudioManager.shared.playBackgroundMusic(named: "Background_Elimination")
         }
     }

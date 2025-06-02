@@ -3,6 +3,7 @@ import SpriteKit
 import AVFoundation
 
 struct TvTransitionTextsView: View {
+    @EnvironmentObject var vm : GameViewModel
     
     enum SequenceType {
         case introSequence, endSequence
@@ -124,8 +125,8 @@ struct TvTransitionTextsView: View {
             case 2:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
-                EmptyView()
-                //VotingView()
+                VotingView()
+                    .environment(vm)
             }
         }
     }

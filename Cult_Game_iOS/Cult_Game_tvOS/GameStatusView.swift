@@ -64,7 +64,7 @@ struct GameStatusView: View {
             AudioManager.shared.stopBackgroundMusic()
 
         }.onAppear {
-            timer.start(duration: 30) //180
+            timer.start(duration: 120) //180
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

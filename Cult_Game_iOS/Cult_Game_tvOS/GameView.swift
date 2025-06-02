@@ -27,10 +27,12 @@ struct GameView: View {
                 DiscussionView()
                     .environmentObject(vm)
             case .elimination:
-                VotingView()
+                TvTransitionTextsView(type: .endSequence, isFirstRound: true)
                     .environmentObject(vm)
             case .eliminationResults:
-                VotingResultView()
+//                VotingResultView()
+//                    .environmentObject(vm)
+                VotingView()
                     .environmentObject(vm)
             case .victory(_):
                 if let outcome = vm.gameOutcome {

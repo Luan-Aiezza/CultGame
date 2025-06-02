@@ -23,8 +23,8 @@ struct SelectCard: View {
                     withAnimation {
                         zoomedCard = card
                         showZoomedCard = true
+                    }
                 }
-            }
         } else {
             Image("selectCard")
                 .resizable()
@@ -48,7 +48,7 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     @State private var showMurderView = false
-    
+    @State private var showFollowTvView = false
     
     @ViewBuilder
     var destinationView: some View {
@@ -130,9 +130,9 @@ struct PlayCardView: View {
                         }
                         .dropDestination(for: Card.self) { items, location in
                             if let card = selectedCard {
-                                    hand.append(card)
-                                    selectedCard = nil
-                                    return true
+                                hand.append(card)
+                                selectedCard = nil
+                                return true
                             }
                             return false
                         }
@@ -158,8 +158,8 @@ struct PlayCardView: View {
                         } label: {
                             ZStack {
                                 Text("Skip")
-                                .font(.custom("Almendra-Regular", size: 16))
-                                .foregroundColor(Color.title)
+                                    .font(.custom("Almendra-Regular", size: 16))
+                                    .foregroundColor(Color.title)
                                 Image("cultist_button_001")
                             }
                         }
@@ -180,13 +180,18 @@ struct PlayCardView: View {
                             }
                         } label: {
                             Text("Done")
-                            .font(.custom("Almendra-Regular", size: 16))
-                            .foregroundColor(Color.title)
+                                .font(.custom("Almendra-Regular", size: 16))
+                                .foregroundColor(Color.title)
                             Image("cultist_button_001")
                         }
                     }
                     .frame(maxWidth: 500)
                     .padding()
+                    if showFollowTvView {
+                        FollowTvView()
+                            .transition(.opacity)
+                            .zIndex(5)
+                    }
                 }
                 
                 NavigationLink(
@@ -202,6 +207,14 @@ struct PlayCardView: View {
                     MurderView()
                 }
                 
+            }
+        }
+        .onReceive(multiplayerManager.$currentPhase) { newPhase in
+            // Impede que a phase visível vá para .discussion automaticamente
+            
+            if newPhase == .discussion {
+                // Mantenha a fase visível como está
+                print("Tentativa de ir para .discussion ignorada")
             }
         }
         .onAppear {
@@ -220,8 +233,14 @@ struct PlayCardView: View {
                 if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
-                    stringShow = "Você pulou esta rodada."
-                    showBlockMessage = true
+                   
+                    showFollowTvView = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        showFollowTvView = false
+                        stringShow = "Blocked cards, time to discuss!"
+                        showBlockMessage = true
+                    }
                 }
             }
         }

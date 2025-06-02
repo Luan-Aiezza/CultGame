@@ -98,19 +98,21 @@ class MultiplayerManager: NSObject, ObservableObject {
             return
         }
         
-        //Verifica disponibilidade de personagem
-        let usedCharacters = self.players.values.compactMap { $0.character }
-        let availableCharacters = Character.allCases.filter { !usedCharacters.contains($0) }
-        guard let character = availableCharacters.first else {
-            return
-        }
-        
         
         //Manda um personagem um player
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            
+            let usedCharacters = self.players.values.compactMap { $0.character }
+            let availableCharacters = Character.allCases.filter { !usedCharacters.contains($0) }
+            guard let character = availableCharacters.first else {
+                return
+            }
+            
             if let peer = self.connectedPeers.first(where: { $0.displayName == peerID.displayName }),
-               let _ = self.players[peer.displayName] {
-                self.players[peer.displayName]?.character = character
+               var player = self.players[peer.displayName] {
+                player.character = character
+                self.players[peer.displayName] = player
+                print("player: \(player)")
                 self.sendPlayersToAll()
             }
         }
@@ -181,6 +183,9 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     func handleReceived(_ action: CardPlayAction, from peerID: String) {
+        
+        print("recebi uma carta: \(action.card.name)")
+        
         DispatchQueue.main.async {
             let faithChange =  action.card.faithCost
             let heresyChange = action.card.faithCost
@@ -196,16 +201,34 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     func applyPendingEffects() {
+        
+        print("entrou em pending effects")
+        
+        
         for effect in pendingEffects {
             if effect.faithChange != 0 {
                 globalState.sharedFaithPoints += effect.faithChange
+                
+                if globalState.sharedFaithPoints < 0 {
+                    globalState.sharedFaithPoints = 0
+                }
+                
             }
             
             if effect.heresyChange != 0 {
                 globalState.heresyPoints += effect.heresyChange
+                
+                if globalState.sharedFaithPoints < 0 {
+                    globalState.heresyPoints = 0
+                }
+                
             }
             
             globalState.followers += effect.followersChange
+            
+            if globalState.followers < 0 {
+                globalState.followers = 0
+            }
         }
         pendingEffects.removeAll()
         sendGlobalStateToAllPlayers()
@@ -228,14 +251,16 @@ extension MultiplayerManager: MCSessionDelegate {
                     self.players[peerID.displayName] = PlayerModel()
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    print("Player sem personagem")
-                    print(self.players)
-                    if self.session.connectedPeers.contains(peerID) {
-                        self.addCharacter(to: peerID)
+                if self.isHosting {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if self.session.connectedPeers.contains(peerID) {
+                            if self.players[peerID.displayName]?.character == nil {
+                                self.addCharacter(to: peerID)
+                            }
+                        }
                     }
                 }
-                
+
             case .notConnected:
                 self.connectedPeers.removeAll { $0 == peerID }
                 self.players.removeValue(forKey: peerID.displayName)

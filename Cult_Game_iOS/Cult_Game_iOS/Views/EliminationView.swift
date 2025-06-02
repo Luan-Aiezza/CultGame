@@ -108,9 +108,9 @@ struct EliminationView: View {
 
                     // Botão Done
                     Button(action: {
-                        if (selectedPlayerID != nil) {
+                        if let player = selectedPlayerID {
                             voteConfirmed = true
-                            viewModel
+                            viewModel.addVote(to: player)
                             showFollowTvView = true
                         }
                         

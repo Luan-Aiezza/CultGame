@@ -70,7 +70,12 @@ struct VotingResultView: View {
         }
         .onAppear {
             gameViewModel.evaluateVotes()
-            timerManager.start(duration: 20)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+                gameViewModel.advancePhaseAfterTimer()
+            })
+            
+//            timerManager.start(duration: 20)
             Audio.setVolume(to: 0.4)
             Audio.playSound(named: "BonfireRise")
         }

@@ -39,10 +39,10 @@ extension GameViewModel {
             multiplayerManager.sendGamePhase(.eliminationResults)
         case .eliminationResults:
             print("current phase: \(multiplayerManager.currentPhase)")
+            evaluateVictory()
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
-            evaluateVictory()
         default:
             break
         }

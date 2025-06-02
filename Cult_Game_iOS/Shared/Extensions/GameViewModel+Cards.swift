@@ -46,22 +46,10 @@ extension GameViewModel {
             return
         }
 
-        guard points >= card.faithCost else {
-            return
-        }
-
         assignCard(card: card)
         removeCardFromHand(card: card)
 
         card.play(vm: self)
-
-        print("""
-        🃏 Carta jogada: \(card.name)
-        ✝️ Fé: \(multiplayerManager.globalState.sharedFaithPoints)
-        🔥 Heresia: \(multiplayerManager.globalState.heresyPoints)
-        👥 Fiéis: \(multiplayerManager.globalState.followers)
-        """)
-
         turnEnteredCardPlayOnce()
     }
 

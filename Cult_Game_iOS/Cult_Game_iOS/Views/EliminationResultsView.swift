@@ -118,7 +118,7 @@ struct DefeatImageView: View {
         Image(imageName)
             .resizable()
             .scaledToFit()
-            .offset(x: -8, y: -120)
+            .offset(x: 0, y: -120)
             .frame(width: 115, height: 130)
             .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
             .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem

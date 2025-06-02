@@ -17,25 +17,32 @@ struct GameView: View {
             case .pairing:
                 HostGameView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .roleSelection:
                 StoryView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .cardPlay:
                 GameStatusView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .discussion:
                 DiscussionView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .elimination:
                 VotingView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .eliminationResults:
                 VotingResultView()
                     .environmentObject(vm)
+                    .ignoresSafeArea()
             case .victory(_):
                 if let outcome = vm.gameOutcome {
                     VictoryTvView(outcome: outcome)
                         .environmentObject(vm)
+                        .ignoresSafeArea()
                 }
             }
         }

@@ -47,7 +47,7 @@ struct MurderView: View {
                 VStack {
                     Spacer()
 
-                    Text("Escolha alguém para matar")
+                    Text("Choose someone to eliminate!")
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
                         .foregroundColor(.title)
@@ -98,7 +98,6 @@ struct MurderView: View {
                         voteConfirmed = true
                         if let peer = selectedPlayerID {
                             vm.kill(peer: peer)
-                            print("assassinou fulano")
                         }
                         DispatchQueue.main.async {
                             print(vm.multiplayerManager.players)

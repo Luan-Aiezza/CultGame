@@ -43,7 +43,7 @@ struct EliminationView: View {
                 VStack {
                     Spacer()
 
-                    Text("Quem é Herege?")
+                    Text("Who is the heretic?")
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
                         .foregroundColor(.title)

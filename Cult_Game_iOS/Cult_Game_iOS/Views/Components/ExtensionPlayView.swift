@@ -4,7 +4,7 @@ import SwiftUI
 extension PlayView {
     
     var scene: SKScene {
-        if let scene = SKScene(fileNamed: "PhoneViewScene.sks") {
+        if let scene = SKScene(fileNamed: "PhoneScene.sks") {
             applyLinearFiltering(to: scene)
             animateBonfire(in: scene)
             return scene

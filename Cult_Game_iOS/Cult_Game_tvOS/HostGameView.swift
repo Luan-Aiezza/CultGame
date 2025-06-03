@@ -150,7 +150,7 @@ struct HostGameView: View {
                             .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                     }
                     
-                }
+                }.padding(.trailing, 100)
             }
             .onChange(of: multiplayerManager.players.count) { count in
                 canPlay = count >= 0

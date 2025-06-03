@@ -48,10 +48,11 @@ struct VotingResultView: View {
                     Image("\(killedName)")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 151, height: 161)
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
                         .padding(.top, 230)
+                        .position(x: 0, y: 0)
                 } else {
                     Text("Draw! No one was voted!")
                         .font(.custom("VinerHandITC", size: 70))

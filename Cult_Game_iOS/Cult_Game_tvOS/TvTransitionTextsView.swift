@@ -6,7 +6,7 @@ struct TvTransitionTextsView: View {
     @EnvironmentObject var vm : GameViewModel
     
     enum SequenceType {
-        case introSequence, endSequence
+        case introSequence, middleSequence, endSequence
     }
 
     let type: SequenceType
@@ -108,7 +108,7 @@ struct TvTransitionTextsView: View {
                 //GameStatusView()
             }
             
-        case .endSequence:
+        case .middleSequence:
             switch step {
             case 0:
                 VStack(spacing: 12) {
@@ -120,9 +120,15 @@ struct TvTransitionTextsView: View {
                         .padding()
                 }
                 .transition(.opacity)
-            case 1:
+            default:
+                EmptyView()
+            }
+            
+        case .endSequence:
+            switch step {
+            case 0:
                 centeredText(selectedText)
-            case 2:
+            case 1:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
                 VotingView()

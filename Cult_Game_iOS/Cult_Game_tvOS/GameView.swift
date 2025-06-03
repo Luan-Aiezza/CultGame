@@ -30,9 +30,7 @@ struct GameView: View {
                 TvTransitionTextsView(type: .endSequence, isFirstRound: true)
                     .environmentObject(vm)
             case .eliminationResults:
-//                VotingResultView()
-//                    .environmentObject(vm)
-                VotingView()
+                VotingResultView()
                     .environmentObject(vm)
             case .victory(_):
                 if let outcome = vm.gameOutcome {

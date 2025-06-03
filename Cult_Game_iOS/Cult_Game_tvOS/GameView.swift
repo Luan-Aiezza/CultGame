@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct GameView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
@@ -13,6 +14,7 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
+            
             switch multiplayerManager.currentPhase {
             case .pairing:
                 HostGameView()

@@ -17,12 +17,9 @@ struct StoryView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                SpriteView(scene: scene)
+                
+                LinearGradient(colors: [Color.black.opacity(0.5), Color.clear], startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
-                    .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                    }
-
                 
                 VStack {
                     TvTransitionTextsView(type: .introSequence, isFirstRound: true)

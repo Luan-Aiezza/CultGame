@@ -11,13 +11,7 @@ struct VotingView: View {
     var body: some View {
         
         ZStack {
-            
-            // Fundo com a cena do SpriteKit
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-            
-            // UI sobreposta
-            
+
             VStack {
                 // TIMER CENTRAL SUPERIOR
                 HStack {

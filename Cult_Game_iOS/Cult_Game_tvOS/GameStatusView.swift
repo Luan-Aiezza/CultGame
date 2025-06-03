@@ -11,11 +11,6 @@ struct GameStatusView: View {
     var body: some View {
         
         ZStack {
-            
-            // Fundo com a cena do SpriteKit
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-
             // UI sobreposta
             
             VStack {
@@ -68,6 +63,7 @@ struct GameStatusView: View {
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }
+    
     var playerIconsView: some View {
         HStack(spacing: 8) {
             ForEach(multiplayerManager.players.values.filter { $0.state == .active }, id: \.id) { player in
@@ -82,4 +78,5 @@ struct GameStatusView: View {
         .background(Color(red: 0.16, green: 0.15, blue: 0.13))
         .cornerRadius(16)
     }
+    
 }

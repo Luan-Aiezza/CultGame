@@ -12,17 +12,13 @@ struct DiscussionView: View {
     var body: some View {
         ZStack {
             
-            SpriteView(scene: scene)
-                .ignoresSafeArea(.all)
-            
             if showResultView {
                 ResultView()
                     .background(Color.clear)
+                
             } else {
                 ZStack {
-                    // UI sobreposta
                     VStack {
-                        
                         // TIMER CENTRAL SUPERIOR
                         HStack {
                             Spacer()

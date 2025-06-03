@@ -75,6 +75,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				TileMap/MyScene.sks,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};

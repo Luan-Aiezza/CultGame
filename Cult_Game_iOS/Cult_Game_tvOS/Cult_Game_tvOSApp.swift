@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SpriteKit
 @main
 struct Cult_Game_tvOSApp: App {
     @StateObject var multiplayerManager = MultiplayerManager.shared
@@ -19,9 +19,15 @@ struct Cult_Game_tvOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TvTransitionTextsView(type: .endSequence, isFirstRound: true)
+            ZStack{
+            SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
+                .ignoresSafeArea()
+            
+            HomeScreenView()
                 .environmentObject(gameViewModel)
                 .ignoresSafeArea()
+                
+            }
         }
     }
 }

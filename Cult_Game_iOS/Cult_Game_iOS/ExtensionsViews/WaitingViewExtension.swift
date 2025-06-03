@@ -4,7 +4,8 @@ import SpriteKit
 extension WaitingView {
     
     var scene: SKScene {
-        if let scene = SKScene(fileNamed: "PhoneScene") {
+//        if let scene = SKScene(fileNamed: "PhoneScene") {
+        if let scene = SKScene(fileNamed: "MainSceneiOS") {
             scene.scaleMode = .aspectFill
             applyLinearFiltering(to: scene)
             animateBonfire(in: scene)

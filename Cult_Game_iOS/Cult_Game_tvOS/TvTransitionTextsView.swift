@@ -59,10 +59,7 @@ struct TvTransitionTextsView: View {
     
     var body: some View {
         ZStack {
-            // VIEW DO MAPA
-            SpriteView(scene: scene)
-                .ignoresSafeArea(.all)
-            
+
             // Radial gradient overlay
             Rectangle()
                 .fill(

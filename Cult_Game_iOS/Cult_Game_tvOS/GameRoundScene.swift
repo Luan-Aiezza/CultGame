@@ -22,9 +22,7 @@ struct GameRoundView: View {
     
     var body: some View {
         ZStack {
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-            
+
             if let outcome = outcome {
                 VStack(spacing: 16) {
                     switch outcome {

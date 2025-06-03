@@ -61,9 +61,6 @@ struct VictoryTvView: View {
     var body: some View {
         ZStack {
             
-            SpriteView(scene: scene)//animacao do fundo
-                .ignoresSafeArea(.all)
-            
             Image(content.backgroundImageName)
                 .resizable()
                 .scaledToFill()
@@ -147,6 +144,7 @@ struct VictoryTvView: View {
             .padding()
         }.onAppear{
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
+            MainScene.shared?.zoomIn()
         }
     }
 }

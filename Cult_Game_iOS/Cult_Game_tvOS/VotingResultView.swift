@@ -10,10 +10,6 @@ struct VotingResultView: View {
     
     var body: some View {
         ZStack {
-            // Background scene
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-
             // Dark gradient overlay
             LinearGradient(colors: [Color.black.opacity(0.5), Color.clear], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()

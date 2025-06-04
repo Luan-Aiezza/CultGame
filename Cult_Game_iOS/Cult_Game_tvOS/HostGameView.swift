@@ -156,6 +156,7 @@ struct HostGameView: View {
                 canPlay = count >= 0
             }
             .onAppear {
+                MainScene.shared?.zoomOut()
                 multiplayerManager.startHosting()
             }
         }

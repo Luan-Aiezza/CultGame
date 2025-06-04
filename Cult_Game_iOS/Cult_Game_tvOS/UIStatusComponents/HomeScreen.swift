@@ -20,8 +20,6 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationView {
             ZStack {
-//                SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
-//                    .ignoresSafeArea()
                 
                 // Camada de gradiente radial para escurecer a tela
                 RadialGradient(

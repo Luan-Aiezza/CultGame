@@ -16,9 +16,18 @@ public class MainScene: SKScene {
     
     public func zoomIn() {
         if let camera {
+            camera.run(.move(to: CGPoint(x: 0, y: 100), duration: 0.0))
             camera.run(.scale(to: 0.4, duration: 0.75))
         }
     }
+    
+    public func zoomOut() {
+        if let camera {
+            camera.run(.move(to: CGPoint(x: 0, y: 0), duration: 0.0))
+            camera.run(.scale(to: 1, duration: 0.75))
+        }
+    }
+    
 }
 
 extension MainView {
@@ -34,7 +43,7 @@ extension MainView {
         animateRain(in: scene)
         animateSmoke(in: scene)
         animateBonfire(in: scene)
-        animateFollowers(in: scene)
+        //animateFollowers(in: scene)
         
         return scene
     }

@@ -55,11 +55,9 @@ struct GameStatusView: View {
                 .padding(.bottom, 20)
             }
         }
-        .onDisappear{
-            AudioManager.shared.stopBackgroundMusic()
-
-        }.onAppear {
-            timer.start(duration: 120) //180
+        .onAppear {
+            MainScene.shared?.zoomOut()
+            timer.start(duration: 5) //90
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

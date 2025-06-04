@@ -1,7 +1,7 @@
 import SwiftUI
 import SpriteKit
 
-extension MainView {
+extension MainScene {
     
     func animateFollowers(in scene: SKScene) {
         guard let centerNode = scene.childNode(withName: "*/Fogueira") else {

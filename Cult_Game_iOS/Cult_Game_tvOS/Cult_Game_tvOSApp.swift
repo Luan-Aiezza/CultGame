@@ -20,12 +20,13 @@ struct Cult_Game_tvOSApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack{
-            SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
-                .ignoresSafeArea()
-            
-            HomeScreenView()
-                .environmentObject(gameViewModel)
-                .ignoresSafeArea()
+                
+//            SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
+//                .ignoresSafeArea()
+                
+                VictoryTvView(outcome: .cultistVictoryElimination)
+                    .environmentObject(gameViewModel)
+                    .ignoresSafeArea()
                 
             }
         }

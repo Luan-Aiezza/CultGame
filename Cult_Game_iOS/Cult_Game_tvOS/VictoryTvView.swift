@@ -8,7 +8,6 @@ import AVFoundation
 // tela de vitória para tvOS, exibe elementos visuais com base no resultado da partida
 struct VictoryTvView: View {
     let outcome: GameOutcome
-    @State private var navigateToWaiting = false
     @EnvironmentObject var viewModel: GameViewModel
     let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
     
@@ -56,7 +55,7 @@ struct VictoryTvView: View {
         }
         return nil
     }
-
+    
     
     var body: some View {
         ZStack {
@@ -72,7 +71,7 @@ struct VictoryTvView: View {
                     // Botão no canto superior direito para sair da partida e voltar para a tela de espera
                     Button(action: {
                         viewModel.resetGame()
-                        navigateToWaiting = true
+                        viewModel.multiplayerManager.currentPhase = .pairing
                     }) {
                         Image("Exit")
                             .resizable()
@@ -83,7 +82,7 @@ struct VictoryTvView: View {
                     .padding(.trailing, 95)
                     .padding(.bottom, 24)
                 }
-                 
+                
                 // Exibe os textos de título e descrição da vitória
                 Text(content.title)
                     .font(.custom("VinerHandITC", size: 70))
@@ -137,14 +136,11 @@ struct VictoryTvView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: HomeScreenView(), isActive: $navigateToWaiting) {
-                    EmptyView()
-                }// Link para navegar de volta pra tela de host quando o botaao É PRESSIOANDO
             }
             .padding()
         }.onAppear{
-            AudioManager.shared.playBackgroundMusic(named: "Background_Map")
             MainScene.shared?.zoomIn()
+            AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }
 }

@@ -10,7 +10,7 @@ struct MainView: View {
             SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
                 .ignoresSafeArea()
             
-            GameView()
+            HomeScreenView()
                 .ignoresSafeArea(.all)
             
         }

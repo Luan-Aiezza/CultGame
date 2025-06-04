@@ -25,19 +25,24 @@ struct GameView: View {
             case .cardPlay:
                 GameStatusView()
                     .environmentObject(vm)
+                    .ignoresSafeArea(.all)
             case .discussion:
                 DiscussionView()
                     .environmentObject(vm)
+                    .ignoresSafeArea(.all)
             case .elimination:
-                TvTransitionTextsView(type: .endSequence, isFirstRound: true)
+                VotingView()
                     .environmentObject(vm)
+                    .ignoresSafeArea(.all)
             case .eliminationResults:
                 VotingResultView()
                     .environmentObject(vm)
+                    .ignoresSafeArea(.all)
             case .victory(_):
                 if let outcome = vm.gameOutcome {
                     VictoryTvView(outcome: outcome)
                         .environmentObject(vm)
+                        .ignoresSafeArea(.all)
                 }
             }
         }

@@ -128,8 +128,7 @@ struct TvTransitionTextsView: View {
             case 1:
                 centeredTextWithImage(text: "Vote for the Heretic", image: "PhoneIcon")
             default:
-                VotingView()
-                    .environment(vm)
+                EmptyView()
             }
         }
     }

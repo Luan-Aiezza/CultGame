@@ -11,7 +11,7 @@ struct VotingResultView: View {
     var body: some View {
         ZStack {
             // Dark gradient overlay
-            LinearGradient(colors: [Color.black.opacity(0.5), Color.clear], startPoint: .top, endPoint: .bottom)
+            LinearGradient(colors: [Color.black.opacity(1), Color.clear], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
 
             VStack {
@@ -66,8 +66,8 @@ struct VotingResultView: View {
             .padding(.vertical, 100)
         }
         .onAppear {
+            MainScene.shared?.zoomIn()
             gameViewModel.evaluateVotes()
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
                 gameViewModel.advancePhaseAfterTimer()
             })

@@ -69,7 +69,7 @@ struct DiscussionView: View {
                     }
                 }
                 .onAppear {
-                    timerManager.start(duration: 5)//120
+                    timerManager.start(duration: 120)//120
                 }
             }
         }

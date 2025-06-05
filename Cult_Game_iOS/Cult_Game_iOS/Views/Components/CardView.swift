@@ -14,10 +14,24 @@ struct CardAttribute {
     let iconName: String
 }
 
+//MARK: Sugestão
+/*
+extension CardType {
+ var iconName: String {
+        switch self {
+        case .common, .cultist, .empty: return "cultist"
+        case .heresy: return "sabotage"
+        case .assassination: return "heresy"
+        }
+    }
+ }
+*/
+
 struct CardView: View {
     var card: Card
     @State private var cardAttributes: [CardAttribute] = []
     
+    #warning("Melhora a legibilidade do CardView, visto que esse switch é em relação ao CardType.")
     var icon: String {
         switch card.type {
         case .common: return "cultist"
@@ -111,8 +125,9 @@ struct CardView: View {
                             .frame(width: width * 0.08, height: width * 0.06)
                             .padding(.bottom, 3)
                     }
-
+                    
                     .position(x: width * 0.74, y: height * 0.915)
+                    #warning("Em termos de responsividade, recomendável utilizar paddings")
                 }
             }
             .onAppear {

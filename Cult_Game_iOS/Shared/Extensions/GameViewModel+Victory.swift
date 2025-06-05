@@ -17,6 +17,7 @@ extension GameViewModel {
         }
     }
     
+    #warning("Retirar prints depois de debuggado a função")
     func evaluateVictory() {
         
         print("entrou em evaluate victory")
@@ -47,6 +48,7 @@ extension GameViewModel {
         if let outcome {
             print("🏁 Vitória detectada: \(outcome)")
             multiplayerManager.sendVictory(outcome)
+
             self.gameOutcome = outcome
             multiplayerManager.currentPhase = .victory(outcome)
             multiplayerManager.sendGamePhase(.victory(outcome))

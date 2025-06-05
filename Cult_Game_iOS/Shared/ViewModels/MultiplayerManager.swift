@@ -1,11 +1,14 @@
 import Foundation
 import MultipeerConnectivity
 
+#warning("Não deveria estar na pasta 'ViewModel, e sim em uma pasta separada, seja dentro ou fora da Model.")
+
+#warning("A classe faz muita coisa: gerencia conexão, estado de jogo, serialização, envio de mensagens, integração com NotificationCenter. Sugestão: MultiplayerManager (apenas conexão) e outro manager para estado do jogo/mensagens")
+
 class MultiplayerManager: NSObject, ObservableObject {
     
     //MARK: Singleton
     static let shared = MultiplayerManager()
-    
     
     //MARK: Connection
     private let serviceType = "cult-game"
@@ -40,7 +43,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     
-    
     //MARK: Game Central -> Mensagens
     
     // carta
@@ -61,6 +63,7 @@ class MultiplayerManager: NSObject, ObservableObject {
     }
     
     //votado
+    #warning("EliminateVoted e EliminateKilled fazem a exata mesma coisa. Transformar em uma função só")
     func eliminateVoted(peerID : String) {
         let message = MultiplayerMessage.vote(peerID)
         if let data = try? JSONEncoder().encode(message) {
@@ -86,9 +89,9 @@ class MultiplayerManager: NSObject, ObservableObject {
         }
     }
     
+    #warning("Não precisa de comentários, quando o nome da função por si só já é explicativa")
     //personagem
     func addCharacter(to peerID: MCPeerID) {
-        
         // a TV assina personagens -> se o ID for o mesmo, não mandará personagens
         guard peerID != myPeerID else { return }
         if players[peerID.displayName]?.character != nil { return }
@@ -98,7 +101,7 @@ class MultiplayerManager: NSObject, ObservableObject {
             return
         }
         
-        
+        #warning("Separar em outra função.")
         //Manda um personagem um player
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
@@ -378,6 +381,7 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {}
 }
 
+
 extension Notification.Name {
     static let didReceiveGameData = Notification.Name("didReceiveGameData")
     static let didReceiveRole = Notification.Name("didReceiveRole")
@@ -385,6 +389,7 @@ extension Notification.Name {
     static let didReceiveVictory = Notification.Name("didReceiveVictory")
 }
 
+#warning("Criar uma pasta 'Utils' ajuda a ter na manga uma caixa de ferramentas, que você pode utilizar onde quiser. Essa extensão poderia estar lá")
 extension Dictionary {
     func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
         Dictionary<T, Value>(uniqueKeysWithValues: self.map { (transform($0.key), $0.value) })

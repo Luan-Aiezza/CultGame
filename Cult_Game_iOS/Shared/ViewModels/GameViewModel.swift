@@ -23,8 +23,7 @@ class GameViewModel: ObservableObject, Observable {
     let multiplayerManager = MultiplayerManager.shared
     public var emptyCard = Card(name: "", faithCost: 0, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "", imageName: "", type: .empty, rarity: 0)
     private var cancellables = Set<AnyCancellable>()
-    
-    
+        
     // MARK: - Estado individual
     @Published private(set) var player = PlayerModel()
     @Published var gameOutcome: GameOutcome?

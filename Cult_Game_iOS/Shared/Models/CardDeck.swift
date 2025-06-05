@@ -7,6 +7,7 @@
 
 import Foundation
 
+#warning("Dados estáticos devem estar em uma pasta separada. Exemplo: Mocks, Data, etc.")
 public class CardDeck {
     
     let commonCards: [Card] = [

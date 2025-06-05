@@ -18,8 +18,7 @@ struct RoleView: View {
                     .scaledToFill()
                 
                 
-                VStack{
-                    
+                VStack {
                     VStack {
                         Text(" \(viewModel.player.role?.rawValue.capitalized ?? "Unknown")")
                             .font(.custom("VinerHandITC", size: 40))
@@ -67,7 +66,7 @@ struct RoleView: View {
                     .padding(.top, 100)
                     .padding(.bottom, 25)
                 }
-                
+
                 Color.black
                     .opacity(fadeInOut ? 0 : 1)
                     .ignoresSafeArea()

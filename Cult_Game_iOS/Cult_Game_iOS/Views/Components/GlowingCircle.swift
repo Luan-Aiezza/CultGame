@@ -3,6 +3,7 @@ import SwiftUI
 struct GlowingCircleView: View {
     let characterImageName: String
     
+    #warning("Renomear nomes de variáveis. Ângulo de que?")
     @State private var animateGlow = false
     @State private var angle: Double = 0
     

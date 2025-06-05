@@ -7,6 +7,8 @@
 import SpriteKit
 import SwiftUI
 
+#warning("Renomear nome da View para StartView, ou algo parecido.")
+
 struct PlayView: View {
     @EnvironmentObject var vm: GameViewModel
     
@@ -57,3 +59,8 @@ struct PlayView: View {
         .navigationBarBackButtonHidden(true)
     }
 }
+
+#Preview(body: {
+    PlayView()
+        .environment(GameViewModel())
+})

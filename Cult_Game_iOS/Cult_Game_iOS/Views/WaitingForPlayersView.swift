@@ -32,6 +32,7 @@ struct WaitingForPlayersView: View {
             VStack {
                 Spacer()
 
+                #warning("Fazer tratativa viewModel.player.character! com if let/guard let. ")
                 Text(viewModel.player.character!.displayName)
                     .font(Font.custom("Almendra-Regular", size: 38))
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
@@ -93,6 +94,9 @@ struct WaitingForPlayersView: View {
         }
     }
 }
+
+#warning("Retirar comentários...")
+
 //
 //extension GameViewModel {
 //    static func previewModel() -> GameViewModel {

@@ -1,6 +1,9 @@
 import SpriteKit
 import SwiftUI
 
+
+//O papel da View é só exibir a cena, nunca montá-la ou configurar nós.
+
 extension PlayView {
     
     var scene: SKScene {

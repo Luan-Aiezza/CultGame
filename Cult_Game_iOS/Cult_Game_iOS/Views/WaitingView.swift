@@ -7,6 +7,8 @@
 import SwiftUI
 import SpriteKit
 
+#warning("Se aplica os mesmos avisos dados na MurderView.")
+
 struct WaitingView: View {
     @EnvironmentObject var vm: GameViewModel
     @ObservedObject private var multiplayerManager = MultiplayerManager.shared

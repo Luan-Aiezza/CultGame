@@ -6,6 +6,7 @@ struct DiscussionView: View {
     @ObservedObject var timerManager = GameTimerManager()
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var showResultView = true
+    #warning("variável maiúscula?? O certo é o uso do CamelCase")
     let Audio = AudioManager.shared
     var tvResponse = 1.5
 

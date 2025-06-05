@@ -16,6 +16,7 @@ struct VictoryScreenView: View {
     @State private var navigateToWaiting = false
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var viewModel: GameViewModel
+    #warning("Usar extensão de Color. Exemplo dado no Confluence na página do grupo.")
     let hereticRed = Color(red: 1.0, green: 0.32, blue: 0.32) // FF5151
     @State var isDisconnected = false
     var content: VictoryScreenContent {
@@ -34,6 +35,9 @@ struct VictoryScreenView: View {
 
         return nil
     }
+
+    #warning("Cuidado com o 'return nil'. Elaborar enums com casos de erro para evitar crashes.")
+    #warning("A view ao invés apenas de exibir, está processando algo. Considerar que a lógica seja feita na ViewModel.")
     var hereticDefeatImageName: String? {
         guard outcome.isCultistVictory else { return nil }
         
@@ -129,8 +133,10 @@ struct VictoryScreenView: View {
                     }
                     .padding()
                 }
+               
                 .onAppear {
                 }
+            #warning("Retirar estruturas que não estão sendo mais utilizadas.☝🏼")
             }
         }
         
@@ -187,6 +193,9 @@ extension GameViewModel {
         return vm
     }
 }
+
+#warning("Excluir views que não estão sendo mais usadas")
+
 struct DefeatedImageView: View {
     let imageName: String
     

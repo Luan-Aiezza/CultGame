@@ -1,13 +1,18 @@
 import SwiftUI
 import MultipeerConnectivity
 
+#warning("Se aplica os mesmos avisos dados na MurderView.")
+
 struct EliminationView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    
+    #warning("Propriedades sendo usadas em mais de uma View. Seguindo a arquitetura MVVM, é recomendável colocá-las em uma ViewModel, algo como EliminationPhaseViewModel. Já que se tratam de regras de negócio.")
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     @State private var showFollowTvView = false
+
     var myCharacter: Character? {
         let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
         let character = viewModel.multiplayerManager.players.first {
@@ -134,6 +139,7 @@ struct EliminationView: View {
                 .frame(maxWidth: .infinity)
 
                 .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
+
                 if showFollowTvView {
                     FollowTvView()
                         .transition(.opacity)

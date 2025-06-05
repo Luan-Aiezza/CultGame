@@ -1,6 +1,8 @@
 import Foundation
 import SwiftUI
 
+#warning("Uma Model sendo ObservableObject? É um modelo com comportamento? Sugestão: separar Card como modelo puro, e criar um serviço ou ViewModel que execute o método.")
+
 class SpecificCard : Card, ObservableObject{
     @Published var isActive : Bool = false
     var specialAbility : ((GameViewModel) -> Void)?

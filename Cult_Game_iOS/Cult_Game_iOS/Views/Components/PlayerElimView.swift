@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlayerElimView: View {
+    
+    #warning("a View apenas exibe informações, não as processa ou modifica. Variáveis como isSelected deve ir para a View Model, por exemplo")
     let player: PlayerModel
     let isSelected: Bool
     @Binding var glowRotation: Double

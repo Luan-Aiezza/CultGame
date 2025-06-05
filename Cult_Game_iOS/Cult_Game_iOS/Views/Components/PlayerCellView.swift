@@ -61,7 +61,7 @@ struct PlayerCellView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: height - 15, height: height - 15)
-
+                    
                     Text(player.character?.displayName ?? "nil")
                         .foregroundColor(.title)
                         .fontWeight(isSelected ? .bold : .regular)
@@ -73,12 +73,13 @@ struct PlayerCellView: View {
                 }
                 .padding(.horizontal, 8)
                 
+                #warning("Evitar utilizar de offset, posições variam de dispositivo para dispositivo. Prefirir usar paddings.")
                 if isSelected {
-                                    Image("murder_symbol")
-                                        .resizable()
-                                        .frame(width: 54, height: 57)
-                                        .offset(x: 74, y: -36.5) // Metade para fora nas duas direções
-                                }
+                    Image("murder_symbol")
+                        .resizable()
+                        .frame(width: 54, height: 57)
+                        .offset(x: 74, y: -36.5) // Metade para fora nas duas direções
+                }
                 
             }
         }

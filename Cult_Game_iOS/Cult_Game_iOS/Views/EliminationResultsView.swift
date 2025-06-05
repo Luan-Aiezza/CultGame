@@ -3,16 +3,19 @@ import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
 
+#warning("Mesmo aviso dado na EliminationResultsView e MurderView")
+
 struct EliminationResultsView: View {
+    
+    #warning("Por que é @ObservedObject? Ele está apenas instanciando um singleton, logo não vai apresentar mudanças. Sugestão: let multiplayerManager = MultiplayerManager.shared")
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
+
     @EnvironmentObject var viewModel: GameViewModel
     @State var isDisconnected = false
 
     var isPlayerEliminated: Bool {
         viewModel.eliminatedPlayer == viewModel.peerID
     }
-
-
 
     var eliminatedCharacter: Character? {
         guard let eliminated = viewModel.eliminatedPlayer,
@@ -30,6 +33,7 @@ struct EliminationResultsView: View {
             SpriteView(scene: scene)
                 .ignoresSafeArea()
             
+            #warning("Cuidado com os magic numbers!!")
             VStack {
                 HStack {
                     Spacer()
@@ -41,8 +45,7 @@ struct EliminationResultsView: View {
                             .resizable()
                             .frame(width: 48, height: 35)
                             .foregroundColor(.white)
-                    }
-                    .padding(.trailing, 17.4)
+                    }.padding(.trailing, 17.4)
                 }
                 .padding(.top, 16)
                 
@@ -81,6 +84,7 @@ struct EliminationResultsView: View {
                     Spacer()
 
                 } else {
+                    #warning("Nível alto em gambiarra hahaha.")
                     Spacer()
                     Text(" ")
                     Spacer()

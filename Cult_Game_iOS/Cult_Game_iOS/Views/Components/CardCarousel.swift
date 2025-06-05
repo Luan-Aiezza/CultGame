@@ -6,7 +6,7 @@ extension Int {
         return r < 0 ? r + m : r
     }
 }
-
+#warning("Retirar elementos não mais utilizados")
 func blockMessage(cardType : CardType) -> some View {
     ZStack {
         Image("tip_001")
@@ -28,8 +28,10 @@ func blockMessage(cardType : CardType) -> some View {
     }
 }
 
+#warning("Nomes de Tipo são em CamelCase")
 struct blockMessageView : View {
     
+    #warning("Falta clareza no nome de variáveis")
     @Binding var show : String
     
     var body: some View {
@@ -148,8 +150,11 @@ struct CardCarouselView: View {
                 activeIndex = 0
             }
         }
+    #warning("Não ignorar os warnings...☝🏼")
     }
     
+    #warning("Tudo é privado a menos que seja público. Lembrar de privar funções específicas dessa classe.")
+
     func distance(_ item: Int) -> Double {
         guard cards.count > 0 else { return 0 }
         return (draggingItem - Double(item)).remainder(dividingBy: Double(cards.count))

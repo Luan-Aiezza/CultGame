@@ -19,6 +19,7 @@ class TimerManager: ObservableObject {
             .store(in: &cancellables)
     }
 
+    #warning("Deixar mais claro nomes de função")
     private func tick() {
         guard timeRemaining > 0 else { return }
         timeRemaining -= 1

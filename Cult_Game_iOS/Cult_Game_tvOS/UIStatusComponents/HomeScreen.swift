@@ -58,6 +58,7 @@ struct HomeScreenView: View {
                 }
             }
         }.onAppear {
+            #warning("Criar uma propriedade com o nome dos SFX")
             AudioManager.shared.playBackgroundMusic(named: "Intro_Game_OST")
         }
     }
@@ -75,6 +76,7 @@ struct HomeScreenView: View {
         }
     }
 }
+
 struct HowToPlayView1: View {
     var isPortuguese: Bool {
         Locale.current.language.languageCode?.identifier == "pt"

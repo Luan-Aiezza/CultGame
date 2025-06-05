@@ -36,6 +36,9 @@ struct SelectCard: View {
 }
 
 struct PlayCardView: View {
+
+    #warning("Criar nomes de variáveis e/ou constantes que representam sua funcionalidade")
+    
     @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @ObservedObject var pvm = PlayCardViewModel()
@@ -210,6 +213,8 @@ struct PlayCardView: View {
                 }
                 
             }
+            #warning("Retirar estruturas que não estão sendo mais usadas. Prejudica a clareza de códigio no arquivo. Exemplo: .onReceive {} 👇🏼")
+
         }
         .onReceive(multiplayerManager.$currentPhase) { newPhase in
             // Impede que a phase visível vá para .discussion automaticamente

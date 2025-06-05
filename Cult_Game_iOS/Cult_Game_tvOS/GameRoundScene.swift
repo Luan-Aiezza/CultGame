@@ -22,7 +22,7 @@ struct GameRoundView: View {
     
     var body: some View {
         ZStack {
-            SpriteView(scene: scene)
+            SpriteView(scene: GameStatusView)
                 .ignoresSafeArea()
             
             if let outcome = outcome {

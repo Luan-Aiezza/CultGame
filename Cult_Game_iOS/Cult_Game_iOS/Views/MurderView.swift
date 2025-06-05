@@ -7,6 +7,8 @@ struct MurderView: View {
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+
+    #warning("Fere o princípio de responsabilidade única. Deveria estar em uma ViewModel, por exemplo.")
     var myCharacter: Character? {
         let myDisplayName = vm.multiplayerManager.myPeerID.displayName
         let character = vm.multiplayerManager.players.first {
@@ -16,6 +18,7 @@ struct MurderView: View {
         return character
     }
 
+    #warning("Magic Numbers :( / Essa estrutura é utilizada em EliminationView também, então já que não é específico dessa view, poderia criar uma struct 'LayoutConstants' algo assim, para evitar repetições em mais de um arquivo.")
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
     private let verticalSpacing: CGFloat = 34
@@ -28,6 +31,7 @@ struct MurderView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            
             let availableWidth = geometry.size.width - (horizontalPadding * 2) - horizontalSpacing
             let cardWidth = availableWidth / 2
 
@@ -35,7 +39,9 @@ struct MurderView: View {
                 Color.black.opacity(0.8)
                     .ignoresSafeArea()
                     .transition(.opacity)
-                
+
+                #warning("1. Prefira utilizar nomes que representam do que se trata a imagem. / 2. Use o ImageResource, chance zero de errar nome da imagem. Ex: Image(.background002)")
+
                 Image("background_002")
                     .resizable()
                     .overlay {
@@ -47,6 +53,8 @@ struct MurderView: View {
                 VStack {
                     Spacer()
 
+                #warning("Utilizar fontes customizadas assim, não permite adaptação no Dynamic Type. Sugestão: .font(.custom('', size: 34, relativeTo: .largeTitle))")
+                    
                     Text("Escolha alguém para matar")
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
@@ -88,18 +96,21 @@ struct MurderView: View {
                     }
                     .padding(.top, 20)
 
+                #warning("Magic Numbers :(")
                     Spacer(minLength: 520)
                 }
                 .padding(.horizontal, horizontalPadding)
 
                 // Botão
                 Button(action: {
+                    #warning("Prefira usar if let/guard let e tratar casos de erro.")
                     if (selectedPlayerID != nil) {
                         voteConfirmed = true
                         if let peer = selectedPlayerID {
                             vm.kill(peer: peer)
                             print("assassinou fulano")
                         }
+                        #warning("Lembrar de retirar os prints. Eles não devem ir para a produção.")
                         DispatchQueue.main.async {
                             print(vm.multiplayerManager.players)
                         }

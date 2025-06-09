@@ -37,7 +37,7 @@ struct SelectCard: View {
 
 struct PlayCardView: View {
     @EnvironmentObject var vm: GameViewModel
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @ObservedObject var pvm = PlayCardViewModel()
     @State var selectedCard: Card? = nil
     @State var hand: [Card] = []

@@ -9,7 +9,7 @@ import SwiftUI
 import SpriteKit
 @main
 struct Cult_Game_tvOSApp: App {
-    @StateObject var multiplayerManager = MultiplayerManager.shared
+    @StateObject var multiplayerManager = GameKitMultiplayerManager.shared
     @StateObject var gameViewModel = GameViewModel()
     
     init(){

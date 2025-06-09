@@ -1,19 +1,17 @@
 import SwiftUI
-import MultipeerConnectivity
+import GameKit
 
 struct MurderView: View {
     @EnvironmentObject var vm: GameViewModel
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
+    
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+
     var myCharacter: Character? {
-        let myDisplayName = vm.multiplayerManager.myPeerID.displayName
-        let character = vm.multiplayerManager.players.first {
-            $0.key == myDisplayName
-        }?.value.character
-        
-        return character
+        let myID = multiplayerManager.localPlayer.playerID
+        return multiplayerManager.players[myID]?.character
     }
 
     private let horizontalPadding: CGFloat = 26
@@ -35,11 +33,15 @@ struct MurderView: View {
                 Color.black.opacity(0.8)
                     .ignoresSafeArea()
                     .transition(.opacity)
-                
+
                 Image("background_002")
                     .resizable()
                     .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                        LinearGradient(
+                            colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
@@ -55,25 +57,21 @@ struct MurderView: View {
 
                     LazyVGrid(columns: columns, spacing: verticalSpacing) {
                         ForEach(
-                            multiplayerManager.players.filter { (peerID, player) in
-                                let isNotMyPeer = player.character != myCharacter
-                                let isActive = player.state == .active
-                                return isNotMyPeer && isActive
-                            },
+                            multiplayerManager.players.filter { (playerID, player) in
+                                player.character != myCharacter && player.state == .active
+                            }.sorted(by: { $0.key < $1.key }),
                             id: \.key
-                        ) { peerID, player in
+                        ) { playerID, player in
                             PlayerCellView(
                                 player: player,
-                                isSelected: selectedPlayerID == peerID,
+                                isSelected: selectedPlayerID == playerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
-                                    if selectedPlayerID == peerID {
-                                        // Deseleciona
+                                    if selectedPlayerID == playerID {
                                         selectedPlayerID = nil
                                         glowRotation = 0
                                     } else {
-                                        // Seleciona novo player
-                                        selectedPlayerID = peerID
+                                        selectedPlayerID = playerID
                                         voteConfirmed = false
                                         glowRotation = 0
                                         withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
@@ -92,16 +90,14 @@ struct MurderView: View {
                 }
                 .padding(.horizontal, horizontalPadding)
 
-                // Botão
+                // Botão Done
                 Button(action: {
-                    if (selectedPlayerID != nil) {
+                    if let playerID = selectedPlayerID {
                         voteConfirmed = true
-                        if let peer = selectedPlayerID {
-                            vm.kill(peer: peer)
-                            print("assassinou fulano")
-                        }
+                        vm.kill(peer: playerID)
+                        print("Assassinou \(playerID)")
                         DispatchQueue.main.async {
-                            print(vm.multiplayerManager.players)
+                            print(multiplayerManager.players)
                         }
                     }
                 }) {
@@ -123,8 +119,4 @@ struct MurderView: View {
             }
         }
     }
-}
-
-#Preview {
-    MurderView()
 }

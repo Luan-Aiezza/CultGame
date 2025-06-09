@@ -10,7 +10,7 @@ import SpriteKit
 
 struct StoryView: View {
     @EnvironmentObject var vm: GameViewModel
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @State private var fadeInOut : Bool = false
     @State private var changeView : Bool = false
     

@@ -3,7 +3,7 @@ import SpriteKit
 import AVFoundation
 
 struct ResultView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     
     var body: some View {
         ZStack {
@@ -59,5 +59,5 @@ struct ResultView: View {
 
 #Preview {
     ResultView()
-        .environmentObject(MultiplayerManager.shared)
+        .environmentObject(GameKitMultiplayerManager.shared)
 }

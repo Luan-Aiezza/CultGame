@@ -3,7 +3,7 @@ import SpriteKit
 import Combine
 
 struct GameStatusView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @ObservedObject var timer = GameTimerManager()
     
     var tvResponse = 1.5

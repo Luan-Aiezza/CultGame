@@ -3,7 +3,7 @@ import SpriteKit
 import Combine
 
 struct VotingView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @ObservedObject var timer = GameTimerManager()
     @State private var showStory = true
     
@@ -77,7 +77,7 @@ struct VotingView: View {
     }
     var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
+            ForEach(multiplayerManager.connectedPlayers, id: \.self) { peer in
                 Image("FoxIcon")//trocar pelo icone do jogador
                     .resizable()
                     .frame(width: 36*tvResponse, height: 36*tvResponse)

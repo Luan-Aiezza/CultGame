@@ -77,7 +77,7 @@ struct StatusBarAnimatedView: View {
 
 struct StatusBarView: View {
     
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     
     var tvResponse = 1.5
 

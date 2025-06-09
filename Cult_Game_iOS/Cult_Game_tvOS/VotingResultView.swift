@@ -4,7 +4,7 @@ import AVFoundation
 
 struct VotingResultView: View {
     var timerManager = GameTimerManager()
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @EnvironmentObject var gameViewModel: GameViewModel
     var Audio = AudioManager.shared
     

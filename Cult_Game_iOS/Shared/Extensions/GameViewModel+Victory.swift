@@ -8,54 +8,40 @@
 import SwiftUI
 
 extension GameViewModel {
-    
+
     @objc func handleVictory(_ notification: Notification) {
         if let outcome = notification.object as? GameOutcome {
             self.gameOutcome = outcome
             self.currentPhase = .victory(outcome)
-            multiplayerManager.sendGamePhase(.victory(outcome))
+            multiplayer.sendGamePhase(.victory(outcome))
         }
     }
-    
+
     func evaluateVictory() {
-        
-        print("entrou em evaluate victory")
-        
-        let players = multiplayerManager.players
-        print("players: \(players)")
-        
-        let cultists = players.filter { (_, player) in
-            player.role == .cultist && player.state == .active
-        }
-        
-        let heretics = players.filter { (_, player) in
-            player.role == .heretic && player.state == .active
-        }
-        
+        let players = multiplayer.players
+
+        let cultists = players.filter { $0.value.role == .cultist && $0.value.state == .active }
+        let heretics = players.filter { $0.value.role == .heretic && $0.value.state == .active }
+
         var outcome: GameOutcome?
 
-        if multiplayerManager.globalState.followers >= GameRules.maxFollowers {
+        if multiplayer.globalState.followers >= GameRules.maxFollowers {
             outcome = .cultistVictoryFollowers
         } else if heretics.isEmpty {
             outcome = .cultistVictoryElimination
-        } else if multiplayerManager.globalState.followers <= 0 {
+        } else if multiplayer.globalState.followers <= 0 {
             outcome = .hereticVictoryFollowers
         } else if heretics.count >= cultists.count {
             outcome = .hereticVictoryBalance
         }
 
         if let outcome {
-            print("🏁 Vitória detectada: \(outcome)")
-            multiplayerManager.sendVictory(outcome)
+            multiplayer.sendVictory(outcome)
             self.gameOutcome = outcome
-            multiplayerManager.currentPhase = .victory(outcome)
-            multiplayerManager.sendGamePhase(.victory(outcome))
+            multiplayer.currentPhase = .victory(outcome)
+            multiplayer.sendGamePhase(.victory(outcome))
         } else {
-            print("🔄 Nenhuma vitória detectada")
             advancePhaseAfterTimer()
         }
-        
-        print("chegou ao final de evaluate victory")
     }
-
 }

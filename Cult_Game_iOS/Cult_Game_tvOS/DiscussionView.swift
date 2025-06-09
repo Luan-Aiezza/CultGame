@@ -10,7 +10,7 @@ struct DiscussionView: View {
     }
 
     @ObservedObject var timerManager = GameTimerManager()
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @State private var viewPhase: ViewPhase = .transition
     let Audio = AudioManager.shared
     var tvResponse = 1.5
@@ -95,7 +95,7 @@ struct DiscussionView: View {
 
     var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
+            ForEach(multiplayerManager.connectedPlayers, id: \.self) { peer in
                 Image("FoxIcon") // Trocar pelo ícone do jogador
                     .resizable()
                     .frame(width: 36 * tvResponse, height: 36 * tvResponse)
@@ -108,5 +108,5 @@ struct DiscussionView: View {
 
 #Preview {
     DiscussionView()
-        .environmentObject(MultiplayerManager.shared)
+        .environmentObject(GameKitMultiplayerManager.shared)
 }

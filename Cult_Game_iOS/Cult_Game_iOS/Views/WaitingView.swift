@@ -1,32 +1,24 @@
-//
-//  WaitingView.swift
-//  Cult_Game_iOS
-//
-//  Created by Jessica Rodrigues on 22/05/25.
-//
 import SwiftUI
 import SpriteKit
+import GameKit
 
 struct WaitingView: View {
     @EnvironmentObject var vm: GameViewModel
-    @ObservedObject private var multiplayerManager = MultiplayerManager.shared
-    
+    @ObservedObject var multiplayer = GameKitMultiplayerManager.shared
+
+    @State private var hasAttemptedJoin = false
+    @State private var joinError: String?
+
     var myCharacter: Character? {
-        let myDisplayName = vm.multiplayerManager.myPeerID.displayName
-        let character = vm.multiplayerManager.players.first {
-            $0.key == myDisplayName
-        }?.value.character
-        
-        return character
+        let myDisplayName = multiplayer.localPlayer.displayName
+        return multiplayer.players[myDisplayName]?.character
     }
-    
+
     var body: some View {
         ZStack {
-            // Fundo com a cena do SpriteKit
             SpriteView(scene: scene)
                 .ignoresSafeArea()
-            
-            // Camada de gradiente radial para escurecer a tela
+
             RadialGradient(
                 gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
                 center: .center,
@@ -34,33 +26,43 @@ struct WaitingView: View {
                 endRadius: 300
             )
             .ignoresSafeArea()
-            
-            if let character = myCharacter {
-                VStack {
+
+            VStack {
+                if let character = myCharacter {
                     Text(character.displayName.uppercased())
                         .font(Font.custom("Almendra-Regular", size: 38))
                         .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
                         .padding(.bottom, 16)
-                    
+
                     ZStack {
                         Image("PlayerCardBackground")
                             .resizable()
                             .frame(width: 200, height: 200)
-                        
+
                         Image("\(character.displayName.capitalized)")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 180, height: 180)
                     }
-                    .padding(.horizontal)
-                }
-            } else{
-                VStack{
+                } else {
                     Spacer()
-                    Text("Waiting for players...")
+                    Text("Waiting for Apple TV to start match...")
                         .font(Font.custom("Almendra-Regular", size: 23))
                         .foregroundColor(Color(red:211/255, green:180/255, blue:125/255))
-                }.padding(.bottom)
+
+                    if let joinError {
+                        Text("Erro: \(joinError)")
+                            .foregroundColor(.red)
+                            .padding(.top)
+                    }
+                    Spacer()
+                }
+            }
+        }
+        .onAppear {
+            if !hasAttemptedJoin {
+                hasAttemptedJoin = true
+                // Nenhuma ação de matchmaking aqui — apenas escutando convite
             }
         }
     }

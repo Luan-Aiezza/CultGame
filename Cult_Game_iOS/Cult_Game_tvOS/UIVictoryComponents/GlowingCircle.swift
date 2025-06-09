@@ -1,12 +1,8 @@
 import SwiftUI
-import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
 
-/// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
-/// BOTAO DE SAIR DA PARTIDA
-
-// View que exibe o personagem herege com um efeito de brilho animado e um círculo pulsante
+// MARK: - View de Personagem com Brilho Animado
 struct GlowingCircleView: View {
     let characterImageName: String
     @State private var animateGlow = false
@@ -16,13 +12,12 @@ struct GlowingCircleView: View {
     
     var body: some View {
         ZStack {
-            
             Image(characterImageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 270, height: 300)
-                .offset(x: 0, y: 10)
-            
+                .offset(y: 10)
+
             Circle()
                 .stroke(
                     LinearGradient(
@@ -39,6 +34,7 @@ struct GlowingCircleView: View {
                 .frame(width: 300, height: 280)
                 .blur(radius: 4)
                 .opacity(0.8)
+                .rotationEffect(.degrees(angle))
         }
         .onAppear {
             animateGlow = true

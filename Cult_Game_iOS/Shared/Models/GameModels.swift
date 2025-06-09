@@ -1,28 +1,31 @@
 // GameModels.swift
 import Foundation
 import SwiftUI
-import MultipeerConnectivity
 
+// MARK: - Ação de Jogada
 struct CardPlayAction: Codable {
     var playerID: String
     var card: Card
     var playerRole: PlayerRole
 }
-struct GameEffects {
-    let peerID: String
+
+// MARK: - Efeitos do jogo
+struct GameEffects: Codable {
+    let playerID: String
     let faithChange: Int
     let heresyChange: Int
     let followersChange: Int
 }
 
+// MARK: - Resultado final
 enum GameOutcome: String, Codable {
     case cultistVictoryFollowers
     case cultistVictoryElimination
     case hereticVictoryFollowers
     case hereticVictoryBalance
-}/////////////////
+}
 
-
+// MARK: - Fases do jogo
 enum GamePhase: Codable, Equatable {
     case pairing
     case roleSelection
@@ -30,36 +33,32 @@ enum GamePhase: Codable, Equatable {
     case discussion
     case elimination
     case eliminationResults
-    case victory(GameOutcome) ////////////////
+    case victory(GameOutcome)
 }
 
-
-
-
+// MARK: - Atualização pontual
 struct GameUpdate: Codable {
     var sharedFaithPoints: Int
     var sharedFollowers: Int
 }
 
-
+// MARK: - Regras base
 struct GameRules {
     static let maxFollowers = 40
     static let initialFollowers = 35
     static let initialHeresy = 0
     static let maxFaithPoints = 1000
     static let initialFaithPoints = 5
-    
 }
 
-// Estado global sincronizado
+// MARK: - Estado global sincronizado
 struct GlobalGameState: Codable {
     var sharedFaithPoints: Int
     var heresyPoints: Int
     var followers: Int
 }
 
-
-//CONTROLE DO TIPO DE JOGADOR
+// MARK: - Tipos de carta
 enum CardType: String, Codable {
     case common
     case cultist
@@ -68,17 +67,17 @@ enum CardType: String, Codable {
     case empty
 }
 
+// MARK: - Mensagens trocadas via rede
 enum MultiplayerMessage: Codable {
     case attPhase(GamePhase)
     case roleAssignment(PlayerRole)
     case kickPlayer
-    case characterAssignment(String)
-    case vote(String)
-    case kill(String)
-    case setInactive(String)
-    case updatePlayers([String: PlayerModel])
+    case characterAssignment(String)      // playerID
+    case vote(String)                     // playerID
+    case kill(String)                     // playerID
+    case setInactive(String)             // playerID
+    case updatePlayers([String: PlayerModel]) // playerID -> model
     case victory(GameOutcome)
-
     
     enum CodingKeys: String, CodingKey {
         case type, data
@@ -94,38 +93,38 @@ enum MultiplayerMessage: Codable {
         case setInactive
         case updatePlayers
         case victory
-
     }
-    
-    // Manual Encoding
+
+    // MARK: - Encoding manual
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .attPhase(let phase):
             try container.encode(MessageType.attPhase, forKey: .type)
-                    try container.encode(phase, forKey: .data)
-
+            try container.encode(phase, forKey: .data)
+            
         case .roleAssignment(let role):
             try container.encode(MessageType.roleAssignment, forKey: .type)
             try container.encode(role, forKey: .data)
             
         case .kickPlayer:
             try container.encode(MessageType.kickPlayer, forKey: .type)
-            //decodificar a mensagem do personagem
-        case .characterAssignment(let peerID):
-            try container.encode(MessageType.characterAssignment, forKey: .type)
-            try container.encode(peerID, forKey: .data)
-        case .vote(let peerID):
-            try container.encode(MessageType.vote, forKey: .type)
-            try container.encode(peerID, forKey: .data)
-        
-        case .kill(let peerID):
-            try container.encode(MessageType.vote, forKey: .type)
-            try container.encode(peerID, forKey: .data)
             
-        case .setInactive(let peerID):
+        case .characterAssignment(let playerID):
+            try container.encode(MessageType.characterAssignment, forKey: .type)
+            try container.encode(playerID, forKey: .data)
+            
+        case .vote(let playerID):
+            try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(playerID, forKey: .data)
+            
+        case .kill(let playerID):
+            try container.encode(MessageType.kill, forKey: .type)
+            try container.encode(playerID, forKey: .data)
+            
+        case .setInactive(let playerID):
             try container.encode(MessageType.setInactive, forKey: .type)
-            try container.encode(peerID, forKey: .data)
+            try container.encode(playerID, forKey: .data)
             
         case .updatePlayers(let players):
             try container.encode(MessageType.updatePlayers, forKey: .type)
@@ -133,37 +132,42 @@ enum MultiplayerMessage: Codable {
             
         case .victory(let outcome):
             try container.encode(MessageType.victory, forKey: .type)
-            try container.encode(outcome, forKey: .data)///////////////////
+            try container.encode(outcome, forKey: .data)
         }
     }
-    
-    // Manual Decoding
+
+    // MARK: - Decoding manual
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(MessageType.self, forKey: .type)
+        
         switch type {
         case .attPhase:
-                let phase = try container.decode(GamePhase.self, forKey: .data)
-                self = .attPhase(phase)
+            let phase = try container.decode(GamePhase.self, forKey: .data)
+            self = .attPhase(phase)
+            
         case .roleAssignment:
             let role = try container.decode(PlayerRole.self, forKey: .data)
             self = .roleAssignment(role)
             
         case .kickPlayer:
             self = .kickPlayer
-            //decodificar a mensagem do personagem
+            
         case .characterAssignment:
-            let peerID = try container.decode(String.self, forKey: .data)
-            self = .characterAssignment(peerID)
+            let playerID = try container.decode(String.self, forKey: .data)
+            self = .characterAssignment(playerID)
+            
         case .vote:
-            let peerID = try container.decode(String.self, forKey: .data)
-            self = .vote(peerID)
+            let playerID = try container.decode(String.self, forKey: .data)
+            self = .vote(playerID)
+            
         case .kill:
-            let peerID = try container.decode(String.self, forKey: .data)
-            self = .kill(peerID)
+            let playerID = try container.decode(String.self, forKey: .data)
+            self = .kill(playerID)
+            
         case .setInactive:
-            let peerID = try container.decode(String.self, forKey: .data)
-            self = .setInactive(peerID)
+            let playerID = try container.decode(String.self, forKey: .data)
+            self = .setInactive(playerID)
             
         case .updatePlayers:
             let players = try container.decode([String: PlayerModel].self, forKey: .data)
@@ -171,8 +175,7 @@ enum MultiplayerMessage: Codable {
             
         case .victory:
             let outcome = try container.decode(GameOutcome.self, forKey: .data)
-            self = .victory(outcome)////////////////////////////
+            self = .victory(outcome)
         }
     }
-    
 }

@@ -42,7 +42,7 @@ struct RoleView: View {
                     
                     VStack{
                         if let role = viewModel.player.role {
-                            if let character = viewModel.multiplayerManager.players[viewModel.multiplayerManager.myPeerID.displayName]?.character {
+                            if let character = viewModel.multiplayer.players[viewModel.multiplayer.localPlayer.displayName]?.character {
                                 switch role {
                                 case .cultist:
                                     Image("cultist_\(String(describing: character.displayName.lowercased()))_001")

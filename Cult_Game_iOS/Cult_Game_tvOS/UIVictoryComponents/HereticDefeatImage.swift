@@ -1,9 +1,8 @@
 import SwiftUI
-import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
 
-//exibe a imagem do herege derrotado, escurecendo gradualmente e desaparecendo com fade-out
+// MARK: - View do Herege Derrotado com Efeito Visual
 struct HereticDefeatImageView: View {
     let imageName: String
     
@@ -14,17 +13,17 @@ struct HereticDefeatImageView: View {
         Image(imageName)
             .resizable()
             .scaledToFit()
-            .offset(x: 0, y: -350)
             .frame(width: 150, height: 160)
+            .offset(y: -350)
             .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
-            .opacity(fadeOut) // fade out da imagem
+            .colorMultiply(Color(white: 1.0 - darkness)) // escurece gradualmente
+            .opacity(fadeOut) // desaparece gradualmente
             .onAppear {
                 withAnimation(.easeIn(duration: 18)) {
-                    darkness = 1.0 // totalmente preto
+                    darkness = 1.0
                 }
                 withAnimation(.easeOut(duration: 17).delay(2)) {
-                    fadeOut = 0.0 // desaparece
+                    fadeOut = 0.0
                 }
             }
     }

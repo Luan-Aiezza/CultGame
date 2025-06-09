@@ -9,7 +9,7 @@ import SwiftUI
 import SpriteKit
 
 struct GameView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @EnvironmentObject var vm: GameViewModel
     
     var body: some View {

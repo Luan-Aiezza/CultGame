@@ -25,53 +25,34 @@ extension GameViewModel {
         let needed = idealCardNumber - player.hand.count
         guard needed > 0 else { return }
 
-        var pool: [Card] = []
-
-        switch player.role {
-        case .cultist:
-            guard let card = deckManager.replenishHand(player.hand, usedCard: player.usedCard) else {return}
-            pool.append(card)
-        case .heretic:
-            guard let card = deckManager.replenishHand(player.hand, usedCard: player.usedCard) else {return}
-            pool.append(card)
-        default:
-            break
+        if let card = deckManager.replenishHand(player.hand, usedCard: player.usedCard) {
+            addCard(pool: [card], needed: needed)
         }
-        addCard(pool: pool, needed: needed)
     }
 
-    
     func playCard(_ card: Card) {
-        guard player.usedCard != nil else {
-            return
-        }
+        guard player.usedCard == nil else { return }
 
         assignCard(card: card)
         removeCardFromHand(card: card)
 
-        card.play(vm: self)
+        let action = CardPlayAction(playerID: peerID, card: card, playerRole: player.role!)
+        multiplayer.send(action)
+        
         turnEnteredCardPlayOnce()
     }
 
     func skipCard() {
-        guard player.usedCard != nil else {
-            return
-        }
-        
+        guard player.usedCard == nil else { return }
+
         let action = CardPlayAction(playerID: peerID, card: emptyCard, playerRole: player.role!)
-
-        if isHost {
-            multiplayerManager.handleReceived(action, from: peerID)
-        } else {
-            multiplayerManager.send(action)
-        }
-
+        multiplayer.send(action)
+        
         turnEmptyCard()
     }
 
-
     func playAllActiveCards() {
-        activeCards.removeAll { $0.isActive == false }
+        activeCards.removeAll { !$0.isActive }
         for card in activeCards {
             card.play(vm: self)
         }

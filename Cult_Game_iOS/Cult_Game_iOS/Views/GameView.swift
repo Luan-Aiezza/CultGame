@@ -6,7 +6,7 @@ import SwiftUI
 
 struct GameView: View {
     @EnvironmentObject var vm: GameViewModel
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @State var visiblePhase: GamePhase = .pairing
     
     var body: some View {
@@ -46,7 +46,7 @@ struct GameView: View {
             }
         }
         .onAppear {
-            multiplayerManager.joinSession()
+            multiplayerManager.match
 
             UIApplication.shared.isIdleTimerDisabled = true
                 
@@ -57,13 +57,13 @@ struct GameView: View {
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
+            NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                 if let role = notification.object as? Character {
                     vm.assignCharacter(role)
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
+            NotificationCenter.default.addObserver(forName: .didReceiveRole, object: nil, queue: .main) { notification in
                 if let character = notification.object as? Character {
                     // Atualize a UI com o personagem recebido
                     print("🎨 Recebi meu personagem: \(character)")

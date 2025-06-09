@@ -1,18 +1,16 @@
 import SwiftUI
-import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
+//import MultipeerConnectivity
 
 struct EliminationResultsView: View {
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var viewModel: GameViewModel
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
     @State var isDisconnected = false
 
     var isPlayerEliminated: Bool {
         viewModel.eliminatedPlayer == viewModel.peerID
     }
-
-
 
     var eliminatedCharacter: Character? {
         guard let eliminated = viewModel.eliminatedPlayer,
@@ -26,7 +24,6 @@ struct EliminationResultsView: View {
 
     var body: some View {
         ZStack {
-
             SpriteView(scene: scene)
                 .ignoresSafeArea()
             
@@ -34,8 +31,8 @@ struct EliminationResultsView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                                multiplayerManager.disconnect()
-                                isDisconnected = true
+                        multiplayerManager.disconnectAll()
+                        isDisconnected = true
                     }) {
                         Image("exit")
                             .resizable()
@@ -50,10 +47,8 @@ struct EliminationResultsView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            
             VStack(spacing: 30) {
                 Spacer()
-
 
                 if isPlayerEliminated, let character = eliminatedCharacter {
                     Text("You were eliminated!")
@@ -61,38 +56,33 @@ struct EliminationResultsView: View {
                         .bold()
                         .foregroundColor(cultistGold)
                         .multilineTextAlignment(.center)
-                        .frame(width: 260, alignment: .center)
+                        .frame(width: 260)
                         .padding(.horizontal, 24)
 
                     Text(randomSacrificeDescription())
                         .font(.custom("Almendra", size: 24))
                         .foregroundColor(cultistGold)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(0.2)
-                        .frame(width: 312, alignment: .center)
+                        .frame(width: 312)
                         .padding(.horizontal, 32)
 
                     DefeatImageView(imageName: "\(character.rawValue.capitalized)C")
                         .scaledToFit()
-                        //.frame(width: 150, height: 10)
-                        //.offset(x: 29, y: 100)
                         .shadow(radius: 10)
 
                     Spacer()
-
                 } else {
                     Spacer()
                     Text(" ")
                     Spacer()
                 }
-            }.navigationDestination(isPresented: $isDisconnected) {
+            }
+            .navigationDestination(isPresented: $isDisconnected) {
                 PlayView()
             }
-
             .padding()
         }
     }
-
 
     func randomSacrificeDescription() -> String {
         [
@@ -105,7 +95,6 @@ struct EliminationResultsView: View {
         ].randomElement()!
     }
 }
-
 
 //exibe a imagem do herege derrotado, escurecendo gradualmente e desaparecendo com fade-out
 struct DefeatImageView: View {
@@ -132,58 +121,4 @@ struct DefeatImageView: View {
                 }
             }
     }
-}
-
-
-#if DEBUG
-extension GameViewModel {
-    static func previewEliminated() -> GameViewModel {
-        let vm = GameViewModel()
-        let peerID = "JogadorTest"
-
-        // ✅ Define o peer fake no manager
-        let testPeer = MCPeerID(displayName: peerID)
-        //vm.multiplayerManager.setFakePeerID(testPeer)
-
-        // ✅ Cria e registra o player eliminado
-        let player = PlayerModel(
-            id: peerID,
-            state: .inactive,
-            character: .fox
-        )
-        vm.multiplayerManager.players[peerID] = player
-        //vm.multiplayerManager.connectedPeers = [peerID]
-        vm.multiplayerManager.connectedPeers = [testPeer]
-        vm.eliminatedPlayer = peerID
-        vm.voteOccurred = true
-        vm.didEvaluate = true
-
-        return vm
-    }
-}
-#endif
-
-
-func previewEliminated() -> GameViewModel {
-    let vm = GameViewModel()
-    let peerID = "JogadorTest"
-
-    let testPeer = MCPeerID(displayName: peerID)
-    //vm.multiplayerManager.setFakePeerID(testPeer)
-
-    let player = PlayerModel(
-        id: peerID,
-        state: .inactive,
-        character: .fox
-    )
-    vm.multiplayerManager.players[peerID] = player
-    vm.multiplayerManager.connectedPeers = [testPeer]
-    vm.eliminatedPlayer = peerID
-    vm.voteOccurred = true
-    vm.didEvaluate = true
-
-    print("👤 peerID: \(testPeer.displayName)")
-    print("🔥 eliminado: \(vm.eliminatedPlayer ?? "nil")")
-
-    return vm
 }

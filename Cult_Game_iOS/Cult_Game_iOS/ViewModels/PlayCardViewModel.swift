@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Foundation
-import MultipeerConnectivity
+import GameKit
 import Combine
 
 class PlayCardViewModel: ObservableObject, Observable {

@@ -10,7 +10,7 @@ import Combine
 import SwiftUICore
 
 class GameTimerManager: ObservableObject {
-    var multiplayerManager = MultiplayerManager.shared
+    var multiplayerManager = GameKitMultiplayerManager.shared
     @Published var timeRemaining: Int = 0
     private var timer: Timer?
     

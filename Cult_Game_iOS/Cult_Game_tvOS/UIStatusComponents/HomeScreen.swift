@@ -1,18 +1,16 @@
 import SwiftUI
-import MultipeerConnectivity
 import SpriteKit
 
 struct HomeScreenView: View {
     @EnvironmentObject var vm: GameViewModel
-    
+
     enum FocusedButton: Hashable {
         case pair
         case howToPlay
     }
 
     @FocusState private var focusedButton: FocusedButton?
-    
-    // Detecta idioma do sistema
+
     var isPortuguese: Bool {
         Locale.current.language.languageCode?.identifier == "pt"
     }
@@ -20,8 +18,6 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                
-                // Camada de gradiente radial para escurecer a tela
                 RadialGradient(
                     gradient: Gradient(colors: [Color.black.opacity(0.2), Color.black]),
                     center: .center,
@@ -34,9 +30,9 @@ struct HomeScreenView: View {
                     Image("Logo_1")
                         .resizable()
                         .frame(width: 1203, height: 233)
+
                     Spacer()
 
-                    // Botão "Parear"
                     NavigationLink(destination: GameView().environmentObject(vm)) {
                         Image(getImageName(button: .pair))
                             .resizable()
@@ -45,7 +41,6 @@ struct HomeScreenView: View {
                     .buttonStyle(.borderless)
                     .focused($focusedButton, equals: .pair)
 
-                    // Botão "Como Jogar"
                     NavigationLink(destination: HowToPlayView1().environmentObject(vm)) {
                         Image(getImageName(button: .howToPlay))
                             .resizable()
@@ -55,12 +50,12 @@ struct HomeScreenView: View {
                     .focused($focusedButton, equals: .howToPlay)
                 }
             }
-        }.onAppear {
+        }
+        .onAppear {
             AudioManager.shared.playBackgroundMusic(named: "Intro_Game_OST")
         }
     }
 
-    // MARK: - Nome da imagem com base no foco e idioma
     func getImageName(button: FocusedButton) -> String {
         let focused = (focusedButton == button)
         let lang = isPortuguese ? "port" : "ing"
@@ -73,15 +68,16 @@ struct HomeScreenView: View {
         }
     }
 }
+
 struct HowToPlayView1: View {
     var isPortuguese: Bool {
         Locale.current.language.languageCode?.identifier == "pt"
     }
 
     var imageNames: [String] {
-        isPortuguese ?
-            ["manual_port_01", "manual_port_02", "manual_port_03"] :
-            ["manual_ing_01", "manual_ing_02", "manual_ing_03"]
+        isPortuguese
+            ? ["manual_port_01", "manual_port_02", "manual_port_03"]
+            : ["manual_ing_01", "manual_ing_02", "manual_ing_03"]
     }
 
     @State private var currentIndex: Int = 0
@@ -90,8 +86,6 @@ struct HowToPlayView1: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                
-                // Camada de gradiente radial para escurecer a tela
                 RadialGradient(
                     gradient: Gradient(colors: [Color.black.opacity(0.2), Color.black]),
                     center: .center,
@@ -100,7 +94,6 @@ struct HowToPlayView1: View {
                 )
                 .ignoresSafeArea()
 
-                // Imagem do manual no centro
                 Image(imageNames[currentIndex])
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -111,13 +104,12 @@ struct HowToPlayView1: View {
                             Image("back")
                                 .resizable()
                                 .frame(width: 88, height: 60)
-                        }.buttonStyle(.borderless)
+                        }
+                        .buttonStyle(.borderless)
                     }
                     Spacer()
                 }
 
-
-                // Botões de navegação esquerda e direita
                 HStack {
                     Button(action: {
                         if currentIndex > 0 {
@@ -126,8 +118,10 @@ struct HowToPlayView1: View {
                     }) {
                         Image("left")
                             .opacity(currentIndex > 0 ? 1 : 0.3)
-                    }.buttonStyle(.borderless)
+                    }
+                    .buttonStyle(.borderless)
                     .disabled(currentIndex == 0)
+
                     Spacer()
 
                     Button(action: {
@@ -137,13 +131,12 @@ struct HowToPlayView1: View {
                     }) {
                         Image("right")
                             .opacity(currentIndex < imageNames.count - 1 ? 1 : 0.3)
-                    }.buttonStyle(.borderless)
+                    }
+                    .buttonStyle(.borderless)
                     .disabled(currentIndex == imageNames.count - 1)
                 }
                 .padding(.horizontal)
             }
-            //.navigationTitle("Como Jogar")
-            //.navigationBarTitleDisplayMode(.inline)
         }
     }
 }

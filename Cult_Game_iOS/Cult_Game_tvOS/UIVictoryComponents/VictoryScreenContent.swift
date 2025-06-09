@@ -1,5 +1,4 @@
 import SwiftUI
-import MultipeerConnectivity
 import SpriteKit
 import AVFoundation
 

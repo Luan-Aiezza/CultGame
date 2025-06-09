@@ -1,19 +1,18 @@
 import SwiftUI
-import MultipeerConnectivity
+import GameKit
 
 struct EliminationView: View {
     @EnvironmentObject var viewModel: GameViewModel
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @ObservedObject var multiplayerManager = GameKitMultiplayerManager.shared
+    
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     @State private var showFollowTvView = false
+
     var myCharacter: Character? {
-        let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
-        let character = viewModel.multiplayerManager.players.first {
-            $0.key == myDisplayName
-        }?.value.character
-        return character
+        let myPlayerID = multiplayerManager.localPlayer.playerID
+        return multiplayerManager.players[myPlayerID]?.character
     }
 
     private let horizontalPadding: CGFloat = 26
@@ -35,7 +34,8 @@ struct EliminationView: View {
                 Image("background_002")
                     .resizable()
                     .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)],
+                                       startPoint: .top, endPoint: .bottom)
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
@@ -51,26 +51,21 @@ struct EliminationView: View {
 
                     LazyVGrid(columns: columns, spacing: verticalSpacing) {
                         ForEach(
-                            multiplayerManager.players.filter { (peerID, player) in
-                                let isNotMyPeer = player.character != myCharacter
-                                let isActive = player.state == .active
-                                return isNotMyPeer && isActive
-                            },
+                            multiplayerManager.players.filter { (playerID, player) in
+                                player.character != myCharacter && player.state == .active
+                            }.sorted(by: { $0.key < $1.key }), // ordenação opcional para estabilidade visual
                             id: \.key
-                        ) { peerID, player in
-
+                        ) { playerID, player in
                             PlayerElimView(
                                 player: player,
-                                isSelected: peerID == selectedPlayerID,
+                                isSelected: playerID == selectedPlayerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
-                                    if selectedPlayerID == peerID {
-                                        // Deseleciona
+                                    if selectedPlayerID == playerID {
                                         selectedPlayerID = nil
                                         glowRotation = 0
                                     } else {
-                                        // Seleciona novo player
-                                        selectedPlayerID = peerID
+                                        selectedPlayerID = playerID
                                         voteConfirmed = false
                                         glowRotation = 0
                                         withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
@@ -91,7 +86,7 @@ struct EliminationView: View {
 
                 HStack(spacing: 22) {
                     Button(action: {
-                        //TODO: Adicionar tela da Mari
+                        // TODO: Adicionar ação da tela de skip
                     }) {
                         Text("Skip")
                             .font(.custom("Almendra-Regular", size: 26))
@@ -106,15 +101,13 @@ struct EliminationView: View {
                             )
                     }
 
-                    // Botão Done
                     Button(action: {
-                        if let player = selectedPlayerID {
+                        if let playerID = selectedPlayerID {
                             voteConfirmed = true
-                            viewModel.addVote(to: player)
+                            viewModel.addVote(to: playerID)
                             showFollowTvView = true
                         }
-                        
-                        //TODO: Adicionar tela da Mari
+                        // TODO: Adicionar lógica de navegação se necessário
                     }) {
                         Text("Done")
                             .font(.custom("Almendra-Regular", size: 26))
@@ -132,8 +125,8 @@ struct EliminationView: View {
                 }
                 .padding(.horizontal, 48)
                 .frame(maxWidth: .infinity)
-
                 .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
+
                 if showFollowTvView {
                     FollowTvView()
                         .transition(.opacity)
@@ -142,8 +135,4 @@ struct EliminationView: View {
             }
         }
     }
-}
-
-#Preview {
-    EliminationView()
 }

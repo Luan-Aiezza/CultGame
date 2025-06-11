@@ -26,11 +26,6 @@ class GameKitMultiplayerManager: NSObject, ObservableObject {
     @Published var voted: PlayerModel?
     @Published var outcome: GameOutcome?
     
-//    private override init() {
-//        super.init()
-//        authenticateLocalPlayer()
-//    }
-    
     // MARK: - Authentication
     func authenticateLocalPlayer(completion: @escaping (Bool) -> Void = { _ in }) {
         localPlayer.authenticateHandler = { viewController, error in
@@ -55,26 +50,51 @@ class GameKitMultiplayerManager: NSObject, ObservableObject {
         request.maxPlayers = maxPlayers
         request.inviteMessage = "Junte-se à partida!"
 
-        if isHosting {
-            // Host (Apple TV) apresenta a interface para esperar jogadores
-            let mmvc = GKMatchmakerViewController(matchRequest: request)!
-            mmvc.matchmakerDelegate = self
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.windows.first?.rootViewController?.present(mmvc, animated: true)
-            }
-        } else {
-            // Cliente (iPhone) busca partida automaticamente
-            GKMatchmaker.shared().findMatch(for: request) { match, error in
-                if let match = match {
-                    self.match = match
-                    match.delegate = self
-                    self.connectedPlayers = match.players
-                    self.setupLocalPlayer()
-                    completion(nil)
-                } else {
-                    completion(error)
+        GKMatchmaker.shared().findMatch(for: request) { match, error in
+            if let match = match {
+                self.match = match
+                match.delegate = self
+                self.connectedPlayers = match.players
+                self.setupLocalPlayer()
+
+                if self.isHosting {
+                    // Começa a procurar jogadores locais assim que a partida está pronta
+                    GKMatchmaker.shared().startBrowsingForNearbyPlayers(handler: { player, reachable in
+                        if reachable {
+                            print("📡 Jogador encontrado: \(player.displayName)")
+                            self.gkPlayers[player.gamePlayerID] = player
+                            self.sendInvite(to: player)
+                        } else {
+                            print("❌ Jogador desconectado: \(player.displayName)")
+                        }
+                    })
                 }
+
+                completion(nil)
+            } else {
+                print("🚫 Erro ao iniciar matchmaking: \(error?.localizedDescription ?? "desconhecido")")
+                completion(error)
+            }
+        }
+    }
+
+    
+    func sendInvite(to player: GKPlayer) {
+        let request = GKMatchRequest()
+        request.recipients = [player]
+        request.maxPlayers = 8
+        request.minPlayers = 2
+
+        guard let match = self.match else {
+            print("🚫 Não há partida ativa para adicionar jogadores.")
+            return
+        }
+
+        GKMatchmaker.shared().addPlayers(to: match, matchRequest: request) { error in
+            if let error = error {
+                print("🚫 Falha ao adicionar jogador: \(error.localizedDescription)")
+            } else {
+                print("✅ Jogador adicionado com sucesso")
             }
         }
     }

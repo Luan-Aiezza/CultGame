@@ -32,6 +32,12 @@ struct HostGameView: View {
     @State private var gameStarted = false
     @State private var canPlay = false
     @State private var errorMessage: String?
+    @State private var showMatchmaker = true
+    
+    // Added state property to hold matchmaker error messages
+    @State private var matchmakerErrorMessage: String? = nil
+    
+    @State private var didStartHosting = false
 
     @State var showBlockMessage = false
     @State var stringShow = "Minimum of 5 players"
@@ -140,14 +146,24 @@ struct HostGameView: View {
                     }
                 }
             }
-            .onChange(of: multiplayerManager.players.count) { count in
-                canPlay = count >= 5 // mínimo de 5 jogadores
-            }
-            .sheet(isPresented: .constant(true), content: {
-                MatchmakerView()
-            })
             .onAppear {
                 MainScene.shared?.zoomOut()
+                startHostingGame()
+            }
+        }
+    }
+    func startHostingGame() {
+        GameKitMultiplayerManager.shared.authenticateLocalPlayer { success in
+            if success {
+                multiplayerManager.startMatchmaking(asHost: true) { error in
+                    if let error = error {
+                        print("🔍 Erro completo: \(error.localizedDescription), \(String(describing: error))")
+                    } else {
+                        print("✅ Match iniciado com sucesso")
+                    }
+                }
+            } else {
+                print("🚫 Não foi possível autenticar o jogador")
             }
         }
     }
@@ -155,7 +171,7 @@ struct HostGameView: View {
     func startGame() {
         let totalPlayers = multiplayerManager.players.count
 
-        if totalPlayers < 5 || totalPlayers > 7 {
+        if totalPlayers < 1 || totalPlayers > 7 {
             showBlockMessage = true
             stringShow = "Minimum of 5, maximum of 7 players"
             return

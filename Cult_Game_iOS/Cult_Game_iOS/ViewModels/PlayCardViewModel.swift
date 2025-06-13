@@ -11,7 +11,7 @@ import MultipeerConnectivity
 import Combine
 
 #warning("Dois tipos de observação para a classe")
-class PlayCardViewModel: ObservableObject, Observable {
+class PlayCardViewModel: ObservableObject {
     
     @Published var isShowingMurderView = false
 

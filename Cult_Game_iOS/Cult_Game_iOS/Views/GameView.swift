@@ -28,11 +28,10 @@ struct GameView: View {
                 EliminationResultsView()
             case.victory(_):
                 #warning("Nested(uma estrutura dentro da outra, tipo função dentro de função) nem sempre é uma boa prática em termos de legibilidade. Sugestão: if let outcome = vm.gameOutcome, let role = vm.player.role {}")
-                if let outcome = vm.gameOutcome {
-                    if let role = vm.player.role {
+                if let outcome = vm.gameOutcome,let role = vm.player.role  {
                         VictoryScreenView(role: role, outcome: outcome)
                             .environmentObject(vm)
-                    }
+//                    }
                 }
         }
     }
@@ -69,12 +68,12 @@ struct GameView: View {
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
-                if let character = notification.object as? Character {
-                    // Atualize a UI com o personagem recebido
-                    print("🎨 Recebi meu personagem: \(character)")
-                }
-            }
+//            NotificationCenter.default.addObserver(forName: .didReceiveCharacter, object: nil, queue: .main) { notification in
+//                if let character = notification.object as? Character {
+//                    // Atualize a UI com o personagem recebido
+//                    print("🎨 Recebi meu personagem: \(character)")
+//                }
+//            }
             
         }
     

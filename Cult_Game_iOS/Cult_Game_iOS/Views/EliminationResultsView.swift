@@ -8,7 +8,7 @@ import AVFoundation
 struct EliminationResultsView: View {
     
     #warning("Por que é @ObservedObject? Ele está apenas instanciando um singleton, logo não vai apresentar mudanças. Sugestão: let multiplayerManager = MultiplayerManager.shared")
-    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    let multiplayerManager = MultiplayerManager.shared
 
     @EnvironmentObject var viewModel: GameViewModel
     @State var isDisconnected = false

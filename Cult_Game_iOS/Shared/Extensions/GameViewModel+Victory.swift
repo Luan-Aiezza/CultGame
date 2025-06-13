@@ -17,7 +17,7 @@ extension GameViewModel {
         }
     }
     
-    #warning("Retirar prints depois de debuggado a função")
+    #warning("Retirar prints depois de debugg da função")
     func evaluateVictory() {
         
         print("entrou em evaluate victory")

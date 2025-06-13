@@ -42,7 +42,7 @@ struct MurderView: View {
 
                 #warning("1. Prefira utilizar nomes que representam do que se trata a imagem. / 2. Use o ImageResource, chance zero de errar nome da imagem. Ex: Image(.background002)")
 
-                Image("background_002")
+                Image(.background002)
                     .resizable()
                     .overlay {
                         LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)

@@ -9,7 +9,7 @@ import Foundation
 
 #warning("Dados estáticos devem estar em uma pasta separada. Exemplo: Mocks, Data, etc.")
 public class CardDeck {
-    
+        
     let commonCards: [Card] = [
         Card(name: "Offering", faithCost: 3, heresyCost: 0, followersEffect: 6, effectsDescription: "", description: "Silent offers are placed on the altas, strengthening invisible bonds with the divine", imageName: "flower", type: .common, rarity: 1),
         Card(name: "Fog Veil", faithCost: 3, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "A dense fog covers the lake, creating a space for deep meditation", imageName: "hood", type: .common, rarity: 1),

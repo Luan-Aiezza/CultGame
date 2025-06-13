@@ -3,6 +3,9 @@ import Foundation
 
 #warning("Cara de ChatGPT....")
 // Gerenciador responsável por distribuir cartas aos jogadores, controlando os baralhos e reciclagem de cartas.
+
+
+/// faz a distribuicao de cartas
 class CardDistributionManager: ObservableObject {
     
     //singleton

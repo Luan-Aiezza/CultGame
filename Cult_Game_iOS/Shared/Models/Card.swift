@@ -49,3 +49,4 @@ class Card: Identifiable, Equatable, Codable, Transferable {
         vm.multiplayerManager.send(action)
     }
 }
+

@@ -3,7 +3,7 @@ import SwiftUI
 
 #warning("Uma Model sendo ObservableObject? É um modelo com comportamento? Sugestão: separar Card como modelo puro, e criar um serviço ou ViewModel que execute o método.")
 
-class SpecificCard : Card, ObservableObject{
+class SpecificCard : Card, ObservableObject {
     @Published var isActive : Bool = false
     var specialAbility : ((GameViewModel) -> Void)?
     @Published var rotationCount : Int = 0
@@ -45,3 +45,22 @@ class SpecificCard : Card, ObservableObject{
         specialAbility?(vm)
     }
 }
+
+//MARK: Sugestão
+
+//class SpecificCardViewModel: ObservableObject {
+//    @Published var isActive: Bool = false
+//    @Published var rotationCount: Int = 0
+//
+//    let card: SpecificCard
+//
+//    init(card: SpecificCard) {
+//        self.card = card
+//    }
+//
+//    func playCard(in viewModel: GameViewModel) {
+//        viewModel.removeCardFromHand(card: card)
+//        card.specialAbility?(viewModel)
+//    }
+//}
+

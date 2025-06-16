@@ -22,29 +22,45 @@ struct PlayerCardView: View {
                 .frame(width: width, height: height)
                 .blur(radius: 0.1)
             
-            
-            Image( "imageAnimals")
-                .resizable()
-                .frame(width: width, height: height)
-                .cornerRadius(10)
-            
-            HStack(spacing: 10) {
-                Image(player.character?.displayName ?? "")
+            if let displayName = player.character?.displayName, !displayName.isEmpty {
+                Image("imageAnimals")
+                    .resizable()
+                    .frame(width: width, height: height)
+                    .cornerRadius(10)
+                HStack(spacing: 10) {
+                    Image(displayName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: height - 30, height: height - 30)
-    
-                Text(player.character?.displayName ?? "")
-                    .foregroundColor(.title)
-                    .fontWeight(.regular)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .font(.custom("Almendra-Regular", size: 45))
-                
-                Spacer()
+                    Text(displayName)
+                        .foregroundColor(.title)
+                        .fontWeight(.regular)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .font(.custom("Almendra-Regular", size: 45))
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+            } else {
+                Image("personPlaceholder")
+                    .resizable()
+                    .frame(width: width, height: height)
+                    .cornerRadius(10)
+                HStack(spacing: 10) {
+                    Image("personPlaceholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: height - 30, height: height - 30)
+                    Text("Wait...")
+                        .foregroundColor(.gray)
+                        .fontWeight(.regular)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .font(.custom("Almendra-Regular", size: 45))
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-            
         }
         .frame(width: width, height: height)
         

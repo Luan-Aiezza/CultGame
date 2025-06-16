@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import SwiftUICore
+import SwiftUI
 
 class GameTimerManager: ObservableObject {
     var multiplayerManager = MultiplayerManager.shared

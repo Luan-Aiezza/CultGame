@@ -61,11 +61,9 @@ struct HostGameView: View {
             let secondRow = Array(playerList.dropFirst(maxPlayersPerRow))
             
             ZStack() {
-//                SpriteView(scene: scene)
-//                    .ignoresSafeArea()
-//                
+                
                 Color.black.opacity(0.4)
-                        .ignoresSafeArea()
+                    .ignoresSafeArea()
                 
                 VStack {
                     Text("Pairing with players")
@@ -193,7 +191,7 @@ struct HostGameView: View {
         for (peer, role) in roles {
             multiplayerManager.sendRole(role, to: peer)
         }
-    }    
+    }
 }
 
 // MARK: - Preview

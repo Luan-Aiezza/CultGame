@@ -33,14 +33,16 @@ struct GameStatusView: View {
                 HStack {
                     // ÍCONES DOS JOGADORES - CANTO INFERIOR ESQUERDO
                     ZStack(alignment: .center) {
+                        
                         playerIconsView
                             .frame(width: 388 * tvResponse, height: 60 * tvResponse)
                             .background(Color(red: 0.16, green: 0.15, blue: 0.13))
                             .cornerRadius(16)
-
+                        
                         Image("PlayersBorder")
                             .resizable()
                             .frame(width: 394 * tvResponse, height: 66 * tvResponse)
+                        
                     }.padding(.leading, 80*tvResponse)
                     
                     Spacer()
@@ -62,16 +64,25 @@ struct GameStatusView: View {
         }
     }
     
-    var playerIconsView: some View {
+    private var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(multiplayerManager.players.values.filter { $0.state == .active }, id: \.id) { player in
-                let character = player.character?.displayName.capitalized
-                Image("\(String(describing: character))")
+            ForEach(multiplayerManager.players.filter { (key, player) in
+                !key.contains("TV") && player.state == .active
+            }.map { $0.value }, id: \.id) { player in
+                if let displayName = player.character?.displayName, !displayName.isEmpty {
+                    Image(displayName)
                         .resizable()
+                        .scaledToFit()
                         .frame(width: 36 * tvResponse, height: 36 * tvResponse)
+                        .cornerRadius(10)
+                } else {
+                    Image("personPlaceholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36 * tvResponse, height: 36 * tvResponse)
+                        .cornerRadius(10)
+                }
             }
-
-
         }
         .background(Color(red: 0.16, green: 0.15, blue: 0.13))
         .cornerRadius(16)

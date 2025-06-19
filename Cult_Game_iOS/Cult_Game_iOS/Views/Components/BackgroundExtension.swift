@@ -1,17 +1,10 @@
-//
-//  ExtensioinEliminationResultsView.swift
-//  Cult_Game_iOS
-//
-//  Created by Grecia Cristina on 27/05/25.
-//
-
 import SpriteKit
 import SwiftUI
 
-extension EliminationResultsView {
+extension MainViewiOS {
     
     var scene: SKScene {
-        if let scene = SKScene(fileNamed: "PhoneScene.sks") {
+        if let scene = SKScene(fileNamed: "MainSceneiOS.sks") {
             applyLinearFiltering(to: scene)
             animateBonfire(in: scene)
             return scene
@@ -37,6 +30,8 @@ extension EliminationResultsView {
         scene.addChild(emitter1)
     }
     
+    
+    // MARK: - Aplica .linear nos nós
     func applyLinearFiltering(to node: SKNode) {
         if let spriteNode = node as? SKSpriteNode, let texture = spriteNode.texture {
             texture.filteringMode = .linear
@@ -45,5 +40,7 @@ extension EliminationResultsView {
         for child in node.children {
             applyLinearFiltering(to: child)
         }
+        
     }
+    
 }

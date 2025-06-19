@@ -26,9 +26,6 @@ struct EliminationResultsView: View {
 
     var body: some View {
         ZStack {
-
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
             
             VStack {
                 HStack {

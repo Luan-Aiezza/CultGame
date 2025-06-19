@@ -49,9 +49,6 @@ struct VictoryScreenView: View {
                 
                 ZStack {
                     
-                    SpriteView(scene: scene)
-                        .ignoresSafeArea()
-                    
                     VStack {
                         HStack {
                             Spacer()

@@ -13,19 +13,15 @@ struct PlayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                
-                // Fundo com a cena do SpriteKit
-                SpriteView(scene: scene)
-                    .ignoresSafeArea()
-                
-                // Camada de gradiente radial para escurecer a tela
-                RadialGradient(
-                    gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
-                    center: .center,
-                    startRadius: 10,
-                    endRadius: 300
-                )
-                .ignoresSafeArea()
+
+//                // Camada de gradiente radial para escurecer a tela
+//                RadialGradient(
+//                    gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
+//                    center: .center,
+//                    startRadius: 10,
+//                    endRadius: 300
+//                )
+//                .ignoresSafeArea()
                 
                 VStack{
                     Image("TitleGamePhone")

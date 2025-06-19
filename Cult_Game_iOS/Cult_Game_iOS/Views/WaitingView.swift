@@ -22,10 +22,7 @@ struct WaitingView: View {
     
     var body: some View {
         ZStack {
-            // Fundo com a cena do SpriteKit
-            SpriteView(scene: scene)
-                .ignoresSafeArea()
-            
+
             // Camada de gradiente radial para escurecer a tela
             RadialGradient(
                 gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),

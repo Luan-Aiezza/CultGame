@@ -16,9 +16,37 @@ struct Cult_Game_iOSApp: App {
     }
     
     var body: some Scene {
+    
         WindowGroup {
-            PlayView()
+            MainViewiOS()
                 .environmentObject(vm)
         }
     }
 }
+
+
+//var body: some View {
+//    ZStack {
+//        switch visiblePhase {
+//            case .pairing:
+//                WaitingView()
+//            case .roleSelection:
+//                StoryView()
+//            case .cardPlay:
+//                PlayCardView()
+//            case .discussion:
+//                DiscussionView()
+//            case .elimination:
+//                EliminationView()
+//            case .eliminationResults:
+//                EliminationResultsView()
+//            case.victory(_):
+//                if let outcome = vm.gameOutcome {
+//                    if let role = vm.player.role {
+//                        VictoryScreenView(role: role, outcome: outcome)
+//                        .environmentObject(vm)
+//                }
+//            }
+//        }
+//    }
+//    .onReceive(mult

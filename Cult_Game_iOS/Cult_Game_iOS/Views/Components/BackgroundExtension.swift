@@ -3,6 +3,7 @@ import SwiftUI
 
 extension MainViewiOS {
     
+    
     var scene: SKScene {
         if let scene = SKScene(fileNamed: "MainSceneiOS.sks") {
             applyLinearFiltering(to: scene)

@@ -33,7 +33,7 @@ struct StoryView: View {
                 Color.black
                     .opacity(fadeInOut ? 0 : 1)
                     .ignoresSafeArea()
-                    .animation(.easeIn(duration: 2), value: fadeInOut)
+                    .animation(.easeIn(duration: 0), value: fadeInOut)
                     
             } .onAppear {
                 fadeInOut =  true

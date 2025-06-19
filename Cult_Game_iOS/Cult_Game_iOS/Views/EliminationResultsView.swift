@@ -27,6 +27,14 @@ struct EliminationResultsView: View {
     var body: some View {
         ZStack {
             
+            Image("background_002")
+                .resizable()
+                .overlay {
+                    LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                }
+                .ignoresSafeArea()
+                .scaledToFill()//RETIRAR DEPOIS
+            
             VStack {
                 HStack {
                     Spacer()

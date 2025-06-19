@@ -13,15 +13,23 @@ struct PlayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                
+                Image("background_002")
+                    .resizable()
+                    .overlay {
+                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
+                    }
+                    .ignoresSafeArea()
+                    .scaledToFill()//RETIRAR DEPOIS
 
-//                // Camada de gradiente radial para escurecer a tela
-//                RadialGradient(
-//                    gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
-//                    center: .center,
-//                    startRadius: 10,
-//                    endRadius: 300
-//                )
-//                .ignoresSafeArea()
+                // Camada de gradiente radial para escurecer a tela
+                RadialGradient(
+                    gradient: Gradient(colors: [Color.black.opacity(0.4), Color.black]),
+                    center: .center,
+                    startRadius: 10,
+                    endRadius: 300
+                )
+                .ignoresSafeArea()
                 
                 VStack{
                     Image("TitleGamePhone")

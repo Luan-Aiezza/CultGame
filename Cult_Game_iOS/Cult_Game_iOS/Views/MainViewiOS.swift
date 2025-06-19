@@ -8,9 +8,11 @@ struct MainViewiOS: View {
         ZStack {
             
             SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
-                .ignoresSafeArea(.all)
+                .ignoresSafeArea()
             
             PlayView()
+                .ignoresSafeArea(.all)
+                .background(Color.clear)
         }
     }
 }

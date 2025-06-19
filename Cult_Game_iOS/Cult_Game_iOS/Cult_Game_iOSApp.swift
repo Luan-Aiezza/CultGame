@@ -20,6 +20,7 @@ struct Cult_Game_iOSApp: App {
         WindowGroup {
             MainViewiOS()
                 .environmentObject(vm)
+                .ignoresSafeArea()
         }
     }
 }

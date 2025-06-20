@@ -59,29 +59,29 @@ struct VictoryScreenView: View {
             
             FollowTvViewEnd()
             
-            VStack {
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        multiplayerManager.disconnect()
-                        isDisconnected = true
-                    }) {
-                        Image("exit")
-                            .resizable()
-                            .frame(width: 48, height: 35)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.trailing, 80)
-                }
-                .padding(.top, 16)
-                
-                Spacer()
-            }
-            .zIndex(5)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationDestination(isPresented: $isDisconnected) {
-                PlayView()
-            }
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    Button(action: {
+//                        multiplayerManager.disconnect()
+//                        isDisconnected = true
+//                    }) {
+//                        Image("exit")
+//                            .resizable()
+//                            .frame(width: 48, height: 35)
+//                            .foregroundColor(.white)
+//                    }
+//                    .padding(.trailing, 80)
+//                }
+//                .padding(.top, 16)
+//                
+//                Spacer()
+//            }
+//            .zIndex(5)
+//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            .navigationDestination(isPresented: $isDisconnected) {
+//                PlayView()
+//            }
         }
     }
 }

@@ -70,6 +70,7 @@ struct VictoryTvView: View {
                     Spacer()
                     // Botão no canto superior direito para sair da partida e voltar para a tela de espera
                     Button(action: {
+                        MultiplayerManager.shared.disconnectAll()
                         viewModel.resetGame()
                         viewModel.multiplayerManager.currentPhase = .pairing
                     }) {

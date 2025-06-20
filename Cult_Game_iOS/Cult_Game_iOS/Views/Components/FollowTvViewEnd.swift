@@ -21,14 +21,14 @@ struct FollowTvViewEnd: View {
                 .scaledToFit()
                 .frame(width: 120, height: 120)
             
-            Text("Look the result on TV, end game!")
+            Text("End game!\nLook the result on TV ")
                 .font(.custom("VinerHandITC", size: 30))
                 .foregroundStyle(Color.title)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
             
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 80)
         .zIndex(2)
     }
 }

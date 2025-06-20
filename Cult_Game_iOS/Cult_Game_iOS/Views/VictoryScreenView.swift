@@ -71,7 +71,7 @@ struct VictoryScreenView: View {
                             .frame(width: 48, height: 35)
                             .foregroundColor(.white)
                     }
-                    .padding(.trailing, 100)
+                    .padding(.trailing, 80)
                 }
                 .padding(.top, 16)
                 

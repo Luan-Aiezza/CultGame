@@ -135,7 +135,7 @@ struct EliminationView: View {
 
                 .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
                 if showFollowTvView {
-                    FollowTvView()
+                    FollowTvViewVoting()
                         .transition(.opacity)
                         .zIndex(5)
                 }

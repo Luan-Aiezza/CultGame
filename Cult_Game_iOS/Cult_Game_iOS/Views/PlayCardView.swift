@@ -174,7 +174,7 @@ struct PlayCardView: View {
                                let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
                                 if !skippedRound {
                                     vm.playCard(cardToPlay)
-                                    stringShow = "You already played a card!"
+                                    stringShow = "You played a card!"
                                     showBlockMessage = true
                                     playedCard = true
                                     
@@ -234,16 +234,15 @@ struct PlayCardView: View {
         .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
             
             if newValue == .discussion {
+                stringShow = ""
+                showBlockMessage = false
+                showFollowTvView = true
                 if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
-                   
-                    showFollowTvView = true
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                        showFollowTvView = false
-                        stringShow = "Blocked cards, time to discuss!"
-                        showBlockMessage = true
+                        showFollowTvView = true
                     }
                 }
             }

@@ -7,6 +7,10 @@ struct MurderView: View {
     @State private var selectedPlayerID: String? = nil
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
+    @State private var hasKilled: Bool = false
+
+    var onDismiss: (() -> Void)?
+
     var myCharacter: Character? {
         let myDisplayName = vm.multiplayerManager.myPeerID.displayName
         let character = vm.multiplayerManager.players.first {
@@ -24,6 +28,10 @@ struct MurderView: View {
     private var columns: [GridItem] {
         [GridItem(.flexible(), spacing: horizontalSpacing),
          GridItem(.flexible(), spacing: horizontalSpacing)]
+    }
+
+    init(onDismiss: (() -> Void)? = nil) {
+        self.onDismiss = onDismiss
     }
 
     var body: some View {
@@ -67,6 +75,9 @@ struct MurderView: View {
                                 isSelected: selectedPlayerID == peerID,
                                 glowRotation: $glowRotation,
                                 onSelect: {
+                                    if hasKilled {
+                                        return
+                                    }
                                     if selectedPlayerID == peerID {
                                         // Deseleciona
                                         selectedPlayerID = nil
@@ -94,31 +105,33 @@ struct MurderView: View {
 
                 // Botão
                 Button(action: {
-                    if (selectedPlayerID != nil) {
+                    if let peer = selectedPlayerID, !hasKilled {
                         voteConfirmed = true
-                        if let peer = selectedPlayerID {
-                            vm.kill(peer: peer)
-                            print("assassinou fulano")
-                        }
+                        vm.kill(peer: peer)
+                        hasKilled = true
+                        print("assassinou fulano")
                         DispatchQueue.main.async {
                             print(vm.multiplayerManager.players)
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            onDismiss?()
                         }
                     }
                 }) {
                     Text("Done")
                         .font(.custom("Almendra-Regular", size: 26))
-                        .foregroundColor(selectedPlayerID == nil ? Color("disable") : Color("title_color"))
+                        .foregroundColor((selectedPlayerID == nil || hasKilled) ? Color("disable") : Color("title_color"))
                         .padding(.horizontal, 73)
                         .padding(.vertical, 13)
                         .background(
-                            Image(selectedPlayerID == nil ? "buttonDisable" : "buttonEnable")
+                            Image((selectedPlayerID == nil || hasKilled) ? "buttonDisable" : "buttonEnable")
                                 .resizable()
                                 .renderingMode(.original)
                                 .cornerRadius(12)
                         )
                         .fixedSize()
                 }
-                .disabled(selectedPlayerID == nil)
+                .disabled(selectedPlayerID == nil || hasKilled)
                 .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
             }
         }
@@ -126,5 +139,5 @@ struct MurderView: View {
 }
 
 #Preview {
-    MurderView()
+    MurderView(onDismiss: {})
 }

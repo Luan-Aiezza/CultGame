@@ -18,9 +18,9 @@ struct Cult_Game_iOSApp: App {
     var body: some Scene {
     
         WindowGroup {
-            MainViewiOS()
+            EliminationView()
                 .environmentObject(vm)
-                .ignoresSafeArea()
+
         }
     }
 }

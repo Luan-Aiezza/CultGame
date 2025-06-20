@@ -208,7 +208,7 @@ struct PlayCardView: View {
                     EmptyView()
                 }
                 .fullScreenCover(isPresented: $showMurderView) {
-                    MurderView()
+                    MurderView(onDismiss: { showMurderView = false })
                 }
                 
             }

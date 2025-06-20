@@ -20,6 +20,10 @@ struct EliminationView: View {
     private let horizontalSpacing: CGFloat = 18
     private let verticalSpacing: CGFloat = 34
     private let cardHeight: CGFloat = 68
+    
+    
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
 
     private var columns: [GridItem] {
         [GridItem(.flexible(), spacing: horizontalSpacing),
@@ -27,8 +31,8 @@ struct EliminationView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            let availableWidth = geometry.size.width - (horizontalPadding * 2) - horizontalSpacing
+        
+            let availableWidth = screenWidth - (horizontalPadding * 2) - horizontalSpacing
             let cardWidth = availableWidth / 2
 
             ZStack {
@@ -41,14 +45,17 @@ struct EliminationView: View {
                     .scaledToFill()
 
                 VStack {
+                    
                     Spacer()
 
                     Text("Quem é Herege?")
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
                         .foregroundColor(.title)
-                        .padding(.bottom, 48)
-
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
                     LazyVGrid(columns: columns, spacing: verticalSpacing) {
                         ForEach(
                             multiplayerManager.players.filter { (peerID, player) in
@@ -84,6 +91,7 @@ struct EliminationView: View {
                         }
                     }
                     .padding(.top, 20)
+                    .padding(.horizontal, 100)
 
                     Spacer(minLength: 520)
                 }
@@ -102,6 +110,7 @@ struct EliminationView: View {
                                 Image("buttonEnable")
                                     .resizable()
                                     .renderingMode(.original)
+                                    .scaledToFit()
                                     .cornerRadius(12)
                             )
                     }
@@ -125,22 +134,25 @@ struct EliminationView: View {
                                 Image(selectedPlayerID == nil ? "buttonDisable" : "buttonEnable")
                                     .resizable()
                                     .renderingMode(.original)
+                                    .scaledToFit()
                                     .cornerRadius(12)
                             )
                     }
                     .disabled(selectedPlayerID == nil)
                 }
-                .padding(.horizontal, 48)
+                .padding(.bottom, 20)
+                .padding(.leading, 130)
+                .padding(.trailing, 10)
                 .frame(maxWidth: .infinity)
 
-                .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
+                .position(x: screenWidth / 2, y: screenHeight - 85)
                 if showFollowTvView {
                     FollowTvViewVoting()
                         .transition(.opacity)
                         .zIndex(5)
                 }
             }
-        }
+        
     }
 }
 

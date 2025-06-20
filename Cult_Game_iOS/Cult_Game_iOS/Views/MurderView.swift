@@ -24,6 +24,9 @@ struct MurderView: View {
     private let horizontalSpacing: CGFloat = 18
     private let verticalSpacing: CGFloat = 34
     private let cardHeight: CGFloat = 68
+    
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
 
     private var columns: [GridItem] {
         [GridItem(.flexible(), spacing: horizontalSpacing),
@@ -49,17 +52,16 @@ struct MurderView: View {
                 .ignoresSafeArea()
                 .scaledToFill()
             
-            VStack(spacing: 0) {
+            VStack(spacing: 20) {
                 Spacer()
                 
-                Text("Escolha alguém para matar")
+                Text("Escolha alguém para eliminar!")
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .font(.custom("VinerHandITC", size: 34))
                     .foregroundColor(.title)
-                    .padding(.bottom, 24)
-                
-                GeometryReader { geometry in
+                    .padding(.horizontal, 80)
+        
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
                         
@@ -94,7 +96,7 @@ struct MurderView: View {
                                                 }
                                             }
                                         },
-                                        width: (geometry.size.width - (horizontalPadding * 2) - horizontalSpacing) / 2,
+                                        width: (screenWidth - (horizontalPadding * 2) - horizontalSpacing) / 2,
                                         height: cardHeight
                                     )
                                 }
@@ -106,7 +108,6 @@ struct MurderView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .padding(.horizontal, horizontalPadding)
                     }
-                }
 
                 Button(action: {
                     if let peer = selectedPlayerID, !hasKilled {
@@ -117,7 +118,9 @@ struct MurderView: View {
                         DispatchQueue.main.async {
                             print(vm.multiplayerManager.players)
                         }
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            // onDismiss will dismiss MurderView and return to PlayCardView
                             onDismiss?()
                         }
                     }

@@ -27,18 +27,19 @@ struct PlayerCardView: View {
                     .resizable()
                     .frame(width: width, height: height)
                     .cornerRadius(10)
+                
                 HStack(spacing: 10) {
                     Image(displayName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: height - 30, height: height - 30)
+                    
                     Text(displayName)
                         .foregroundColor(.title)
-                        .fontWeight(.regular)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
                         .font(.custom("Almendra-Regular", size: 45))
-                    Spacer()
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .frame(width: width - (height - 30) - 50, alignment: .leading) // <- Garantir espaço estável
                 }
                 .padding(.horizontal, 16)
             } else {
@@ -46,23 +47,25 @@ struct PlayerCardView: View {
                     .resizable()
                     .frame(width: width, height: height)
                     .cornerRadius(10)
+                
                 HStack(spacing: 10) {
                     Image("personPlaceholder")
                         .resizable()
                         .scaledToFit()
                         .frame(width: height - 30, height: height - 30)
+                    
                     Text("Wait...")
                         .foregroundColor(.gray)
-                        .fontWeight(.regular)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
                         .font(.custom("Almendra-Regular", size: 45))
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .frame(width: width - (height - 30) - 50, alignment: .leading)
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 16)
             }
         }
         .frame(width: width, height: height)
-        
     }
 }

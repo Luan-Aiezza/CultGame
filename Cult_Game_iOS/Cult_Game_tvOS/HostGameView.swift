@@ -107,11 +107,10 @@ struct HostGameView: View {
                             )
                         }
                     }
+                    .frame(maxWidth: .infinity)
                     
                     if !secondRow.isEmpty {
                         HStack(spacing: horizontalSpacing) {
-                            Spacer(minLength: (geometry.size.width - (cardWidth + horizontalSpacing) * CGFloat(secondRow.count - 1) - cardWidth) / 2)
-                            
                             ForEach(secondRow, id: \.id) { player in
                                 PlayerCardView(
                                     player: player,
@@ -119,10 +118,10 @@ struct HostGameView: View {
                                     height: cardHeight
                                 )
                             }
-                            
-                            Spacer(minLength: (geometry.size.width - (cardWidth + horizontalSpacing) * CGFloat(secondRow.count - 1) - cardWidth) / 2)
                         }
+                        .frame(maxWidth: .infinity)
                     }
+
                 }
                 
                 VStack {
@@ -137,17 +136,6 @@ struct HostGameView: View {
                         }
                     }
                     
-                    HStack (spacing: 16) {
-                        Spacer()
-                        Image("minionsImage")
-                            .resizable()
-                            .frame(width: 76, height: 74)
-                            .padding(.bottom)
-                        Text("\(playerList.count)/7")
-                            .font(Font.custom("VinerHandITC", size: 60))
-                            .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                    }
-                    
                 }
             }
             .onChange(of: multiplayerManager.players.count) { count in
@@ -157,6 +145,17 @@ struct HostGameView: View {
                 MainScene.shared?.zoomOut()
                 multiplayerManager.startHosting()
             }
+            
+            HStack (spacing: 16) {
+                Spacer()
+                Image("minionsImage")
+                    .resizable()
+                    .frame(width: 76, height: 74)
+                    .padding(.bottom)
+                Text("\(playerList.count)/7")
+                    .font(Font.custom("VinerHandITC", size: 60))
+                    .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
+            }.padding(.top, 900)
         }
     }
     

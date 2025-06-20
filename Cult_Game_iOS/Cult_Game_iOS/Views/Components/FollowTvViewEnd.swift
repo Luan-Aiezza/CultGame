@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FollowTvView: View {
+struct FollowTvViewEnd: View {
 
     var body: some View {
         Color.black.opacity(0.85)
@@ -21,7 +21,7 @@ struct FollowTvView: View {
                 .scaledToFit()
                 .frame(width: 120, height: 120)
             
-            Text("Look the result on TV, time to discuss!")
+            Text("Look the result on TV, end game!")
                 .font(.custom("VinerHandITC", size: 30))
                 .foregroundStyle(Color.title)
                 .multilineTextAlignment(.center)

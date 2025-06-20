@@ -24,10 +24,11 @@ struct StoryView: View {
                     .scaledToFill()
                 
                 VStack {
-                    Text("A new day starts on the village and you are...")
+                    Text("A new day starts on the village\nand you are...")
                         .font(.custom("Almendra-Regular", size: 35))
                         .foregroundStyle(Color.title)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                 }.padding(.horizontal, 40)
                 
                 Color.black
@@ -35,7 +36,8 @@ struct StoryView: View {
                     .ignoresSafeArea()
                     .animation(.easeIn(duration: 0), value: fadeInOut)
                     
-            } .onAppear {
+            }
+            .onAppear {
                 fadeInOut =  true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
                     fadeInOut = false

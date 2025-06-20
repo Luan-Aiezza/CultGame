@@ -66,7 +66,7 @@ public class CardDeck {
         Card(name: "Secret Ritual", faithCost: 0, heresyCost: 6, followersEffect: -12, effectsDescription: "", description: "In muffled chants and hidden circles, forbidden ceremonies are conducted. Few return… but power makes itself known.", imageName: "writing", type: .heresy, rarity: 1)
     ]
 
-    let assassinationCard = Card(name: "Assassination", faithCost: 0, heresyCost: 10, followersEffect: 0, effectsDescription: "This card eliminates one of the players ", description: "During the night, the leader is found with their robe soaked and eyes staring into nothingness. No alarm was heard. The strike was precise — and final.", imageName: "blood", type: .assassination, rarity: 10)
+    let assassinationCard = Card(name: "Assassination", faithCost: 0, heresyCost: -10, followersEffect: 0, effectsDescription: "This card eliminates one of the players ", description: "During the night, the leader is found with their robe soaked and eyes staring into nothingness. No alarm was heard. The strike was precise — and final.", imageName: "blood", type: .assassination, rarity: 10)
     
     var specialCards: [SpecificCard] = []
 }

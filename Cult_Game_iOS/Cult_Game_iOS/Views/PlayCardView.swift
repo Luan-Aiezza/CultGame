@@ -241,7 +241,7 @@ struct PlayCardView: View {
                     showFollowTvView = true
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        showFollowTvView = false
+//                        showFollowTvView = false
                         stringShow = "Blocked cards, time to discuss!"
                         showBlockMessage = true
                     }

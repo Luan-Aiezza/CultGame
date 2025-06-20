@@ -35,75 +35,79 @@ struct MurderView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            let availableWidth = geometry.size.width - (horizontalPadding * 2) - horizontalSpacing
-            let cardWidth = availableWidth / 2
-
-            ZStack {
-                Color.black.opacity(0.8)
-                    .ignoresSafeArea()
-                    .transition(.opacity)
-                
-                Image("background_002")
-                    .resizable()
-                    .overlay {
-                        LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                    }
-                    .ignoresSafeArea()
-                    .scaledToFill()
-
-                VStack {
-                    Spacer()
-
-                    Text("Escolha alguém para matar")
-                        .multilineTextAlignment(.center)
-                        .font(.custom("VinerHandITC", size: 34))
-                        .foregroundColor(.title)
-                        .padding(.bottom, 24)
-
-                    LazyVGrid(columns: columns, spacing: verticalSpacing) {
-                        ForEach(
-                            multiplayerManager.players.filter { (peerID, player) in
-                                let isNotMyPeer = player.character != myCharacter
-                                let isActive = player.state == .active
-                                return isNotMyPeer && isActive
-                            },
-                            id: \.key
-                        ) { peerID, player in
-                            PlayerCellView(
-                                player: player,
-                                isSelected: selectedPlayerID == peerID,
-                                glowRotation: $glowRotation,
-                                onSelect: {
-                                    if hasKilled {
-                                        return
-                                    }
-                                    if selectedPlayerID == peerID {
-                                        // Deseleciona
-                                        selectedPlayerID = nil
-                                        glowRotation = 0
-                                    } else {
-                                        // Seleciona novo player
-                                        selectedPlayerID = peerID
-                                        voteConfirmed = false
-                                        glowRotation = 0
-                                        withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                            glowRotation = 360
-                                        }
-                                    }
-                                },
-                                width: cardWidth,
-                                height: cardHeight
-                            )
-                        }
-                    }
-                    .padding(.top, 20)
-
-                    Spacer(minLength: 520)
+        
+        ZStack {
+            Color.black.opacity(0.8)
+                .ignoresSafeArea()
+                .transition(.opacity)
+            
+            Image("background_002")
+                .resizable()
+                .overlay {
+                    LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
                 }
-                .padding(.horizontal, horizontalPadding)
+                .ignoresSafeArea()
+                .scaledToFill()
+            
+            VStack(spacing: 0) {
+                Spacer()
+                
+                Text("Escolha alguém para matar")
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .font(.custom("VinerHandITC", size: 34))
+                    .foregroundColor(.title)
+                    .padding(.bottom, 24)
+                
+                GeometryReader { geometry in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack {
+                        
+                            LazyVGrid(columns: columns, spacing: verticalSpacing) {
+                                ForEach(
+                                    multiplayerManager.players.filter { (peerID, player) in
+                                        let isNotMyPeer = player.character != myCharacter
+                                        let isActive = player.state == .active
+                                        return isNotMyPeer && isActive
+                                    },
+                                    id: \.key
+                                ) { peerID, player in
+                                    PlayerCellView(
+                                        player: player,
+                                        isSelected: selectedPlayerID == peerID,
+                                        glowRotation: $glowRotation,
+                                        onSelect: {
+                                            if hasKilled {
+                                                return
+                                            }
+                                            if selectedPlayerID == peerID {
+                                                // Deseleciona
+                                                selectedPlayerID = nil
+                                                glowRotation = 0
+                                            } else {
+                                                // Seleciona novo player
+                                                selectedPlayerID = peerID
+                                                voteConfirmed = false
+                                                glowRotation = 0
+                                                withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                                                    glowRotation = 360
+                                                }
+                                            }
+                                        },
+                                        width: (geometry.size.width - (horizontalPadding * 2) - horizontalSpacing) / 2,
+                                        height: cardHeight
+                                    )
+                                }
+                            }
+                            .padding(.top, 20)
+                            .padding(.horizontal, 100)
+                            
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        .padding(.horizontal, horizontalPadding)
+                    }
+                }
 
-                // Botão
                 Button(action: {
                     if let peer = selectedPlayerID, !hasKilled {
                         voteConfirmed = true
@@ -132,7 +136,7 @@ struct MurderView: View {
                         .fixedSize()
                 }
                 .disabled(selectedPlayerID == nil || hasKilled)
-                .position(x: geometry.size.width / 2, y: geometry.size.height - 85)
+                .padding(.bottom, 20)
             }
         }
     }

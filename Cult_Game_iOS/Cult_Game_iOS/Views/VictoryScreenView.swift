@@ -31,7 +31,7 @@ struct VictoryScreenView: View {
             let character = model.character
             return "\(String(describing: character?.rawValue.capitalized))H"
         }
-
+        
         return nil
     }
     var hereticDefeatImageName: String? {
@@ -43,177 +43,45 @@ struct VictoryScreenView: View {
         
         return nil
     }
+    
+    var body: some View {
+        
+        
+        ZStack {
             
-            var body: some View {
-                
-                
-                ZStack {
-                    
-                    Image("background_002")
-                        .resizable()
-                        .overlay {
-                            LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                        }
-                        .ignoresSafeArea()
-                        .scaledToFill()//RETIRAR DEPOIS
-                    
-                    VStack {
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                multiplayerManager.disconnect()
-                                isDisconnected = true
-                            }) {
-                                Image("exit")
-                                    .resizable()
-                                    .frame(width: 48, height: 35)
-                                    .foregroundColor(.white)
-                            }
-                            .padding(.trailing, 17.4)
-                        }
-                        .padding(.top, 16)
-                        
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    VStack(spacing: 40) {
-                        
-                        Text(content.title)
-                            .font(.custom("VinerHandITC", size: 45))
-                            .bold()
-                            .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
-                            .multilineTextAlignment(.center)
-                        
-                            .frame(width: 260, alignment: .center) // largura fixa
-                            .padding(.horizontal, 24)
-                            .padding(.top, 80)
-                        
-                        
-                        Text(content.description)
-                            .font(.custom("Almendra-Regular", size: 24))
-                            .foregroundColor({
-                                switch outcome {
-                                case .hereticVictoryFollowers, .hereticVictoryBalance:
-                                    return hereticRed
-                                default:
-                                    return Color(red: 211/255, green: 180/255, blue: 125/255, opacity: 1)
-                                }
-                            }())
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(0.2)
-                            .frame(width: 312, alignment: .center)
-                            .padding(.horizontal, 32)
-                        
-                        
-                        if [.hereticVictoryFollowers, .hereticVictoryBalance].contains(outcome){
-                            
-                            ZStack {
-                                Image("CircleHeretic")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 300, height: 293)
-                                
-                                if let imageName = hereticImageName {
-                                    GlowingCircleView(characterImageName: imageName)
-                                }
-                                
-                            }
-                        } else {
-                            
-                            if let defeatImage = hereticDefeatImageName {
-                                HereticDefeatImageViewiphone(imageName: defeatImage)
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        
-                    }.navigationDestination(isPresented: $isDisconnected) {
-                        PlayView()
-                    }
-                    .padding()
+            Image("background_002")
+                .resizable()
+                .overlay {
+                    LinearGradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0.1)], startPoint: .top, endPoint: .bottom)
                 }
-                .onAppear {
+                .ignoresSafeArea()
+                .scaledToFill()//RETIRAR DEPOIS
+            
+            FollowTvViewEnd()
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        multiplayerManager.disconnect()
+                        isDisconnected = true
+                    }) {
+                        Image("exit")
+                            .resizable()
+                            .frame(width: 48, height: 35)
+                            .foregroundColor(.white)
+                    }
+                    .padding(.trailing, 100)
                 }
+                .padding(.top, 16)
+                
+                Spacer()
+            }
+            .zIndex(5)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationDestination(isPresented: $isDisconnected) {
+                PlayView()
             }
         }
-        
-struct HereticDefeatImageViewiphone: View {
-    let imageName: String
-    
-    @State private var darkness: Double = 0.0
-    @State private var fadeOut: Double = 1.0
-    
-    var body: some View {
-        Image(imageName)
-            .resizable()
-            .scaledToFit()
-            .offset(x: -8, y: -120)
-            .frame(width: 115, height: 130)
-            .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
-            .opacity(fadeOut) // fade out da imagem
-            .onAppear {
-                withAnimation(.easeIn(duration: 8)) {
-                    darkness = 1.0 // totalmente preto
-                }
-                withAnimation(.easeOut(duration: 15).delay(2)) {
-                    fadeOut = 0.0 // desaparece
-                }
-            }
-    }
-}
-extension GameViewModel {
-    static func previewModel() -> GameViewModel {
-        let vm = GameViewModel()
-        let peer = MCPeerID(displayName: "You")
-        //vm.multiplayerManager.setFakePeerID()
-        vm.multiplayerManager.connectedPeers = [peer]
-
-        var me = PlayerModel()
-        me.role = .heretic
-        me.character = .deer
-
-        vm.multiplayerManager.players[peer.displayName] = me
-        vm.attPlayer(newPlayer: me)
-
-        // ✅ Adiciona o herege
-        let hereticPeer = MCPeerID(displayName: "Herege")
-        let heretic = PlayerModel(
-            id: hereticPeer.displayName,
-            role: .heretic,
-            state: .active,
-            character: .fox
-        )
-        vm.multiplayerManager.players[hereticPeer.displayName] = heretic
-        vm.multiplayerManager.connectedPeers.append(hereticPeer)
-
-        return vm
-    }
-}
-struct DefeatedImageView: View {
-    let imageName: String
-    
-    @State private var darkness: Double = 0.0
-    @State private var fadeOut: Double = 1.0
-    
-    var body: some View {
-        Image(imageName)
-            .resizable()
-            .scaledToFit()
-            .offset(x: -8, y: -120)
-            .frame(width: 115, height: 130)
-            .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-            .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem
-            .opacity(fadeOut) // fade out da imagem
-            .onAppear {
-                withAnimation(.easeIn(duration: 8)) {
-                    darkness = 1.0 // totalmente preto
-                }
-                withAnimation(.easeOut(duration: 15).delay(2)) {
-                    fadeOut = 0.0 // desaparece
-                }
-            }
     }
 }

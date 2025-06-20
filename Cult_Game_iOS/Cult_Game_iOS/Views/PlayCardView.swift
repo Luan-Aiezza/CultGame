@@ -116,20 +116,22 @@ struct PlayCardView: View {
                         }
                         .transition(.slide)
                     if selectedCard != nil {
-                        HStack(spacing: 20) {
-                            ForEach(hand, id: \.id) { card in
-                                CardView(card: card)
-                                    .frame(width: 154, height: 216)
-                                    .draggable(card)
-                                    .overlay {
-                                        if playedCard {
-                                            ZStack {
-                                                Color.black.opacity(0.6)
-                                                    .cornerRadius(12)
-                                                Image("block")
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 20) {
+                                ForEach(hand, id: \.id) { card in
+                                    CardView(card: card)
+                                        .frame(width: 154, height: 216)
+                                        .draggable(card)
+                                        .overlay {
+                                            if playedCard {
+                                                ZStack {
+                                                    Color.black.opacity(0.6)
+                                                        .cornerRadius(12)
+                                                    Image("block")
+                                                }
                                             }
                                         }
-                                    }
+                                }
                             }
                         }
                         .dropDestination(for: Card.self) { items, location in

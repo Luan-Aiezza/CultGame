@@ -28,7 +28,7 @@ struct StoryView: View {
                         .font(.custom("Almendra-Regular", size: 35))
                         .foregroundStyle(Color.title)
                         .multilineTextAlignment(.center)
-                }
+                }.padding(.horizontal, 40)
                 
                 Color.black
                     .opacity(fadeInOut ? 0 : 1)

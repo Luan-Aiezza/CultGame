@@ -313,6 +313,7 @@ extension MultiplayerManager: MCSessionDelegate {
                         self.sendPlayersToAll()
                     }
                 }
+                //ERA MUITO SIMPLES >:C
             case .setInactive(let peerDisplayName):
                 DispatchQueue.main.async {
                     if var player = self.players[peerDisplayName] {
@@ -388,6 +389,7 @@ extension Notification.Name {
     static let didReceiveRole = Notification.Name("didReceiveRole")
     static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
     static let didReceiveVictory = Notification.Name("didReceiveVictory")
+    static let didReceiveSetInactive = Notification.Name("didReceiveSetInactive")
 }
 
 extension Dictionary {

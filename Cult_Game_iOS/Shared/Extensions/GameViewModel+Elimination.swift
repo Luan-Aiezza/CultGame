@@ -83,7 +83,3 @@ extension GameViewModel {
         self.didEvaluate = true
     }
 }
-
-extension Notification.Name {
-    static let didReceiveSetInactive = Notification.Name("didReceiveSetInactive")
-}

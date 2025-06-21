@@ -119,8 +119,7 @@ struct MurderView: View {
                             print(vm.multiplayerManager.players)
                         }
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            // onDismiss will dismiss MurderView and return to PlayCardView
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             onDismiss?()
                         }
                     }

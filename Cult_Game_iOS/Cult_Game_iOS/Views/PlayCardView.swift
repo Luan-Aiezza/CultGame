@@ -49,6 +49,8 @@ struct PlayCardView: View {
     @State var playedCard: Bool = false
     @State private var showMurderView = false
     @State private var showFollowTvView = false
+    @State private var showDeadView = false
+    @State private var isDisconnected = false
     
     @ViewBuilder
     var destinationView: some View {
@@ -202,6 +204,11 @@ struct PlayCardView: View {
                         .transition(.opacity)
                         .zIndex(5)
                 }
+                if showDeadView {
+                    FollowTvViewDead()
+                        .transition(.opacity)
+                        .zIndex(10)
+                }
                 NavigationLink(
                     destination: destinationView,
                     isActive: Binding(
@@ -214,7 +221,9 @@ struct PlayCardView: View {
                 .fullScreenCover(isPresented: $showMurderView) {
                     MurderView(onDismiss: { showMurderView = false })
                 }
-                
+            }
+            .navigationDestination(isPresented: $isDisconnected) {
+                PlayView()
             }
         }
         .onReceive(multiplayerManager.$currentPhase) { newPhase in
@@ -234,6 +243,16 @@ struct PlayCardView: View {
             } else {
                 self.stringShow = "You do not have enough heresy to play this card."
             }
+            
+            //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
+            if vm.player.state == .inactive && !showDeadView {
+                showDeadView = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    multiplayerManager.disconnect()
+                    isDisconnected = true
+                }
+            }
+            
         }
         .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
             
@@ -241,7 +260,17 @@ struct PlayCardView: View {
                 stringShow = ""
                 showBlockMessage = false
                 showFollowTvView = true
-                if !skippedRound && !playedCard {
+                
+                //GARANTIR A SAIDA DO JOGADOR NA RODADA DE DISCUSSÃO REFATORAR
+                if vm.player.state == .inactive && !showDeadView {
+                    showDeadView = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        multiplayerManager.disconnect()
+                        isDisconnected = true
+                    }
+                }
+                
+                else if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
                     

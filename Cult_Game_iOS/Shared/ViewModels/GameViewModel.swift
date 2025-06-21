@@ -131,6 +131,12 @@ class GameViewModel: ObservableObject, Observable {
         player.character = character
     }
     
+    @objc func handleSetInactive() {
+        DispatchQueue.main.async {
+            self.setState(state: .inactive)
+        }
+    }
+    
     // MARK: - Pontos (fé/heresia)
     var points: Int {
         get {
@@ -160,5 +166,6 @@ class GameViewModel: ObservableObject, Observable {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterAssignment(_:)), name: .didReceiveCharacter, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleVictory(_:)), name: .didReceiveVictory, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSetInactive), name: .didReceiveSetInactive, object: nil)
     }
 }

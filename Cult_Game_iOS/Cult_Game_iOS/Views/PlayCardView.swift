@@ -247,30 +247,23 @@ struct PlayCardView: View {
             //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
             if vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    multiplayerManager.disconnect()
-                    isDisconnected = true
-                }
+                multiplayerManager.disconnect()
             }
             
         }
         .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
             
-            if newValue == .discussion {
+            if newValue == .discussion && vm.player.state == .inactive && !showDeadView {
+                showDeadView = true
+                multiplayerManager.disconnect()
+            }
+            
+            else if newValue == .discussion && vm.player.state == .active && !showDeadView  {
                 stringShow = ""
                 showBlockMessage = false
                 showFollowTvView = true
                 
-                //GARANTIR A SAIDA DO JOGADOR NA RODADA DE DISCUSSÃO REFATORAR
-                if vm.player.state == .inactive && !showDeadView {
-                    showDeadView = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        multiplayerManager.disconnect()
-                        isDisconnected = true
-                    }
-                }
-                
-                else if !skippedRound && !playedCard {
+                if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
                     

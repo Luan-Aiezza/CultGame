@@ -320,6 +320,11 @@ extension MultiplayerManager: MCSessionDelegate {
                         self.players[peerDisplayName] = player
                         self.sendPlayersToAll()
                     }
+                    
+                    //Se eu sou o eliminado, notifico para alterar meu próprio estado
+                    if peerDisplayName == self.myPeerID.displayName {
+                        NotificationCenter.default.post(name: .didReceiveSetInactive, object: nil)
+                    }
                 }
             case .updatePlayers(let decoded):
                 DispatchQueue.main.async {

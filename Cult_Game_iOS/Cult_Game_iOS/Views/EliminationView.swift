@@ -34,6 +34,10 @@ struct EliminationView: View {
         
             let availableWidth = screenWidth - (horizontalPadding * 2) - horizontalSpacing
             let cardWidth = availableWidth / 2
+            
+            // Ajuste para garantir espaçamento visível mesmo em telas menores
+            let minCardWidth: CGFloat = 120
+            let adjustedCardWidth = max(cardWidth, minCardWidth)
 
             ZStack {
                 Image("background_002")
@@ -85,13 +89,13 @@ struct EliminationView: View {
                                         }
                                     }
                                 },
-                                width: cardWidth,
+                                width: adjustedCardWidth,
                                 height: cardHeight
                             )
                         }
                     }
                     .padding(.top, 20)
-                    .padding(.horizontal, 100)
+                    .padding(.horizontal, 0)
 
                     Spacer(minLength: 520)
                 }

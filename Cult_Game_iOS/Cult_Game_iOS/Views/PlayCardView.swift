@@ -168,6 +168,8 @@ struct PlayCardView: View {
                                     .frame(width:124,height:48)
                             }
                         }
+                        .disabled(playedCard || skippedRound)
+                        .opacity((playedCard || skippedRound) ? 0.6 : 1.0)
                         
                         Button {
                             if let selectedCard = selectedCard,
@@ -188,6 +190,8 @@ struct PlayCardView: View {
                                 .resizable()
                                 .frame(width:124,height:48)
                         }
+                        .disabled(playedCard || skippedRound || selectedCard == nil)
+                        .opacity((playedCard || skippedRound || selectedCard == nil) ? 0.6 : 1.0)
                     }
                     .frame(maxWidth: 500)
                     .padding()

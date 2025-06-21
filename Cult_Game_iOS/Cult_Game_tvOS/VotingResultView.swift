@@ -48,7 +48,7 @@ struct VotingResultView: View {
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
                         .padding(.top, 230)
-                        .position(x: 960, y: -300)
+                        .position(x: 960, y: -900)
                 } else {
                     Text("Draw! No one was voted!")
                         .font(.custom("VinerHandITC", size: 70))

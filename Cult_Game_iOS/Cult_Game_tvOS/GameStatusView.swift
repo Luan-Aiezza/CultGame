@@ -63,7 +63,7 @@ struct GameStatusView: View {
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }
-    
+    //GENERALIZAR POIS É CHAMADO EM 3 VIEWS
     private var playerIconsView: some View {
         HStack(spacing: 8) {
             ForEach(multiplayerManager.players.filter { (key, player) in

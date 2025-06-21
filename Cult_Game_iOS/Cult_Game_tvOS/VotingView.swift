@@ -75,12 +75,25 @@ struct VotingView: View {
             }
         }
     }
-    var playerIconsView: some View {
+    //GENERALIZAR POIS É CHAMADO EM 3 VIEWS
+    private var playerIconsView: some View {
         HStack(spacing: 8) {
-            ForEach(multiplayerManager.connectedPeers, id: \.self) { peer in
-                Image("FoxIcon")//trocar pelo icone do jogador
-                    .resizable()
-                    .frame(width: 36*tvResponse, height: 36*tvResponse)
+            ForEach(multiplayerManager.players.filter { (key, player) in
+                !key.contains("TV") && player.state == .active
+            }.map { $0.value }, id: \.id) { player in
+                if let displayName = player.character?.displayName, !displayName.isEmpty {
+                    Image(displayName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36 * tvResponse, height: 36 * tvResponse)
+                        .cornerRadius(10)
+                } else {
+                    Image("personPlaceholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36 * tvResponse, height: 36 * tvResponse)
+                        .cornerRadius(10)
+                }
             }
         }
         .background(Color(red: 0.16, green: 0.15, blue: 0.13))

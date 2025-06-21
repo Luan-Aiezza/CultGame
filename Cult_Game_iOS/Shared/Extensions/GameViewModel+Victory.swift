@@ -37,11 +37,25 @@ extension GameViewModel {
         if multiplayerManager.globalState.followers >= GameRules.maxFollowers {
             outcome = .cultistVictoryFollowers
         } else if heretics.isEmpty {
-            outcome = .cultistVictoryElimination
+            // Only trigger cultist victory if a heretic (assassin) was actually eliminated
+            if let eliminatedPeer = self.eliminatedPlayer, let eliminated = players[eliminatedPeer], eliminated.role == .heretic {
+                outcome = .cultistVictoryElimination
+            }
         } else if multiplayerManager.globalState.followers <= 0 {
             outcome = .hereticVictoryFollowers
         } else if heretics.count >= cultists.count {
             outcome = .hereticVictoryBalance
+        }
+        
+        let activePlayers = players.filter { (_, player) in
+            player.state == .active
+        }
+        // If there are 3 or more active players and no victory condition, continue to card play
+        if activePlayers.count >= 3 && outcome == nil {
+            currentPhase = .roleSelection
+            multiplayerManager.currentPhase = .roleSelection
+            multiplayerManager.sendGamePhase(.roleSelection)
+            return
         }
 
         if let outcome {

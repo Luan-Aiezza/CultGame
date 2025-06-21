@@ -1,4 +1,3 @@
-
 import Foundation
 
 extension GameViewModel {
@@ -40,6 +39,9 @@ extension GameViewModel {
         case .eliminationResults:
             print("current phase: \(multiplayerManager.currentPhase)")
             evaluateVictory()
+            if multiplayerManager.currentPhase == .roleSelection {
+                return
+            }
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)

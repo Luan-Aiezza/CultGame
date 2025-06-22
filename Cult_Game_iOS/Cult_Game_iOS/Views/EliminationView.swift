@@ -8,6 +8,8 @@ struct EliminationView: View {
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     @State private var showFollowTvView = false
+    @State private var showBlockMessage = false
+    @State private var stringShow = "You skipped this round!"
     var myCharacter: Character? {
         let myDisplayName = viewModel.multiplayerManager.myPeerID.displayName
         let character = viewModel.multiplayerManager.players.first {
@@ -47,6 +49,11 @@ struct EliminationView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
+                
+                if showBlockMessage {
+                    blockMessageView(show: $stringShow)
+                        .zIndex(10)
+                }
 
                 VStack {
                     
@@ -103,6 +110,11 @@ struct EliminationView: View {
 
                 HStack(spacing: 22) {
                     Button(action: {
+                        showBlockMessage = true
+                        stringShow = "You skipped this round!"
+                        selectedPlayerID = nil
+                        voteConfirmed = false
+                        glowRotation = 0
                         //TODO: Adicionar tela da Mari
                     }) {
                         Text("Skip")
@@ -118,6 +130,7 @@ struct EliminationView: View {
                                     .cornerRadius(12)
                             )
                     }
+                    .disabled(showBlockMessage)
 
                     // Botão Done
                     Button(action: {
@@ -142,7 +155,7 @@ struct EliminationView: View {
                                     .cornerRadius(12)
                             )
                     }
-                    .disabled(selectedPlayerID == nil)
+                    .disabled(selectedPlayerID == nil || showBlockMessage)
                 }
                 .padding(.bottom, 20)
                 .padding(.leading, 130)
@@ -163,3 +176,4 @@ struct EliminationView: View {
 #Preview {
     EliminationView()
 }
+

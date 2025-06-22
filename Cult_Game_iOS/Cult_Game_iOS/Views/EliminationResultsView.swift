@@ -7,7 +7,6 @@ struct EliminationResultsView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var viewModel: GameViewModel
     @State var isDisconnected = false
-    @State private var showDeadView = false
 
     var isPlayerEliminated: Bool {
         viewModel.eliminatedPlayer == viewModel.peerID
@@ -89,9 +88,8 @@ struct EliminationResultsView: View {
                 }
             }
             .onAppear {
-                if isPlayerEliminated && !isDisconnected && !showDeadView {
+                if isPlayerEliminated && !isDisconnected {
                     multiplayerManager.disconnect()
-                    showDeadView = true
                 }
             }
             .navigationDestination(isPresented: $isDisconnected) {
@@ -100,10 +98,10 @@ struct EliminationResultsView: View {
 
             .padding()
             
-            if showDeadView {
+            if isPlayerEliminated {
                 FollowTvViewDead()
                     .transition(.opacity)
-                    .zIndex(10)
+                    .zIndex(20)
             }
         }
     }

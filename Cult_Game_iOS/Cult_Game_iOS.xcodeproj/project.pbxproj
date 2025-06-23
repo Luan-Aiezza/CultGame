@@ -67,7 +67,7 @@
 				Assets.xcassets,
 				ViewModels/PlayCardViewModel.swift,
 				Views/Components/PlayerElimView.swift,
-				Views/WaitingForPlayersView.swift,
+				Views/iOS_Flow/iOS_1_pairing/WaitingForPlayersView.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};

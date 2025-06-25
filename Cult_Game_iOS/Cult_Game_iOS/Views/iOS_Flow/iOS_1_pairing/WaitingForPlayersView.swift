@@ -2,21 +2,6 @@ import SwiftUI
 import MultipeerConnectivity
 
 
-extension Character {
-    var displayName: String {
-        switch self {
-        case .fox: return "Fox"
-        case .panda: return "Panda"
-        case .bunny: return "Bunny"
-        case .tiger: return "Tiger"
-        case .deer: return "Deer"
-        case .pig: return "Pig"
-        case .wolf: return "Wolf"
-        }
-    }
-}
-
-
 // MARK: - Tela principal de espera
 struct WaitingForPlayersView: View {
     @EnvironmentObject var viewModel: GameViewModel

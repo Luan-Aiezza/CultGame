@@ -8,8 +8,7 @@ struct DiscussionView: View {
         case result
         case main
     }
-
-    @ObservedObject var timerManager = GameTimerManager()
+    @EnvironmentObject var gameViewModel: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @State private var viewPhase: ViewPhase = .transition
     let Audio = AudioManager.shared
@@ -32,7 +31,7 @@ struct DiscussionView: View {
                         HStack {
                             Spacer()
                             ZStack(alignment: .center) {
-                                TimerView(timerManager: timerManager)
+                                TimerView(timerManager: gameViewModel.timerManager)
                                     .frame(width: 194 * tvResponse, height: 74 * tvResponse)
                                     .background(Color(red: 0.16, green: 0.15, blue: 0.13))
                                 Image("TimerBar")
@@ -69,7 +68,7 @@ struct DiscussionView: View {
                     }
                 }
                 .onAppear {
-                    timerManager.start(duration: 120)//120
+                    gameViewModel.timerManager.start(duration: 120)//120
                 }
             }
         }

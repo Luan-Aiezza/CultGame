@@ -4,7 +4,7 @@ import Combine
 
 struct GameStatusView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var timer = GameTimerManager()
+    @EnvironmentObject var gameViewModel: GameViewModel
     
     var tvResponse = 1.5
 
@@ -19,7 +19,7 @@ struct GameStatusView: View {
                 HStack {
                     Spacer()
                     ZStack(alignment: .center) {
-                        TimerView(timerManager: timer)
+                        TimerView(timerManager: gameViewModel.timerManager)
                             .frame(width: 194 * tvResponse, height: 74 * tvResponse)
                             .background(Color(red: 0.16, green: 0.15, blue: 0.13))
                         Image("TimerBar")
@@ -59,7 +59,7 @@ struct GameStatusView: View {
         }
         .onAppear {
             MainScene.shared?.zoomOut()
-            timer.start(duration: 90) //90
+            gameViewModel.timerManager.start(duration: 90)//90
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

@@ -27,3 +27,17 @@ struct PlayerModel: Codable, Identifiable, Equatable {
     var votes: Int = 0
     var character: Character? = nil
 }
+
+extension Character {
+    var displayName: String {
+        switch self {
+        case .fox: return "Fox"
+        case .panda: return "Panda"
+        case .bunny: return "Bunny"
+        case .tiger: return "Tiger"
+        case .deer: return "Deer"
+        case .pig: return "Pig"
+        case .wolf: return "Wolf"
+        }
+    }
+}

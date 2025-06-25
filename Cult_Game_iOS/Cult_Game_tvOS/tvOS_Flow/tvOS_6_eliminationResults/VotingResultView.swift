@@ -3,7 +3,6 @@ import SpriteKit
 import AVFoundation
 
 struct VotingResultView: View {
-    var timerManager = GameTimerManager()
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @EnvironmentObject var gameViewModel: GameViewModel
     var Audio = AudioManager.shared
@@ -74,7 +73,7 @@ struct VotingResultView: View {
                 gameViewModel.advancePhaseAfterTimer()
             })
             
-            timerManager.start(duration: 10)
+            gameViewModel.timerManager.start(duration: 10)
             Audio.setVolume(to: 0.4)
             Audio.playSound(named: "BonfireRise")
         }

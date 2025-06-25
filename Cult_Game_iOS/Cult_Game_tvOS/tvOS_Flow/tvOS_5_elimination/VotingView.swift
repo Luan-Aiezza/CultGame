@@ -4,7 +4,7 @@ import Combine
 
 struct VotingView: View {
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
-    @ObservedObject var timer = GameTimerManager()
+    @EnvironmentObject var gameViewModel: GameViewModel
     @State private var showStory = true
     
     var tvResponse = 1.5
@@ -22,7 +22,7 @@ struct VotingView: View {
                         HStack {
                             Spacer()
                             ZStack(alignment: .center) {
-                                TimerView(timerManager: timer)
+                                TimerView(timerManager: gameViewModel.timerManager)
                                     .frame(width: 194 * tvResponse, height: 74 * tvResponse)
                                     .background(Color(red: 0.16, green: 0.15, blue: 0.13))
                                 Image("TimerBar")
@@ -63,7 +63,7 @@ struct VotingView: View {
                 }
                 .onAppear {
                     MainScene.shared?.zoomIn()
-                    timer.start(duration: 60)//60
+                    gameViewModel.timerManager.start(duration: 60)//60
                     AudioManager.shared.playBackgroundMusic(named: "Background_Elimination")
                 }
             }

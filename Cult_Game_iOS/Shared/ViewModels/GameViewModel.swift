@@ -4,6 +4,9 @@ import MultipeerConnectivity
 import Combine
 
 class GameViewModel: ObservableObject, Observable {
+    //ferramentas
+    @Published var timerManager = GameTimerManager()
+    
     // MARK: - Estado geral do jogo
     @Published var activeCards: [SpecificCard] = []
     @Published var eliminatedPlayer: String?
@@ -162,6 +165,10 @@ class GameViewModel: ObservableObject, Observable {
     
     // MARK: - Init
     init() {
+        timerManager.onEnded = {
+            self.advancePhaseAfterTimer()
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleCharacterAssignment(_:)), name: .didReceiveCharacter, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRoleAssignment(_:)), name: .didReceiveRole, object: nil)

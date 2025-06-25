@@ -130,6 +130,9 @@ class MultiplayerManager: NSObject, ObservableObject {
         player?.role = role
         players[peer.displayName] = player
         
+        sendPlayersToAll()
+        print("players atualmente: \(players)")
+        
         let message = MultiplayerMessage.roleAssignment(role)
         if let data = try? JSONEncoder().encode(message) {
             try? session.send(data, toPeers: [peer], with: .reliable)
@@ -241,7 +244,7 @@ extension MultiplayerManager: MCSessionDelegate {
         DispatchQueue.main.async {
             switch state {
             case .connected:
-                    self.connectedPeers.append(peerID)
+                self.connectedPeers.append(peerID)
                 
                 if peerID.displayName.contains("Apple TV") {
                     return

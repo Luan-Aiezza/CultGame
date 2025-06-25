@@ -14,9 +14,7 @@ class GameTimerManager: ObservableObject {
     @Published var timeRemaining: Int = 0
     private var timer: Timer?
     
-    func onTimerEnded() {
-        advancePhaseAfterTimer()
-    }
+    var onEnded: (() -> Void)?
     
     func start(duration: Int) {
         stop()
@@ -29,7 +27,7 @@ class GameTimerManager: ObservableObject {
                 self.timeRemaining -= 1
             } else {
                 self.stop()
-                self.onTimerEnded()
+                self.onEnded?()
             }
         }
     }
@@ -42,22 +40,5 @@ class GameTimerManager: ObservableObject {
     func reset(duration: Int) {
         stop()
         start(duration: duration)
-    }
-    
-    func advancePhaseAfterTimer() {
-        switch multiplayerManager.currentPhase {
-        case .roleSelection:
-            multiplayerManager.sendGamePhase(.cardPlay)
-        case .cardPlay:
-            multiplayerManager.sendGamePhase(.discussion)
-        case .discussion:
-            multiplayerManager.sendGamePhase(.elimination)
-        case .elimination:
-            multiplayerManager.sendGamePhase(.eliminationResults)
-        case .eliminationResults:
-            multiplayerManager.sendGamePhase(.cardPlay)
-        default:
-            break
-        }
     }
 }

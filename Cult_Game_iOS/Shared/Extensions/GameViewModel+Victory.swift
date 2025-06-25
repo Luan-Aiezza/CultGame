@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import os
+
+private let logger = Logger(subsystem: "mooncat.Cult-Game-iOS", category: "GameLogic")
 
 extension GameViewModel {
     
@@ -18,58 +21,78 @@ extension GameViewModel {
     }
     
     func evaluateVictory() {
-        
-        print("entrou em evaluate victory")
+        logger.debug("connected peers: \(self.multiplayerManager.connectedPeers)")
         
         let players = multiplayerManager.players
-        print("players: \(players)")
+        logger.debug("jogadores: \(players)")
         
         let cultists = players.filter { (_, player) in
-            player.role == .cultist && player.state == .active
+            if let role = player.role {
+                return role == .cultist && player.state == .active
+            } else {
+                return false
+            }
         }
+        logger.debug("cultistas ativos: \(cultists.map { $0.key })")
         
         let heretics = players.filter { (_, player) in
-            player.role == .heretic && player.state == .active
+            if let role = player.role {
+                return role == .heretic && player.state == .active
+            } else {
+                return false
+            }
         }
+        logger.debug("hereges ativos: \(heretics.map { $0.key })")
         
         var outcome: GameOutcome?
-
-        if multiplayerManager.globalState.followers >= GameRules.maxFollowers {
+        
+        let followers = multiplayerManager.globalState.followers
+        logger.debug("seguidores: \(followers)")
+        
+        if followers >= GameRules.maxFollowers {
+            logger.info("vitória dos cultistas por número de seguidores")
             outcome = .cultistVictoryFollowers
         } else if heretics.isEmpty {
-            // Only trigger cultist victory if a heretic (assassin) was actually eliminated
-            if let eliminatedPeer = self.eliminatedPlayer, let eliminated = players[eliminatedPeer], eliminated.role == .heretic {
-                outcome = .cultistVictoryElimination
+            logger.info("nenhum herege ativo restante.")
+            if let eliminatedPeer = self.eliminatedPlayer {
+                logger.debug("jogador eliminado: \(eliminatedPeer)")
+                if let eliminated = players[eliminatedPeer] {
+                    logger.debug("rle eliminado: \(eliminated.role?.rawValue ?? "desconhecido")")
+                    if eliminated.role == .heretic {
+                        logger.info("vitória dos cultistas por eliminação de herege")
+                        outcome = .cultistVictoryElimination
+                    }
+                }
             }
-        } else if multiplayerManager.globalState.followers <= 0 {
+        } else if followers <= 0 {
+            logger.info("vitória dos hereges por perda total de seguidores!")
             outcome = .hereticVictoryFollowers
         } else if heretics.count >= cultists.count {
+            logger.info("vitória dos hereges por balanceamento!")
             outcome = .hereticVictoryBalance
         }
         
         let activePlayers = players.filter { (_, player) in
             player.state == .active
         }
-        // If there are 3 or more active players and no victory condition, continue to card play
+        logger.debug("jogadores ativos restantes: \(activePlayers.count)")
+        
         if activePlayers.count >= 3 && outcome == nil {
-            currentPhase = .roleSelection
-            multiplayerManager.currentPhase = .roleSelection
-            multiplayerManager.sendGamePhase(.roleSelection)
-            return
+            logger.info("continuando para próxima fase: roleSelection")
+            advancePhaseAfterTimer()
         }
-
+        
         if let outcome {
-            print("🏁 Vitória detectada: \(outcome)")
+            logger.info("vitória detectada: \(String(describing: outcome))")
             multiplayerManager.sendVictory(outcome)
             self.gameOutcome = outcome
             multiplayerManager.currentPhase = .victory(outcome)
             multiplayerManager.sendGamePhase(.victory(outcome))
         } else {
-            print("🔄 Nenhuma vitória detectada")
-            advancePhaseAfterTimer()
+            logger.info("nenhuma vitória detectada — avançando fase")
+            //advancePhaseAfterTimer()
         }
         
-        print("chegou ao final de evaluate victory")
+        logger.debug("fim de evaluateVictory()")
     }
-
 }

@@ -22,6 +22,7 @@ extension GameViewModel {
             print("current phase: \(multiplayerManager.currentPhase)")
             multiplayerManager.killed = nil
             multiplayerManager.voted = nil
+            evaluateVictory()
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
             multiplayerManager.sendGamePhase(.discussion)

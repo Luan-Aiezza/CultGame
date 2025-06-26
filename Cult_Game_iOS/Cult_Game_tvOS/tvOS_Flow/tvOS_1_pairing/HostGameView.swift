@@ -132,7 +132,7 @@ struct HostGameView: View {
                             blockMessageView(show: $stringShow)
                                 .zIndex(4)
                                 .padding(.trailing, -60)
-                                .padding(.bottom, -50)
+                                .padding(.bottom, 50)
                         }
                     }
                     

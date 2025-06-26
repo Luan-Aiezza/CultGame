@@ -41,8 +41,6 @@ class Card: Identifiable, Equatable, Codable, Transferable {
         guard let role = vm.player.role else { return }
         let action = CardPlayAction(playerID: vm.peerID, card: self, playerRole: role)
         
-        print("agora ta dentro daquela funcao de DENTRO da carta")
-        
         vm.multiplayerManager.send(action)
     }
 }

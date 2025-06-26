@@ -22,13 +22,13 @@ extension GameViewModel {
             print("current phase: \(multiplayerManager.currentPhase)")
             multiplayerManager.killed = nil
             multiplayerManager.voted = nil
-//            evaluateVictory()
+            evaluateVictory()
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
             multiplayerManager.sendGamePhase(.discussion)
         case .discussion:
             print("current phase: \(multiplayerManager.currentPhase)")
-//            evaluateVictory()
+            evaluateVictory()
             currentPhase = .elimination
             multiplayerManager.currentPhase = .elimination
             multiplayerManager.sendGamePhase(.elimination)
@@ -39,7 +39,7 @@ extension GameViewModel {
             multiplayerManager.sendGamePhase(.eliminationResults)
         case .eliminationResults:
             print("current phase: \(multiplayerManager.currentPhase)")
-//            evaluateVictory()
+            evaluateVictory()
             if multiplayerManager.currentPhase == .roleSelection {
                 return
             }

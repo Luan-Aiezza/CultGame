@@ -45,7 +45,6 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     // carta
     func send(_ action: CardPlayAction) {
-        print("funcao do multiplayer manager de ENVIAR a carta estou na funcao send")
         
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {

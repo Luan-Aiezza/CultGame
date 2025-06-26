@@ -22,13 +22,13 @@ extension GameViewModel {
             print("current phase: \(multiplayerManager.currentPhase)")
             multiplayerManager.killed = nil
             multiplayerManager.voted = nil
-            evaluateVictory()
+//            evaluateVictory()
             currentPhase = .discussion
             multiplayerManager.currentPhase = .discussion
             multiplayerManager.sendGamePhase(.discussion)
         case .discussion:
             print("current phase: \(multiplayerManager.currentPhase)")
-            evaluateVictory()
+//            evaluateVictory()
             currentPhase = .elimination
             multiplayerManager.currentPhase = .elimination
             multiplayerManager.sendGamePhase(.elimination)
@@ -39,22 +39,29 @@ extension GameViewModel {
             multiplayerManager.sendGamePhase(.eliminationResults)
         case .eliminationResults:
             print("current phase: \(multiplayerManager.currentPhase)")
-            evaluateVictory()
+//            evaluateVictory()
             if multiplayerManager.currentPhase == .roleSelection {
                 return
             }
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
+            resetRound()
         default:
             break
         }
     }
     
+    func resetRound() {
+        multiplayerManager.voted = nil
+        multiplayerManager.killed = nil
+        self.destroyUsedCard()
+    }
+    
     func handlePhaseChange() {
         
         if isHost, case .cardPlay = multiplayerManager.currentPhase {
-            evaluateVictory()
+//            evaluateVictory()
         }
 
         switch multiplayerManager.currentPhase {

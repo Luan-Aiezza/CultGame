@@ -42,14 +42,17 @@ extension GameViewModel {
 
     
     func playCard(_ card: Card) {
-        guard player.usedCard != nil else {
+        print("agora realmente entrou em playCard e está enviando a carta \(card.name)")
+        
+        guard player.usedCard == nil else {
             return
         }
-
+        
         assignCard(card: card)
         removeCardFromHand(card: card)
 
         card.play(vm: self)
+        print("chegou no final da funcao de enviar cartacarta \(card.name)")
         turnEnteredCardPlayOnce()
     }
 

@@ -24,6 +24,7 @@
 		3398F2422DCCDE1B0060E09B /* Exceptions for "Shared" folder in "Cult_Game_iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Data/CardDistributionManager.swift,
 				"Extensions/GameViewModel+Cards.swift",
 				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
@@ -34,16 +35,16 @@
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
-				ViewModels/CardDistributionManager.swift,
+				Services/MultiplayerManager.swift,
+				Utils/Utilities.swift,
 				ViewModels/GameViewModel.swift,
-				ViewModels/MultiplayerManager.swift,
-				ViewModels/TimerManager.swift,
 			);
 			target = CF696C122DC3B95000B0CE7D /* Cult_Game_iOS */;
 		};
 		3398F2442DCCDE250060E09B /* Exceptions for "Shared" folder in "Cult_Game_tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Data/CardDistributionManager.swift,
 				"Extensions/GameViewModel+Cards.swift",
 				"Extensions/GameViewModel+Elimination.swift",
 				"Extensions/GameViewModel+MultiplayerSinc.swift",
@@ -54,10 +55,9 @@
 				Models/GameModels.swift,
 				Models/PlayerModel.swift,
 				Models/SpecificCard.swift,
-				ViewModels/CardDistributionManager.swift,
+				Services/MultiplayerManager.swift,
+				Utils/Utilities.swift,
 				ViewModels/GameViewModel.swift,
-				ViewModels/MultiplayerManager.swift,
-				ViewModels/TimerManager.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;
 		};
@@ -65,8 +65,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				ViewModels/PlayCardViewModel.swift,
-				Views/Components/PlayerElimView.swift,
+				Views/Components/MurderView/PlayerElimView.swift,
 				Views/iOS_Flow/iOS_1_pairing/WaitingForPlayersView.swift,
 			);
 			target = CFFE15682DCA633100CFF322 /* Cult_Game_tvOS */;

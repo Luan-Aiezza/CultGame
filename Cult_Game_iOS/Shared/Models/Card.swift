@@ -1,11 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-//UTI
-extension UTType {
-    static let card: UTType = UTType(exportedAs: "card")
-}
-
 //ESTRUTURA DAS CARTAS
 class Card: Identifiable, Equatable, Codable, Transferable {
     
@@ -45,6 +40,8 @@ class Card: Identifiable, Equatable, Codable, Transferable {
     func play(vm: GameViewModel) {
         guard let role = vm.player.role else { return }
         let action = CardPlayAction(playerID: vm.peerID, card: self, playerRole: role)
+        
+        print("agora ta dentro daquela funcao de DENTRO da carta")
         
         vm.multiplayerManager.send(action)
     }

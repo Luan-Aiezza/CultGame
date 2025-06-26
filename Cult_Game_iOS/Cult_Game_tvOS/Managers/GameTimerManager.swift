@@ -27,7 +27,9 @@ class GameTimerManager: ObservableObject {
                 self.timeRemaining -= 1
             } else {
                 self.stop()
-                self.onEnded?()
+                DispatchQueue.main.async { [weak self] in
+                    self?.onEnded?()
+                }
             }
         }
     }
@@ -41,4 +43,9 @@ class GameTimerManager: ObservableObject {
         stop()
         start(duration: duration)
     }
+    
+    deinit {
+        stop()
+    }
+
 }

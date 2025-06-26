@@ -45,6 +45,8 @@ class MultiplayerManager: NSObject, ObservableObject {
     
     // carta
     func send(_ action: CardPlayAction) {
+        print("funcao do multiplayer manager de ENVIAR a carta estou na funcao send")
+        
         guard !session.connectedPeers.isEmpty else { return }
         if let data = try? JSONEncoder().encode(action) {
             let stablePeers = self.connectedPeers
@@ -221,7 +223,7 @@ class MultiplayerManager: NSObject, ObservableObject {
             if effect.heresyChange != 0 {
                 globalState.heresyPoints += effect.heresyChange
                 
-                if globalState.sharedFaithPoints < 0 {
+                if globalState.heresyPoints < 0 {
                     globalState.heresyPoints = 0
                 }
                 
@@ -348,6 +350,7 @@ extension MultiplayerManager: MCSessionDelegate {
                 }
             }
         } else {
+            print("recebeu ALGO")
             handleReceived(data, from: peerID.displayName)
         }
     }
@@ -393,10 +396,4 @@ extension Notification.Name {
     static let didReceiveCharacter = Notification.Name("didReceiveCharacter")
     static let didReceiveVictory = Notification.Name("didReceiveVictory")
     static let didReceiveSetInactive = Notification.Name("didReceiveSetInactive")
-}
-
-extension Dictionary {
-    func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
-        Dictionary<T, Value>(uniqueKeysWithValues: self.map { (transform($0.key), $0.value) })
-    }
 }

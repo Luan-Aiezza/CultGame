@@ -62,6 +62,22 @@ struct WaitingView: View {
             } else{
                 VStack{
                     Spacer()
+                    VStack(spacing: 20) {
+                        Image("tv_frame")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                        
+                        Text("Play the game\non Apple TV!")
+                            .font(.custom("VinerHandITC", size: 30))
+                            .foregroundStyle(Color.title)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                        
+                    }
+                    .padding(.horizontal, 40)
+                    .zIndex(5)
+                    Spacer()
                     Text("Waiting for players...")
                         .font(Font.custom("Almendra-Regular", size: 23))
                         .foregroundColor(Color(red:211/255, green:180/255, blue:125/255))

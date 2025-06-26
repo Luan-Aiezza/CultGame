@@ -20,7 +20,19 @@ enum GameOutcome: String, Codable {
     case cultistVictoryElimination
     case hereticVictoryFollowers
     case hereticVictoryBalance
-}/////////////////
+}
+
+extension GameOutcome {
+    var isHereticVictory: Bool {
+        self == .hereticVictoryFollowers || self == .hereticVictoryBalance
+    }
+}
+extension GameOutcome {
+    var isCultistVictory: Bool {
+        self == .cultistVictoryFollowers || self == .cultistVictoryElimination
+    }
+}
+
 
 
 enum GamePhase: Codable, Equatable {

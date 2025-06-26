@@ -1,52 +1,12 @@
-//
-//  PlayCardView.swift
-//  Cult_Game_iOS
-//
-//  Created by Jessica Rodrigues on 21/05/25.
-//
-
 import SwiftUI
 import SpriteKit
 
-struct SelectCard: View {
-    @Binding var selectedCard: Card?
-    @Binding var zoomedCard: Card?
-    @Binding var showZoomedCard : Bool
-    
-    var body: some View {
-        if let card = selectedCard {
-            CardView(card: card)
-                .frame(width: 154, height: 216)
-                .padding(.bottom, 100)
-                .draggable(card)
-                .onTapGesture {
-                    withAnimation {
-                        zoomedCard = card
-                        showZoomedCard = true
-                    }
-                }
-        } else {
-            Image("selectCard")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 154, height: 216)
-                .padding(.bottom, 100)
-        }
-    }
-}
-
 struct PlayCardView: View {
+    
     @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @ObservedObject var pvm = PlayCardViewModel()
-    @State var selectedCard: Card? = nil
-    @State var hand: [Card] = []
-    @State var zoomedCard: Card? = nil
-    @State var showZoomedCard = false
-    @State var showBlockMessage = false
-    @State var stringShow = "The cult does not have enough faith points to choose a card"
-    @State var skippedRound: Bool = false
-    @State var playedCard: Bool = false
+    
     @State private var showMurderView = false
     @State private var showFollowTvView = false
     @State private var showDeadView = false
@@ -54,8 +14,7 @@ struct PlayCardView: View {
     
     @ViewBuilder
     var destinationView: some View {
-        if let outcome = vm.gameOutcome,
-           let role = vm.player.role {
+        if let outcome = vm.gameOutcome, let role = vm.player.role {
             VictoryScreenView(role: role, outcome: outcome)
         } else {
             EmptyView()
@@ -66,7 +25,7 @@ struct PlayCardView: View {
         NavigationStack {
             ZStack {
                 
-                if let card = zoomedCard, showZoomedCard {
+                if let card = pvm.zoomedCard, pvm.showZoomedCard {
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
                     
@@ -76,14 +35,14 @@ struct PlayCardView: View {
                         .transition(.opacity)
                         .onTapGesture {
                             withAnimation {
-                                showZoomedCard = false
+                                pvm.showZoomedCard = false
                             }
                         }
                         .zIndex(2)
                 }
                 
-                if showBlockMessage && !showZoomedCard {
-                    blockMessageView(show: $stringShow)
+                if pvm.showBlockMessage && !pvm.showZoomedCard {
+                    blockMessageView(show: $pvm.stringShow)
                         .zIndex(4)
                 }
                 
@@ -96,36 +55,30 @@ struct PlayCardView: View {
                     .scaledToFill()
                 
                 VStack {
-                    SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
+                    SelectCard()
+                        .environmentObject(pvm)
                         .padding(.vertical, 50)
-                        .dropDestination(for: Card.self) { items, location in
+                        .dropDestination(for: Card.self) { items, _ in
                             if let card = items.first {
-                                if selectedCard == nil {
-                                    selectedCard = card
-                                    hand.removeAll { $0 == card }
-                                    return true
-                                }
+                                pvm.selectCard(card)
+                                return true
                             }
                             return false
                         }
                         .onTapGesture {
-                            if let card = selectedCard {
-                                if !playedCard {
-                                    hand.append(card)
-                                    selectedCard = nil
-                                }
-                            }
+                            pvm.returnSelectedCard()
                         }
                         .transition(.slide)
-                    if selectedCard != nil {
+                    
+                    if pvm.selectedCard != nil {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 20) {
-                                ForEach(hand, id: \.id) { card in
+                                ForEach(pvm.hand, id: \.id) { card in
                                     CardView(card: card)
                                         .frame(width: 154, height: 216)
                                         .draggable(card)
                                         .overlay {
-                                            if playedCard {
+                                            if pvm.playedCard {
                                                 ZStack {
                                                     Color.black.opacity(0.6)
                                                         .cornerRadius(12)
@@ -136,137 +89,94 @@ struct PlayCardView: View {
                                 }
                             }
                         }
-                        .dropDestination(for: Card.self) { items, location in
-                            if let card = selectedCard {
-                                hand.append(card)
-                                selectedCard = nil
+                        .dropDestination(for: Card.self) { _, _ in
+                            if let card = pvm.selectedCard {
+                                pvm.dropBackCard(card)
                                 return true
                             }
                             return false
                         }
                     } else {
-                        CardCarouselView(
-                            selectedCard: $selectedCard,
-                            zoomedCard: $zoomedCard,
-                            showZoomedCard: $showZoomedCard,
-                            showBlockMessage: $showBlockMessage,
-                            cards: $hand,
-                            skippedRound: $skippedRound
-                        )
+                        CardCarouselView()
+                            .environmentObject(pvm)
                     }
                     
                     HStack(spacing: 50) {
                         Button {
-                            if !playedCard && selectedCard == nil {
-                                vm.skipCard()
-                                skippedRound = true
-                                stringShow = "You skiped this round!"
-                                showBlockMessage = true
-                            }
+                            pvm.skipRound()
                         } label: {
-                            ZStack {
-                                Image("cardViewButton")
-                                    .resizable()
-                                    .frame(width:124,height:48)
-                            }
+                            Image("cardViewButton")
+                                .resizable()
+                                .frame(width: 124, height: 48)
                         }
-                        .disabled(playedCard || skippedRound)
-                        .opacity((playedCard || skippedRound) ? 0.6 : 1.0)
+                        .disabled(pvm.playedCard || pvm.skippedRound)
+                        .opacity((pvm.playedCard || pvm.skippedRound) ? 0.6 : 1.0)
                         
                         Button {
-                            if let selectedCard = selectedCard,
-                               let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
-                                if !skippedRound {
-                                    vm.playCard(cardToPlay)
-                                    stringShow = "You played a card!"
-                                    showBlockMessage = true
-                                    playedCard = true
-                                    
-                                    if cardToPlay.type == .assassination {
-                                        showMurderView = true
-                                    }
-                                }
+                            if let selectedCard = pvm.selectedCard {
+                                print("clicou em done com a carta: \(selectedCard.name)")
                             }
+                            pvm.playSelectedCard()
+                            
                         } label: {
                             Image("CardDoneButton")
                                 .resizable()
-                                .frame(width:124,height:48)
+                                .frame(width: 124, height: 48)
                         }
-                        .disabled(playedCard || skippedRound || selectedCard == nil)
-                        .opacity((playedCard || skippedRound || selectedCard == nil) ? 0.6 : 1.0)
+                        .disabled(pvm.playedCard || pvm.skippedRound || pvm.selectedCard == nil)
+                        .opacity((pvm.playedCard || pvm.skippedRound || pvm.selectedCard == nil) ? 0.6 : 1.0)
                     }
                     .frame(maxWidth: 500)
                     .padding()
-                   
                 }
+                
                 if showFollowTvView {
                     FollowTvView()
                         .transition(.opacity)
                         .zIndex(5)
                 }
+                
                 if showDeadView {
                     FollowTvViewDead()
                         .transition(.opacity)
                         .zIndex(10)
                 }
-                NavigationLink(
-                    destination: destinationView,
-                    isActive: Binding(
-                        get: { vm.gameOutcome != nil },
-                        set: { _ in }
-                    )
-                ) {
+                
+                NavigationLink(destination: destinationView, isActive: Binding(get: { vm.gameOutcome != nil }, set: { _ in })) {
                     EmptyView()
                 }
+                
                 .fullScreenCover(isPresented: $showMurderView) {
-                    MurderView(onDismiss: { showMurderView = false })
+                    MurderView {
+                        showMurderView = false
+                    }
                 }
             }
             .navigationDestination(isPresented: $isDisconnected) {
                 PlayView()
             }
         }
-        .onReceive(multiplayerManager.$currentPhase) { newPhase in
-            // Impede que a phase visível vá para .discussion automaticamente
-            
-            if newPhase == .discussion {
-                // Mantenha a fase visível como está
-//                print("Tentativa de ir para .discussion ignorada")
-            }
-        }
         .onAppear {
-            self.hand = vm.player.hand
-            vm.handlePhaseChange()
+            pvm.settings(vm: vm)
+            pvm.updateMessage()
             
-            if vm.player.role == .cultist {
-                self.stringShow = "Your cult does not have enough faith to play this card."
-            } else {
-                self.stringShow = "You do not have enough heresy to play this card."
-            }
-            
-            //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
             if vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
                 multiplayerManager.disconnect()
             }
-            
         }
-        .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
-            
-            if newValue == .discussion && vm.player.state == .inactive && !showDeadView {
+        .onChange(of: multiplayerManager.currentPhase) { _, newPhase in
+            if newPhase == .discussion && vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
                 multiplayerManager.disconnect()
-            }
-            
-            else if newValue == .discussion && vm.player.state == .active && !showDeadView  {
-                stringShow = ""
-                showBlockMessage = false
+            } else if newPhase == .discussion && vm.player.state == .active && !showDeadView {
+                pvm.stringShow = ""
+                pvm.showBlockMessage = false
                 showFollowTvView = true
                 
-                if !skippedRound && !playedCard {
+                if !pvm.skippedRound && !pvm.playedCard {
                     vm.skipCard()
-                    skippedRound = true
-                    
+                    pvm.skippedRound = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         showFollowTvView = true
                     }
@@ -275,8 +185,3 @@ struct PlayCardView: View {
         }
     }
 }
-
-#Preview(body: {
-    PlayCardView()
-        .environmentObject(GameViewModel())
-})

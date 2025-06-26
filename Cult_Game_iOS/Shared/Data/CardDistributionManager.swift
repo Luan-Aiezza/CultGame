@@ -63,7 +63,6 @@ class CardDistributionManager: ObservableObject {
             }
         case .cultist:
             if let newCard = drawCardWithChance(from: &cultistDeck, usedPile: &usedCultist) {
-                print("inserindo \(newCard) no deck")
                 return newCard
                 //addUsedCard(card) | nao sera incluida nos used se estiver ativa
             }

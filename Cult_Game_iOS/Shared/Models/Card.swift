@@ -1,11 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-//UTI
-extension UTType {
-    static let card: UTType = UTType(exportedAs: "card")
-}
-
 //ESTRUTURA DAS CARTAS
 class Card: Identifiable, Equatable, Codable, Transferable {
     

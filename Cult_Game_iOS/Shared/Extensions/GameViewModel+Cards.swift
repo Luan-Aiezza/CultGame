@@ -42,10 +42,11 @@ extension GameViewModel {
 
     
     func playCard(_ card: Card) {
-        guard player.usedCard != nil else {
+        
+        guard player.usedCard == nil else {
             return
         }
-
+        
         assignCard(card: card)
         removeCardFromHand(card: card)
 

@@ -46,15 +46,22 @@ extension GameViewModel {
             currentPhase = .cardPlay
             multiplayerManager.currentPhase = .cardPlay
             multiplayerManager.sendGamePhase(.cardPlay)
+            resetRound()
         default:
             break
         }
     }
     
+    func resetRound() {
+        multiplayerManager.voted = nil
+        multiplayerManager.killed = nil
+        self.destroyUsedCard()
+    }
+    
     func handlePhaseChange() {
         
         if isHost, case .cardPlay = multiplayerManager.currentPhase {
-            evaluateVictory()
+//            evaluateVictory()
         }
 
         switch multiplayerManager.currentPhase {

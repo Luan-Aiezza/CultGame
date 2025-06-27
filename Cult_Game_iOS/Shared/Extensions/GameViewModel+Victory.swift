@@ -79,7 +79,11 @@ extension GameViewModel {
         
         if activePlayers.count >= 3 && outcome == nil {
             logger.info("continuando para próxima fase: roleSelection")
-            advancePhaseAfterTimer()
+            let phaseAtSchedule = self.currentPhase
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.advancePhaseIfUnchanged(scheduledPhase: phaseAtSchedule)
+            }
         }
         
         if let outcome {
@@ -94,5 +98,14 @@ extension GameViewModel {
         }
         
         logger.debug("fim de evaluateVictory()")
+    }
+
+    /// Avança a fase apenas se ela permanecer igual à fase agendada
+    func advancePhaseIfUnchanged(scheduledPhase: GamePhase) {
+        if self.currentPhase == scheduledPhase {
+            self.advancePhaseAfterTimer()
+        } else {
+            logger.info("Phase changed between scheduling and execution; skipping phase advance.")
+        }
     }
 }

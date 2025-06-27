@@ -7,7 +7,7 @@ struct MainView: View {
     var body: some View {
         ZStack {
             
-            SpriteView(scene: scene, debugOptions: [.showsDrawCount, .showsFPS, .showsNodeCount])
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
             
             HomeScreenView()

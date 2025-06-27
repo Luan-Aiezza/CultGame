@@ -68,7 +68,7 @@ struct DiscussionView: View {
                     }
                 }
                 .onAppear {
-                    gameViewModel.timerManager.start(duration: 20)//120
+                    gameViewModel.timerManager.start(duration: 120)//120
                 }
             }
         }

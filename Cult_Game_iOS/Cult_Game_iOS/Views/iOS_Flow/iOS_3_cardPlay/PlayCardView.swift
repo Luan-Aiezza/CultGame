@@ -56,7 +56,7 @@ struct PlayCardView: View {
                 
                 VStack {
                     SelectCard()
-                        .environmentObject(pvm)
+                        .environmentObject(pvm) // pass environmentObject for isCardBlocked logic
                         .padding(.vertical, 50)
                         .dropDestination(for: Card.self) { items, _ in
                             if let card = items.first {
@@ -70,45 +70,48 @@ struct PlayCardView: View {
                         }
                         .transition(.slide)
                     
-                    if pvm.selectedCard != nil {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 20) {
-                                ForEach(pvm.hand, id: \.id) { card in
-                                    CardView(card: card)
-                                        .frame(width: 154, height: 216)
-                                        .draggable(card)
-                                        .overlay {
-                                            if pvm.playedCard {
-                                                ZStack {
-                                                    Color.black.opacity(0.6)
-                                                        .cornerRadius(12)
-                                                    Image("block")
-                                                }
-                                            }
-                                        }
+                    // Main change: Always show selected card OR carousel, even if skippedRound is true.
+                    if let selected = pvm.selectedCard {
+                        CardView(card: selected)
+                            .frame(width: 154, height: 216)
+                            .draggable(selected)
+                            .overlay {
+                                // Overlay block if playedCard OR skippedRound is true
+                                if pvm.playedCard || pvm.skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                            .cornerRadius(12)
+                                        Image("block")
+                                    }
+                                    .allowsHitTesting(false)
                                 }
                             }
-                        }
-                        .dropDestination(for: Card.self) { _, _ in
-                            if let card = pvm.selectedCard {
-                                pvm.dropBackCard(card)
-                                return true
-                            }
-                            return false
-                        }
                     } else {
                         CardCarouselView()
-                            .environmentObject(pvm)
+                            .environmentObject(pvm) // pass environmentObject for isCardBlocked logic
+                            .overlay {
+                                // Overlay block if playedCard OR skippedRound is true
+                                if pvm.playedCard || pvm.skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                        Image("block")
+                                    }
+                                }
+                            }
                     }
                     
                     HStack(spacing: 50) {
                         Button {
+                            // Changed: Skip button only sets skippedRound and calls skipRound()
+                            pvm.skippedRound = true
                             pvm.skipRound()
+                            // Do NOT set playedCard = true here anymore
                         } label: {
                             Image("cardViewButton")
                                 .resizable()
                                 .frame(width: 124, height: 48)
                         }
+                        // Disabled if playedCard OR skippedRound to block interaction after either action
                         .disabled(pvm.playedCard || pvm.skippedRound)
                         .opacity((pvm.playedCard || pvm.skippedRound) ? 0.6 : 1.0)
                         
@@ -116,8 +119,10 @@ struct PlayCardView: View {
                             if let selectedCard = pvm.selectedCard {
                                 print("clicou em done com a carta: \(selectedCard.name)")
                             }
+                            // Done button sets both playedCard and skippedRound true as before
+                            pvm.playedCard = true
+                            pvm.skippedRound = true
                             pvm.playSelectedCard()
-                            
                         } label: {
                             Image("CardDoneButton")
                                 .resizable()

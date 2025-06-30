@@ -63,7 +63,7 @@ struct VotingView: View {
                 }
                 .onAppear {
                     MainScene.shared?.zoomIn()
-                    gameViewModel.timerManager.start(duration: 10)//60
+                    gameViewModel.timerManager.start(duration: 60)//60
                     AudioManager.shared.playBackgroundMusic(named: "Background_Elimination")
                 }
             }

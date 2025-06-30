@@ -425,7 +425,7 @@
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Faithbound";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This game uses the local network for communication between devices.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -463,7 +463,7 @@
 				INFOPLIST_FILE = "Cult-Game-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Faithbound";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo usa a rede local para comunicação entre dispositivos.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This game uses the local network for communication between devices.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -505,7 +505,7 @@
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Faithbound";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This game needs access to the local network for multiplayer games.";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -540,7 +540,7 @@
 				INFOPLIST_FILE = "Cult-Game-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Faithbound";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este jogo precisa acessar a rede local para jogos multiplayer.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This game needs access to the local network for multiplayer games.";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

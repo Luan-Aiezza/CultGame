@@ -21,7 +21,8 @@ extension GameViewModel {
     }
     
     func evaluateVictory() {
-        logger.debug("connected peers: \(self.multiplayerManager.connectedPeers)")
+        // IMPORTANT: This function should NOT be called directly inside phase transitions
+        // to avoid loops or memory leaks. Use it only for explicit victory checks.
         
         let players = multiplayerManager.players
         logger.debug("jogadores: \(players)")
@@ -79,7 +80,9 @@ extension GameViewModel {
         
         if activePlayers.count >= 3 && outcome == nil {
             logger.info("continuando para próxima fase: roleSelection")
-            advancePhaseAfterTimer()
+            // Removed implicit advancePhaseAfterTimer() call here to prevent unintended phase transitions.
+            // Phase flow is now controlled by checkIfShouldAdvancePhase() in the proper phase.
+            // advancePhaseAfterTimer()
         }
         
         if let outcome {
@@ -96,3 +99,4 @@ extension GameViewModel {
         logger.debug("fim de evaluateVictory()")
     }
 }
+

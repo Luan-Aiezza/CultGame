@@ -22,7 +22,7 @@ struct MurderView: View {
 
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
-    private let verticalSpacing: CGFloat = 34
+    private let verticalSpacing: CGFloat = 38
     private let cardHeight: CGFloat = 68
     
     let screenWidth = UIScreen.main.bounds.width
@@ -55,7 +55,7 @@ struct MurderView: View {
             VStack(spacing: 20) {
                 Spacer()
                 
-                Text("Escolha alguém para eliminar!")
+                Text("Choose one to eliminate!")
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .font(.custom("VinerHandITC", size: 34))

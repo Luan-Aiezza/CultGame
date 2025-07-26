@@ -22,10 +22,7 @@ extension GameViewModel {
             print("current phase: \(multiplayerManager.currentPhase)")
             multiplayerManager.killed = nil
             multiplayerManager.voted = nil
-            evaluateVictory()
-            currentPhase = .discussion
-            multiplayerManager.currentPhase = .discussion
-            multiplayerManager.sendGamePhase(.discussion)
+            checkIfShouldAdvancePhase()
         case .discussion:
             print("current phase: \(multiplayerManager.currentPhase)")
             evaluateVictory()
@@ -72,6 +69,18 @@ extension GameViewModel {
             }
 
         default: break
+        }
+    }
+    
+    private func checkIfShouldAdvancePhase() {
+        let activePlayers = multiplayerManager.players.filter { $0.value.state == .active }
+        if activePlayers.count >= 3 {
+            currentPhase = .discussion
+            multiplayerManager.currentPhase = .discussion
+            multiplayerManager.sendGamePhase(.discussion)
+        } else {
+            // Caso não haja jogadores suficientes, pode colocar lógica adicional ou finalizar a partida
+            print("Não há jogadores ativos suficientes para continuar.")
         }
     }
 }

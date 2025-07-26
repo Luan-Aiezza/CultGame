@@ -20,7 +20,7 @@ struct EliminationView: View {
 
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
-    private let verticalSpacing: CGFloat = 34
+    private let verticalSpacing: CGFloat = 38
     private let cardHeight: CGFloat = 68
     
     
@@ -59,7 +59,7 @@ struct EliminationView: View {
                     
                     Spacer()
 
-                    Text("Quem é Herege?")
+                    Text("Who is the heretic?")
                         .multilineTextAlignment(.center)
                         .font(.custom("VinerHandITC", size: 34))
                         .foregroundColor(.title)
@@ -157,12 +157,9 @@ struct EliminationView: View {
                     }
                     .disabled(selectedPlayerID == nil || showBlockMessage)
                 }
-                .padding(.bottom, 20)
-                .padding(.leading, 130)
-                .padding(.trailing, 10)
-                .frame(maxWidth: .infinity)
-
-                .position(x: screenWidth / 2, y: screenHeight - 85)
+                .padding(.top, 700)
+                .padding(.horizontal, 70)
+                
                 if showFollowTvView {
                     FollowTvViewVoting()
                         .transition(.opacity)

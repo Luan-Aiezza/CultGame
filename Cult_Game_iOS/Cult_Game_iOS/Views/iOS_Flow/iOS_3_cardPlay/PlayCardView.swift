@@ -95,6 +95,19 @@ struct PlayCardView: View {
                     .ignoresSafeArea()
                     .scaledToFill()
                 
+                if let character = vm.player.character {
+                    HStack {
+                        Image(character.displayName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .padding(.leading, 16)
+                            .padding(.top, 16)
+                        Spacer()
+                    }
+                    .zIndex(3)
+                }
+                
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
                         .padding(.vertical, 50)

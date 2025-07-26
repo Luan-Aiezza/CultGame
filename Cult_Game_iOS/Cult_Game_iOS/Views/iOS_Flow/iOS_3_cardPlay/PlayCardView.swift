@@ -263,13 +263,13 @@ struct PlayCardView: View {
                 showBlockMessage = false
                 showFollowTvView = true
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    showFollowTvView = false
+                }
+                
                 if !skippedRound && !playedCard {
                     vm.skipCard()
                     skippedRound = true
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        showFollowTvView = true
-                    }
                 }
             }
         }

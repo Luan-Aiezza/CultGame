@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlayView: View {
     @EnvironmentObject var vm: GameViewModel
+    @State private var isLogo2Active: Bool = false
+    @State private var logoTimer: Timer? = nil
     
     var body: some View {
         NavigationStack {
@@ -32,9 +34,10 @@ struct PlayView: View {
                 .ignoresSafeArea()
                 
                 VStack{
-                    Image("TitleGamePhone")
+                    Image(isLogo2Active ? "Logo_2_iOS" : "Logo_1_iOS")
                         .resizable()
                         .frame(width: 309, height: 154)
+                        .animation(.linear(duration: 0.15), value: isLogo2Active)
                     Spacer()
                     
                     ZStack{
@@ -59,5 +62,19 @@ struct PlayView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear{
+            // --- Adicione abaixo ---
+            logoTimer?.invalidate()
+            logoTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+                isLogo2Active = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    isLogo2Active = false
+                }
+            }
+        }
+        .onDisappear {
+            logoTimer?.invalidate()
+            logoTimer = nil
+        }
     }
 }

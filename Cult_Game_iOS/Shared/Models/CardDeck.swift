@@ -12,7 +12,7 @@ public class CardDeck {
     let commonCards: [Card] = [
         Card(name: "Offering", faithCost: 3, heresyCost: 0, followersEffect: 6, effectsDescription: "", description: "Silent offers are placed on the altas, strengthening invisible bonds with the divine", imageName: "flower", type: .common, rarity: 1),
         Card(name: "Fog Veil", faithCost: 3, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "A dense fog covers the lake, creating a space for deep meditation", imageName: "hood", type: .common, rarity: 1),
-        Card(name: "Path of Pain", faithCost: 6, heresyCost: 0, followersEffect: -3, effectsDescription: "", description: "Only the strongest go up the hill and come back stronger", imageName: "path", type: .common, rarity: 1),
+        Card(name: "Path of Pain", faithCost: 6, heresyCost: 0, followersEffect: -3, effectsDescription: "", description: "Only the strongest go up the hill and come back stronger", imageName: "blasphemy", type: .common, rarity: 1),
         Card(name: "Star Song", faithCost: 3, heresyCost: 0, followersEffect: 1, effectsDescription: "", description: "By the fire and under the stars, the cultists sing old ballads that warms their spirit", imageName: "song", type: .common, rarity: 1),
         Card(name: "Aurora Vigil", faithCost: 6, heresyCost: 0, followersEffect: -3, effectsDescription: "", description: "The most faithful of them go up the hill, looking at the sky for guidance. The will renovates the faith.", imageName: "sun", type: .common, rarity: 1),
         Card(name: "Day Vigil", faithCost: 8, heresyCost: 0, followersEffect: 0, effectsDescription: "", description: "The people reunites for a day vigil. IT strengthens their bond.", imageName: "eye", type: .common, rarity: 1),
@@ -66,7 +66,7 @@ public class CardDeck {
         Card(name: "Secret Ritual", faithCost: 0, heresyCost: 6, followersEffect: -12, effectsDescription: "", description: "In muffled chants and hidden circles, forbidden ceremonies are conducted. Few return… but power makes itself known.", imageName: "writing", type: .heresy, rarity: 1)
     ]
 
-    let assassinationCard = Card(name: "Assassination", faithCost: 0, heresyCost: 10, followersEffect: 0, effectsDescription: "This card eliminates one of the players ", description: "During the night, the leader is found with their robe soaked and eyes staring into nothingness. No alarm was heard. The strike was precise — and final.", imageName: "blood", type: .assassination, rarity: 10)
+    let assassinationCard = Card(name: "Assassination", faithCost: 0, heresyCost: -10, followersEffect: 0, effectsDescription: "This card eliminates one of the players ", description: "During the night, the leader is found with their robe soaked and eyes staring into nothingness. No alarm was heard. The strike was precise — and final.", imageName: "blood", type: .assassination, rarity: 10)
     
     var specialCards: [SpecificCard] = []
 }

@@ -13,6 +13,8 @@ struct MainView: View {
             HomeScreenView()
                 .ignoresSafeArea(.all)
             
+        }.onAppear {
+            UIApplication.shared.isIdleTimerDisabled = true
         }
     }
 }

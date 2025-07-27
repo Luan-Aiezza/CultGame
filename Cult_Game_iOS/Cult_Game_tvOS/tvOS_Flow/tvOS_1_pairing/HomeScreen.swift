@@ -13,6 +13,9 @@ struct HomeScreenView: View {
 
     @FocusState private var focusedButton: FocusedButton?
     
+    @State private var isLogo2Active: Bool = false
+    @State private var logoTimer: Timer? = nil
+    
     // Detecta idioma do sistema
     var isPortuguese: Bool {
         Locale.current.language.languageCode?.identifier == "pt"
@@ -32,9 +35,10 @@ struct HomeScreenView: View {
                 .ignoresSafeArea()
 
                 VStack(spacing: 40) {
-                    Image("Logo_1")
+                    Image(isLogo2Active ? "Logo_2" : "Logo_1")
                         .resizable()
                         .frame(width: 1203, height: 233)
+                        .animation(.linear(duration: 0.03), value: isLogo2Active)
                     Spacer()
 
                     // Botão "Parear"
@@ -56,10 +60,23 @@ struct HomeScreenView: View {
                     .focused($focusedButton, equals: .howToPlay)
                 }
             }
-        }.onAppear {
+        }
+        .onAppear {
             vm.resetGame()
             MultiplayerManager.shared.disconnectAll()
             AudioManager.shared.playBackgroundMusic(named: "Intro_Game_OST")
+            // --- Adicione abaixo ---
+            logoTimer?.invalidate()
+            logoTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+                isLogo2Active = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    isLogo2Active = false
+                }
+            }
+        }
+        .onDisappear {
+            logoTimer?.invalidate()
+            logoTimer = nil
         }
     }
 

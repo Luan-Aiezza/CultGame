@@ -45,6 +45,23 @@ extension GameViewModel {
         guard player.usedCard != nil else {
             return
         }
+        
+        // Impede jogar cartas caso não haja pontos suficientes
+        //CHECAR
+        switch card.type {
+        case .heresy, .assassination:
+            if globalState.heresyPoints < abs(card.heresyCost) {
+                print("Não há pontos de heresia suficientes!")
+                return
+            }
+        case .cultist, .common:
+            if globalState.sharedFaithPoints < abs(card.faithCost) {
+                print("Não há pontos de fé suficientes!")
+                return
+            }
+        default:
+            break
+        }
 
         assignCard(card: card)
         removeCardFromHand(card: card)
@@ -77,3 +94,4 @@ extension GameViewModel {
         }
     }
 }
+

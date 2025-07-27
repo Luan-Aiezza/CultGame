@@ -55,12 +55,10 @@ extension GameViewModel {
         }
 
         switch multiplayerManager.currentPhase {
-            case .cardPlay:
-            if player.hasEnteredCardPlayOnce {
-                globalState.heresyPoints += 10
-                if globalState.heresyPoints > 20{
-                    globalState.heresyPoints = 20
-                }
+        case .cardPlay:
+            globalState.heresyPoints += 5
+            if globalState.heresyPoints > 20 {
+                globalState.heresyPoints = 20
             }
             turnEnteredCardPlayOnce()
             replenishHandIfNeeded()
@@ -88,3 +86,4 @@ extension GameViewModel {
         }
     }
 }
+

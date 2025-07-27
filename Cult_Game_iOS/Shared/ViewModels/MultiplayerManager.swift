@@ -191,7 +191,7 @@ class MultiplayerManager: NSObject, ObservableObject {
         
         DispatchQueue.main.async {
             let faithChange =  action.card.faithCost
-            let heresyChange = action.card.faithCost
+            let heresyChange = action.card.heresyCost
             let followersChange = action.card.followersEffect
             let effect = GameEffects(
                 peerID: peerID,

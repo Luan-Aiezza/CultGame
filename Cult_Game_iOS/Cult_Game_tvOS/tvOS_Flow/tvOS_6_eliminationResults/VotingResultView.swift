@@ -27,7 +27,7 @@ struct VotingResultView: View {
                         .foregroundStyle(Color.subtitleResult)
                 }
 
-                // Caso de jogador eliminado por votos
+                // Caso de jogador eliminado por votos, somente se eliminado e jogador presente
                 else if let eliminated = gameViewModel.eliminatedPlayer,
                         let killedName = multiplayerManager.players[eliminated]?.character?.displayName {
 
@@ -47,11 +47,11 @@ struct VotingResultView: View {
                         .frame(width: 151, height: 161)
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
-                        .padding(.top, 230)
+                        .padding(.top, 430)
                         .position(x: 960, y: -1600)
                 }
 
-                // Caso de ninguém eliminado (todos com zero votos, mas sem empate)
+                // Caso de ninguém eliminado (eliminatedPlayer é nil ou jogador não está presente)
                 else {
                     Text("No one was voted!")
                         .font(.custom("VinerHandITC", size: 70))

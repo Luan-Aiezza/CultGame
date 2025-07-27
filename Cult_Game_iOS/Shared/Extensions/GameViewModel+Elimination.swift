@@ -41,6 +41,9 @@ extension GameViewModel {
     }
     
     func evaluateVotes() {
+        eliminatedPlayer = nil
+        isTie = false
+
         let votePairs = multiplayerManager.players.map { (peerID, player) in
             (peerID, player.votes)
         }

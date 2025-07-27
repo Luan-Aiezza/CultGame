@@ -31,6 +31,7 @@ struct ResultView: View {
                     .padding(.vertical, 20)
                 StatusBarView()
                 
+                //ele não esta caindo na condição
                 if let killedName = multiplayerManager.killed?.character?.displayName {
                     Text("\(killedName) was eliminated!")
                         .font(.custom("VinerHandITC", size: 46))

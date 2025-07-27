@@ -53,6 +53,7 @@ struct EliminationView: View {
                 if showBlockMessage {
                     blockMessageView(show: $stringShow)
                         .zIndex(10)
+                        .padding(.top, 500)
                 }
 
                 VStack {

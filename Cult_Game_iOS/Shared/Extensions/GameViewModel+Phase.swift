@@ -58,6 +58,9 @@ extension GameViewModel {
             case .cardPlay:
             if player.hasEnteredCardPlayOnce {
                 globalState.heresyPoints += 10
+                if globalState.heresyPoints > 20{
+                    globalState.heresyPoints = 20
+                }
             }
             turnEnteredCardPlayOnce()
             replenishHandIfNeeded()
@@ -81,6 +84,7 @@ extension GameViewModel {
         } else {
             // Caso não haja jogadores suficientes, pode colocar lógica adicional ou finalizar a partida
             print("Não há jogadores ativos suficientes para continuar.")
+            evaluateVictory()
         }
     }
 }

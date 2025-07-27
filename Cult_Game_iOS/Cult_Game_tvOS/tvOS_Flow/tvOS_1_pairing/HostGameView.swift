@@ -136,7 +136,7 @@ struct HostGameView: View {
                         }
                     }
                     
-                }.padding(.bottom, 80)
+                }.padding(.bottom, 100)
             }
             .onChange(of: multiplayerManager.players.count) { count in
                 canPlay = count >= 0
@@ -156,6 +156,8 @@ struct HostGameView: View {
                     .font(Font.custom("VinerHandITC", size: 60))
                     .foregroundColor(Color(red: 1.0, green: 0.91, blue: 0.75))
             }.padding(.top, 900)
+        }.onAppear{
+            viewModel.resetGame()
         }
     }
     

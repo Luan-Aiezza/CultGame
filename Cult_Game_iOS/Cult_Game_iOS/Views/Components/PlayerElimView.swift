@@ -57,19 +57,19 @@ struct PlayerElimView: View {
                     .cornerRadius(10)
 
                 HStack(spacing: 10) {
-                    if let characterName = player.character?.rawValue {
-                        Image(isSelected ? "\(characterName)_heretic" : characterName)
+                    if let character = player.character, !character.rawValue.isEmpty {
+                        Image(character.rawValue)
                             .resizable()
                             .scaledToFit()
                             .frame(width: height - 15, height: height - 15)
                     } else {
-                        Image("placeholder")
+                        Image("personPlaceholder")
                             .resizable()
                             .scaledToFit()
                             .frame(width: height - 15, height: height - 15)
                     }
 
-                    Text(player.character?.displayName ?? "nil")
+                    Text(player.character?.displayName ?? "Unknown")
                         .foregroundColor(.title)
                         .fontWeight(isSelected ? .bold : .regular)
                         .lineLimit(1)
@@ -81,11 +81,11 @@ struct PlayerElimView: View {
                 .padding(.horizontal, 8)
                 
                 if isSelected {
-                                    Image("fire_symbol")
-                                        .resizable()
-                                        .frame(width: 46, height: 56)
-                                        .offset(x: 62, y: -38.5) // Metade para fora nas duas direções
-                                }
+                    Image("fire_symbol")
+                        .resizable()
+                        .frame(width: 46, height: 56)
+                        .offset(x: 62, y: -38.5) // Metade para fora nas duas direções
+                }
                 
             }
         }

@@ -3,6 +3,7 @@ import MultipeerConnectivity
 import SpriteKit
 
 struct HomeScreenView: View {
+    
     @EnvironmentObject var vm: GameViewModel
     
     enum FocusedButton: Hashable {
@@ -56,6 +57,8 @@ struct HomeScreenView: View {
                 }
             }
         }.onAppear {
+            vm.resetGame()
+            MultiplayerManager.shared.disconnectAll()
             AudioManager.shared.playBackgroundMusic(named: "Intro_Game_OST")
         }
     }

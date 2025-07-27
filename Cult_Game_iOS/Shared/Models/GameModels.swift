@@ -120,7 +120,7 @@ enum MultiplayerMessage: Codable {
             try container.encode(peerID, forKey: .data)
         
         case .kill(let peerID):
-            try container.encode(MessageType.vote, forKey: .type)
+            try container.encode(MessageType.kill, forKey: .type)
             try container.encode(peerID, forKey: .data)
             
         case .setInactive(let peerID):

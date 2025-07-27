@@ -29,7 +29,7 @@ struct StoryView: View {
                         .foregroundStyle(Color.title)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
-                }.padding(.horizontal, 40)
+                }.padding(.horizontal, 70)
                 
                 Color.black
                     .opacity(fadeInOut ? 0 : 1)

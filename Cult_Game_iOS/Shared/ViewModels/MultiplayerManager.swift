@@ -207,30 +207,44 @@ class MultiplayerManager: NSObject, ObservableObject {
         
         print("entrou em pending effects")
         
-        
         for effect in pendingEffects {
-            if effect.faithChange != 0 {
+            // Faith points adjustment
+            let maxFaith = GameRules.maxFaithPoints
+            if effect.faithChange > 0 {
+                let faltaFaith = maxFaith - globalState.sharedFaithPoints
+                let vaiAdicionar = min(faltaFaith, effect.faithChange)
+                globalState.sharedFaithPoints += vaiAdicionar
+            } else if effect.faithChange < 0 {
                 globalState.sharedFaithPoints += effect.faithChange
-                
                 if globalState.sharedFaithPoints < 0 {
                     globalState.sharedFaithPoints = 0
                 }
-                
             }
             
-            if effect.heresyChange != 0 {
+            // Heresy points adjustment
+            let maxHeresy = 20
+            if effect.heresyChange > 0 {
+                let faltaHeresy = maxHeresy - globalState.heresyPoints
+                let vaiAdicionar = min(faltaHeresy, effect.heresyChange)
+                globalState.heresyPoints += vaiAdicionar
+            } else if effect.heresyChange < 0 {
                 globalState.heresyPoints += effect.heresyChange
-                
-                if globalState.sharedFaithPoints < 0 {
+                if globalState.heresyPoints < 0 {
                     globalState.heresyPoints = 0
                 }
-                
             }
             
-            globalState.followers += effect.followersChange
-            
-            if globalState.followers < 0 {
-                globalState.followers = 0
+            // Followers adjustment
+            let maxFollowers = GameRules.maxFollowers
+            if effect.followersChange > 0 {
+                let faltaFollowers = maxFollowers - globalState.followers
+                let vaiAdicionar = min(faltaFollowers, effect.followersChange)
+                globalState.followers += vaiAdicionar
+            } else if effect.followersChange < 0 {
+                globalState.followers += effect.followersChange
+                if globalState.followers < 0 {
+                    globalState.followers = 0
+                }
             }
         }
         pendingEffects.removeAll()

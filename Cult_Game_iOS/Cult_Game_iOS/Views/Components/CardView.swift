@@ -84,7 +84,7 @@ struct CardView: View {
                 if cardAttributes.count > 0 {
                     let cost = cardAttributes[0]
                     HStack(spacing: 0) {
-                        Text("\(cost.value >= 0 ? "+" : "-")\(cost.value)")
+                        Text("\(cost.value >= 0 ? "" : "")\(cost.value)")
                             .font(.custom("VinerHandITC", size: width * 0.075))
                             .foregroundStyle(.black.opacity(0.7))
                        

@@ -95,18 +95,25 @@ struct PlayCardView: View {
                     .ignoresSafeArea()
                     .scaledToFill()
                 
-                if let character = vm.player.character {
-                    HStack {
-                        Image(character.displayName)
+                // Exibir icone aqui substituído para sempre mostrar o bloco do canto superior esquerdo
+                HStack {
+                    if let character = vm.player.character, !character.rawValue.isEmpty {
+                        Image(character.rawValue)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
-                            .padding(.leading, 16)
+                            .padding(.trailing, 16)
                             .padding(.top, 16)
-                        Spacer()
+                    } else {
+                        Image("personPlaceholder")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .padding(.trailing, 16)
+                            .padding(.top, 16)
                     }
-                    .zIndex(3)
                 }
+                .zIndex(4)
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)

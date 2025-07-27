@@ -8,9 +8,9 @@ struct MurderView: View {
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     @State private var hasKilled: Bool = false
-
+    
     var onDismiss: (() -> Void)?
-
+    
     var myCharacter: Character? {
         let myDisplayName = vm.multiplayerManager.myPeerID.displayName
         let character = vm.multiplayerManager.players.first {
@@ -19,7 +19,7 @@ struct MurderView: View {
         
         return character
     }
-
+    
     private let horizontalPadding: CGFloat = 26
     private let horizontalSpacing: CGFloat = 18
     private let verticalSpacing: CGFloat = 38
@@ -27,16 +27,16 @@ struct MurderView: View {
     
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
-
+    
     private var columns: [GridItem] {
         [GridItem(.flexible(), spacing: horizontalSpacing),
          GridItem(.flexible(), spacing: horizontalSpacing)]
     }
-
+    
     init(onDismiss: (() -> Void)? = nil) {
         self.onDismiss = onDismiss
     }
-
+    
     var body: some View {
         
         ZStack {
@@ -53,6 +53,7 @@ struct MurderView: View {
                 .scaledToFill()
             
             VStack(spacing: 20) {
+                
                 Spacer()
                 
                 Text("Choose one to eliminate!")
@@ -61,54 +62,48 @@ struct MurderView: View {
                     .font(.custom("VinerHandITC", size: 34))
                     .foregroundColor(.title)
                     .padding(.horizontal, 80)
-        
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack {
-                        
-                            LazyVGrid(columns: columns, spacing: verticalSpacing) {
-                                ForEach(
-                                    multiplayerManager.players.filter { (peerID, player) in
-                                        let isNotMyPeer = player.character != myCharacter
-                                        let isActive = player.state == .active
-                                        return isNotMyPeer && isActive
-                                    },
-                                    id: \.key
-                                ) { peerID, player in
-                                    PlayerCellView(
-                                        player: player,
-                                        isSelected: selectedPlayerID == peerID,
-                                        glowRotation: $glowRotation,
-                                        onSelect: {
-                                            if hasKilled {
-                                                return
-                                            }
-                                            if selectedPlayerID == peerID {
-                                                // Deseleciona
-                                                selectedPlayerID = nil
-                                                glowRotation = 0
-                                            } else {
-                                                // Seleciona novo player
-                                                selectedPlayerID = peerID
-                                                voteConfirmed = false
-                                                glowRotation = 0
-                                                withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                                    glowRotation = 360
-                                                }
-                                            }
-                                        },
-                                        width: (screenWidth - (horizontalPadding * 2) - horizontalSpacing) / 2,
-                                        height: cardHeight
-                                    )
+                
+                LazyVGrid(columns: columns, spacing: verticalSpacing) {
+                    ForEach(
+                        multiplayerManager.players.filter { (peerID, player) in
+                            let isNotMyPeer = player.character != myCharacter
+                            let isActive = player.state == .active
+                            return isNotMyPeer && isActive
+                        },
+                        id: \.key
+                    ) { peerID, player in
+                        PlayerCellView(
+                            player: player,
+                            isSelected: selectedPlayerID == peerID,
+                            glowRotation: $glowRotation,
+                            onSelect: {
+                                if hasKilled {
+                                    return
                                 }
-                            }
-                            .padding(.top, 20)
-                            .padding(.horizontal, 100)
-                            
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .padding(.horizontal, horizontalPadding)
+                                if selectedPlayerID == peerID {
+                                    // Deseleciona
+                                    selectedPlayerID = nil
+                                    glowRotation = 0
+                                } else {
+                                    // Seleciona novo player
+                                    selectedPlayerID = peerID
+                                    voteConfirmed = false
+                                    glowRotation = 0
+                                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                                        glowRotation = 360
+                                    }
+                                }
+                            },
+                            width: (screenWidth - (horizontalPadding * 2) - horizontalSpacing) / 2,
+                            height: cardHeight
+                        )
                     }
-
+                }
+                .padding(.top, 20)
+                .padding(.horizontal, 100)
+                
+                Spacer(minLength: 450)
+                
                 Button(action: {
                     if let peer = selectedPlayerID, !hasKilled {
                         voteConfirmed = true

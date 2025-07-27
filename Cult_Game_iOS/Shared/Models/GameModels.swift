@@ -43,11 +43,11 @@ struct GameUpdate: Codable {
 
 
 struct GameRules {
-    static let maxFollowers = 40
+    static let maxFollowers = 100
     static let initialFollowers = 35
     static let initialHeresy = 0
-    static let maxFaithPoints = 1000
-    static let initialFaithPoints = 5
+    static let maxFaithPoints = 80
+    static let initialFaithPoints = 20
     
 }
 

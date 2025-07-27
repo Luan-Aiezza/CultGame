@@ -104,7 +104,7 @@ struct EliminationView: View {
                     .padding(.top, 20)
                     .padding(.horizontal, 40)
 
-                    Spacer(minLength: 520)
+                    Spacer(minLength: 510)
                 }
                 .padding(.horizontal, horizontalPadding)
 

@@ -136,7 +136,7 @@ struct HostGameView: View {
                         }
                     }
                     
-                }
+                }.padding(.bottom, 80)
             }
             .onChange(of: multiplayerManager.players.count) { count in
                 canPlay = count >= 0

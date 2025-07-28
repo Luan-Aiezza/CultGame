@@ -55,7 +55,7 @@ struct PlayView: View {
                                 .foregroundStyle(Color.title)
                             
                         }
-                    }
+                    }.padding(.bottom, 40)
                 }
                 .padding(.bottom)
                 .padding(.top, 104)

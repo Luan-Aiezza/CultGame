@@ -14,7 +14,7 @@ struct HereticDefeatImageView: View {
         Image(imageName)
             .resizable()
             .scaledToFit()
-            .offset(x: 0, y: -350)
+            .offset(x: 0, y: -550)
             .frame(width: 150, height: 160)
             .position(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
             .colorMultiply(Color(white: 1.0 - darkness)) // escurece imagem

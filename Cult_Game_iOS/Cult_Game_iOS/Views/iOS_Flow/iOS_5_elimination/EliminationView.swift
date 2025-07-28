@@ -50,116 +50,128 @@ struct EliminationView: View {
                     .ignoresSafeArea()
                     .scaledToFill()
                 
-                if showBlockMessage {
-                    blockMessageView(show: $stringShow)
-                        .zIndex(10)
-                        .padding(.top, 500)
-                }
-
-                VStack {
-                    
-                    Spacer()
-
-                    Text("Who is the heretic?")
-                        .multilineTextAlignment(.center)
-                        .font(.custom("VinerHandITC", size: 34))
-                        .foregroundColor(.title)
-                        .padding(.horizontal)
-                    
-                    Spacer()
-                    
-                    LazyVGrid(columns: columns, spacing: verticalSpacing) {
-                        ForEach(
-                            multiplayerManager.players.filter { (peerID, player) in
-                                let isNotMyPeer = player.character != myCharacter
-                                let isActive = player.state == .active
-                                return isNotMyPeer && isActive
-                            },
-                            id: \.key
-                        ) { peerID, player in
-
-                            PlayerElimView(
-                                player: player,
-                                isSelected: peerID == selectedPlayerID,
-                                glowRotation: $glowRotation,
-                                onSelect: {
-                                    if selectedPlayerID == peerID {
-                                        // Deseleciona
-                                        selectedPlayerID = nil
-                                        glowRotation = 0
-                                    } else {
-                                        // Seleciona novo player
-                                        selectedPlayerID = peerID
-                                        voteConfirmed = false
-                                        glowRotation = 0
-                                        withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                            glowRotation = 360
-                                        }
-                                    }
-                                },
-                                width: adjustedCardWidth,
-                                height: cardHeight
-                            )
-                        }
-                    }
-                    .padding(.top, 20)
-                    .padding(.horizontal, 40)
-
-                    Spacer(minLength: 510)
-                }
-                .padding(.horizontal, horizontalPadding)
-
-                HStack(spacing: 22) {
-                    Button(action: {
-                        showBlockMessage = true
-                        stringShow = "You skipped this round!"
-                        selectedPlayerID = nil
-                        voteConfirmed = false
-                        glowRotation = 0
-                        //TODO: Adicionar tela da Mari
-                    }) {
-                        Text("Skip")
-                            .font(.custom("Almendra-Regular", size: 26))
-                            .foregroundColor(Color("title_color"))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 13)
-                            .background(
-                                Image("buttonEnable")
-                                    .resizable()
-                                    .renderingMode(.original)
-                                    .scaledToFit()
-                                    .cornerRadius(12)
-                            )
-                    }
-                    .disabled(showBlockMessage)
-
-                    // Botão Done
-                    Button(action: {
-                        if let player = selectedPlayerID {
-                            voteConfirmed = true
-                            viewModel.addVote(to: player)
-                            showFollowTvView = true
-                        }
+                ZStack {
+                    VStack {
                         
-                        //TODO: Adicionar tela da Mari
-                    }) {
-                        Text("Done")
-                            .font(.custom("Almendra-Regular", size: 26))
-                            .foregroundColor(selectedPlayerID == nil ? Color("disable") : Color("title_color"))
-                            .padding(.vertical, 13)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                Image(selectedPlayerID == nil ? "buttonDisable" : "buttonEnable")
-                                    .resizable()
-                                    .renderingMode(.original)
-                                    .scaledToFit()
-                                    .cornerRadius(12)
-                            )
+                        Spacer()
+
+                        Text("Who is the heretic?")
+                            .multilineTextAlignment(.center)
+                            .font(.custom("VinerHandITC", size: 34))
+                            .foregroundColor(.title)
+                            .padding(.horizontal)
+                        
+                        Spacer()
+                        
+                        LazyVGrid(columns: columns, spacing: verticalSpacing) {
+                            ForEach(
+                                multiplayerManager.players.filter { (peerID, player) in
+                                    let isNotMyPeer = player.character != myCharacter
+                                    let isActive = player.state == .active
+                                    return isNotMyPeer && isActive
+                                },
+                                id: \.key
+                            ) { peerID, player in
+
+                                PlayerElimView(
+                                    player: player,
+                                    isSelected: peerID == selectedPlayerID,
+                                    glowRotation: $glowRotation,
+                                    onSelect: {
+                                        if selectedPlayerID == peerID {
+                                            // Deseleciona
+                                            selectedPlayerID = nil
+                                            glowRotation = 0
+                                        } else {
+                                            // Seleciona novo player
+                                            selectedPlayerID = peerID
+                                            voteConfirmed = false
+                                            glowRotation = 0
+                                            withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                                                glowRotation = 360
+                                            }
+                                        }
+                                    },
+                                    width: adjustedCardWidth,
+                                    height: cardHeight
+                                )
+                            }
+                        }
+                        .padding(.top, 20)
+                        .padding(.horizontal, 40)
+
+                        Spacer(minLength: 510)
                     }
-                    .disabled(selectedPlayerID == nil || showBlockMessage)
+                    .padding(.horizontal, horizontalPadding)
+                    .allowsHitTesting(!showBlockMessage)
+                    .opacity(showBlockMessage ? 0.5 : 1)
+
+                    HStack(spacing: 22) {
+                        Button(action: {
+                            showBlockMessage = true
+                            stringShow = "You skipped this round!"
+                            selectedPlayerID = nil
+                            voteConfirmed = false
+                            glowRotation = 0
+                            //TODO: Adicionar tela da Mari
+                        }) {
+                            Text("Skip")
+                                .font(.custom("Almendra-Regular", size: 26))
+                                .foregroundColor(Color("title_color"))
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 13)
+                                .background(
+                                    Image("buttonEnable")
+                                        .resizable()
+                                        .renderingMode(.original)
+                                        .scaledToFit()
+                                        .cornerRadius(12)
+                                )
+                        }
+                        .disabled(showBlockMessage)
+
+                        // Botão Done
+                        Button(action: {
+                            if let player = selectedPlayerID {
+                                voteConfirmed = true
+                                viewModel.addVote(to: player)
+                                showFollowTvView = true
+                            }
+                            
+                            //TODO: Adicionar tela da Mari
+                        }) {
+                            Text("Done")
+                                .font(.custom("Almendra-Regular", size: 26))
+                                .foregroundColor(selectedPlayerID == nil ? Color("disable") : Color("title_color"))
+                                .padding(.vertical, 13)
+                                .frame(maxWidth: .infinity)
+                                .background(
+                                    Image(selectedPlayerID == nil ? "buttonDisable" : "buttonEnable")
+                                        .resizable()
+                                        .renderingMode(.original)
+                                        .scaledToFit()
+                                        .cornerRadius(12)
+                                )
+                        }
+                        .disabled(selectedPlayerID == nil || showBlockMessage)
+                    }
+                    .padding(.top, 700)
+                    .padding(.horizontal, 70)
+                    .allowsHitTesting(!showBlockMessage)
+                    .opacity(showBlockMessage ? 0.5 : 1)
+                    
+                    if showBlockMessage {
+                        Rectangle()
+                            .fill(Color.black.opacity(0.5))
+                            .ignoresSafeArea()
+                        
+                        VStack {
+                            blockMessageView(show: $stringShow)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .zIndex(100)
+                    }
                 }
-                .padding(.top, 700)
-                .padding(.horizontal, 70)
                 
                 if showFollowTvView {
                     FollowTvViewVoting()
@@ -174,4 +186,3 @@ struct EliminationView: View {
 #Preview {
     EliminationView()
 }
-

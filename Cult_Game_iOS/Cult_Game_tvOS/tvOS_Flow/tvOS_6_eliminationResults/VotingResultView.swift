@@ -48,7 +48,7 @@ struct VotingResultView: View {
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
                         .padding(.top, 430)
-                        .position(x: 960, y: -1600)
+                        .position(x: 960, y: -550)
                 }
 
                 // Caso de ninguém eliminado (eliminatedPlayer é nil ou jogador não está presente)

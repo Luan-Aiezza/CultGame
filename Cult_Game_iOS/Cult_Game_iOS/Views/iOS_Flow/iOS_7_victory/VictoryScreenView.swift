@@ -1,4 +1,3 @@
-
 /// TODO: eSPACAMENTO ENRE AS LINHAS DE TEXTO
 /// BOTAO DE SAIR DA PARTIDA
 /// ANIMACAO MASCARA SAINDO
@@ -59,5 +58,6 @@ struct VictoryScreenView: View {
             
             FollowTvViewEnd()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }

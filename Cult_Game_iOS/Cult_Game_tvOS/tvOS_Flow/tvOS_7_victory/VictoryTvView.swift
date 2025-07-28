@@ -80,7 +80,6 @@ struct VictoryTvView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 44, height: 40)
                     }
-                    .tint(Color.accentButton)
                     .padding(.trailing, 95)
                     .padding(.bottom, 24)
                 }
@@ -123,7 +122,7 @@ struct VictoryTvView: View {
                             GlowingCircleView(characterImageName: imageName)
                         }
                     }
-                    if let name = hereticName {
+                    if let name = hereticName { //BUSCAR UMA IMAGEM MELHOR
                         Text("Heretic – \(name)")
                             .font(.custom("VinerHandITC", size: 30))
                             .bold()
@@ -132,6 +131,7 @@ struct VictoryTvView: View {
                             .frame(width: 450, height: 150, alignment: .center)
                             .padding(.horizontal, 24)
                     }
+                    
                 } else {// Se a vitória foi dos cultistas, mostra a animação de derrota do herege
                     if let defeatImage = hereticDefeatImageName {
                         HereticDefeatImageView(imageName: defeatImage)

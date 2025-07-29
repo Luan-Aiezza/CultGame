@@ -48,6 +48,7 @@ struct PlayCardView: View {
     @State var skippedRound: Bool = false
     @State var playedCard: Bool = false
     @State private var showMurderView = false
+    @State private var selectedPlayerID: String? = nil
     @State private var showFollowTvView = false
     @State private var showDeadView = false
     @State private var isDisconnected = false
@@ -232,7 +233,9 @@ struct PlayCardView: View {
                 ) {
                     EmptyView()
                 }
-                .fullScreenCover(isPresented: $showMurderView) {
+                .fullScreenCover(isPresented: $showMurderView, onDismiss: {
+                    selectedPlayerID = nil
+                }) {
                     MurderView(onDismiss: { showMurderView = false })
                 }
             }
@@ -285,6 +288,12 @@ struct PlayCardView: View {
                     vm.skipCard()
                     skippedRound = true
                 }
+            }
+            // Fechar MurderView se fase mudou para discussão e ninguém foi escolhido
+            if newValue == .discussion && showMurderView && selectedPlayerID == nil {
+                showMurderView = false
+                // Garante que nenhuma eliminação ocorra
+                selectedPlayerID = nil
             }
         }
     }

@@ -1,62 +1,20 @@
-//
-//  PlayCardView.swift
-//  Cult_Game_iOS
-//
-//  Created by Jessica Rodrigues on 21/05/25.
-//
-
 import SwiftUI
 import SpriteKit
 
-struct SelectCard: View {
-    @Binding var selectedCard: Card?
-    @Binding var zoomedCard: Card?
-    @Binding var showZoomedCard : Bool
-    
-    var body: some View {
-        if let card = selectedCard {
-            CardView(card: card)
-                .frame(width: 154, height: 216)
-                .padding(.bottom, 100)
-                .draggable(card)
-                .onTapGesture {
-                    withAnimation {
-                        zoomedCard = card
-                        showZoomedCard = true
-                    }
-                }
-        } else {
-            Image("selectCard")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 154, height: 216)
-                .padding(.bottom, 100)
-        }
-    }
-}
-
 struct PlayCardView: View {
+    
     @EnvironmentObject var vm: GameViewModel
     @ObservedObject var multiplayerManager = MultiplayerManager.shared
     @ObservedObject var pvm = PlayCardViewModel()
-    @State var selectedCard: Card? = nil
-    @State var hand: [Card] = []
-    @State var zoomedCard: Card? = nil
-    @State var showZoomedCard = false
-    @State var showBlockMessage = false
-    @State var stringShow = "The cult does not have enough faith points to choose a card"
-    @State var skippedRound: Bool = false
-    @State var playedCard: Bool = false
+    
     @State private var showMurderView = false
-    @State private var selectedPlayerID: String? = nil
     @State private var showFollowTvView = false
     @State private var showDeadView = false
     @State private var isDisconnected = false
     
     @ViewBuilder
     var destinationView: some View {
-        if let outcome = vm.gameOutcome,
-           let role = vm.player.role {
+        if let outcome = vm.gameOutcome, let role = vm.player.role {
             VictoryScreenView(role: role, outcome: outcome)
         } else {
             EmptyView()
@@ -67,7 +25,7 @@ struct PlayCardView: View {
         NavigationStack {
             ZStack {
                 
-                if let card = zoomedCard, showZoomedCard {
+                if let card = pvm.zoomedCard, pvm.showZoomedCard {
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
                     
@@ -77,14 +35,14 @@ struct PlayCardView: View {
                         .transition(.opacity)
                         .onTapGesture {
                             withAnimation {
-                                showZoomedCard = false
+                                pvm.showZoomedCard = false
                             }
                         }
                         .zIndex(2)
                 }
                 
-                if showBlockMessage && !showZoomedCard {
-                    blockMessageView(show: $stringShow)
+                if pvm.showBlockMessage && !pvm.showZoomedCard {
+                    blockMessageView(show: $pvm.stringShow)
                         .zIndex(4)
                 }
                 
@@ -95,196 +53,140 @@ struct PlayCardView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
-                    .scaleEffect(1.2)
-                
-                // Exibir icone aqui substituído para sempre mostrar o bloco do canto superior esquerdo
                 
                 VStack {
-                    SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
+                    SelectCard()
+                        .environmentObject(pvm) // pass environmentObject for isCardBlocked logic
                         .padding(.vertical, 50)
-                        .dropDestination(for: Card.self) { items, location in
+                        .dropDestination(for: Card.self) { items, _ in
                             if let card = items.first {
-                                if selectedCard == nil {
-                                    selectedCard = card
-                                    hand.removeAll { $0 == card }
-                                    return true
-                                }
-                            }
-                            return false
-                        }
-                        .onTapGesture {
-                            if let card = selectedCard {
-                                if !playedCard {
-                                    hand.append(card)
-                                    selectedCard = nil
-                                }
-                            }
-                        }
-                        .transition(.slide)
-                    if selectedCard != nil {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 20) {
-                                ForEach(hand, id: \.id) { card in
-                                    CardView(card: card)
-                                        .frame(width: 154, height: 216)
-                                        .draggable(card)
-                                        .overlay {
-                                            if playedCard {
-                                                ZStack {
-                                                    Color.black.opacity(0.6)
-                                                        .cornerRadius(12)
-                                                    Image("block")
-                                                }
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                        .dropDestination(for: Card.self) { items, location in
-                            if let card = selectedCard {
-                                hand.append(card)
-                                selectedCard = nil
+                                pvm.selectCard(card)
                                 return true
                             }
                             return false
                         }
+                        .onTapGesture {
+                            pvm.returnSelectedCard()
+                        }
+                        .transition(.slide)
+                    
+                    // Main change: Always show selected card OR carousel, even if skippedRound is true.
+                    if let selected = pvm.selectedCard {
+                        CardView(card: selected)
+                            .frame(width: 154, height: 216)
+                            .draggable(selected)
+                            .overlay {
+                                // Overlay block if playedCard OR skippedRound is true
+                                if pvm.playedCard || pvm.skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                            .cornerRadius(12)
+                                        Image("block")
+                                    }
+                                    .allowsHitTesting(false)
+                                }
+                            }
                     } else {
-                        CardCarouselView(
-                            selectedCard: $selectedCard,
-                            zoomedCard: $zoomedCard,
-                            showZoomedCard: $showZoomedCard,
-                            showBlockMessage: $showBlockMessage,
-                            cards: $hand,
-                            skippedRound: $skippedRound
-                        )
-                        .environmentObject(vm)
+                        CardCarouselView()
+                            .environmentObject(pvm) // pass environmentObject for isCardBlocked logic
+                            .overlay {
+                                // Overlay block if playedCard OR skippedRound is true
+                                if pvm.playedCard || pvm.skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                        Image("block")
+                                    }
+                                }
+                            }
                     }
                     
                     HStack(spacing: 50) {
                         Button {
-                            if !playedCard && selectedCard == nil {
-                                vm.skipCard()
-                                skippedRound = true
-                                stringShow = "You skiped this round!"
-                                showBlockMessage = true
-                            }
+                            // Changed: Skip button only sets skippedRound and calls skipRound()
+                            pvm.skippedRound = true
+                            pvm.skipRound()
+                            // Do NOT set playedCard = true here anymore
                         } label: {
-                            ZStack {
-                                Image("cardViewButton")
-                                    .resizable()
-                                    .frame(width:124,height:48)
-                            }
+                            Image("cardViewButton")
+                                .resizable()
+                                .frame(width: 124, height: 48)
                         }
-                        .disabled(playedCard || skippedRound)
-                        .opacity((playedCard || skippedRound) ? 0.6 : 1.0)
+                        // Disabled if playedCard OR skippedRound to block interaction after either action
+                        .disabled(pvm.playedCard || pvm.skippedRound)
+                        .opacity((pvm.playedCard || pvm.skippedRound) ? 0.6 : 1.0)
                         
                         Button {
-                            if let selectedCard = selectedCard,
-                               let cardToPlay = vm.player.hand.first(where: { $0.id == selectedCard.id }) {
-                                if !skippedRound {
-                                    vm.playCard(cardToPlay)
-                                    stringShow = "You played a card!"
-                                    showBlockMessage = true
-                                    playedCard = true
-                                    
-                                    if cardToPlay.type == .assassination {
-                                        showMurderView = true
-                                    }
-                                }
+                            if let selectedCard = pvm.selectedCard {
+                                print("clicou em done com a carta: \(selectedCard.name)")
                             }
+                            // Done button sets both playedCard and skippedRound true as before
+                            pvm.playedCard = true
+                            pvm.skippedRound = true
+                            pvm.playSelectedCard()
                         } label: {
                             Image("CardDoneButton")
                                 .resizable()
-                                .frame(width:124,height:48)
+                                .frame(width: 124, height: 48)
                         }
-                        .disabled(playedCard || skippedRound || selectedCard == nil)
-                        .opacity((playedCard || skippedRound || selectedCard == nil) ? 0.6 : 1.0)
+                        .disabled(pvm.playedCard || pvm.skippedRound || pvm.selectedCard == nil)
+                        .opacity((pvm.playedCard || pvm.skippedRound || pvm.selectedCard == nil) ? 0.6 : 1.0)
                     }
                     .frame(maxWidth: 500)
                     .padding()
-                   
                 }
+                
                 if showFollowTvView {
                     FollowTvView()
                         .transition(.opacity)
                         .zIndex(5)
                 }
+                
                 if showDeadView {
                     FollowTvViewDead()
                         .transition(.opacity)
                         .zIndex(10)
                 }
-                NavigationLink(
-                    destination: destinationView,
-                    isActive: Binding(
-                        get: { vm.gameOutcome != nil },
-                        set: { _ in }
-                    )
-                ) {
+                
+                NavigationLink(destination: destinationView, isActive: Binding(get: { vm.gameOutcome != nil }, set: { _ in })) {
                     EmptyView()
                 }
-                .fullScreenCover(isPresented: $showMurderView, onDismiss: {
-                    selectedPlayerID = nil
-                }) {
-                    MurderView(onDismiss: { showMurderView = false })
+                
+                .fullScreenCover(isPresented: $showMurderView) {
+                    MurderView {
+                        showMurderView = false
+                    }
                 }
             }
             .navigationDestination(isPresented: $isDisconnected) {
                 PlayView()
             }
         }
-        .onReceive(multiplayerManager.$currentPhase) { newPhase in
-            // Impede que a phase visível vá para .discussion automaticamente
-            
-            if newPhase == .discussion {
-                // Mantenha a fase visível como está
-//                print("Tentativa de ir para .discussion ignorada")
-            }
-        }
         .onAppear {
-            self.hand = vm.player.hand
-            vm.handlePhaseChange()
+            pvm.settings(vm: vm)
+            pvm.updateMessage()
             
-            //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
             if vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
                 multiplayerManager.disconnect()
             }
-            
         }
-        .onChange(of: multiplayerManager.currentPhase) { oldValue, newValue in
-            
-            if newValue == .discussion && vm.player.state == .inactive && !showDeadView {
+        .onChange(of: multiplayerManager.currentPhase) { _, newPhase in
+            if newPhase == .discussion && vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
                 multiplayerManager.disconnect()
-            }
-            
-            else if newValue == .discussion && vm.player.state == .active && !showDeadView  {
-
-                stringShow = ""
-                showBlockMessage = false
+            } else if newPhase == .discussion && vm.player.state == .active && !showDeadView {
+                pvm.stringShow = ""
+                pvm.showBlockMessage = false
                 showFollowTvView = true
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    showFollowTvView = false
-                }
-                
-                if !skippedRound && !playedCard {
+                if !pvm.skippedRound && !pvm.playedCard {
                     vm.skipCard()
-                    skippedRound = true
+                    pvm.skippedRound = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        showFollowTvView = true
+                    }
                 }
-            }
-            // Fechar MurderView se fase mudou para discussão e ninguém foi escolhido
-            if newValue == .discussion && showMurderView && selectedPlayerID == nil {
-                showMurderView = false
-                // Garante que nenhuma eliminação ocorra
-                selectedPlayerID = nil
             }
         }
     }
 }
-
-#Preview(body: {
-    PlayCardView()
-        .environmentObject(GameViewModel())
-})

@@ -4,7 +4,7 @@ import MultipeerConnectivity
 import Combine
 
 class GameViewModel: ObservableObject, Observable {
-    //ferramentas
+    //ferramentas: singleton
     @Published var timerManager = GameTimerManager()
     
     // MARK: - Estado geral do jogo
@@ -42,7 +42,12 @@ class GameViewModel: ObservableObject, Observable {
     }
     
     func assignCard(card: Card) {
+        print("assinando uma carta nova \(card.name)")
         player.usedCard = card
+    }
+    
+    func destroyUsedCard() {
+        player.usedCard = nil
     }
     
     func attPlayer(newPlayer: PlayerModel) {
@@ -163,10 +168,15 @@ class GameViewModel: ObservableObject, Observable {
         }
     }
     
+    deinit {
+        print("GameViewModel está sendo desalocado")
+//        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Init
     init() {
-        timerManager.onEnded = {
-            self.advancePhaseAfterTimer()
+        timerManager.onEnded = { [weak self] in
+            self?.advancePhaseAfterTimer()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(syncState), name: .didReceiveGameData, object: nil)

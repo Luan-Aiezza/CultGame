@@ -98,18 +98,6 @@ struct PlayCardView: View {
                     .scaleEffect(1.2)
                 
                 // Exibir icone aqui substituído para sempre mostrar o bloco do canto superior esquerdo
-                //CHECAR AMANHA
-                HStack(){
-                    if let character = vm.player.character {
-                        Image(character.displayName)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 300, height: 300)
-                            .padding(.trailing, 16)
-                            .padding(.top, 16)
-                        
-                    }
-                }
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)

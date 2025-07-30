@@ -97,7 +97,7 @@ struct CardCarouselView: View {
                                         }
                                     }
                                 case .heretic:
-                                    if vm.globalState.heresyPoints < card.heresyCost || skippedRound {
+                                    if vm.globalState.heresyPoints > abs(card.heresyCost) || skippedRound {
                                         ZStack {
                                             Color.black.opacity(0.6)
                                                 .cornerRadius(12)

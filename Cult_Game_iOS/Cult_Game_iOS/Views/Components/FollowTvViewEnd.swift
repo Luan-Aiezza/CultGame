@@ -21,7 +21,7 @@ struct FollowTvViewEnd: View {
                 .scaledToFit()
                 .frame(width: 120, height: 120)
             
-            Text("End game!\nLook the result on TV ")
+            Text("End game!\nClose the game on iPhone ")
                 .font(.custom("VinerHandITC", size: 30))
                 .foregroundStyle(Color.title)
                 .multilineTextAlignment(.center)

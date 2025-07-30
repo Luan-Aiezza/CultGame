@@ -255,12 +255,6 @@ struct PlayCardView: View {
             self.hand = vm.player.hand
             vm.handlePhaseChange()
             
-            if vm.player.role == .cultist {
-                self.stringShow = "Your cult does not have enough faith to play this card."
-            } else {
-                self.stringShow = "You do not have enough heresy to play this card."
-            }
-            
             //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
             if vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
@@ -276,6 +270,7 @@ struct PlayCardView: View {
             }
             
             else if newValue == .discussion && vm.player.state == .active && !showDeadView  {
+
                 stringShow = ""
                 showBlockMessage = false
                 showFollowTvView = true

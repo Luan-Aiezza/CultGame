@@ -21,7 +21,7 @@ struct FollowTvViewVoting: View {
                 .scaledToFit()
                 .frame(width: 120, height: 120)
             
-            Text("Look the result on TV!")
+            Text("Look at Apple TV!")
                 .font(.custom("VinerHandITC", size: 30))
                 .foregroundStyle(Color.title)
                 .multilineTextAlignment(.center)

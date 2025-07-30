@@ -62,6 +62,7 @@ struct VotingResultView: View {
                         .frame(width: UIScreen.main.bounds.width / 3)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.subtitleResult)
+                    Spacer()
                 }
             }
             .padding(.vertical, 100)

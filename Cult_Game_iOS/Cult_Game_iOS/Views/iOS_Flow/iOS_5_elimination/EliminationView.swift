@@ -8,6 +8,7 @@ struct EliminationView: View {
     @State private var voteConfirmed = false
     @State private var glowRotation: Double = 0
     @State private var showFollowTvView = false
+    @State private var didAppear = false
     @State private var showBlockMessage = false
     @State private var stringShow = "You skipped this round!"
     var myCharacter: Character? {
@@ -177,6 +178,14 @@ struct EliminationView: View {
                     FollowTvViewVoting()
                         .transition(.opacity)
                         .zIndex(5)
+                }
+            }
+            .onAppear {
+                guard !didAppear else { return }
+                didAppear = true
+                showFollowTvView = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                    showFollowTvView = false
                 }
             }
         

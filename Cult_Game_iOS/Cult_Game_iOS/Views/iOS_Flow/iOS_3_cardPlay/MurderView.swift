@@ -56,7 +56,7 @@ struct MurderView: View {
                 
                 Spacer()
                 
-                Text("Choose one to eliminate!")
+                Text("Choose to eliminate!")
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .font(.custom("VinerHandITC", size: 34))

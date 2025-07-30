@@ -39,7 +39,24 @@ class SpecificCard : Card, ObservableObject{
     }
     
     override func play(vm: GameViewModel) {
-        vm.removeCardFromHand(card: self)
+        // Deduct cost based on card type and player role
+        if type == .heresy || type == .assassination {
+            if vm.player.role == .heretic {
+                vm.points += heresyCost // heresyCost should be negative for cost
+            } else if vm.player.role == .cultist {
+                vm.points += faithCost  // fallback just in case
+            }
+        } else {
+            if vm.player.role == .cultist {
+                vm.points += faithCost
+            } else if vm.player.role == .heretic {
+                vm.points += heresyCost
+            }
+        }
+        // Only remove card from hand if NOT assassination
+        if type != .assassination {
+            vm.removeCardFromHand(card: self)
+        }
         specialAbility?(vm)
     }
 }

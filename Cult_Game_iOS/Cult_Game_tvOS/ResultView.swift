@@ -7,6 +7,7 @@ struct ResultView: View {
     
     var body: some View {
         ZStack {
+            
             // Radial gradient overlay
             Rectangle()
                 .fill(

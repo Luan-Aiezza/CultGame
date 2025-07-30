@@ -23,6 +23,7 @@ struct DiscussionView: View {
             case .result:
                 ResultView()
                     .background(Color.clear)
+                
 
             case .main:
                 ZStack {
@@ -68,6 +69,10 @@ struct DiscussionView: View {
                     }
                 }
                 .onAppear {
+                    gameViewModel.globalState.heresyPoints += 5
+                    if gameViewModel.globalState.heresyPoints > 20 {
+                        gameViewModel.globalState.heresyPoints = 20
+                    }
                     gameViewModel.timerManager.start(duration: 20)//120
                 }
             }

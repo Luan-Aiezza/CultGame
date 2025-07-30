@@ -84,9 +84,9 @@ struct CardCarouselView: View {
                                 showZoomedCard = true
                             }
                             
-                        }
+                        }//RESOLVER PARA AS CARTAS QUE USAM HERESY
                         .overlay {
-                            if vm.points < card.faithCost || skippedRound == true {
+                            if vm.points < card.faithCost ||  skippedRound == true {
                                 ZStack {
                                     Color.black.opacity(0.6)
                                         .cornerRadius(12)

@@ -157,6 +157,7 @@ struct PlayCardView: View {
                             cards: $hand,
                             skippedRound: $skippedRound
                         )
+                        .environmentObject(vm)
                     }
                     
                     HStack(spacing: 50) {

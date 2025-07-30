@@ -70,6 +70,9 @@ struct DiscussionView: View {
                 }
                 .onAppear {
                     gameViewModel.globalState.heresyPoints += 5
+                    
+                    print("Atualizacao na game view model: \(gameViewModel.globalState.heresyPoints)")
+                    
                     if gameViewModel.globalState.heresyPoints > 20 {
                         gameViewModel.globalState.heresyPoints = 20
                     }

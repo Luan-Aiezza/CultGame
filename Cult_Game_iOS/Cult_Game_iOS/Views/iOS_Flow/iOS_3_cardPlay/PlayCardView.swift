@@ -95,6 +95,7 @@ struct PlayCardView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
+                    .scaleEffect(1.2)
                 
                 // Exibir icone aqui substituído para sempre mostrar o bloco do canto superior esquerdo
                 //CHECAR AMANHA

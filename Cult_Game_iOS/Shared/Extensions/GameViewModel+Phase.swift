@@ -53,9 +53,14 @@ extension GameViewModel {
         if isHost, case .cardPlay = multiplayerManager.currentPhase {
             evaluateVictory()
         }
-
         switch multiplayerManager.currentPhase {
         case .cardPlay:
+            
+            globalState.heresyPoints += 5
+            if globalState.heresyPoints > 20 {
+                globalState.heresyPoints = 20
+            }
+            
             turnEnteredCardPlayOnce()
             replenishHandIfNeeded()
             multiplayerManager.goToNextRound()

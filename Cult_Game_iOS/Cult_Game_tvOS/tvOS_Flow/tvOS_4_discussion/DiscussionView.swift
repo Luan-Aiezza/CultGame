@@ -69,10 +69,6 @@ struct DiscussionView: View {
                     }
                 }
                 .onAppear {
-                    gameViewModel.globalState.heresyPoints += 5
-                    if gameViewModel.globalState.heresyPoints > 20 {
-                        gameViewModel.globalState.heresyPoints = 20
-                    }
                     gameViewModel.timerManager.start(duration: 20)//120
                 }
             }

@@ -14,16 +14,22 @@ struct GameView: View {
             switch visiblePhase {
                 case .pairing:
                     WaitingView()
+                    .environmentObject(vm)
                 case .roleSelection:
                     StoryView()
+                    .environmentObject(vm)
                 case .cardPlay:
                     PlayCardView()
+                    .environmentObject(vm)
                 case .discussion:
                     DiscussionView()
+                    .environmentObject(vm)
                 case .elimination:
                     EliminationView()
+                    .environmentObject(vm)
                 case .eliminationResults:
                     EliminationResultsView()
+                    .environmentObject(vm)
                 case.victory(_):
                     if let outcome = vm.gameOutcome {
                         if let role = vm.player.role {

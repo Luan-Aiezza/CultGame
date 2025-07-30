@@ -95,20 +95,26 @@ struct PlayCardView: View {
                     }
                     .ignoresSafeArea()
                     .scaledToFill()
+                    .scaleEffect(1.2)
                 
-                // Exibir icone aqui substituído para sempre mostrar o bloco do canto superior esquerdo
-                //CHECAR AMANHA
-                HStack(){
-                    if let character = vm.player.character {
-                        Image(character.displayName)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 300, height: 300)
-                            .padding(.trailing, 16)
-                            .padding(.top, 16)
-                        
+                //CHECAR CONDICIONAL
+                VStack {
+                    HStack {
+                        if let character = vm.player.character {
+                            Image(character.displayName)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .shadow(radius: 4)
+                        }
+                        Spacer()
                     }
+                    .padding([.top, .leading], 24)
+                    Spacer()
                 }
+                .zIndex(10)
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)
@@ -167,7 +173,7 @@ struct PlayCardView: View {
                             showBlockMessage: $showBlockMessage,
                             cards: $hand,
                             skippedRound: $skippedRound
-                        )
+                        ).environmentObject(vm)
                     }
                     
                     HStack(spacing: 50) {
@@ -298,3 +304,4 @@ struct PlayCardView: View {
     PlayCardView()
         .environmentObject(GameViewModel())
 })
+

@@ -65,6 +65,11 @@ struct CardCarouselView: View {
     @State var draggingItem = 0.0
     @State var activeIndex: Int = 0
     
+    // MARK: - Dragging state variables added for custom card drag handling
+    @State private var isDraggingCard: Bool = false
+    @State private var dragCard: Card? = nil
+    @State private var dragOffset: CGSize = .zero
+    
     
     var body: some View {
         ZStack {
@@ -74,45 +79,134 @@ struct CardCarouselView: View {
                 let z = 1.0 - dist * 0.1
                 let xOffset = offset(index)
                 
-                ZStack {
-                    CardView(card: card)
-                        .frame(width: 154, height: 216)
-                        .draggable(card)
-                        .onTapGesture {
-                            withAnimation {
-                                zoomedCard = card
-                                showZoomedCard = true
-                            }
-                            
-                        }//RESOLVER PARA AS CARTAS QUE USAM HERESY
-                        .overlay {
-                            if let role = vm.player.role {
-                                switch role {
-                                case .cultist:
-                                    if vm.points < card.faithCost || skippedRound {
-                                        ZStack {
-                                            Color.black.opacity(0.6)
-                                                .cornerRadius(12)
-                                            Image("block")
+                // Hide card while dragging it separately to avoid duplication
+                if !(isDraggingCard && dragCard?.id == card.id) {
+                    ZStack {
+                        // CardView with custom drag gesture only for the centered card
+                        if isCardCentered(index) {
+                            CardView(card: card)
+                                .frame(width: 154, height: 216)
+                                //.draggable(card) // Removed default draggable gesture
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { value in
+                                            // Start dragging
+                                            isDraggingCard = true
+                                            dragCard = card
+                                            dragOffset = value.translation
+                                        }
+                                        .onEnded { value in
+                                            // Determine if card dragged far enough to be considered removed
+                                            let threshold: CGFloat = 120
+                                            if abs(dragOffset.height) > threshold || abs(dragOffset.width) > threshold {
+                                                // Remove card from list and set selectedCard
+                                                selectedCard = card
+                                                if let idx = cards.firstIndex(where: { $0.id == card.id }) {
+                                                    cards.remove(at: idx)
+                                                }
+                                                // Reset dragging state
+                                                isDraggingCard = false
+                                                dragCard = nil
+                                                dragOffset = .zero
+                                            } else {
+                                                // Cancel drag, reset states
+                                                withAnimation {
+                                                    dragOffset = .zero
+                                                    isDraggingCard = false
+                                                    dragCard = nil
+                                                }
+                                            }
+                                        }
+                                )
+                                // Overlay block if needed on dragged card
+                                .overlay {
+                                    if let role = vm.player.role {
+                                        switch role {
+                                        case .cultist:
+                                            if vm.points < card.faithCost || skippedRound {
+                                                ZStack {
+                                                    Color.black.opacity(0.6)
+                                                        .cornerRadius(12)
+                                                    Image("block")
+                                                }
+                                            }
+                                        case .heretic:
+                                            if vm.points < abs(card.heresyCost) || skippedRound {
+                                                ZStack {
+                                                    Color.black.opacity(0.6)
+                                                        .cornerRadius(12)
+                                                    Image("block")
+                                                }
+                                            }
                                         }
                                     }
-                                case .heretic:
-                                    if vm.points < abs(card.heresyCost) || skippedRound {
-                                        ZStack {
-                                            Color.black.opacity(0.6)
-                                                .cornerRadius(12)
-                                            Image("block")
+                                }
+                        } else {
+                            // Other cards just normal display with overlay block if needed
+                            CardView(card: card)
+                                .frame(width: 154, height: 216)
+                                //.draggable(card) // Removed default draggable gesture
+                                .overlay {
+                                    if let role = vm.player.role {
+                                        switch role {
+                                        case .cultist:
+                                            if vm.points < card.faithCost || skippedRound {
+                                                ZStack {
+                                                    Color.black.opacity(0.6)
+                                                        .cornerRadius(12)
+                                                    Image("block")
+                                                }
+                                            }
+                                        case .heretic:
+                                            if vm.points < abs(card.heresyCost) || skippedRound {
+                                                ZStack {
+                                                    Color.black.opacity(0.6)
+                                                        .cornerRadius(12)
+                                                    Image("block")
+                                                }
+                                            }
                                         }
+                                    }
+                                }
+                        }
+                    }
+                    .scaleEffect(scale)
+                    .offset(x: xOffset, y: 0)
+                    .zIndex(z)
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+            
+            // Draw the dragged card separately following the finger
+            if isDraggingCard, let dragCard = dragCard {
+                CardView(card: dragCard)
+                    .frame(width: 154, height: 216)
+                    .offset(dragOffset)
+                    .zIndex(1000)
+                    .animation(.easeOut, value: dragOffset)
+                    // Overlay block if needed on dragged card
+                    .overlay {
+                        if let role = vm.player.role {
+                            switch role {
+                            case .cultist:
+                                if vm.points < dragCard.faithCost || skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                            .cornerRadius(12)
+                                        Image("block")
+                                    }
+                                }
+                            case .heretic:
+                                if vm.points < abs(dragCard.heresyCost) || skippedRound {
+                                    ZStack {
+                                        Color.black.opacity(0.6)
+                                            .cornerRadius(12)
+                                        Image("block")
                                     }
                                 }
                             }
                         }
-                    
-                }
-                .scaleEffect(scale)
-                .offset(x: xOffset, y: 0)
-                .zIndex(z)
-                .transition(.scale.combined(with: .opacity))
+                    }
             }
         }
         .onAppear(){
@@ -179,5 +273,3 @@ struct CardCarouselView: View {
     }
     
 }
-
-

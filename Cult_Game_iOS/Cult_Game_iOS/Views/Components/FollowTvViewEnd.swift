@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FollowTvViewEnd: View {
+    
+    @ObservedObject var multiplayerManager = MultiplayerManager.shared
+    @EnvironmentObject var viewModel: GameViewModel
 
     var body: some View {
         Color.black.opacity(0.85)
@@ -16,6 +19,25 @@ struct FollowTvViewEnd: View {
             .zIndex(1)
         
         VStack(spacing: 20) {
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    viewModel.resetGame()
+                    MultiplayerManager.shared.disconnectAll()
+                    multiplayerManager.currentPhase = .pairing
+                }) {
+                    Image("Exit")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                }
+                .padding(.trailing, 32)
+                .padding(.top, 44)
+            }
+            
+            Spacer()
+            
             Image("tv_frame")
                 .resizable()
                 .scaledToFit()
@@ -26,6 +48,8 @@ struct FollowTvViewEnd: View {
                 .foregroundStyle(Color.title)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
+            
+            Spacer()
             
         }
         .padding(.horizontal, 80)

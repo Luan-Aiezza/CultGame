@@ -1,55 +1,5 @@
 import SwiftUI
 
-extension Int {
-    func positiveMod(_ m: Int) -> Int {
-        let r = self % m
-        return r < 0 ? r + m : r
-    }
-}
-
-func blockMessage(cardType : CardType) -> some View {
-    ZStack {
-        Image("tip_001")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 140)
-        
-        if cardType == .cultist || cardType == .common {
-            Text("O culto não tem pontos de fé suficiente para escolher a carta")
-                .font(.custom("Almendra-Regular", size: 16))
-                .foregroundColor(Color.title)
-                .padding(.horizontal, 8)
-        } else {
-            Text("Você não tem heresia suficiente para escolher a carta")
-                .font(.custom("Almendra-Regular", size: 16))
-                .foregroundColor(Color.title)
-                .padding(.horizontal, 8)
-        }
-    }
-}
-
-struct blockMessageView : View {
-    
-    @Binding var show : String
-    
-    var body: some View {
-        ZStack {
-            Image("tip_001")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300)
-            
-            Text(show)
-                .frame(width: 240)
-                .font(.custom("Almendra-Regular", size: 16))
-                .foregroundColor(Color.title)
-                .padding(.horizontal, 8)
-                .padding(.bottom, 15)
-                .multilineTextAlignment(.center)
-        }
-    }
-}
-
 struct CardCarouselView: View {
     var xDistance: Int = 120
     @EnvironmentObject var vm: GameViewModel
@@ -167,38 +117,5 @@ struct CardCarouselView: View {
     func offset(_ item: Int) -> Double {
         let angle = Double.pi * 2 / Double(cards.count) * distance(item)
         return sin(angle) * Double(xDistance)
-    }
-}
-
-struct DraggableCarouselCard: View {
-    let card: Card
-    let onPullOut: () -> Void
-    let onZoom: () -> Void
-
-    @GestureState private var dragOffset = CGSize.zero
-
-    var body: some View {
-        CardView(card: card)
-            .frame(width: 154, height: 216)
-            .offset(y: dragOffset.height)
-            .scaleEffect(dragOffset != .zero ? 1.05 : 1.0)
-            .animation(.spring(), value: dragOffset)
-            .gesture(
-                DragGesture(minimumDistance: 5)
-                    .updating($dragOffset) { value, state, _ in
-                        // Detecta apenas arraste vertical
-                        if abs(value.translation.height) > abs(value.translation.width) {
-                            state = value.translation
-                        }
-                    }
-                    .onEnded { value in
-                        if value.translation.height < -80 {
-                            onPullOut()
-                        }
-                    }
-            )
-            .onTapGesture {
-                onZoom()
-            }
     }
 }

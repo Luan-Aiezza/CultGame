@@ -184,7 +184,7 @@ struct PlayCardView: View {
                     }
                     .frame(maxWidth: 500)
                     .padding()
-                   
+                    
                 }
                 if showFollowTvView {
                     FollowTvView()
@@ -220,14 +220,14 @@ struct PlayCardView: View {
             
             if newPhase == .discussion {
                 // Mantenha a fase visível como está
-//                print("Tentativa de ir para .discussion ignorada")
+                // print("Tentativa de ir para .discussion ignorada")
             }
         }
         .onAppear {
             self.hand = vm.player.hand
             vm.handlePhaseChange()
             
-            //GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO REFATORAR
+            //REFATORAR PARA GARANTIR A SAIDA DO JOGADOR MESMO APOS O REINICIO DO JOGO
             if vm.player.state == .inactive && !showDeadView {
                 showDeadView = true
                 multiplayerManager.disconnect()
@@ -242,7 +242,7 @@ struct PlayCardView: View {
             }
             
             else if newValue == .discussion && vm.player.state == .active && !showDeadView  {
-
+                
                 stringShow = ""
                 showBlockMessage = false
                 showFollowTvView = true

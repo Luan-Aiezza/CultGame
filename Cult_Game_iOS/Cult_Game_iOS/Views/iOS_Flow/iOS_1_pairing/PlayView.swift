@@ -41,18 +41,21 @@ struct PlayView: View {
                     Spacer()
                     
                     ZStack{
-                        Image("cultist_button_001")
-                            .resizable()
-                            .frame(width: 200, height: 51)
                         NavigationLink {
                             GameView()
                                 .environmentObject(vm)
                                 .navigationBarBackButtonHidden(true)
                             
                         } label: {
-                            Text("Pair")
-                                .font(.custom("Almendra-Regular", size: 26))
-                                .foregroundStyle(Color.title)
+                            ZStack{
+                                Image("cultist_button_001")
+                                    .resizable()
+                                    .frame(width: 200, height: 51)
+                                
+                                Text("Pair")
+                                    .font(.custom("Almendra-Regular", size: 26))
+                                    .foregroundStyle(Color.title)
+                            }
                             
                         }
                     }.padding(.bottom, 40)

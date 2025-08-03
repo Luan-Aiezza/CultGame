@@ -71,8 +71,8 @@ struct VictoryTvView: View {
                     // Botão no canto superior direito para sair da partida e voltar para a tela de espera
                     Button(action: {
                         //VERIFICAR QUEM VEM PRIMEIRO
-                        viewModel.resetGame()
                         MultiplayerManager.shared.disconnectAll()
+                        viewModel.resetGame()
                         viewModel.multiplayerManager.currentPhase = .pairing
                     }) {
                         Image("Exit")
@@ -141,6 +141,7 @@ struct VictoryTvView: View {
             }
             .padding()
         }.onAppear{
+            MultiplayerManager.shared.disconnectAll()
             MainScene.shared?.zoomIn()
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }

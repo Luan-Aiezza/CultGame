@@ -62,7 +62,7 @@ struct WaitingView: View {
             } else{
                 VStack{
                     Spacer()
-                    Text("Waiting for players...")
+                    Text("Waiting to connect...")
                         .font(Font.custom("Almendra-Regular", size: 23))
                         .foregroundColor(Color(red:211/255, green:180/255, blue:125/255))
                 }.padding(.bottom)

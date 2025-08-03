@@ -18,7 +18,7 @@ struct Cult_Game_iOSApp: App {
     var body: some Scene {
     
         WindowGroup {
-            VictoryScreenView(role: .cultist, outcome: .cultistVictoryElimination)
+            MainViewiOS()
                 .environmentObject(vm)
                 .ignoresSafeArea()
         }

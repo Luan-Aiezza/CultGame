@@ -75,6 +75,8 @@ struct WaitingForPlayersView: View {
                         .zIndex(6)
                 }
             }
+        }.onAppear{
+            viewModel.resetGame()
         }
     }
 }

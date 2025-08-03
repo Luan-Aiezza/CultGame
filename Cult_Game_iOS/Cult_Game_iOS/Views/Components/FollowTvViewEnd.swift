@@ -23,8 +23,7 @@ struct FollowTvViewEnd: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    viewModel.resetGame()
-                    MultiplayerManager.shared.disconnectAll()
+                    multiplayerManager.disconnect()
                     multiplayerManager.currentPhase = .pairing
                 }) {
                     Image("Exit")
@@ -32,7 +31,7 @@ struct FollowTvViewEnd: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 60, height: 60)
                 }
-                .padding(.trailing, 32)
+                .padding(.trailing, 20)
                 .padding(.top, 44)
             }
             
@@ -49,7 +48,7 @@ struct FollowTvViewEnd: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
             
-            Spacer()
+            Spacer(minLength: 200)
             
         }
         .padding(.horizontal, 80)

@@ -47,7 +47,7 @@ struct VotingResultView: View {
                         .frame(width: 151, height: 161)
                         .rotationEffect(.degrees(15))
                         .opacity(0.5)
-                        .padding(.top, 430)
+                        .padding(.top, 1800)
                         .position(x: 960, y: -550)
                 }
 

@@ -51,6 +51,7 @@ struct FollowTvViewEnd: View {
             Spacer(minLength: 200)
             
         }
+        .padding(.bottom, 100)
         .padding(.horizontal, 80)
         .zIndex(2)
     }

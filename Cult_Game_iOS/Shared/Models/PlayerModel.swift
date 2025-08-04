@@ -31,13 +31,13 @@ struct PlayerModel: Codable, Identifiable, Equatable {
 extension Character {
     var displayName: String {
         switch self {
-        case .fox: return "fox"
-        case .panda: return "panda"
-        case .bunny: return "bunny"
-        case .tiger: return "tiger"
-        case .deer: return "deer"
-        case .pig: return "pig"
-        case .wolf: return "wolf"
+        case .fox: return "Fox"
+        case .panda: return "Panda"
+        case .bunny: return "Bunny"
+        case .tiger: return "Tiger"
+        case .deer: return "Deer"
+        case .pig: return "Pig"
+        case .wolf: return "Wolf"
         }
     }
 }

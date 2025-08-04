@@ -19,6 +19,8 @@ struct PlayCardView: View {
     @State private var showDeadView = false
     @State private var isDisconnected = false
     
+    @State private var cardPlayedZoomed: Card? = nil
+    
     @ViewBuilder
     var destinationView: some View {
         if let outcome = vm.gameOutcome,
@@ -168,7 +170,8 @@ struct PlayCardView: View {
                                     stringShow = "You played a card!"
                                     showBlockMessage = true
                                     playedCard = true
-                                    
+                                    cardPlayedZoomed = cardToPlay // 👈 salva a carta para exibir
+
                                     if cardToPlay.type == .assassination {
                                         showMurderView = true
                                     }
@@ -187,9 +190,21 @@ struct PlayCardView: View {
                     
                 }
                 if showFollowTvView {
-                    FollowTvView()
-                        .transition(.opacity)
-                        .zIndex(5)
+                    if let card = cardPlayedZoomed{
+                        Color.black.opacity(0.6)
+                            .ignoresSafeArea()
+                            .transition(.opacity)
+                        
+                        CardView(card: card)
+                            .frame(width: 350, height: 490)
+                            .shadow(radius: 10)
+                            .transition(.scale)
+                            .zIndex(6)
+                    }else{
+                        FollowTvView()
+                            .transition(.opacity)
+                            .zIndex(5)
+                    }
                 }
                 if showDeadView {
                     FollowTvViewDead()

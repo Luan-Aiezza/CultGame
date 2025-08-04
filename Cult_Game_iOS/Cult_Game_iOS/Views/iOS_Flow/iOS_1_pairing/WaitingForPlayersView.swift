@@ -80,36 +80,3 @@ struct WaitingForPlayersView: View {
         }
     }
 }
-//
-//extension GameViewModel {
-//    static func previewModel() -> GameViewModel {
-//        let vm = GameViewModel()
-//        let peer = MCPeerID(displayName: "You")
-//        vm.multiplayerManager._setFakePeerID(peer)
-//        vm.multiplayerManager.connectedPeers = [peer]
-//
-//        vm.assignCharacter(.bunny)
-//        return vm
-//    }
-//}
-//
-
-//extension GameViewModel {
-//    static func previewModel() -> GameViewModel {
-//        let vm = GameViewModel()
-//        let peer = MCPeerID(displayName: "You")
-//        vm.multiplayerManager._setFakePeerID(peer)
-//        vm.multiplayerManager.connectedPeers = [peer]
-//
-//        vm.assignCharacter(.bunny)
-//        return vm
-//    }
-//}
-
-
-//
-//#Preview {
-//    let vm = GameViewModel.previewModel()
-//    vm.multiplayerManager.isHosting = true
-//    return WaitingForPlayersView(viewModel: vm)
-//}

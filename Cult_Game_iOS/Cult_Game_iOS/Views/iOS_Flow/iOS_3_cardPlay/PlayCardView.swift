@@ -20,6 +20,14 @@ struct PlayCardView: View {
     @State private var isDisconnected = false
     
     @State private var cardPlayedZoomed: Card? = nil
+    var myCharacter: Character? {
+        let myDisplayName = vm.multiplayerManager.myPeerID.displayName
+        let character = vm.multiplayerManager.players.first {
+            $0.key == myDisplayName
+        }?.value.character
+        
+        return character
+    }
     
     @ViewBuilder
     var destinationView: some View {
@@ -65,24 +73,27 @@ struct PlayCardView: View {
                     .scaledToFill()
                     .scaleEffect(1.2)
                 
-                //CHECAR CONDICIONAL
+                //CHECAR PORQUE O ICONE NAO APARECE
                 VStack {
                     HStack {
-                        if let character = vm.player.character {
-                            Image(character.displayName)
+                        if let character = myCharacter {
+                            Image("\(character.displayName.capitalized)")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 60, height: 60)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                                .shadow(radius: 4)
+                                .overlay(Circle().stroke(Color.white, lineWidth: 1))
+                                .shadow(radius: 2)
+                        } else {
+                            Text("No Character")
+                                .foregroundColor(.white)
                         }
                         Spacer()
                     }
-                    .padding([.top, .leading], 24)
+                    .padding(.top, 24)
+                    .padding(.leading, 80)
                     Spacer()
                 }
-                .zIndex(10)
                 
                 VStack {
                     SelectCard(selectedCard: $selectedCard, zoomedCard: $zoomedCard, showZoomedCard: $showZoomedCard)

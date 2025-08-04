@@ -162,7 +162,7 @@ struct HostGameView: View {
     }
     
     func startGame() {
-        if multiplayerManager.connectedPeers.count < 3 || multiplayerManager.connectedPeers.count > 7 {
+        if multiplayerManager.connectedPeers.count < 5 || multiplayerManager.connectedPeers.count > 7 {
             showBlockMessage = true
             return
         }

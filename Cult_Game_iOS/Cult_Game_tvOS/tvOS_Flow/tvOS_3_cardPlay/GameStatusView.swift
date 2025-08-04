@@ -59,7 +59,7 @@ struct GameStatusView: View {
         }
         .onAppear {
             MainScene.shared?.zoomOut()
-            gameViewModel.timerManager.start(duration: 40)//90
+            gameViewModel.timerManager.start(duration: 60)//90
             AudioManager.shared.playBackgroundMusic(named: "Background_Map")
         }
     }

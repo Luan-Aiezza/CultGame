@@ -54,7 +54,7 @@ struct EliminationView: View {
                 ZStack {
                     VStack {
                         
-                        Spacer()
+                        Spacer(minLength: 100)
 
                         Text("Who is the heretic?")
                             .multilineTextAlignment(.center)

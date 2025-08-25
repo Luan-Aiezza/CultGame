@@ -172,7 +172,7 @@ struct EliminationView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .zIndex(100)
                     }
-                }
+                }.padding(.horizontal, 20)
                 
                 if showFollowTvView {
                     FollowTvViewVoting()

@@ -48,7 +48,7 @@ Requirements: Xcode, an Apple TV (or tvOS simulator) and at least five iPhones, 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Luan-Aiezza/Cult_Game.git
+   git clone https://github.com/Luan-Aiezza/CultGame.git
    ```
 2. Open `Cult_Game_iOS/Cult_Game_iOS.xcodeproj` in Xcode.
 3. Run the **tvOS** scheme on the Apple TV to host a match.
